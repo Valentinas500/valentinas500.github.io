@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+<li>
+  <a href="other.html">Other</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+<li>
+  <a href="https://github.com/YOURGITHUB">
+    <span class="fa fa-github"></span>
+     
+    GitHub
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<p>Based on Wooldridge, J. (2019). Introductory Econometrics: A Modern Approach. Boston, MA: Cengage.</p>
+<p>Syllabus</p>
+<div id="chapter-1-the-nature-of-econometrics-and-economic-data" class="section level5">
+<h5>Chapter 1: The Nature of Econometrics and Economic Data</h5>
+<p><details> <summary><a>Show all details</a></summary></p>
+<p>
+<p>Econometrics is the use of statistical methods to analyze economic data. It is concerned with the systemic study of economic phenomena, estimating economic relationships, confronting economic theory by testing hypotheses, and forecasting the behavior of economic variables using observed data.</p>
+<p>Empirical economics provides a numerous examples of attempts to estimate economic relationships. For example, an analyst from both the government and the private sector are interested in estimating the demand/supply of various products; a private firms are interested in estimating the effects on advertising on sales and profits and so on. Many macro economists try to measure the effectiveness of various government policies. Once variables have been identified and effects measures, we may use the estimated relationships to predict future values. For example, firms try to forecast sales, profits, cost of production, and inventory requirements. Utility companies need to predict the energy demand. Many financial economists try to forecast stock market indices and prices of specific stocks. By the end of the semester, you will know what data you need to answer questions like these and what econometric methods you should use to evaluate these questions.</p>
+<p>While most biology, physics and other natural sciences use experimental data, econometricians typically do not have experimental data but must rely on observational (also called non-experimental, retrospective) data. In controlled experimental environment, all other variables are held constant and some one experiment can be run many times. The issue with observational data is that while we observe a lot of changes in the variable of interest, we have all other circumstances changing as well (as we do not have controlled environment). We also are not able to observe many key variables.</p>
+<p>Common application of econometric techniques are forecasting of macroeconomic variables such as the interest rates, inflation rates, GDP, trade balance, debt and so on. Many economists and econometricians work on other less publicly visible issues such as, for example, effect of schooling on student performance.</p>
+<p>Empirical analysis uses data to test a theory or estimate a relationship. Researcher should take the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>A careful formulation of the question of interest.</li>
+<li>Formulation of the economic model which describes some relationship.</li>
+<li>Formulation of econometric model.</li>
+<li>Collection of data.</li>
+<li>Estimation of the models, testing of the hypotheses of interest using data.</li>
+<li>Using the models for prediction and policy purposes.</li>
+</ol>
+<p>A model is a simplified representation of a real-world process. Many scientists argue in favor of simplicity because simple models are easier to understand, communicate ans evaluate empirically. However, others criticize the oversimplification of the models and use of unrealistic assumptions. Friedman argued that assumptions should be sufficiently good to study the question at hand (we do not want to assume so much that the result can only be such that we expect).</p>
+<p>Econometric models directly specify the relationship between the independent variables (regressors, covariates, predicting variables) on the right hand side and the dependent variable (regressand) on the left hand side. We choose the econometric model taking into account economic theory and data. In practice, in our model we include all variables that we think are relevant for our purpose. Too often, very important variables are not precisely observed or observed at all. The rest of the variables that we do not see as relevant, appear in the disturbance term (we will discuss what this is more in the next class).</p>
+<p>Econometric analysis requires data. This data comes in a variety of types. Each type of data requires a specific type of econometric methods to be used. Inappropriate econometric methods for the data may lead to misleading results. There are several kinds of economic data sets:</p>
+<ul>
+<li>Cross section data</li>
+<li>Time series data</li>
+<li>Pooled cross section data</li>
+<li>Panel data (also known as longitudinal data)</li>
+</ul>
+<p>Cross sectional data set consists of sample individuals, households, firms, cities, states, countries or other units taken at a given point in time. An important feature of cross sectional data is that we assume it is obtained by random sampling from the underlying population. However, sometimes the random sample assumption is violated if individuals refuse to participate or inappropriate survey method captures only a specific group of the population.</p>
+<p>Time series data set consists of observations on variables over time. For example, stock price movement, changes in money supply, consumer price index, GDP, crime rate, automobile sales figures. Time series observations are typically serially correlated, that is they are not independent across time. This requires use of slightly more advanced econometric techniques. Researcher must also pay attention to data frequency at which data is collected. Data may be collected hourly, daily, weekly, monthly, quarterly, yearly and so on. Time series data typically includes trends and seasonality. &lt;<Think of ice-cream production and sales throughout the year.>&gt; Time series data requires slightly more complex tools because of highly persistent nature of this kind of data.</p>
+<p>Pooled cross section is a data set that combines two or more-cross section in one data set. Cross sections must be drawn independently of each other. Cross sections are often used to evaluate policy changes. For example, a cross sectional survey may be done on a random sample of households in one year, and then repeated in a few years on a new random sample. Analysis of a pooled cross section is similar to standard cross section but with some additional controls. A researcher must account for secular differences in variables across time. A key relationship may change over time.</p>
+<p>Panel or longitudinal data set consists of a time series for each cross sectional member in the data set. Panel data has both cross sectional and a time series dimension. For example, we observe John Smith’s wage, employment history, education and other variables for every of the ten years. Similarly, we can observe a country’s immigration flows, tax rates, wage rates, government expenditures and so on. The key feature is that the same individual, firm or a country is observed for a few consecutive periods. This allows us to account for time-invariant unobservables. For example, we may not observe individual’s talent but if we follow the same person for a number of years as the individual acquires more education, we may be able to better estimate the effect of education on wages holding the unobservable talent constant. With panel data, we may also introduce lagged variables. For example, if tax rates that individual is facing get changed this year, the person may change their behavior next year. However, panel data is expensive because it requires following up on the same individuals or firms over time. There are a few excellent panel data sets that many economists use. For example, see PSID (Panel Study of Income Dynamics), HRS (Health and Retirement Study), SHARE (Survey of Health, Ageing and Retirement in Europe).</p>
+<p>Before any research project, a researcher must define the causal relationship of interest and try to describe how it is possible to design the study to infer the causal relationship.</p>
+<p>In econometrics, the goal is to establish causality or causal effect. This, for example, would allow us to say that attending classes increases student’s performance. Most researchers, however, find associations. This is equivalent of saying that class attendance and student performance is associated or correlated without being able to say that one causes the other. To be able to derive causal relationship, we need the notion of ceteris paribus to hold. Ceteris paribus means all other being equal. For example, a student that attends class, ceteris paribus, performs better in exams and assignments. Ceteris paribus in this example means a student with the same ability, prior skills and in every other way identical. Other example: how does the price change affect the quantity demanded. We need to make sure that when the price changes, nothing else (for example, income, prices of related goods etc) changes. Then we can look at only the change in price and the change in quantity demanded.</p>
+<p>When experiments are feasible, it is easier to infer causal relationship. For example, (1) choose several one-acre plots of land; (2) randomly assign different amounts of fertilizer to the different plots; (3) compare yields. Experiment works because amount of fertilizer applied is unrelated to other factors influencing crop yields. That is all other factors that influence crop yield such as quality of land, rainfall, presence of parasites, and so on are the same on all one-acre plots.</p>
+<p>In most cases, however, experiments are either unfeasible and/or unethical to do. For example, if you are interested in the returns to education, you may ask: “If a person is chosen from the population and given another year of education, by how much will his or her wage increase?” To do an experiment, we would need to randomly assign different amounts of education to groups of people and compare wage outcomes later on. The issue is that the amount of education is related to other factors that influence wages, for example, natural ability or intelligence and we cannot observe. Similarly, we cannot do experiments with policing as different parts of the city are inherently different, and police presence and crime rates are contemporaneously determined.</p>
+<p>Another topic that receives a lot of attention is the effect of minimum wage on unemployment. A researcher would ask: “By how much (if at all) will unemployment increase if the minimum wage is increased by a certain amount (holding other things fixed)?” An experiment is not feasible again, because randomly assigning minimum wages would be unethical. Looking at current minimum wages would not lead to causality because level of the minimum wage depends on political and economic factors that also influence unemployment. So if one finds high minimum wage and low unemployment, it may be caused by some other factor.</p>
+<p>With econometrics, we can also test various economic and finance hypotheses. For example, in financial economics, the pure expectations hypothesis states that the expected long-term interest rate equals compounded expected short-term interest rates. In other words, it states that if you chose to invest into 2 consecutive three-month T-bills or 1 six-month T-bill (so that both of these investments are of the same length), the interest rate should be the same for both of these investments, holding everything else (like the risk, liquidity, etc) constant.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Problem 1.<br />
+Suppose that you are asked to conduct a study to determine whether smaller class sizes lead to improved student performance of fourth graders.<br />
+1. If you could conduct any experiment you want, what would you do? Be specific. 2. More realistically, suppose you can collect observational data on several thousand fourth graders in a given state. You can obtain the size of their fourth-grade class and a standardized test score taken at the end of fourth grade. Why might you expect a negative correlation between class size and test score?<br />
+3. Would a negative correlation necessarily show that smaller class sizes cause better performance? Explain.
+</p>
+<p class="comment">
+Computer Exercise C1.<br />
+Use the data in <strong>wage1</strong> for this exercise.<br />
+1. Find the average education level in the sample. What are the lowest and highest years of education?<br />
+2. Find the average hourly wage in the sample. Does it seem high or low?<br />
+3. The wage data are reported in 1976 dollars. Using the Economic Report of the President (2011 or later), obtain and report the Consumer Price Index (CPI) for the years 1976 and 2010.<br />
+4. Use the CPI values from part (iii) to find the average hourly wage in 2010 dollars. Now does the average hourly wage seem reasonable?<br />
+5. How many women are in the sample? How many men?
+</p>
+<p class="comment">
+Computer Exercise C7.<br />
+The data set in <strong>alcohol</strong> contains information on a sample of men in the United States. Two key variables are self-reported employment status and alcohol abuse (along with many other variables). The variables employ and abuse are both binary, or indicator, variables: they take on only the values of zero and one.<br />
+1. What percentage of the men in the sample report abusing alcohol? What is the employment rate?<br />
+2. Consider the group of men who abuse alcohol. What is the employment rate among them?<br />
+3. What is the employment rate for the group of men who do not abuse alcohol?<br />
+4. Discuss the difference in your answers to parts 2 and 3. Does this allow you to conclude that alcohol abuse cause unemployment?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Maddala, G. S., &amp; Lahiri, K. (1992). Introduction to econometrics (Vol. 2). New York: Macmillan.</p>
+<p>Ramanathan, R. (2002). Introductory econometrics with applications. Fort Worth: Harcourt College Publishers.</p>
+<hr />
+<hr />
+</p>
+<p></details></p>
+</div>
+<div id="chapter-2-the-simple-regression-model" class="section level5">
+<h5>Chapter 2: The Simple Regression Model</h5>
+</div>
+<div id="chapter-3-the-multiple-regression-analysis-estimation" class="section level5">
+<h5>Chapter 3: The Multiple Regression Analysis: Estimation</h5>
+</div>
+<div id="chapter-4-the-multiple-regression-analysis-inference" class="section level5">
+<h5>Chapter 4: The Multiple Regression Analysis: Inference</h5>
+</div>
+<div id="chapter-5-the-multiple-regression-analysis-ols-asymptotics" class="section level5">
+<h5>Chapter 5: The Multiple Regression Analysis: OLS Asymptotics</h5>
+</div>
+<div id="chapter-6-multiple-regression-analysis-further-issues" class="section level5">
+<h5>Chapter 6: Multiple Regression Analysis: Further Issues</h5>
+</div>
+<div id="chapter-7-multiple-regression-analysis-with-dummy-variables" class="section level5">
+<h5>Chapter 7: Multiple Regression Analysis with Dummy Variables</h5>
+</div>
+<div id="chapter-8-heteroskedasticity" class="section level5">
+<h5>Chapter 8: Heteroskedasticity</h5>
+</div>
+<div id="chapter-9-specification-and-data-issues" class="section level5">
+<h5>Chapter 9: Specification and Data Issues</h5>
+</div>
+<div id="chapter-15-instrumental-variables-estimation-and-two-stage-least-squares" class="section level5">
+<h5>Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares</h5>
+</div>
+<div id="chapter-17-limited-dependent-variable-models-logit-and-probit" class="section level5">
+<h5>Chapter 17: Limited Dependent Variable Models: Logit and Probit</h5>
+</div>
+<div id="chapter-10-basic-regression-analysis-with-time-series-data" class="section level5">
+<h5>Chapter 10: Basic Regression Analysis with Time Series Data</h5>
+</div>
+<div id="chapter-11-issues-in-using-ols-with-time-series-data" class="section level5">
+<h5>Chapter 11: Issues in Using OLS with Time Series Data</h5>
+</div>
+<div id="chapter-12-serial-correlation-and-heteroskedasticity-in-time-series-regressions" class="section level5">
+<h5>Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions</h5>
+</div>
+<div id="chapter-18-advanced-time-series-topics" class="section level5">
+<h5>Chapter 18: Advanced Time Series Topics</h5>
+</div>
+<div id="chapter-13-pooling-cross-sections-across-time-simple-panel-data-methods" class="section level5">
+<h5>Chapter 13: Pooling Cross Sections across Time: Simple Panel Data Methods</h5>
+</div>
+<div id="chapter-14-advanced-panel-data-methods" class="section level5">
+<h5>Chapter 14: Advanced Panel Data Methods</h5>
+</div>
+<div id="chapter-16-simultaneous-equation-models" class="section level5">
+<h5>Chapter 16: Simultaneous Equation Models</h5>
+</div>
+<div id="chapter-19-carrying-out-an-empirical-project" class="section level5">
+<h5>Chapter 19: Carrying Out an Empirical Project</h5>
+<p>Data Visualization And Regression Reporting in R Introduction to Graphs in R for Econometricians Correlation in R Reporting and Comparing Regressions’ Results in R Time Series Analysis and Visualization in R Panel Data Visualization in R Data Visualization Using ‘googleVis’ Data Manipulation and Visualization in R with ‘tidyverse’ Interactive Apps Using ‘shiny’ In R Topics in Advanced Econometrics Nonparametric Econometrics in R Advanced Time Series Analysis in R Quantile Regressions in R Simple Machine Learning Algorithms in R K-Nearest Neighbors Algorithm in R Practical Data Science with R Based on Zumel, N., &amp; Mount, J. (2014). Practical Data Science With R. Manning Publications Co. Starting with R and Data Exploring Data: Summary Statistics and Plots</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
