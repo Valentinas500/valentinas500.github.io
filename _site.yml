@@ -22,7 +22,7 @@ navbar:
       href: mailto:vrudys@fordham.edu           # CHANGE HERE 
     - text: "GitHub"
       icon: fa-github
-      href: https://github.com/YOURGITHUB       # CHANGE HERE 
+      href: https://github.com/Valentinas500       # CHANGE HERE 
 output:
   html_document:
     theme: readable
