@@ -353,16 +353,21 @@ border-radius: 5px;
 <p>First example: the returns to education. <span class="math display">\[ wage = \beta_0 + \beta_1 educ + u\]</span> This model relates the person’s wage (wage) to observed education (educ) and other unobserved factors (u). If the wage is measured in dollars per hour and educ is the acquired years of education, then beta_1 measures the change in hourly wage given an additional year in education, holding all other factors (in u) constant. Let’s consider how well the assumptions of the model are held. Linearity assumption implies that change from no to one year of education has the same effect on your wage as the change from eleven to twelve years of education. In fact, we may expect increasing or decreasing returns to education. The linear assumption is likely not realistic in this case. Ceteris paribus assumption implies education is mean independent of other factors such as innate ability or talent. However, this is almost certainly not true. Individuals with higher natural abilities or talent are much more likely to obtain more years of education. In other words, do you expect and individual who did not finish high school and someone with a masters degree have the same natural ability. While it is certainly true for some, it is probably not true for majority. Violation of cateris paribus assumption means that we cannot infer causality: using this simple model we cannot state that education causes an increase in wage holding all other constant.</p>
 <p>Second example: fertilizer effect on crop yield. <span class="math display">\[ yield = \beta_0 + \beta_1 fertilizer + u\]</span> If you are a farmer, you most likely want to know the effect of fertilizer on yield, holding all other factors constant. The coefficient of beta_1 measures the effect of fertilizer on yield, holding all else constant. While linearity assumption is likely not realistic, one can do an experiment by dividing one larger field and applying different amounts of fertilizer. In that case, all other factors (such as rainfall, sunshine, land quality, etc) will indeed be constant.</p>
 <p>How do we derive ordinary least squares estimates <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>? To do that, we need data which is a random sample. Estimates are denoted by a hat symbol above beta coefficient. I skip the math in here, but you need to be familiar with the general idea of method of moments approach. The OLS estimators are:</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ \hat{\beta}_1=\frac{\sum_{i=1}^2(x_i -\bar x)(y_i - \bar y)}{\sum_{i=1}^2 (x_i -\bar x)^2} \\
+\hat{\beta}_0=\bar y - \hat \beta_1 \bar x \]</span></p>
 <p><span class="math inline">\(\beta_1\)</span> can also be written as sample correlation times the sample standard deviation of y divided by the sample standard deviation of <span class="math inline">\(x\)</span>.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ \hat{\beta}_1=\hat\rho_{xy}\big(\frac{\hat\sigma_y}{\hat\sigma_x}\big) \]</span></p>
 <p>These estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are called the ordinary least squares (OLS) estimates. The name “ordinary least squares” comes from the fact that these estimates minimize the sum of squared residuals.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ \text{Fitted or predicted values: }\hat y_i = \hat\beta_0 + \hat\beta_1 x_i  \]</span> <span class="math display">\[ \text{Deviations from the regression line (residuals): }\hat u_i =  y_i - \hat y_i  \]</span> <span class="math display">\[ \text{OLS: } \min \sum_{i=1}^n \hat u_i^2 \quad \rightarrow \quad \hat\beta_0, \hat\beta_1  \]</span></p>
 <p>When we estimate the values for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, we can plot the OLS regression line in the scatterplot of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values. This line is sometimes called sample regression function (SRF) because it is estimated version of the population regression function (PRF). Each fitted value (<span class="math inline">\(\hat{y}_i\)</span>) is on this OLS regression line.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<center>
+<img src="picf2.png" />
+</center>
 <p>In the figure above, we see that the fitted Y value is higher than actual Y value for X1. The residual is the difference between the two; in this case, it is negative. For some later Xi, we see that the observed Y value is greater than the fitted. The residual thus is positive. In short, we found such beta_0 and beta_1 that the residuals are as small as can be, or that the line fitted best fits the observed data. We see that in some cases the line overpredicts and in other cases - underpredicts Y.</p>
-<p>It is important to remember that given some value of X, we only predict Y using the OLS regression line. We do not know what the true PRF is or how close our estimated regression line is to the true PRF. Using a different sample, we may get a different OLS regression line (beta_0 and beta_1) which may or may not be closer to PRF.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p>It is important to remember that given some value of <span class="math inline">\(x\)</span>, we only predict Y using the OLS regression line. We do not know what the true PRF is or how close our estimated regression line is to the true PRF. Using a different sample, we may get a different OLS regression line (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>) which may or may not be closer to PRF.</p>
+<center>
+<img src="picf6.png" />
+</center>
 <p>Since most econometricians are painstakingly familiar with OLS, for brevity, we just say we regress Y on X without actually writing out the full econometric model.</p>
 <p>Some properties of OLS statistics:</p>
 <ol style="list-style-type: decimal">
@@ -371,9 +376,12 @@ border-radius: 5px;
 <li>The sample averages of y and x lie on the OLS regression line.</li>
 </ol>
 <p>We can decompose every Yi observation into a fitted value and a residual. Let’s define the total sum of squares (SST), the explained sum of squares (SSE) and the residual sum of squares (SSR) as follows:</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ SST= \sum_{i=1}^n (y_i-\bar y)^2 \\
+SSE = \sum_{i=1}^n (\hat y_i-\bar y)^2 \\
+SSR= \sum_{i=1}^n (\hat u_i)^2 \]</span></p>
 <p>We can also measure how well our estimated OLS regression line fits the data using the SST, SSE and SSR definitions. R-squared of the regression (also known as the coefficient of determination) is defined as the explained sum of squares divided by the total sum of squares.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ SST= SSE + SSR \]</span></p>
+<p><span class="math display">\[ R^2 \equiv \frac{SSE}{SST}=1-\frac{SSR}{SST} \]</span></p>
 <p>It is interpreted as the fraction of the sample variation in y that is explained by x. R-squared is always between 0 and 1. In social sciences, low R-squares are not uncommon. It is important to note that low R-square does not deem the regression useless. The most important is to focus on how well the underlying assumptions are satisfied.</p>
 <p>Let’s look at some examples. First example: CEO Salary and Return on Equity. <span class="math display">\[ salary = \beta_0 + \beta_1 roe + u \]</span> We postulate that CEO are paid more who bring more returns to the owners. In other words, salary depends on the return that the shareholders get. We can also say that we expect beta_1 to be greater than 0. We can write it down as follows:</p>
 <p>In this example, we have observed annual CEO salary, and the average return on equity (ROE) for the CEO’s firm for the three previous years with one meaning 1 percentage point. We run one of the two following codes in R to estimate the OLS coefficients:</p>
