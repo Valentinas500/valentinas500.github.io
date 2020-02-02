@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+<li>
+  <a href="other.html">Other</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+<li>
+  <a href="https://github.com/YOURGITHUB">
+    <span class="fa fa-github"></span>
+     
+    GitHub
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 2</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-2-the-simple-regression-model" class="section level5">
+<h5>Chapter 2: The Simple Regression Model</h5>
+<p>Simple regression model is used to study the relationship between two variables. It is limited as an empirical tool, however, it is a good idea to first study and interpret a simple regression model before heading into studying multiple regression models.</p>
+<p>Econometric analysis usually begins with us observing some X and Y variables that represent some population and we are interested in “explaining variable Y in terms of X” or “studying how Y varies with changes in X”. However, before we write anything down, we need to think about these three questions: (1) how do we allow for other factors (other than X) to affect Y; (2) what is the functional form of the relationship between X and Y; (3) how are we sure that ceteris paribus is captured when estimating relationship between X and Y?</p>
+<p>The standard simple (or bivariate) linear regression model is as follows:</p>
+<center>
+<img src="Pica.png" />
+</center>
+<p>In the above equation, Y is called dependent, explained, response, predicted variable or regressand. X is the independent variable, also known as explanatory, control, predictor variable or regressor. U is the error term, also called the disturbance. In our simple regression analysis, all other factors that affect Y are treated as unobserved and are, effectively, in U. Beta_0 is called the intercept and beta_1 is the slope parameter. Usually, beta_1 is the main focus of attention.</p>
+<p><span class="math display">\[ \frac{\Delta y}{\Delta x} = \beta_1 \quad \quad \text{as long as} \quad \quad \frac{\Delta u}{\Delta x} = 0 \]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> shows by how much does the dependent variable (<span class="math inline">\(y\)</span>) change if independent variable is increased by one unit? This interpretation is only true only when all other things remain equal when the independent variable is increased by one unit. As this usually does not hold, simple linear regression model is rarely applicable in practice.</p>
+<p>As you look at <span class="math inline">\(\beta_1\)</span>, you probably see what the linear relationship means. It implies that one unit change in X has the same effect on Y, regardless of the initial value of <span class="math inline">\(x\)</span>. If we studied the returns to education, this would mean that the change from no to one year of education has the same effect on your wage as the change from eleven to twelve years of education. The true relationship is likely not linear. This is not a big issue as we can allow for non-linear relationships.</p>
+<p>More important issue comes when we look at the ceteris paribus assumption. Causal inference can be drawn only when the explanatory variable does not contain any information about the mean of the unobserved factors (in <span class="math inline">\(u\)</span>). <span class="math inline">\(E(u|x)=E(u)\)</span> states that the average value of <span class="math inline">\(u\)</span> is the same independent of the value of <span class="math inline">\(x\)</span>. We can say that <span class="math inline">\(u\)</span> is mean independent of <span class="math inline">\(x\)</span>. Since we have the intercept that can be adjusted, we can simply make <span class="math inline">\(E(u)=0\)</span>. Thus, we have zero conditional mean assumption: <span class="math inline">\(E(u|x)=0\)</span>.</p>
+<p><span class="math inline">\(E(y|x)\)</span> is called the population regression function (PRF). It is derived by taking the original regression equation and taking expectations conditional on <span class="math inline">\(x\)</span>. <span class="math inline">\(\beta_0 + \beta_1 x\)</span> is called the systemic part of <span class="math inline">\(y\)</span> and <span class="math inline">\(u\)</span> is called the unsystematic part.</p>
+<p><span class="math display">\[ E(y|x) = E(\beta_0 +\beta_1 x +u |x) = \beta_0 +\beta_1 x + E(u|x) = \beta_0 +\beta_1 x\]</span></p>
+<p>Visually, we can express the population regression function (PRF) as follows.</p>
+<center>
+<img src="picd.png" />
+</center>
+<p>Let’s look at some examples.</p>
+<p>First example: the returns to education. <span class="math display">\[ wage = \beta_0 + \beta_1 educ + u\]</span> This model relates the person’s wage (wage) to observed education (educ) and other unobserved factors (u). If the wage is measured in dollars per hour and educ is the acquired years of education, then beta_1 measures the change in hourly wage given an additional year in education, holding all other factors (in u) constant. Let’s consider how well the assumptions of the model are held. Linearity assumption implies that change from no to one year of education has the same effect on your wage as the change from eleven to twelve years of education. In fact, we may expect increasing or decreasing returns to education. The linear assumption is likely not realistic in this case. Ceteris paribus assumption implies education is mean independent of other factors such as innate ability or talent. However, this is almost certainly not true. Individuals with higher natural abilities or talent are much more likely to obtain more years of education. In other words, do you expect and individual who did not finish high school and someone with a masters degree have the same natural ability. While it is certainly true for some, it is probably not true for majority. Violation of cateris paribus assumption means that we cannot infer causality: using this simple model we cannot state that education causes an increase in wage holding all other constant.</p>
+<p>Second example: fertilizer effect on crop yield. <span class="math display">\[ yield = \beta_0 + \beta_1 fertilizer + u\]</span> If you are a farmer, you most likely want to know the effect of fertilizer on yield, holding all other factors constant. The coefficient of beta_1 measures the effect of fertilizer on yield, holding all else constant. While linearity assumption is likely not realistic, one can do an experiment by dividing one larger field and applying different amounts of fertilizer. In that case, all other factors (such as rainfall, sunshine, land quality, etc) will indeed be constant.</p>
+<p>How do we derive ordinary least squares estimates <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>? To do that, we need data which is a random sample. Estimates are denoted by a hat symbol above beta coefficient. I skip the math in here, but you need to be familiar with the general idea of method of moments approach. The OLS estimators are:</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> can also be written as sample correlation times the sample standard deviation of y divided by the sample standard deviation of <span class="math inline">\(x\)</span>.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>These estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are called the ordinary least squares (OLS) estimates. The name “ordinary least squares” comes from the fact that these estimates minimize the sum of squared residuals.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>When we estimate the values for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, we can plot the OLS regression line in the scatterplot of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values. This line is sometimes called sample regression function (SRF) because it is estimated version of the population regression function (PRF). Each fitted value (<span class="math inline">\(\hat{y}_i\)</span>) is on this OLS regression line.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>In the figure above, we see that the fitted Y value is higher than actual Y value for X1. The residual is the difference between the two; in this case, it is negative. For some later Xi, we see that the observed Y value is greater than the fitted. The residual thus is positive. In short, we found such beta_0 and beta_1 that the residuals are as small as can be, or that the line fitted best fits the observed data. We see that in some cases the line overpredicts and in other cases - underpredicts Y.</p>
+<p>It is important to remember that given some value of X, we only predict Y using the OLS regression line. We do not know what the true PRF is or how close our estimated regression line is to the true PRF. Using a different sample, we may get a different OLS regression line (beta_0 and beta_1) which may or may not be closer to PRF.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>Since most econometricians are painstakingly familiar with OLS, for brevity, we just say we regress Y on X without actually writing out the full econometric model.</p>
+<p>Some properties of OLS statistics:</p>
+<ol style="list-style-type: decimal">
+<li>The sum and the sample average of the OLS residuals is zero.</li>
+<li>The sample covariance between the regressors and the OLS residuals is zero.</li>
+<li>The sample averages of y and x lie on the OLS regression line.</li>
+</ol>
+<p>We can decompose every Yi observation into a fitted value and a residual. Let’s define the total sum of squares (SST), the explained sum of squares (SSE) and the residual sum of squares (SSR) as follows:</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>We can also measure how well our estimated OLS regression line fits the data using the SST, SSE and SSR definitions. R-squared of the regression (also known as the coefficient of determination) is defined as the explained sum of squares divided by the total sum of squares.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>It is interpreted as the fraction of the sample variation in y that is explained by x. R-squared is always between 0 and 1. In social sciences, low R-squares are not uncommon. It is important to note that low R-square does not deem the regression useless. The most important is to focus on how well the underlying assumptions are satisfied.</p>
+<p>Let’s look at some examples. First example: CEO Salary and Return on Equity. <span class="math display">\[ salary = \beta_0 + \beta_1 roe + u \]</span> We postulate that CEO are paid more who bring more returns to the owners. In other words, salary depends on the return that the shareholders get. We can also say that we expect beta_1 to be greater than 0. We can write it down as follows:</p>
+<p>In this example, we have observed annual CEO salary, and the average return on equity (ROE) for the CEO’s firm for the three previous years with one meaning 1 percentage point. We run one of the two following codes in R to estimate the OLS coefficients:</p>
+<pre class="r"><code>#install.packages(&quot;wooldridge&quot;) #Make sure you install the package once.
+data(ceosal1, package=&#39;wooldridge&#39;) #Call the data from the package.
+# OLS regression
+lm( salary ~ roe, data=ceosal1 ) #Run the regression using lm command</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = salary ~ roe, data = ceosal1)
+## 
+## Coefficients:
+## (Intercept)          roe  
+##       963.2         18.5</code></pre>
+<pre class="r"><code>cov(ceosal1$roe,ceosal1$salary) #Covariance between roe and salary</code></pre>
+<pre><code>## [1] 1342.538</code></pre>
+<pre class="r"><code>var(ceosal1$roe) #Variance of roe</code></pre>
+<pre><code>## [1] 72.56499</code></pre>
+<pre class="r"><code>mean(ceosal1$salary) #Mean of salary</code></pre>
+<pre><code>## [1] 1281.12</code></pre>
+<pre class="r"><code>mean(ceosal1$roe) #Mean of roe</code></pre>
+<pre><code>## [1] 17.18421</code></pre>
+<pre class="r"><code>(b1hat &lt;- cov(ceosal1$roe,ceosal1$salary)/var(ceosal1$roe))  # manual calculation of beta_1 estimator</code></pre>
+<pre><code>## [1] 18.50119</code></pre>
+<pre class="r"><code>(b0hat &lt;- mean(ceosal1$salary) - b1hat*mean(ceosal1$roe))  # manual calculation of beta_0 estimator</code></pre>
+<pre><code>## [1] 963.1913</code></pre>
+<p>We get the following OLS regression line. <span class="math display">\[\widehat{salary} = 963.19 + 18.50 roe\]</span></p>
+<p>How do we read our results? If <span class="math inline">\(roe=0\)</span>, then we predict the CEO salary is $963,191. With every single percentage point increase in <span class="math inline">\(ro\)</span>, the predicted salary increases by $18,501. For example, if <span class="math inline">\(roe=30\)</span>, then the predicted salary equals 963,191+18,501*(30)=$1,518,221.</p>
+<p>Second example: Return on Education in 1976. <span class="math display">\[wage = \beta_0 + \beta_1 educ + u\]</span> We expect that an individual with more education will have a higher wage, all else held constant. We write down a simple bivariate linear model:</p>
+<p>Write the following R code to estimate <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<pre class="r"><code>data(wage1, package=&#39;wooldridge&#39;)
+# OLS regression:
+reg1=lm(wage ~ educ, data=wage1)
+plot(wage1$educ,wage1$wage)
+abline(lm(wage1$wage~wage1$educ))</code></pre>
+<p><img src="etricsCh2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ, data = wage1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.3396 -2.1501 -0.9674  1.1921 16.6085 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.90485    0.68497  -1.321    0.187    
+## educ         0.54136    0.05325  10.167   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.378 on 524 degrees of freedom
+## Multiple R-squared:  0.1648, Adjusted R-squared:  0.1632 
+## F-statistic: 103.4 on 1 and 524 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We have to be cautious here because this equation predicts a person with no education to have a wage of negative 90 cents an hour (which is ridiculous, of course). The equation predicts poorly due to very few observations of individuals with very little education. With every year in education we predict the wage to increase by 54 cents per hour which is equivalent to $2.16 today. That is a very large effect. It is very likely that the true effect is smaller and it is likely not linear.</p>
+<p>Keep in mind the units. It is important to keep track of the units of measurement to be able to read the results of the regression correctly.</p>
+<p>Another important aspect is the functional form of the econometric model. So far we looked at a simple linear relationship. However, we can also look at various other relationships. First, we will take the natural log of the dependent variable. The interpretation changes! Now, the dependent variable will change by a constant percentage when independent variable increases by 1 unit.</p>
+<p>This can be especially helpful with the returns on education equation. Let’s look back at the original model but this time let’s use the natural log of wage. The model looks like this:</p>
+<p><span class="math display">\[ log(wage) = \beta_0 + \beta_1 educ +u \]</span></p>
+<p><span class="math display">\[ \beta_1 = \frac{\Delta log(wage)}{\Delta educ} = \frac{\frac{\Delta wage}{wage}}{\Delta educ} \]</span></p>
+<p>In our new model, <span class="math inline">\(\beta_1\)</span> indicates by how many percent does the wage increase if the years of education are increased by one year. <span class="math inline">\(\beta_1 * 100\)</span> is often called semi-elasticity of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span>.</p>
+<p>We can run the following code in R to get the OLS estimates and make new plots:</p>
+<pre class="r"><code>data(wage1, package=&#39;wooldridge&#39;)
+#OLS Regression
+reg1=lm(log(wage) ~ educ, data=wage1)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(wage) ~ educ, data = wage1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.21158 -0.36393 -0.07263  0.29712  1.52339 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 0.583773   0.097336   5.998 3.74e-09 ***
+## educ        0.082744   0.007567  10.935  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4801 on 524 degrees of freedom
+## Multiple R-squared:  0.1858, Adjusted R-squared:  0.1843 
+## F-statistic: 119.6 on 1 and 524 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>#Plot 1
+plot(log(wage)~educ, data=wage1)
+abline(reg1)</code></pre>
+<p><img src="etricsCh2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>#Plot 2
+plot(wage~educ, data=wage1)
+a0=1/length(fitted(reg1)) * sum(exp(reg1$residuals))
+points(exp(reg1$fitted.values)*a0~wage1$educ,col=&quot;green&quot;,lwd=5)</code></pre>
+<p><img src="etricsCh2_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p>We find that the wage increases by 8.3% with an additional year of education, else held constant.</p>
+<p>It is always useful to create plots. It helps you better understand the data and they help communicate the results. If we take log wages and education and plot them, we can directly plot the fitted values of the OLS regression (see the first figure (Plot 1)). However, we are not used to thinking in terms of log wages so it is better to convert back to the usual units - dollars. In Plot 2, we can visually observe the non-linear relationship between wage and education. This seems to be a much better fit than the simple linear model done earlier.</p>
+<p>Log-log model is another popular model in which both the left hand side (LHS) and right hand side (RHS) variables are converted to their natural logarithms. It is called a constant elasticity model. In this model, beta_1 is called the elasticity of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span>.</p>
+<p>Let’s look at a different example in which CEO salary and sales are expected to be related. We expect the firm with more sales to pay more to the CEO. In other words, CEO of company with more sales is expected to be compensated more. We can formulate the model as:</p>
+<p><span class="math display">\[ log(salary) = \beta_0 + \beta_1 log(sales) + u \]</span></p>
+<p>The interpretation is now different. <span class="math inline">\(\beta_1\)</span> coefficient now indicates by how many percent the salary is predicted to increase if sales increase by 1%.</p>
+<p><span class="math display">\[ \beta_1 = \frac{\Delta log(salary)}{\Delta log(sales)} = \frac{\frac{\Delta salary}{salary}}{\frac{\Delta sales}{sales}} \]</span></p>
+<p>We can run the following code in R:</p>
+<pre class="r"><code>data(ceosal1, package=&#39;wooldridge&#39;)
+# Estimate log-log model
+reg1=lm( log(salary) ~ log(sales), data=ceosal1 )
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(salary) ~ log(sales), data = ceosal1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.01038 -0.28140 -0.02723  0.21222  2.81128 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.82200    0.28834  16.723  &lt; 2e-16 ***
+## log(sales)   0.25667    0.03452   7.436  2.7e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.5044 on 207 degrees of freedom
+## Multiple R-squared:  0.2108, Adjusted R-squared:  0.207 
+## F-statistic:  55.3 on 1 and 207 DF,  p-value: 2.703e-12</code></pre>
+<pre class="r"><code>plot(log(salary) ~ log(sales), data=ceosal1) #plot 1
+abline(reg1)</code></pre>
+<p><img src="etricsCh2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>plot(salary~log(sales), data=ceosal1) #plot 2
+points(exp(reg1$fitted.values)~log(ceosal1$sales),col=&quot;green&quot;,lwd=4)</code></pre>
+<p><img src="etricsCh2_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code>plot(salary~sales, data=ceosal1) #plot 3
+a0=1/length(fitted(reg1)) * sum(exp(reg1$residuals))
+points(exp(reg1$fitted.values)*a0~ceosal1$sales,col=&quot;green&quot;,lwd=4)</code></pre>
+<p><img src="etricsCh2_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p>Regression results are as follows. Estimated <span class="math inline">\(\beta_0\)</span> coefficient is 4.822 and estimated <span class="math inline">\(\beta_1\)</span> coefficient is 0.257. This can be interpreted as follows: for 10% increase in sales, CEO salary is expected to be higher by 2.57%.</p>
+<p>If a new random sample is taken, we would get different values for the estimated coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. The question is what the estimators will estimate on average and how large will their variability be in repeated samples. OLS regression estimates “well” (we will discuss what that means below), we need to make a few assumptions. We call them Gauss-Markov assumptions for simple regression.</p>
+<ul>
+<li>SLR.1: The relationship between X and Y is linear. (Linear in Parameters)</li>
+<li>SLR.2: We have a random sample following population model. (Random Sampling)</li>
+<li>SLR.3: The sample outcomes on X, are not all the same value. (Sample Variation)</li>
+<li>SLR.4: The error U has a zero conditional mean. E(u|x)=0. (Zero Conditional Mean)</li>
+<li>SLR.5: The error U has the same variance given any value of X. (Homoskedasticity)</li>
+</ul>
+<p>Given the first four assumptions (SLR.1 through SLR.4), we can show that OLS estimates are unbiased. In other words, it means that if we take many samples from the same population, on average, the estimated coefficients will be equal to the values that characterize the true/actual/real relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> in the population.</p>
+<p>Theorem 2.1: Unbiasedness of OLS <span class="math display">\[ SLR.1-SLR.4 \quad \rightarrow \quad E(\hat{\beta_0})=\beta_0, \quad E(\hat{\beta_1})= \beta_1\]</span></p>
+<p>Valid computation the variance for OLS estimators is essential when we want to know the confidence intervals and test hypotheses. However, if we have heteroskedasticity, the standard computation of variance of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> is invalid. The error terms is said to exhibit heteroskedasticity when variance of U depends on <span class="math inline">\(x\)</span>: <span class="math inline">\(Var(u|x)\)</span>. In other words, <span class="math inline">\(u\)</span> exhibits a nonconstant variance across levels of <span class="math inline">\(x\)</span>.</p>
+<p>Theorem 2.2: Variances of the OLS estimators</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>A note on the difference between errors and residuals. Errors show up in the equation containing the population parameters. The residuals show up in the estimated equation. While the errors are unknown, the residuals can be computed.</p>
+<p>The variance of <span class="math inline">\(u\)</span> does not depend on <span class="math inline">\(x\)</span>. That is equivalent to saying that the variance of <span class="math inline">\(u\)</span> with respect to <span class="math inline">\(x\)</span> is equal to the unconditional variance of <span class="math inline">\(u\)</span>.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>One can estimate the variance of the errors by calculating the variance of the residuals in the sample; unfortunately this estimate would be biased.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>An unbiased estimate of the error of the variance can be obtained by subtracting the number of the estimated regression coefficients from the number of observations.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>The estimated standard deviations of the regression coefficients are called “standard errors.” They measure how precisely the regression coefficients are estimated. Standard errors of the regression coefficients are computed as follows.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>Theorem 2.3: Unbiasedness of the error variance</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>Regression through the origin is a technique that imposes beta_0 to equal 0. In other words, it is a model without an intercept. This technique can be easily implemented in R using the code below. In Excel, you can check off if you want a model without intercept.</p>
+<pre class="r"><code># Standard OLS regression
+reg1 &lt;- lm(wage ~ educ, data = wage1)
+# Adding the 0 term tells the lm() to fit the line through the origin
+reg2 &lt;- lm(wage ~ 0 + educ, data = wage1)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ, data = wage1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.3396 -2.1501 -0.9674  1.1921 16.6085 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.90485    0.68497  -1.321    0.187    
+## educ         0.54136    0.05325  10.167   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.378 on 524 degrees of freedom
+## Multiple R-squared:  0.1648, Adjusted R-squared:  0.1632 
+## F-statistic: 103.4 on 1 and 524 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>summary(reg2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ 0 + educ, data = wage1)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -5.142 -2.246 -1.066  1.154 16.528 
+## 
+## Coefficients:
+##      Estimate Std. Error t value Pr(&gt;|t|)    
+## educ  0.47266    0.01146   41.25   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.381 on 525 degrees of freedom
+## Multiple R-squared:  0.7642, Adjusted R-squared:  0.7637 
+## F-statistic:  1701 on 1 and 525 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>So far we have dealt with variables that are quantitative or variables that are measurable such as years of education, wage, salary, age and similar. There are however many qualitative variables. There are two types: binary (dummy) variables and ordinal variables. Dummy variables can only take values of 0 or 1. Usually, 1 indicates that the individual belongs to some group and 0 that the individual does not. For example, white or not white, foreign-born or not, has a car or not. Ordinal variables group individuals into groups where the order matters. For example, how much education one has completed: 0: none, 1: primary school, 2: secondary school, 3: some college, 4: bachelors degree or more.</p>
+<p>For now, we will deal with binary (dummy) variables in a simple regression model. Suppose variable X can take either value equal to 0 or 1. Let’s assume the same simple linear regression model. Since X=0 or X=1, whenever X=0, it does not matter what the value of beta_1, is so the only variable that is left is beta_0. Whenever X=1, Y = beta_0 + beta_1. See below.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>In other words, beta_1 finds the expected difference of the mean when X=1, and when X=0.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>Let’s look at a simple example. We expect that wage is greater among white Americans than nonwhite for a number of reasons which we will discuss in later chapters. In R, write the following code:</p>
+<pre class="r"><code>data(wage1, package=&#39;wooldridge&#39;)
+mean(wage1$nonwhite)</code></pre>
+<pre><code>## [1] 0.1026616</code></pre>
+<pre class="r"><code>summary(wage1$wage)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.530   3.330   4.650   5.896   6.880  24.980</code></pre>
+<pre class="r"><code>reg1=lm(wage~nonwhite, data=wage1)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ nonwhite, data = wage1)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -5.414 -2.526 -1.259  1.026 19.036 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   5.9442     0.1700  34.961   &lt;2e-16 ***
+## nonwhite     -0.4682     0.5306  -0.882    0.378    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.694 on 524 degrees of freedom
+## Multiple R-squared:  0.001484,   Adjusted R-squared:  -0.0004218 
+## F-statistic: 0.7786 on 1 and 524 DF,  p-value: 0.378</code></pre>
+<p>We see that wages of nonwhite people in the US are, indeed, predicted to be lower by 47 cents per hour. However, the result is not statistically significant. In the next chapter, we will see what are the possible reasons for that.</p>
+<p>Similarly, we could have look at the relationship between wage and gender which we will do in the next chapter.</p>
+<p>Now, we can look at the final topic in this chapter: counterfactual outcomes, causality and policy analysis. We are usually interested in the causal effect: what effect does increase in <span class="math inline">\(x\)</span> have on the outcome of Y? With dummy variables, we can see what effect does an exposure to something affect some outcome. The control group is the ones that are not exposed or do not get the treatment, and the treatment group is the one that is subject to some intervention.</p>
+<p>We define the treatment or causal effect as the difference between the observed Y value with treatment and without treatment: tau=te=Y(1)-Y(0). We normally estimate the average treatment effect (ATE), also known as average causal effect (ACE). We define ATE as the expected difference between outcome with and without treatment: E(te)=E[Y(1)-Y(0)]=E[Y(1)]-E[Y(0)].</p>
+<p>For each observed unit <span class="math inline">\(i\)</span>, let <span class="math inline">\(x_i\)</span> be participation status. If <span class="math inline">\(x=0\)</span>, then <span class="math inline">\(y_i=y_i(0)\)</span>, if x=1, then <span class="math inline">\(y_i=y_i(1)\)</span>.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>After a few simple substitutions, we arrive at the equation below.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>We can estimate this equation. Regressing <span class="math inline">\(y\)</span> on <span class="math inline">\(x\)</span> will give us an estimate of the (constant) treatment effect. As long as we have random assignment, OLS will yield an unbiased estimator for the treatment effect tau.</p>
+<p>Random assignment is the hallmark of the random controlled trial (RCT). It is heavily used in determining the causal effects in medical interventions. In RCTs, subjects are randomly assigned into treatment and control groups such that there are no systematic differences between the two groups other than the treatment. However, in practice, in economics, randomized control trials (RCTs) are expensive to implement and may raise ethical issues. Though RCTs are often not feasible in economics, it is useful to think about the kind of experiment you would run if random assignment was a possibility. This helps in identifying the potential impediments to random assignment (that we could conceivable control for in a multivariate regression).</p>
+<p>Let’s examine a simple example in which men with poor labor market histories were assigned to control (no job training) and treatment (job training) groups. In R, write the following code:</p>
+<pre class="r"><code>data(jtrain2, package=&#39;wooldridge&#39;)
+reg1=lm(re78 ~ train, data=jtrain2)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = re78 ~ train, data = jtrain2)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -6.349 -4.555 -1.829  2.917 53.959 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   4.5548     0.4080  11.162  &lt; 2e-16 ***
+## train         1.7943     0.6329   2.835  0.00479 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.58 on 443 degrees of freedom
+## Multiple R-squared:  0.01782,    Adjusted R-squared:  0.01561 
+## F-statistic: 8.039 on 1 and 443 DF,  p-value: 0.004788</code></pre>
+<p>Regressing the real earnings in 1978 measured in thousands of dollars on whether the individual was participated in the job training gives us the following results.</p>
+<p><span class="math display">\[ 1 \]</span></p>
+<p>We see that the results are significant at the 1% level. The R-squared is very low because job training participation explains less than 2% of the variation in real earnings which is not surprising as education, experience and other factors help determine the real wage.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Problem 3.<br />
+The following two variables contain the ACT scores and the GPA (grade point average) for eight college students. <span class="math display">\[
+GPA = c(2.8, 3.4, 3.0, 3.5, 3.6, 3.0, 2.7, 3.7) \\
+ACT = c(21, 24, 26, 27, 29, 25, 25, 30)
+\]</span> Grade point average is based on a four-point scale and has been rounded to one digit after the decimal.<br />
+1. Estimate the relationship between GPA and ACT using OLS; that is, obtain the intercept and slope estimates in the equation <span class="math inline">\(GPA = \beta_0 + \beta_1 * ACT\)</span>.<br />
+Comment on the direction of the relationship. Does the intercept have a useful interpretation here? Explain. How much higher is the GPA predicted to be if the ACT score is increased by five points?<br />
+2. Compute the fitted values and residuals for each observation, and verify that the residuals (approximately) sum to zero.<br />
+3. What is the predicted value of <span class="math inline">\(GPA\)</span> when <span class="math inline">\(ACT=20\)</span>?<br />
+4. How much of the variation in <span class="math inline">\(GPA\)</span> for these eight students is explained by <span class="math inline">\(ACT\)</span>? Explain.
+</p>
+<p class="comment">
+Problem 7.<br />
+Consider the savings function <span class="math inline">\(sav = \beta_0 + \beta_1*inc + u, \text{ where } u= e \sqrt{inc}\)</span> with <span class="math inline">\(e\)</span> as a random variable with <span class="math inline">\(E(e)=0\)</span> and <span class="math inline">\(Var(e)=\sigma^2\)</span> . Assume that <span class="math inline">\(e\)</span> is independent of <span class="math inline">\(inc\)</span>.<br />
+1. Show that <span class="math inline">\(E(u|inc)=0\)</span>, so that the key zero conditional mean assumption (Assumption SLR.4) is satisfied. [Hint: If <span class="math inline">\(e\)</span> is independent of <span class="math inline">\(inc\)</span>, then <span class="math inline">\(E(e|inc)=E(e)\)</span>.]<br />
+2. Show that <span class="math inline">\(Var(u|inc)=(\sigma^2_e)*(inc)\)</span>, so that the homoskedasticity Assumption SLR.5 is violated. In particular, the variance of <span class="math inline">\(sav\)</span> increases with <span class="math inline">\(inc\)</span>. [Hint: <span class="math inline">\(Var(e|inc)=Var(e)\)</span>, if <span class="math inline">\(e\)</span> and <span class="math inline">\(inc\)</span> are independent.]<br />
+3. Provide a discussion that supports the assumption that the variance of savings increases with family income.
+</p>
+<p class="comment">
+Computer Exercise C5.<br />
+For the population of firms in the chemical industry, let <span class="math inline">\(rd\)</span> denote annual expenditures on research and development, and let <span class="math inline">\(sales\)</span> denote annual sales (both are in millions of dollars).<br />
+1. Write down a model (not an estimated equation) that implies a constant elasticity between <span class="math inline">\(rd\)</span> and <span class="math inline">\(sales\)</span>. Which parameter is the elasticity?<br />
+2. Now, estimate the model using the data in <strong>rdchem</strong>. Write out the estimated equation in the usual form. What is the estimated elasticity of <span class="math inline">\(rd\)</span> with respect to <span class="math inline">\(sales\)</span>? Explain in words what this elasticity means.
+</p>
+<p class="comment">
+Computer Exercise C6.<br />
+We used the data in <strong>meap93</strong> for Example 2.12. Now we want to explore the relationship between the math pass rate (<span class="math inline">\(math10\)</span>) and spending per student (<span class="math inline">\(expend\)</span>).<br />
+1. Do you think each additional dollar spent has the same effect on the pass rate, or does a diminishing effect seem more appropriate? Explain.<br />
+2. Assume a population model: <span class="math inline">\(math10 = \beta_0 + \beta_1 * log(expend) + u\)</span>. Argue that <span class="math inline">\(\beta_1/10\)</span> is the percentage point change in <span class="math inline">\(math10\)</span> given a 10% increase in <span class="math inline">\(expend\)</span>.<br />
+3. Use the data in <strong>meap93</strong> to estimate the model from part 2. Report the estimated equation in the usual way, including the sample size and R-squared.<br />
+4. How big is the estimated spending effect? Namely, if spending increases by 10%, what is the estimated percentage point increase in <span class="math inline">\(math10\)</span>?<br />
+5. One might worry that regression analysis can produce fitted values for <span class="math inline">\(math10\)</span> that are greater than 100. Why is this not much of a worry in this data set?
+</p>
+<p class="comment">
+Computer Exercise C11.<br />
+Use the data in <strong>gpa1</strong> to answer these questions. It is a sample of Michigan State University undergraduates from the mid-1990s, and includes current college GPA (<span class="math inline">\(colGPA\)</span>), and a binary variable indicating whether the student owned a personal computer (<span class="math inline">\(PC\)</span>).<br />
+1. How many students are in the sample? Find the average and the highest college GPAs.<br />
+2. How many students owned their own PC?<br />
+3. Estimate the simple regression equation: <span class="math inline">\(colGPA = \beta_0 + \beta_1*PC + u\)</span>. Report your estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. Interpret these estimates, including a discussion of the magnitudes.<br />
+4. What is the R-squared from the regression? What do you make of its magnitude?<br />
+5. Does your finding in part 3 imply that owning a <span class="math inline">\(PC\)</span> has a causal effect on <span class="math inline">\(colGPA\)</span>? Explain.
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Ramanathan, R. (2002). Introductory econometrics with applications. Fort Worth: Harcourt College Publishers.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
