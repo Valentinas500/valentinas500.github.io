@@ -691,14 +691,14 @@ summary( lm(prate ~ mrate+age, data=k401k) )</code></pre>
 </div>
 <p>The unbiased estimator of the error variance in the general multiple regression case is:</p>
 <div class="figure">
-<img src="A995.png" />
+<img src="A9995.png" />
 
 </div>
 <p>An unbiased estimate of the error variance can be obtained by subtracting the number of estimated regression coefficients from the number of observations. The number of observations minus the number of estimated parameters is also called the degrees of freedom. The n estimated squared residuals in the sum are not completely independent but related through the k+1 equations that define the first order conditions of the minimization problem..</p>
 <p><strong>Theorem 3.3: Unbiased estimator of <span class="math inline">\(\sigma^2\)</span></strong></p>
 <p>Under the Gauss-Markov assumptions MLR.1 through MLR.5, <span class="math inline">\(E(\hat \sigma^2)=\sigma^2\)</span></p>
 <div class="figure">
-<img src="A996.png" />
+<img src="A9996.png" />
 
 </div>
 <p>Standard error of the regression (SER) is the positive square root of the variance. SER is an estimator of the standard deviation of the error term. To construct confidence intervals and conduct tests, we will need to estimate the standard deviation of beta_j^hat which is just he square root of the variance. However, since sigma is unknown, we will replace it with sigma estimator. That is called the standard error.</p>
@@ -764,7 +764,7 @@ summary( lm(prate ~ mrate+age, data=k401k) )</code></pre>
 <p><strong>Homework Problems</strong></p>
 <p class="comment">
 Problem 1.<br />
-Using the data in GPA2.RAW on 4,137 college students, the following equation was estimated by OLS: <span class="math display">\[colgpa = 1.392-0.0135*hsperc + 0.00148*sat; \\ n=4,137; \quad  R^2=0.273\]</span> where colgpa is measured on a four-point scale, hsperc is the percentile in the high school graduating class (defined so that, for example, hsperc = 5 means the top 5% of the class), and sat is the combined math and verbal scores on the student achievement test.<br />
+Using the data in <strong>gpa2</strong> on 4,137 college students, the following equation was estimated by OLS: <span class="math display">\[colgpa = 1.392-0.0135*hsperc + 0.00148*sat; \\ n=4,137; \quad  R^2=0.273\]</span> where colgpa is measured on a four-point scale, hsperc is the percentile in the high school graduating class (defined so that, for example, hsperc = 5 means the top 5% of the class), and sat is the combined math and verbal scores on the student achievement test.<br />
 1. Why does it make sense for the coefficient on hsperc to be negative?<br />
 2. What is the predicted college GPA when hsperc=20 and sat=1,050?<br />
 3. Suppose that two high school graduates, A and B, graduated in the same percentile from high school, but Student A’s SAT score was 140 points higher (about one standard deviation in the sample). What is the predicted difference in college GPA for these two students? Is the difference large?<br />
