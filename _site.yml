@@ -1,7 +1,7 @@
-name: "Valentinas Rudys"                                # CHANGE HERE 
+name: "Valentinas Rudys"
 output_dir: "."
 navbar:
-  title: "Valentinas Rudys"                             # CHANGE HERE 
+  title: "Valentinas Rudys"
   type: inverse
   left:
     - text: "Home"
@@ -19,10 +19,7 @@ navbar:
   right:
     - text: "Contact me"
       icon: fa-envelope-o
-      href: mailto:vrudys@fordham.edu           # CHANGE HERE 
-    - text: "GitHub"
-      icon: fa-github
-      href: https://github.com/Valentinas500       # CHANGE HERE 
+      href: mailto:vrudys@fordham.edu
 output:
   html_document:
     theme: readable
