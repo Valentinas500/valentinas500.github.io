@@ -12,7 +12,7 @@
 
 
 
-<title>Introductory Econometrics</title>
+<title>Interpreting Slope Coefficient</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -316,82 +316,30 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Introductory Econometrics</h1>
+<h1 class="title toc-ignore">Interpreting Slope Coefficient</h1>
 
 </div>
 
 
-<style>
-p.comment {
-background-color: #e8e8e8;
-padding: 10px;
-border: 0px solid black;
-margin-left: 25px;
-border-radius: 5px;
-}
-</style>
-<p>Based on Wooldridge, J. (2019). Introductory Econometrics: A Modern Approach. Boston, MA: Cengage.</p>
-<p>Syllabus</p>
-<div id="chapter-1-the-nature-of-econometrics-and-economic-data" class="section level5">
-<h5><a href="etricsCh1.html">Chapter 1: The Nature of Econometrics and Economic Data</a></h5>
+<div id="level-level" class="section level2">
+<h2>Level-level</h2>
+<p><span class="math display">\[ \Delta y=\beta_1\Delta x\]</span> Rearranging the above equation yields <span class="math display">\[ \beta_1 = \Delta y / \Delta x\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> represents the change in y due to one unit increase in x. For example, if <span class="math inline">\(y=wage\)</span> and <span class="math inline">\(x=YearsInEducation\)</span>, then <span class="math inline">\(\beta_1\)</span> represents the change in the wage due to one additional year of schooling.</p>
 </div>
-<div id="chapter-2-the-simple-regression-model" class="section level5">
-<h5><a href="etricsCh2.html">Chapter 2: The Simple Regression Model</a></h5>
-<ul>
-<li><a href="beta1.html">Interpreting <span class="math inline">\(\beta_1\)</span> Coefficient</a></li>
-</ul>
+<div id="log-level" class="section level2">
+<h2>Log-level</h2>
+<p><span class="math display">\[ \Delta log(y)=\beta_1\Delta x\]</span> Since <span class="math inline">\(100*\Delta log(y) \approx \% \Delta y\)</span> for small changes in <span class="math inline">\(y\)</span>, <span class="math display">\[ (\% \Delta y) / 100=\beta_1\Delta x\]</span> <span class="math display">\[ \beta_1 = (\% \Delta y / 100)/(\Delta x) \quad \quad or \quad \quad 100 \beta_1=(\% \Delta y)/(\Delta x) \]</span> <span class="math inline">\(100*\beta_1\)</span> represents the percentage change in y due to one unit increase in x. For example, if <span class="math inline">\(y=wage\)</span> and <span class="math inline">\(x=YearsInEducation\)</span>, then <span class="math inline">\(100*beta_1\)</span> represents the percentage change in the wage due to one additional year of schooling. If one does not multiply <span class="math inline">\(beta_1\)</span> by 100, one gets the change in the wage measured as a fraction.</p>
 </div>
-<div id="chapter-3-the-multiple-regression-analysis-estimation" class="section level5">
-<h5>Chapter 3: The Multiple Regression Analysis: Estimation</h5>
+<div id="level-log" class="section level2">
+<h2>Level-log</h2>
+<p><span class="math display">\[ \Delta y=\beta_1\Delta log(x) = (\beta_1/100) [100*\Delta log(x)] \approx (\beta_1/100)(\%\Delta x) \]</span> where we use the fact that <span class="math inline">\(100*\Delta log(x) \approx \% \Delta x\)</span> for small changes in <span class="math inline">\(x\)</span>. So <span class="math inline">\(\beta_1/100\)</span> is the (ceteris paribus) change in <span class="math inline">\(y\)</span> when <span class="math inline">\(x\)</span> increases by one percent.</p>
+<p><span class="math display">\[ \beta_1/100 = (\Delta y)/(\%\Delta x) \]</span> <span class="math inline">\(\beta_1/100\)</span> represents the change in y due to one percent increase in x. For example, if <span class="math inline">\(y=NumberOfKidsInFamily\)</span> and <span class="math inline">\(x=HouseholdIncome\)</span>, then <span class="math inline">\(beta_1/100\)</span> represents the change in the number of kids a family is predicted to have due to one percent increase in houeshold income.</p>
 </div>
-<div id="chapter-4-the-multiple-regression-analysis-inference" class="section level5">
-<h5>Chapter 4: The Multiple Regression Analysis: Inference</h5>
-</div>
-<div id="chapter-5-the-multiple-regression-analysis-ols-asymptotics" class="section level5">
-<h5>Chapter 5: The Multiple Regression Analysis: OLS Asymptotics</h5>
-</div>
-<div id="chapter-6-multiple-regression-analysis-further-issues" class="section level5">
-<h5>Chapter 6: Multiple Regression Analysis: Further Issues</h5>
-</div>
-<div id="chapter-7-multiple-regression-analysis-with-dummy-variables" class="section level5">
-<h5>Chapter 7: Multiple Regression Analysis with Dummy Variables</h5>
-</div>
-<div id="chapter-8-heteroskedasticity" class="section level5">
-<h5>Chapter 8: Heteroskedasticity</h5>
-</div>
-<div id="chapter-9-specification-and-data-issues" class="section level5">
-<h5>Chapter 9: Specification and Data Issues</h5>
-</div>
-<div id="chapter-15-instrumental-variables-estimation-and-two-stage-least-squares" class="section level5">
-<h5>Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares</h5>
-</div>
-<div id="chapter-17-limited-dependent-variable-models-logit-and-probit" class="section level5">
-<h5>Chapter 17: Limited Dependent Variable Models: Logit and Probit</h5>
-</div>
-<div id="chapter-10-basic-regression-analysis-with-time-series-data" class="section level5">
-<h5>Chapter 10: Basic Regression Analysis with Time Series Data</h5>
-</div>
-<div id="chapter-11-issues-in-using-ols-with-time-series-data" class="section level5">
-<h5>Chapter 11: Issues in Using OLS with Time Series Data</h5>
-</div>
-<div id="chapter-12-serial-correlation-and-heteroskedasticity-in-time-series-regressions" class="section level5">
-<h5>Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions</h5>
-</div>
-<div id="chapter-18-advanced-time-series-topics" class="section level5">
-<h5>Chapter 18: Advanced Time Series Topics</h5>
-</div>
-<div id="chapter-13-pooling-cross-sections-across-time-simple-panel-data-methods" class="section level5">
-<h5>Chapter 13: Pooling Cross Sections across Time: Simple Panel Data Methods</h5>
-</div>
-<div id="chapter-14-advanced-panel-data-methods" class="section level5">
-<h5>Chapter 14: Advanced Panel Data Methods</h5>
-</div>
-<div id="chapter-16-simultaneous-equation-models" class="section level5">
-<h5>Chapter 16: Simultaneous Equation Models</h5>
-</div>
-<div id="chapter-19-carrying-out-an-empirical-project" class="section level5">
-<h5>Chapter 19: Carrying Out an Empirical Project</h5>
-<p>Data Visualization And Regression Reporting in R Introduction to Graphs in R for Econometricians Correlation in R Reporting and Comparing Regressions’ Results in R Time Series Analysis and Visualization in R Panel Data Visualization in R Data Visualization Using ‘googleVis’ Data Manipulation and Visualization in R with ‘tidyverse’ Interactive Apps Using ‘shiny’ In R Topics in Advanced Econometrics Nonparametric Econometrics in R Advanced Time Series Analysis in R Quantile Regressions in R Simple Machine Learning Algorithms in R K-Nearest Neighbors Algorithm in R Practical Data Science with R Based on Zumel, N., &amp; Mount, J. (2014). Practical Data Science With R. Manning Publications Co. Starting with R and Data Exploring Data: Summary Statistics and Plots</p>
+<div id="log-log" class="section level2">
+<h2>Log-log</h2>
+<p><span class="math display">\[ \Delta log(y) = \beta_1 \Delta log(x) \]</span> Since <span class="math inline">\(100*\Delta log(y) \approx \% \Delta y\)</span> for small changes in <span class="math inline">\(y\)</span>, and <span class="math inline">\(100*\Delta log(x) \approx \% \Delta x\)</span> for small changes in <span class="math inline">\(x\)</span>, <span class="math display">\[ \Delta \% y / 100 = \beta_1 \Delta \% x / 100 \]</span></p>
+<p>Simplification yields the following <span class="math display">\[ \Delta \% y = \beta_1 \Delta \% x \quad \quad or \quad \quad \beta_1 = \Delta \% y / \Delta \% x\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> represents the percent change in y due to one percent change in x. For example, if <span class="math inline">\(y=CEOSalary\)</span> and <span class="math inline">\(x=FirmSales\)</span>, then <span class="math inline">\(\beta_1\)</span> represents the percent change in the salary of the CEO due to percent change in the firm’s sales.</p>
 </div>
 
 
