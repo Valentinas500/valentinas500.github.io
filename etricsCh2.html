@@ -521,19 +521,19 @@ points(exp(reg1$fitted.values)*a0~ceosal1$sales,col=&quot;green&quot;,lwd=4)</co
 <p>Theorem 2.1: Unbiasedness of OLS <span class="math display">\[ SLR.1-SLR.4 \quad \rightarrow \quad E(\hat{\beta_0})=\beta_0, \quad E(\hat{\beta_1})= \beta_1\]</span></p>
 <p>Valid computation the variance for OLS estimators is essential when we want to know the confidence intervals and test hypotheses. However, if we have heteroskedasticity, the standard computation of variance of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> is invalid. The error terms is said to exhibit heteroskedasticity when variance of U depends on <span class="math inline">\(x\)</span>: <span class="math inline">\(Var(u|x)\)</span>. In other words, <span class="math inline">\(u\)</span> exhibits a nonconstant variance across levels of <span class="math inline">\(x\)</span>.</p>
 <p>Theorem 2.2: Variances of the OLS estimators</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ Var(\hat{\beta}_1) = \frac{\sigma^2}{\sum_{i=1}^n{(x_i-\bar{x})^2}} = \frac{\sigma^2}{SST_x} \]</span> <span class="math display">\[ Var(\hat{\beta}_0) = \frac{\sigma^2 n^{-1} \sum_{i=1}^n{x_i^2}}{\sum_{i=1}^n{(x_i-\bar{x})^2}} = \frac{\sigma^2 n^{-1} \sum_{i=1}^n{x_i^2}}{SST_x} \]</span></p>
 <p>A note on the difference between errors and residuals. Errors show up in the equation containing the population parameters. The residuals show up in the estimated equation. While the errors are unknown, the residuals can be computed.</p>
 <p>The variance of <span class="math inline">\(u\)</span> does not depend on <span class="math inline">\(x\)</span>. That is equivalent to saying that the variance of <span class="math inline">\(u\)</span> with respect to <span class="math inline">\(x\)</span> is equal to the unconditional variance of <span class="math inline">\(u\)</span>.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ Var(u_i|x_i)=\sigma^2=Var(u_i) \]</span></p>
 <p>One can estimate the variance of the errors by calculating the variance of the residuals in the sample; unfortunately this estimate would be biased.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ \hat{\sigma^2} = \frac{1}{n} \sum_{i=1}^n\hat{u}_i^2 \]</span></p>
 <p>An unbiased estimate of the error of the variance can be obtained by subtracting the number of the estimated regression coefficients from the number of observations.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ \hat{\sigma^2} = \frac{1}{n-2} \sum_{i=1}^n\hat{u}_i^2 \]</span></p>
 <p>The estimated standard deviations of the regression coefficients are called “standard errors.” They measure how precisely the regression coefficients are estimated. Standard errors of the regression coefficients are computed as follows.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ se(\widehat{\beta_1})=\sqrt{\widehat{Var}(\widehat{\beta_1})}=\sqrt{\hat{\sigma}^2/SST_x} \]</span> <span class="math display">\[ se(\widehat{\beta_0})=\sqrt{\widehat{Var}(\widehat{\beta_0})}=\sqrt{\hat{\sigma}^2 n^{-1} \sum x_i^2 /SST_x} \]</span></p>
 <p>Theorem 2.3: Unbiasedness of the error variance</p>
-<p><span class="math display">\[ 1 \]</span></p>
-<p>Regression through the origin is a technique that imposes beta_0 to equal 0. In other words, it is a model without an intercept. This technique can be easily implemented in R using the code below. In Excel, you can check off if you want a model without intercept.</p>
+<p><span class="math display">\[ SLR.1-SLR.5 \quad \rightarrow \quad E(\widehat{\sigma^2})=\sigma^2 \]</span></p>
+<p>Regression through the origin is a technique that imposes <span class="math inline">\(\beta_0\)</span> to equal 0. In other words, it is a model without an intercept. This technique can be easily implemented in R using the code below. In Excel, you can check off if you want a model without intercept.</p>
 <pre class="r"><code># Standard OLS regression
 reg1 &lt;- lm(wage ~ educ, data = wage1)
 # Adding the 0 term tells the lm() to fit the line through the origin
@@ -576,10 +576,10 @@ summary(reg1)</code></pre>
 ## Multiple R-squared:  0.7642, Adjusted R-squared:  0.7637 
 ## F-statistic:  1701 on 1 and 525 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>So far we have dealt with variables that are quantitative or variables that are measurable such as years of education, wage, salary, age and similar. There are however many qualitative variables. There are two types: binary (dummy) variables and ordinal variables. Dummy variables can only take values of 0 or 1. Usually, 1 indicates that the individual belongs to some group and 0 that the individual does not. For example, white or not white, foreign-born or not, has a car or not. Ordinal variables group individuals into groups where the order matters. For example, how much education one has completed: 0: none, 1: primary school, 2: secondary school, 3: some college, 4: bachelors degree or more.</p>
-<p>For now, we will deal with binary (dummy) variables in a simple regression model. Suppose variable X can take either value equal to 0 or 1. Let’s assume the same simple linear regression model. Since X=0 or X=1, whenever X=0, it does not matter what the value of beta_1, is so the only variable that is left is beta_0. Whenever X=1, Y = beta_0 + beta_1. See below.</p>
-<p><span class="math display">\[ 1 \]</span></p>
-<p>In other words, beta_1 finds the expected difference of the mean when X=1, and when X=0.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p>For now, we will deal with binary (dummy) variables in a simple regression model. Suppose variable x can take either value equal to 0 or 1. Let’s assume the same simple linear regression model. Since x=0 or x=1, whenever X=0, it does not matter what the value of <span class="math inline">\(\beta_1\)</span>, is so the only variable that is left is <span class="math inline">\(\beta_0\)</span>. Whenever <span class="math inline">\(x=1\)</span>, <span class="math inline">\(y = \beta_0 + \beta_1\)</span>. See below.</p>
+<p><span class="math display">\[ y = \beta_0 +\beta_1 x + u \]</span> <span class="math display">\[ E(y|x=0) = \beta_0, \quad \quad E(y|x=1) = \beta_0 + \beta_1 x \]</span></p>
+<p>In other words, <span class="math inline">\(\beta_1\)</span> finds the expected difference of the mean when <span class="math inline">\(x=1\)</span>, and when <span class="math inline">\(x=0\)</span>.</p>
+<p><span class="math display">\[ \beta_1 = E(y|x=1) - E(y|x=0)\]</span></p>
 <p>Let’s look at a simple example. We expect that wage is greater among white Americans than nonwhite for a number of reasons which we will discuss in later chapters. In R, write the following code:</p>
 <pre class="r"><code>data(wage1, package=&#39;wooldridge&#39;)
 mean(wage1$nonwhite)</code></pre>
@@ -610,11 +610,11 @@ summary(reg1)</code></pre>
 <p>We see that wages of nonwhite people in the US are, indeed, predicted to be lower by 47 cents per hour. However, the result is not statistically significant. In the next chapter, we will see what are the possible reasons for that.</p>
 <p>Similarly, we could have look at the relationship between wage and gender which we will do in the next chapter.</p>
 <p>Now, we can look at the final topic in this chapter: counterfactual outcomes, causality and policy analysis. We are usually interested in the causal effect: what effect does increase in <span class="math inline">\(x\)</span> have on the outcome of Y? With dummy variables, we can see what effect does an exposure to something affect some outcome. The control group is the ones that are not exposed or do not get the treatment, and the treatment group is the one that is subject to some intervention.</p>
-<p>We define the treatment or causal effect as the difference between the observed Y value with treatment and without treatment: tau=te=Y(1)-Y(0). We normally estimate the average treatment effect (ATE), also known as average causal effect (ACE). We define ATE as the expected difference between outcome with and without treatment: E(te)=E[Y(1)-Y(0)]=E[Y(1)]-E[Y(0)].</p>
-<p>For each observed unit <span class="math inline">\(i\)</span>, let <span class="math inline">\(x_i\)</span> be participation status. If <span class="math inline">\(x=0\)</span>, then <span class="math inline">\(y_i=y_i(0)\)</span>, if x=1, then <span class="math inline">\(y_i=y_i(1)\)</span>.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p>We define the treatment or causal effect as the difference between the observed <span class="math inline">\(y\)</span> value with treatment and without treatment: <span class="math inline">\(\tau=te=y(1)-y(0)\)</span>. We normally estimate the average treatment effect (ATE), also known as average causal effect (ACE). We define ATE as the expected difference between outcome with and without treatment: <span class="math display">\[E(\tau)=E[y(1)-y(0)]=E[y(1)]-E[y(0)]\]</span>.</p>
+<p>For each observed unit <span class="math inline">\(i\)</span>, let <span class="math inline">\(x_i\)</span> be participation status. If <span class="math inline">\(x=0\)</span>, then <span class="math inline">\(y_i=y_i(0)\)</span>, if <span class="math inline">\(x=1\)</span>, then <span class="math inline">\(y_i=y_i(1)\)</span>.</p>
+<p><span class="math display">\[ y_i=(1-x_i)y_i(0)+x_i y_i (1) \]</span></p>
 <p>After a few simple substitutions, we arrive at the equation below.</p>
-<p><span class="math display">\[ 1 \]</span></p>
+<p><span class="math display">\[ y_i=\alpha_0+\tau x_i +u_i(0) \quad \text{assuming} \quad y_i(0)=\alpha_0+u_i(0) \text{ and } y_i=y_i(0)+\tau x_i\]</span></p>
 <p>We can estimate this equation. Regressing <span class="math inline">\(y\)</span> on <span class="math inline">\(x\)</span> will give us an estimate of the (constant) treatment effect. As long as we have random assignment, OLS will yield an unbiased estimator for the treatment effect tau.</p>
 <p>Random assignment is the hallmark of the random controlled trial (RCT). It is heavily used in determining the causal effects in medical interventions. In RCTs, subjects are randomly assigned into treatment and control groups such that there are no systematic differences between the two groups other than the treatment. However, in practice, in economics, randomized control trials (RCTs) are expensive to implement and may raise ethical issues. Though RCTs are often not feasible in economics, it is useful to think about the kind of experiment you would run if random assignment was a possibility. This helps in identifying the potential impediments to random assignment (that we could conceivable control for in a multivariate regression).</p>
 <p>Let’s examine a simple example in which men with poor labor market histories were assigned to control (no job training) and treatment (job training) groups. In R, write the following code:</p>
@@ -639,9 +639,8 @@ summary(reg1)</code></pre>
 ## Residual standard error: 6.58 on 443 degrees of freedom
 ## Multiple R-squared:  0.01782,    Adjusted R-squared:  0.01561 
 ## F-statistic: 8.039 on 1 and 443 DF,  p-value: 0.004788</code></pre>
-<p>Regressing the real earnings in 1978 measured in thousands of dollars on whether the individual was participated in the job training gives us the following results.</p>
-<p><span class="math display">\[ 1 \]</span></p>
-<p>We see that the results are significant at the 1% level. The R-squared is very low because job training participation explains less than 2% of the variation in real earnings which is not surprising as education, experience and other factors help determine the real wage.</p>
+<p>Regressing the real earnings in 1978 measured in thousands of dollars on whether the individual was participated in the job training gives us the following results: <span class="math display">\[ \widehat{\beta}_0=4.55, \quad \widehat{\beta}_1=1.79 \]</span> <span class="math inline">\(re78\)</span> are real earnings in 1978 measured in thousands of dollars. This means that real earnings are predicted to be 1.79 thousand dollars higher for an individual who received training.</p>
+<p>The R-squared is very low because job training participation explains less than 2% of the variation in real earnings which is not surprising as education, experience and other factors help determine the real wage.</p>
 <p><strong>Homework Problems</strong></p>
 <p class="comment">
 Problem 3.<br />
