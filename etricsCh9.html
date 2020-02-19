@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 4</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+<li>
+  <a href="other.html">Other</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 4</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-9-more-on-specification-and-data-issues" class="section level5">
+<h5>Chapter 9: More on Specification and Data Issues</h5>
+<p>A multiple regression model suffers from functional form misspecification when it does not properly account for the relationship between the dependent and the observed explanatory variables. For example, if there are decreasing returns to education or experience but we omit the squared term, we misspecify the functional form. In general, we will not get unbiased estimators of any of the other parameters if we omit one relevant variable.</p>
+<p>One can always test whether explanatory should appear as squares or higher order terms by testing whether such terms can be excluded. Some tests have been proposed to detect general form misspecification. One of such tests is regression specification error test (RESET). The idea of RESET is to include squares and possibly higher order fitted values in the regression (similarly to the reduced White test). To implement RESET, we need to decide how many functions of the fitted values to include. For example, an expanded regression with squared and cubed terms is:</p>
+<p><span class="math display">\[ y=\beta_0 + \beta_1 x_1 + ... + \beta_k x_k +\delta_1 \hat y^2 +\delta_2 \hat y^3 + error\]</span></p>
+<p>We test for the exclusion of the <span class="math inline">\(\hat y\)</span> terms. If they cannot be excluded, this is evidence for omitted higher order terms and interactions, i.e. for misspecification of functional form.</p>
+<p>For example, let’s look at two housing pricing equations:</p>
+<p><span class="math display">\[price = beta_0 + beta_1*lotsize + beta_2*sqrft + beta_3*bdrms + u\]</span></p>
+<p><span class="math display">\[log(price) = beta_0 + beta_1*log(lotsize) + beta_2*log(sqrft) + beta_3*bdrms + u\]</span></p>
+<p>For R, you can use the following code.</p>
+<pre class="r"><code>data(hprice1, package=&#39;wooldridge&#39;)
+library(car);</code></pre>
+<pre><code>## Loading required package: carData</code></pre>
+<pre class="r"><code>library(lmtest);</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre class="r"><code>reg1 = lm(price ~ lotsize+sqrft+bdrms, data=hprice1)
+reg2 = lm(log(price) ~ log(lotsize)+log(sqrft)+bdrms, data=hprice1)
+resettest(reg1)# RESET test for reg1</code></pre>
+<pre><code>## 
+##  RESET test
+## 
+## data:  reg1
+## RESET = 4.6682, df1 = 2, df2 = 82, p-value = 0.01202</code></pre>
+<pre class="r"><code>resettest(reg2)# RESET test for reg2</code></pre>
+<pre><code>## 
+##  RESET test
+## 
+## data:  reg2
+## RESET = 2.565, df1 = 2, df2 = 82, p-value = 0.08308</code></pre>
+<pre class="r"><code>#Alternative approach:
+RESETreg &lt;- lm(price ~ lotsize+sqrft+bdrms+I(fitted(reg1)^2)+ I(fitted(reg1)^3), data=hprice1)
+# RESET test. H0: all coeffs including &quot;fitted&quot; are=0 
+linearHypothesis(RESETreg, matchCoefs(RESETreg,&quot;fitted&quot;)) </code></pre>
+<pre><code>## Linear hypothesis test
+## 
+## Hypothesis:
+## I(fitted(reg1)^2) = 0
+## I(fitted(reg1)^3) = 0
+## 
+## Model 1: restricted model
+## Model 2: price ~ lotsize + sqrft + bdrms + I(fitted(reg1)^2) + I(fitted(reg1)^3)
+## 
+##   Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  
+## 1     84 300724                              
+## 2     82 269984  2     30740 4.6682 0.01202 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The RESET test for regression 1 indicates evidence for misspecification while the same RESET test for regression 2 shows less evidence for misspecificaiton (at least 5% significance level, we would fail to reject the null hypothesis).</p>
+<p>The drawback of the RESET test is that it does not suggest what to do if there is misspecification. RESET provides little guidance as to where misspecification comes from. One may include higher order terms, which implies complicated interactions and higher order terms of all explanatory variables.</p>
+<p>When discussing functional forms, we often consider whether an independent variable should enter the model as a level or a log. However, such non-nested model testing is not simple. Assume you are considering these two models.</p>
+<div class="figure">
+<img src="1221.png" />
+
+</div>
+<p>One method is to define a general model that contains both previous models.</p>
+<p><span class="math display">\[ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 \log(x_1) + \beta_4 \log (x_2) + u\]</span></p>
+<p>However, a clear winner may not necessarily emerge. Also, we cannot compare models if the definition of the dependent variable is not the same. For example, we cannot compare level of <span class="math inline">\(y\)</span> or <span class="math inline">\(log(y)\)</span> models directly.</p>
+<p>Another difficult problem arises when our model excludes a key variable due to data unavailability. If the data on key variable is lacking, one way to resolve it is to use a proxy variable for the omitted variable. Loosely speaking, a proxy variable is something that is related to the unobserved variable that we would like to control in our analysis. For example, one could use IQ as a proxy for natural ability. While we know that IQ and ability is not the same, we may think that they are sufficiently correlated. Moreover, the proxy variable must not be correlated with the error term. If the error and the proxy were correlated, the proxy would actually have to be included in the population regression function. The proxy variable is a “good” proxy for the omitted variable if using other variables in addition will not help to predict the omitted variable.</p>
+<p>Let’s look at the wage example. We know that ability is a determinant of wage but measurement for ability is at best approximate. Some researchers have used IQ score as a proxy for ability (how good is it as a proxy is a separate discussion). In R, execute the following.</p>
+<pre class="r"><code>data(wage2, package=&#39;wooldridge&#39;)
+library(stargazer);</code></pre>
+<pre><code>## 
+## Please cite as:</code></pre>
+<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
+<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
+<pre class="r"><code>reg3=lm(log(wage)~educ+exper+tenure+married+south+urban+black,data=wage2)
+reg4=lm(log(wage)~educ+exper+tenure+married+south+urban+black+IQ,data=wage2)
+reg5=lm(log(wage)~educ+exper+tenure+married+south+urban+black+IQ+(educ*IQ),data=wage2)
+stargazer(reg3,reg4,reg5, type=&quot;text&quot;,keep.stat=c(&quot;n&quot;,&quot;rsq&quot;))</code></pre>
+<pre><code>## 
+## ==========================================
+##                   Dependent variable:     
+##              -----------------------------
+##                        log(wage)          
+##                 (1)       (2)       (3)   
+## ------------------------------------------
+## educ         0.065***  0.054***    0.018  
+##               (0.006)   (0.007)   (0.041) 
+##                                           
+## exper        0.014***  0.014***  0.014*** 
+##               (0.003)   (0.003)   (0.003) 
+##                                           
+## tenure       0.012***  0.011***  0.011*** 
+##               (0.002)   (0.002)   (0.002) 
+##                                           
+## married      0.199***  0.200***  0.201*** 
+##               (0.039)   (0.039)   (0.039) 
+##                                           
+## south        -0.091*** -0.080*** -0.080***
+##               (0.026)   (0.026)   (0.026) 
+##                                           
+## urban        0.184***  0.182***  0.184*** 
+##               (0.027)   (0.027)   (0.027) 
+##                                           
+## black        -0.188*** -0.143*** -0.147***
+##               (0.038)   (0.039)   (0.040) 
+##                                           
+## IQ                     0.004***   -0.001  
+##                         (0.001)   (0.005) 
+##                                           
+## educ:IQ                           0.0003  
+##                                  (0.0004) 
+##                                           
+## Constant     5.395***  5.176***  5.648*** 
+##               (0.113)   (0.128)   (0.546) 
+##                                           
+## ------------------------------------------
+## Observations    935       935       935   
+## R2             0.253     0.263     0.263  
+## ==========================================
+## Note:          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>We are interested to see what happens to returns to education when we include IQ to the log(wage) equation. We see that when IQ is not included, return to education is 6.5% which we expect to be too high. After including IQ, return to education falls to 5.4%. Lastly, introducing an interaction term between education and IQ complicates the model. Now, both education and <span class="math inline">\(IQ*education\)</span> are insignificant. We would prefer the second model to the first or the third.</p>
+<p>For IQ to be a good proxy in the above example, IQ score must not be a direct wage determinant, and most of the variation in ability should be explainable by variation in IQ score. Even if IQ score imperfectly soaks up the variation caused by ability, including it will at least reduce the bias in the measured return to education.</p>
+<p>In some cases we suspect that one or more independent variables is correlated with an omitted variable, but we have not idea how to obtain a proxy for that omitted variable. In such cases, we can include a lagged dependent variable which accounts for historical factors that cause current differences in the dependent variable.</p>
+<p>For example, crime rate in the current period may depend on unemployment and expenditures on law enforcement and many other things, so we can include the lagged value of crime rate. In R, try the following.</p>
+<pre class="r"><code>data(crime2, package=&#39;wooldridge&#39;)
+lm(formula = lcrmrte ~ unem + llawexpc, data = crime2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lcrmrte ~ unem + llawexpc, data = crime2)
+## 
+## Coefficients:
+## (Intercept)         unem     llawexpc  
+##    2.863474     0.003861     0.246161</code></pre>
+<pre class="r"><code>lm(formula = lcrmrte ~ unem + llawexpc + lcrmrt_1, data = crime2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lcrmrte ~ unem + llawexpc + lcrmrt_1, data = crime2)
+## 
+## Coefficients:
+## (Intercept)         unem     llawexpc     lcrmrt_1  
+##    0.076451     0.008621    -0.139576     1.193923</code></pre>
+<p>Including the past crime rate will at least partly control for the many omitted factors that also determine the crime rate in a given year. Another way to interpret this equation is that one compares cities which had the same crime rate last year; this avoids comparing cities that differ very much in unobserved crime factors.</p>
+<p>Sometimes the dependent variable we observe does not perfectly represent the variable of interest. We can say that we have a measurement error, if, for example, in survey families under-report their savings or income. If the measurement error is independent of each explanatory variable, OLS estimators are valid. However, if we have people with higher incomes under-reporting their savings, then OLS estimators will be biased.</p>
+<p>Now let’s look what happens when we have measurement error in the explanatory variable. Let’s assume that <span class="math inline">\(x_1^*\)</span> is the true value and <span class="math inline">\(x_1\)</span> is what we measure.</p>
+<div class="figure">
+<img src="QQQQQ.png" />
+
+</div>
+<p>If we look at the error term in the estimated regression, we see that it is (<span class="math inline">\(u-\beta_1*e_1\)</span>). Classical errors-in-variables assumption states that the measurement error is uncorrelated with the true unobserved explanatory variable. Under the classical errors-in-variables assumption, OLS is biased and inconsistent because the mismeasured variable is endogenous. One can show that the inconsistency is of the following form:</p>
+<div class="figure">
+<img src="QQQQQ2.png" />
+
+</div>
+<p>The effect of the mismeasured variable suffers from attenuation bias, i.e. the magnitude of the effect will be attenuated towards zero. In addition, the effects of the other explanatory variables will be biased.</p>
+<p>Researchers very often deal with the problem of missing data. Sometimes information on certain key variables is not collected, people do not respond to all questions. Missing data is a special case of sample selection (= nonrandom sampling) as the observations with missing information cannot be used. If the sample selection is based on independent variables there is no problem as a regression conditions on the independent variables. In general, sample selection is no problem if it is uncorrelated with the error term of a regression (= exogenous sample selection). Sample selection is a problem, if it is based on the dependent variable or on the error term (= endogenous sample selection).</p>
+<p>If the sample was nonrandom in the way that certain age groups, income groups, or household sizes were over- or undersampled, this is not a problem for the regression because it examines the savings for subgroups defined by income, age, and hh-size. The distribution of subgroups does not matter. If the sample is nonrandom in the way individuals refuse to take part in the sample survey if their wealth is particularly high or low, this will bias the regression results because these individuals may be systematically different from those who do not refuse to take part in the sample survey.</p>
+<p>In some applications, especially, with small data sets, OLS estimates are sensitive to tge inclusion of one or several observations. An observation is influential if dropping it from the analysis changes the key OLS estimates.</p>
+<p>Extreme values and outliers may be a particular problem for OLS because the method is based on squaring deviations. If outliers are the result of mistakes that occurred when keying in the data, one should just discard the affected observations. If outliers are the result of the data generating process, the decision whether to discard the outliers is not so easy.</p>
+<p>Let’s consider infant mortality rates across US rates in 1990. See the R code below to try the example yourself. We run one equation for all 50 US states and District of Columbia (DC) and one without DC which is an outlier here.</p>
+<pre class="r"><code>data(infmrt, package=&#39;wooldridge&#39;)
+library(stargazer);
+reg6=lm(infmort~log(pcinc)+log(physic)+log(popul), data=subset(infmrt, year==1990))
+reg7=lm(infmort~log(pcinc)+log(physic)+log(popul), data=subset(infmrt, DC==0 &amp; year==1990))
+stargazer(reg6, reg7, type=&quot;text&quot;,keep.stat = c(&quot;n&quot;,&quot;rsq&quot;))</code></pre>
+<pre><code>## 
+## =========================================
+##                  Dependent variable:     
+##              ----------------------------
+##                        infmort           
+##                   (1)            (2)     
+## -----------------------------------------
+## log(pcinc)      -4.685*        -0.567    
+##                 (2.604)        (1.641)   
+##                                          
+## log(physic)     4.153***      -2.742**   
+##                 (1.513)        (1.191)   
+##                                          
+## log(popul)       -0.088       0.629***   
+##                 (0.287)        (0.191)   
+##                                          
+## Constant         33.859        23.955*   
+##                 (20.428)      (12.419)   
+##                                          
+## -----------------------------------------
+## Observations       51            50      
+## R2               0.139          0.273    
+## =========================================
+## Note:         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Comparing the two regression results shows that an outlier has a large effect on the slope coefficients. Moreover, the signs switched to what we expected them to be in the second regression. We would probably continue our analysis without DC.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C3.<br />
+Use the data from <strong>jtrain</strong> for this exercise.<br />
+1. Consider the simple regression model <span class="math display">\[log(scrap) = b0 + b1*grant + u\]</span> where scrap is the firm scrap rate and grant is a dummy variable indicating whether a firm received a job training grant. Can you think of some reasons why the unobserved factors in u might be correlated with grant?<br />
+2. Estimate the simple regression model using the data for 1988. (You should have 54 observations.) Does receiving a job training grant significantly lower a firm’s scrap rate?<br />
+3. Now, add as an explanatory variable <span class="math inline">\(log(scrap87)\)</span>. How does this change the estimated effect of grant? Interpret the coefficient on grant. Is it statistically significant at the 5% level against the one-sided alternative <span class="math inline">\(H_1: b_1 &lt; 0\)</span>?<br />
+4. Test the null hypothesis that the parameter on <span class="math inline">\(log(scrap87)\)</span> is one against the two-sided alternative. Report the p-value for the test.<br />
+5. Repeat parts 3 and 4, using heteroskedasticity-robust standard errors, and briefly discuss any notable differences.
+</p>
+<p class="comment">
+Computer Exercise C4.<br />
+Use the data for the year 1990 in <strong>infmrt</strong> for this exercise.<br />
+<span class="math display">\[infmort = b0 + b1*log(pcinc) + b2*log(physic) + b3*log(popul) + u\]</span> 1. Reestimate the equation above (equation 9.43), but now include a dummy variable for the observation on the District of Columbia (called <span class="math inline">\(DC\)</span>). Interpret the coefficient on DC and comment on its size and significance.<br />
+2. Compare the estimates and standard errors from part 1 with those from equation (9.44). What do you conclude about including a dummy variable for a single observation?
+</p>
+<p class="comment">
+Computer Exercise C13\ Use the data in <strong>ceosal2</strong> to answer this question.<br />
+1. Estimate the model <span class="math display">\[lsalary = b0 + b1*lsales + b2*lmktval + b3*ceoten + b4*ceoten^2 + u\]</span> by OLS using all of the observations, where <span class="math inline">\(lsalary\)</span>, <span class="math inline">\(lsales\)</span>, and <span class="math inline">\(lmktval\)</span> are all natural logarithms. Report the results in the usual form with the usual OLS standard errors. (You may verify that the heteroskedasticity-robust standard errors are similar.)<br />
+2. In the regression from part 1 obtain the studentized residuals; call these <span class="math inline">\(stri\)</span>. How many studentized residuals are above 1.96 in absolute value? If the studentized residuals were independent draws from a standard normal distribution, about how many would you expect to be above two in absolute value with 177 draws?<br />
+3. Reestimate the equation in part 1 by OLS using only the observations with <span class="math inline">\(|stri| \leq 1\)</span>. 96. How do the coefficients compare with those in part 1?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

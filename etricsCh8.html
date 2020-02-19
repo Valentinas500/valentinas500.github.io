@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 4</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+<li>
+  <a href="other.html">Other</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 4</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-8-heteroskedasticity" class="section level5">
+<h5>Chapter 8: Heteroskedasticity</h5>
+<p>Homoskedasticity assumption states that the variance of the unobserved error u, conditional on the explanatory variables, is constant. It fails (so we have heteroskedasticity) whenever the variance of the unobserved factors changes across different segments of the population. It is important to remember that heteroskedasticity does not cause bias or inconsistency in the OLS estimators, however, it causes confidence intervals and t-statistics not valid.</p>
+<p>Formulas for OLS standard errors and related statistics have been developed that are robust to heteroskedasticity of unknown form. They are valid in large samples. It can be shown that a valid estimator for the variance of OLS estimator under assumptions MLR.1 through MLR.4 is</p>
+<p>Using these formulas, the usual t test is valid asymptotically. The usual F statistic does not work under heteroskedasticity, but heteroskedasticity robust versions are available in most software.</p>
+<p>How to derive a heteroskedasticity robust LM Statististic:</p>
+<ol style="list-style-type: decimal">
+<li>Obtain residuals in the restricted model.</li>
+<li>Regress each independent variable excluded under the null on all of the included independent variables; if there are q excluded variables, this leads to q sets of residuals.</li>
+<li>Find the products of each residuals in step 1 and step 2</li>
+<li>Run the regression of 1 on the product found in step 3 without an intercept.The heteroskedasticity robust LM statistic is n-SSR1, where SSR1 is the sum of squared residuals from the final regression.</li>
+</ol>
+<p>Even though we could just simply use heteroskedasticity robust standard errors, we are still interested to test whether heteroskedasticity is present to be sure that OLS is the most efficient linear estimator.</p>
+<p>Steps in Breusch-Pagan Test for Heteroskedasticity (BP test):</p>
+<ol style="list-style-type: decimal">
+<li>Estimate the model by OLS. Obtain squared residuals</li>
+<li>Regress the squared residuals on independent variables. Retain R-squared from this regression.</li>
+<li>From either the F statistic or LM statistic compute the p-value. If the p-value is sufficiently small (below a chosen significance level) we reject the null hypothesis of homoskedasticity.</li>
+</ol>
+<p>Let’s try an example. You assume two models:</p>
+<p><span class="math display">\[price = beta_0 + beta_1*lotsize + beta_2*sqrft + beta_3*bdrms + u\]</span></p>
+<p><span class="math display">\[log(price) = beta_0 + beta_1*lotsize + beta_2*sqrft + beta_3*bdrms + u\]</span></p>
+<p>R code is provided below.</p>
+<pre class="r"><code>library(lmtest); # you may need to install package lmtest if you never used it before</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre class="r"><code>data(hprice1, package=&#39;wooldridge&#39;)
+reg1 = lm(price~lotsize+sqrft+bdrms, data=hprice1)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ lotsize + sqrft + bdrms, data = hprice1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -120.026  -38.530   -6.555   32.323  209.376 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -2.177e+01  2.948e+01  -0.739  0.46221    
+## lotsize      2.068e-03  6.421e-04   3.220  0.00182 ** 
+## sqrft        1.228e-01  1.324e-02   9.275 1.66e-14 ***
+## bdrms        1.385e+01  9.010e+00   1.537  0.12795    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 59.83 on 84 degrees of freedom
+## Multiple R-squared:  0.6724, Adjusted R-squared:  0.6607 
+## F-statistic: 57.46 on 3 and 84 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>bptest(reg1)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  reg1
+## BP = 14.092, df = 3, p-value = 0.002782</code></pre>
+<pre class="r"><code># Manual regression of squared residuals 
+summary(lm( resid(reg1)^2 ~ lotsize+sqrft+bdrms, data=hprice1))</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = resid(reg1)^2 ~ lotsize + sqrft + bdrms, data = hprice1)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -9044  -2212  -1256    -97  42582 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -5.523e+03  3.259e+03  -1.694  0.09390 . 
+## lotsize      2.015e-01  7.101e-02   2.838  0.00569 **
+## sqrft        1.691e+00  1.464e+00   1.155  0.25128   
+## bdrms        1.042e+03  9.964e+02   1.046  0.29877   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6617 on 84 degrees of freedom
+## Multiple R-squared:  0.1601, Adjusted R-squared:  0.1301 
+## F-statistic: 5.339 on 3 and 84 DF,  p-value: 0.002048</code></pre>
+<pre class="r"><code>reg2=lm(log(price)~lotsize+sqrft+bdrms, data=hprice1)
+summary(reg2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(price) ~ lotsize + sqrft + bdrms, data = hprice1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.73389 -0.10792 -0.01595  0.11181  0.63914 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 4.759e+00  9.354e-02  50.883  &lt; 2e-16 ***
+## lotsize     5.602e-06  2.038e-06   2.749  0.00732 ** 
+## sqrft       3.641e-04  4.201e-05   8.668 2.77e-13 ***
+## bdrms       2.524e-02  2.859e-02   0.883  0.37992    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1899 on 84 degrees of freedom
+## Multiple R-squared:  0.6223, Adjusted R-squared:  0.6088 
+## F-statistic: 46.13 on 3 and 84 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>bptest(reg2)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  reg2
+## BP = 3.5427, df = 3, p-value = 0.3153</code></pre>
+<p>In the first regression we find heteroskedasticity present. As we discussed earlier, log functional form often solves issues. In this case, log-level form is homoskedastic.</p>
+<p>White test adds squares and cross products of all the independent variables to the regression of OLS residuals on the independent variables (step 2 in BP test). However, due to too many degrees of freedom lost, there is an alternative form of the test.</p>
+<p>White Test for Heteroskedasticity: Estimate the model by OLS. Obtain the squared residuals and fitted values, and compute their squares. Regress the squared residuals on fitted values and squared fitted values. Compute the p-value from either F or LM statistics and compare with your chosen sign. level. See example code how we can check for heteroskedasticity with BP and White tests. In the house price example using the log of price below, we fail to reject homoskedasticity using either test.</p>
+<pre class="r"><code>data(hprice1, package=&#39;wooldridge&#39;)
+reg2 = lm(log(price)~log(lotsize)+log(sqrft)+bdrms, data=hprice1)
+bptest(reg2) # BP test</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  reg2
+## BP = 4.2232, df = 3, p-value = 0.2383</code></pre>
+<pre class="r"><code>bptest(reg2, ~ fitted(reg2) + I(fitted(reg2)^2) ) # White test</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  reg2
+## BP = 3.4473, df = 2, p-value = 0.1784</code></pre>
+<p>Weighted Least Squares (WLS) requires us to know the form of heteroskedasticity. In WLS, we adjust independent variables in such way to eliminate heteroskedasticity. If the other Gauss-Markov assumptions hold as well, OLS applied to the transformed model is the best linear unbiased estimator. Why is WLS more efficient than OLS in the original model? Observations with a large variance are less informative than observations with small variance and therefore should get less weight. WLS is a special case of generalized least squares (GLS)</p>
+<p>For example, let’s look at how net total financial wealth depends on income for single people. Run the following code in R.</p>
+<pre class="r"><code>data(k401ksubs, package=&#39;wooldridge&#39;)
+library(stargazer);</code></pre>
+<pre><code>## 
+## Please cite as:</code></pre>
+<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
+<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
+<pre class="r"><code>library(sandwich);
+reg3=lm(nettfa ~ inc + I((age-25)^2) + male + e401k, data=k401ksubs, subset=(fsize==1))
+bptest(reg3)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  reg3
+## BP = 15.711, df = 4, p-value = 0.003433</code></pre>
+<pre class="r"><code>reg3b=coeftest(reg3, vcov = vcovHC(reg3)) # Heteroskedasticity robust standard errors
+reg4=lm(nettfa ~ inc + I((age-25)^2) + male + e401k, weight=1/inc, data=k401ksubs, subset=(fsize==1))
+stargazer(reg3b,reg4,type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ========================================================
+##                             Dependent variable:         
+##                     ------------------------------------
+##                                          nettfa         
+##                     coefficient           OLS           
+##                        test                             
+##                         (1)               (2)           
+## --------------------------------------------------------
+## inc                  0.771***           0.740***        
+##                       (0.100)           (0.064)         
+##                                                         
+## I((age - 25)2)       0.025***           0.018***        
+##                       (0.004)           (0.002)         
+##                                                         
+## male                   2.478             1.841          
+##                       (2.065)           (1.564)         
+##                                                         
+## e401k                6.886***           5.188***        
+##                       (2.292)           (1.703)         
+##                                                         
+## Constant            -20.985***         -16.703***       
+##                       (3.520)           (1.958)         
+##                                                         
+## --------------------------------------------------------
+## Observations                             2,017          
+## R2                                       0.112          
+## Adjusted R2                              0.110          
+## Residual Std. Error                7.065 (df = 2012)    
+## F Statistic                     63.127*** (df = 4; 2012)
+## ========================================================
+## Note:                        *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Using BP test we find heteroskedasticity present in reg3. Therefore, we obtain heteroskedasticity robust standard errors. Also, we compute weighted least squares. WLS standard errors are smaller implying these estimates are more efficient.</p>
+<p>If the observations are reported as averages at the city/county/state/-country/firm level, they should be weighted by the size of the unit. If errors are homoskedastic at the individual-level, WLS with weights equal to firm size mi should be used. If the assumption of homoskedasticity at the individual-level is not exactly right, we can calculate robust standard errors after WLS (i.e. for the transformed model).</p>
+<p>When we do not know the exact form of heteroskedasticity, we should use feasible GLS (FGLS). Steps in a feasible GLS procedure to correct for heteroskedasticity are:</p>
+<ol style="list-style-type: decimal">
+<li>Run OLS regression and obtain the residuals.</li>
+<li>Square the residuals and then take the natural log.</li>
+<li>Regress log of squared residuals on independent variables.</li>
+<li>Exponentiate the fitted value in step 3 and call it h.</li>
+<li>Estimate the original equation using WLS with weights=1/h.</li>
+</ol>
+<p>For example, we are interested in smoke demand function. We postulate the following model: <span class="math display">\[cigs = b0 + b1*log(income) + b2*log(cigprice) + b3*educ +b4*age + b5*age^2 + b6*restaurn + u\]</span></p>
+<p>Since we suspect heteroskedasticity, we will use the BP test and if we find heteroskedasticity, we will use the FGLS estimation and compare the results with the original results.</p>
+<p>In R, run the following code:</p>
+<pre class="r"><code>data(smoke, package=&#39;wooldridge&#39;)
+library(lmtest);
+library(stargazer);
+reg5&lt;-lm(cigs~log(income)+log(cigpric)+educ+age+I(age^2)+restaurn, data=smoke) #OLS
+bptest(reg5) # BP test</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  reg5
+## BP = 32.258, df = 6, p-value = 1.456e-05</code></pre>
+<pre class="r"><code>plot(resid(reg5)~smoke$income) # plot residuals relative to income</code></pre>
+<p><img src="etricsCh8_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>logu2 = log(resid(reg5)^2) # FGLS: estimation of the variance function
+varreg = lm(logu2~log(income)+log(cigpric)+educ+age+I(age^2)+restaurn, data=smoke)
+w = 1/exp(fitted(varreg))
+reg6=lm(cigs~log(income)+log(cigpric)+educ+age+I(age^2)+restaurn, weight=w ,data=smoke)
+stargazer(reg5,reg6,type = &quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===========================================================
+##                                    Dependent variable:     
+##                                ----------------------------
+##                                            cigs            
+##                                     (1)            (2)     
+## -----------------------------------------------------------
+## log(income)                        0.880        1.295***   
+##                                   (0.728)        (0.437)   
+##                                                            
+## log(cigpric)                       -0.751        -2.940    
+##                                   (5.773)        (4.460)   
+##                                                            
+## educ                             -0.501***      -0.463***  
+##                                   (0.167)        (0.120)   
+##                                                            
+## age                               0.771***      0.482***   
+##                                   (0.160)        (0.097)   
+##                                                            
+## I(age2)                          -0.009***      -0.006***  
+##                                   (0.002)        (0.001)   
+##                                                            
+## restaurn                          -2.825**      -3.461***  
+##                                   (1.112)        (0.796)   
+##                                                            
+## Constant                           -3.640         5.635    
+##                                   (24.079)      (17.803)   
+##                                                            
+## -----------------------------------------------------------
+## Observations                        807            807     
+## R2                                 0.053          0.113    
+## Adjusted R2                        0.046          0.107    
+## Residual Std. Error (df = 800)     13.405         1.579    
+## F Statistic (df = 6; 800)         7.423***      17.055***  
+## ===========================================================
+## Note:                           *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>The results are displayed below. We see that the variation in residuals increases with an increase in income. We run the BP test and find strong evidence against homoskedasticity. Therefore, we run the WLS and compare the results. We see that after adjusting for heteroskedasticity, income is now a significantly associated with number of consumed.</p>
+<p>If the heteroskedasticity function is misspecified, WLS is still consistent under MLR.1 - MLR.4, but robust standard errors should be computed. If OLS and WLS produce very different estimates, this typically indicates that some other assumptions (e.g. MLR.4) are wrong. If there is strong heteroskedasticity, it is still often better to use a wrong form of heteroskedasticity in order to increase efficiency.</p>
+<p>We may also have heteroskedasticity in linear probability models. The simplest way to deal with this is to continue using OLS but to also compute the robust standard errors. However, sometimes the OLS estimators are inefficient in LPM. We can use weighted least squares, however, we have to keep in mind a few things: it is infeasible if LPM predictions are below zero or greater than one. If such cases are rare, they may be adjusted to values such as .01/.99.</p>
+<p>Estimating the Linear Probability Model (LPM) by Weighted Least Squares (WLS):</p>
+<ol style="list-style-type: decimal">
+<li>Estimate the model by OLS and obtain the fitted values</li>
+<li>Determine if all the fitted values are in the range (0,1). If so, proceed, if not, need to adjust.</li>
+<li>Construct the estimated variances hi= yi(1-yi) where yi are obtained fitted values</li>
+<li>Estimate the model by WLS using weights 1/h</li>
+</ol>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Problem 1.<br />
+Consider the following model to explain sleeping behavior: <span class="math display">\[sleep = b0 + b1*totwrk + b2*educ + b3*age + b4*age2 + b5*yngkid + b6*male + u\]</span> 1. Write down a model that allows the variance of u to differ between men and women. The variance should not depend on other factors.<br />
+2. Use the data in <strong>sleep75</strong> to estimate the parameters of the model for heteroskedasticity. (You have to estimate the sleep equation by OLS, first, to obtain the OLS residuals.) Is the estimated variance of u higher for men or for women?<br />
+3. Is the variance of u statistically different for men and for women?
+</p>
+<p class="comment">
+Computer Exercise C6.<br />
+In Example 7.12, we estimated a linear probability model for whether a young man was arrested during 1986: <span class="math display">\[arr86 = b0+ b1*pcnv + b2*avgsen + b3*tottime + b4*ptime86 + b5*qemp86 + u\]</span> 1. Using the data in <strong>crime1</strong>, estimate this model by OLS and verify that all fitted values are strictly between zero and one. What are the smallest and largest fitted values?<br />
+2. Estimate the equation by weighted least squares, as discussed in Section 8.5.<br />
+3. Use the WLS estimates to determine whether avgsen and tottime are jointly significant at the 5% level.
+</p>
+<p class="comment">
+Computer Exercise C14.<br />
+Use the data in <strong>beauty</strong> for this question.<br />
+1. Using the data pooled for men and women, estimate the equation: <span class="math display">\[log(wage) = b0 + b1*belavg + b2*abvavg + b3*female + b4*educ + b5*exper + b5*exper2 + u\]</span> and report the results using heteroskedasticity-robust standard errors below coefficients. Are any of the coefficients surprising in either their signs or magnitudes? Is the coefficient on female practically large and statistically significant?<br />
+2. Add interactions of female with all other explanatory variables in the equation from part 1 (five interactions in all). Compute the usual F test of joint significance of the five interactions and a heteroskedasticity-robust version. Does using the heteroskedasticity-robust version change the outcome in any important way?<br />
+3. In the full model with interactions, determine whether those involving the looks variables - <span class="math inline">\(female*belavg\)</span> and <span class="math inline">\(female*abvavg\)</span> - are jointly significant. Are their coefficients practically small?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
