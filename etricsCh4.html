@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 4</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+<li>
+  <a href="other.html">Other</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 4</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-4-the-multiple-regression-analysis-inference" class="section level5">
+<h5>Chapter 4: The Multiple Regression Analysis: Inference</h5>
+<p>After learning the basics of the multiple linear regression, we now turn to testing hypotheses and building confidence intervals. Remember, that The OLS estimators are random variables. We know their expected values and variances. However, in order to perform statistical inference, we need to know the full sampling distribution of the estimated beta_j which can have virtually any shape. To derive the distribution, we need additional assumptions about the distribution of errors.</p>
+<ul>
+<li>MLR.6: The population error U is independent of the explanatory variables <span class="math inline">\(x_1, x_2,... x_k\)</span> and is normally distributed with zero mean and variance <span class="math inline">\(\sigma^2\)</span>. ((Normality assumption))</li>
+</ul>
+<p>The error term is the sum of “many” different unobserved factors. Sums of many independent random factors are normally distributed according to central limit theorem (CLT). However, there are some weaknesses of this assumption: the factors in U can have very heterogeneous distributions; the factors in U are not necessarily independent of each other.</p>
+<div class="figure">
+<img src="41.png" />
+
+</div>
+<p>The normality of the error term is an empirical question. In most cases, normality is questionable or impossible by definition. For example:</p>
+<ul>
+<li>Wages (nonnegative; also: minimum wage)</li>
+<li>Number of arrests (takes on a small number of integer values)</li>
+<li>Unemployment (indicator variable, takes on only 1 or 0)</li>
+</ul>
+<p>However, the error distribution should be at least close to normal. In some cases, normality can be achieved through transformations of the dependent variable. Under normality, OLS is the best (even nonlinear) unbiased estimator. For the purposes of statistical inference, the assumption of normality can be replaced by a large sample size.</p>
+<ul>
+<li>MLR.1 through MLR.5 are called Gauss-Markov assumptions.</li>
+<li>MLR.1 through MLR.6 are called classical linear model (CLM) assumptions.</li>
+</ul>
+<p>Theorem 4.1: Normal Sampling Distributions Under the CLM assumptions conditional on the sample values of the independent variables, the estimators are normally distributed around the true parameters and the standardized estimators follows standard normal distribution.</p>
+<div class="figure">
+<img src="42.png" />
+
+</div>
+<p><strong>Theorem 4.2: t Distributions for the Standardized Estimators</strong> Under the CLM assumptions, if standardization is done using the standard error, the normal distribution can be replaced by a t-distribution with df=n-k-1.</p>
+<div class="figure">
+<img src="43.png" />
+
+</div>
+<p>It is important because it allows use to test hypotheses involving the <span class="math inline">\(\beta_j\)</span>. In most cases, we are interested in testing the null hypothesis. For example, if you are estimated the wage equation (example: <span class="math inline">\(log(wage) = \beta_0 +\beta_1* education+ \beta_2*experience +\beta_3 *tenure\)</span>),\ <span class="math inline">\(H_0: \beta_2=0\)</span> means that once we account for education and tenure, the number of years in the workforce (experience) has no effect on hourly wage.</p>
+<p>The statistic used to test the hypotheses is called the t-statistic or the t-ratio of the estimated <span class="math inline">\(\beta_j\)</span>.</p>
+<div class="figure">
+<img src="44.png" />
+
+</div>
+<p>Our goal is to define a rejection rule so that if it is true, <span class="math inline">\(H_0\)</span> is rejected only with a small probability (which we call significance level, usually, 5%).</p>
+<p>It is important to keep in mind that we are testing hypotheses about the population parameters and not about the sample estimates.</p>
+<p>To determine a rule for rejecting <span class="math inline">\(H_0\)</span>, we need to define the relative alternative hypothesis. There are one-sided and two sided alternatives. First, let’s examine the one-sided alternative. Let’s consider one-sided alternative hypothesis of the form <span class="math inline">\(H_1: \beta_j&gt;0\)</span> (note that testing with <span class="math inline">\(H_1: \beta_j&lt;0\)</span> is just the mirror image). To test the hypothesis, we need to decide on the significance level: the probability of rejecting <span class="math inline">\(H_0\)</span> when, in fact, it is true. Usually, a 5% significant level is sufficiently large. We reject the null hypothesis in favor of the alternative hypothesis if the estimated coefficient is “too large” (i.e. larger than a critical value). We construct the critical value so that, if the null hypothesis is true, it is rejected in, for example, 5% of the cases. In the given example below, this is the point of the t-distribution with 28 degrees of freedom that is exceeded in 5% of the cases. We reject if t-statistic is greater than 1.701.</p>
+<div class="figure">
+<img src="45.png" />
+
+</div>
+<p>Let’s consider the wage example that we already worked on in the last chapter. our regression model: <span class="math display">\[ log(wage)=\beta_0+\beta_1*educ+\beta_2*exper+\beta_3*tenure\]</span></p>
+<pre class="r"><code>data(wage1, package=&#39;wooldridge&#39;)
+reg1=lm(log(wage) ~ educ+exper+tenure, data=wage1);
+summary(reg1)</code></pre>
+<p>Our estimated slopes and standard errors are as shown below. Say, we are interested to test whether the return to experience, controlling for education and tenure, is zero in the population, against the alternative hypothesis that it is positive.</p>
+<p><img src="46.png" /> <img src="47.png" /></p>
+<p>Having 522 degrees of freedom, we can compute the t-statistic at a chosen significance level (let’s try 5% and 1%). Since we have so many degrees of freedom, we can use the standard normal distribution as well. From the summary of the regression (reg1), we see that the t-statistic for experience is 2.391 which is larger than either 1.6 or 2.3, so we can reject the null hypothesis and state that the partial effect of experience (holding education and tenure constant), even though not large, is strictly positive.</p>
+<pre class="r"><code># CV for alpha=5% and 1% using the t distribution with 522 d.f.:
+alpha &lt;- c(0.05, 0.01);
+qt(1-alpha, 522)</code></pre>
+<pre><code>## [1] 1.647778 2.333513</code></pre>
+<pre class="r"><code>qnorm(1-alpha) # Critical values for alpha=5% and 1% using the normal approximation</code></pre>
+<pre><code>## [1] 1.644854 2.326348</code></pre>
+<p>Now, let’s consider another example: how school size affects student performance. A claim is that, all else equal, students at smaller schools fare better than those at larger schools. We collect the data on student performance in mathematics in tenth-grade measured in percentage of students receiving a passing grade (<span class="math inline">\(math10\)</span>), school size measured by student enrollment (<span class="math inline">\(enroll\)</span>), average annual teacher compensation (<span class="math inline">\(totcomp\)</span>) and number of staff per one student (<span class="math inline">\(staff\)</span>). Here, teacher compensation is a measure of teacher quality and staff size is a rough measure of how much attention students receive.</p>
+<p>We consider the following regression model: <span class="math display">\[math10=\beta_0+\beta_1*totcomp+\beta_2*staff+\beta_3*enroll\]</span> In R, we execute the following syntax to run the regression.</p>
+<pre class="r"><code>data(&quot;meap93&quot;, package=&#39;wooldridge&#39;)
+reg1=lm(math10 ~ totcomp+staff+enroll, data=meap93);
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = math10 ~ totcomp + staff + enroll, data = meap93)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -22.235  -7.008  -0.807   6.097  40.689 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.2740209  6.1137938   0.372    0.710    
+## totcomp      0.0004586  0.0001004   4.570 6.49e-06 ***
+## staff        0.0479199  0.0398140   1.204    0.229    
+## enroll      -0.0001976  0.0002152  -0.918    0.359    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 10.24 on 404 degrees of freedom
+## Multiple R-squared:  0.05406,    Adjusted R-squared:  0.04704 
+## F-statistic: 7.697 on 3 and 404 DF,  p-value: 5.179e-05</code></pre>
+<p>The results are as shown below. As we mentioned, we are interested in the estimate of <span class="math inline">\(\beta_3\)</span>. The null hypothesis is <span class="math inline">\(H_0: \beta_3=0\)</span> and alternative is <span class="math inline">\(H_1: \beta_3&lt;0\)</span>. The coefficient is negative which is what we expected. However, we want to know if it is statistically different from zero. We compute the t-statistic and compare it with the critical values at 5% and 15%. Since the t-statistic is -0.91 and both of the critical values are smaller, we fail to reject the null hypothesis and we state that student enrollment (or school size) is not statistically significant from zero. As you probably already noted, when you execute the regression and call the summary of the regression, the software computes and provides all of this information for you.</p>
+<p><img src="49.png" /> <img src="491.png" /></p>
+<p>What if we consider an alternative functional form with all independent variables in natural logarithmic form (note that the interpretation of the estimated slopes changes): <span class="math display">\[math10=\beta_0+\beta_1*log(totcomp)+\beta_2*log(staff)+\beta_3*log(enroll)\]</span> In R, execute the following code:</p>
+<pre class="r"><code>data(&quot;meap93&quot;, package=&#39;wooldridge&#39;);
+reg2=lm(math10 ~ log(totcomp)+log(staff)+log(enroll), data=meap93);
+summary(reg2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = math10 ~ log(totcomp) + log(staff) + log(enroll), 
+##     data = meap93)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -22.735  -6.838  -0.835   6.139  39.718 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -207.6649    48.7031  -4.264 2.50e-05 ***
+## log(totcomp)   21.1550     4.0555   5.216 2.92e-07 ***
+## log(staff)      3.9800     4.1897   0.950   0.3427    
+## log(enroll)    -1.2680     0.6932  -1.829   0.0681 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 10.18 on 404 degrees of freedom
+## Multiple R-squared:  0.06538,    Adjusted R-squared:  0.05844 
+## F-statistic:  9.42 on 3 and 404 DF,  p-value: 4.974e-06</code></pre>
+<p>The results are shown below. We find that if enrollment is 10% higher at a school, math10 is predicted to be 0.13 percentage points lower and this result is statistically significant at 5% level. At 5% significance level, we reject the null hypothesis that there is no effect if school size on student performance. Note that R-squared is slightly higher meaning that the variation in independent variables explain slightly more variation in the dependent variable in level-log model.</p>
+<p><img src="492.png" /> <img src="493.png" /></p>
+<p>In many applications, it is common to test the null hypothesis against a two-sided alternative: <span class="math inline">\(\beta_j\)</span> is not equal to zero without specifying whether the effect is positive or negative. We reject the null hypothesis in favor of the alternative hypothesis if the absolute value of the estimated coefficient is too large. We construct the critical value so that, if the null hypothesis is true, it is rejected in, for example, 5% of the cases. In the given example, these are the points of the t-distribution so that 5% of the cases lie in the two tails. We reject if absolute value of t-statistic is less than -2.06 or greater than 2.06.</p>
+<p>Let’s consider the model explaining the college GPA (colGPA) with the average number of lectures missed per week (skipped), high school GPA (hsGPA), ACT score (ACT): <span class="math display">\[ colGPA=\beta_0+\beta_1*hsGPA+\beta_2*ACT+\beta_3*skipped \]</span></p>
+<p>In R, we can execute the following code:</p>
+<pre class="r"><code>data(gpa1, package=&#39;wooldridge&#39;)
+reg1 = lm(colGPA ~ hsGPA+ACT+skipped, data=gpa1);
+sumres = summary(reg1);
+# Manually confirm the formulas: Extract coefficients and SE
+regtable = sumres$coefficients;
+bhat = regtable[,1]
+se   = regtable[,2]
+# Reproduce t statistic
+tstat = bhat / se 
+# Reproduce p value
+pval  = 2*pt(-abs(tstat),137)</code></pre>
+<p>The results are displayed below. We see that the coefficient on lectures missed per week is negative and is statistically significant at 1% significance level while the positive effect of ACT is not significant at usually used significance levels.</p>
+<div class="figure">
+<img src="495.png" />
+
+</div>
+<p>What if you are interested to see if <span class="math inline">\(\beta_j\)</span> is equal to some constant other than zero. In that case, our null hypothesis and t-statistic is follows:</p>
+<div class="figure">
+<img src="497.png" />
+
+</div>
+<p>Let’s consider an example. We are interested in campus crime and enrollment. Instead of the usual null hypothesis, we will look if crime increases by one percent when enrollment increases by one percent.</p>
+<p>The regression model: <span class="math display">\[log(crime)=\beta_0+\beta_1*log(enroll)\]</span></p>
+<pre class="r"><code>data(campus, package=&#39;wooldridge&#39;);
+reg1 = lm(log(crime) ~ log(enroll), data=campus);
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(crime) ~ log(enroll), data = campus)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5136 -0.3858  0.1174  0.4363  2.5782 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -6.6314     1.0335  -6.416 5.44e-09 ***
+## log(enroll)   1.2698     0.1098  11.567  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8946 on 95 degrees of freedom
+## Multiple R-squared:  0.5848, Adjusted R-squared:  0.5804 
+## F-statistic: 133.8 on 1 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Remember that log-log is a constant elasticity model: <span class="math inline">\(\beta_1\)</span> measures the percentage change in the dependent variable when independent variable increases by 1 percent. If we are interested in testing whether <span class="math inline">\(\beta_1\)</span> is significantly different from 1, null hypothesis can be stated as <span class="math inline">\(H_0: \beta_1=1\)</span> against <span class="math inline">\(H_1: \beta_1&gt;1\)</span>. The results are show below. The regression summary indicates that the estimate is not exactly 1, but we now ask if it is significantly different from 1. Using the above formula, we find that t-statistic is larger than one-sided critical value at 5% significance level, thus we reject the null hypothesis in favor of the alternative hypothesis.</p>
+<div class="figure">
+<img src="498.png" />
+
+</div>
+<p>Let’s consider another example. Now, we are looking to estimate a model relating the median housing price in a community (price) to amount of nitrogen oxide in the air (nox), weighted distance of the community to five employment centers (dist), average number of rooms in the houses in the community (rooms), and the average student-teacher ratio of schools in the community (stratio). The regression model: <span class="math display">\[log(price)=\beta_0+\beta_1*log(nox)+\beta_2*log(dist)+\beta_3*rooms+\beta_4*stratio\]</span></p>
+<p>Run the following code in R.</p>
+<pre class="r"><code>data(hprice2, package=&#39;wooldridge&#39;);
+reg1 = lm(log(price) ~ log(nox)+log(dist)+rooms+stratio, data=hprice2);
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(price) ~ log(nox) + log(dist) + rooms + stratio, 
+##     data = hprice2)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.05890 -0.12427  0.02128  0.12882  1.32531 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 11.083861   0.318111  34.843  &lt; 2e-16 ***
+## log(nox)    -0.953539   0.116742  -8.168 2.57e-15 ***
+## log(dist)   -0.134339   0.043103  -3.117  0.00193 ** 
+## rooms        0.254527   0.018530  13.736  &lt; 2e-16 ***
+## stratio     -0.052451   0.005897  -8.894  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.265 on 501 degrees of freedom
+## Multiple R-squared:  0.584,  Adjusted R-squared:  0.5807 
+## F-statistic: 175.9 on 4 and 501 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>tstat1=(reg1$coefficients[2]+1)/reg1$coefficients[7]</code></pre>
+<p>Assume we wish to test the null hypothesis <span class="math inline">\(H_0: \beta_1=-1\)</span>. Corresponding t-statistic for this test is 0.393 which is very small and definitely smaller than any critical value at any reasonable significance level. Thus, we fail to reject the null hypothesis. Controlling for the other factors we included, there is little evidence that the price elasticity regards to the amount of nitrogen in the air is different from -1.</p>
+<p>You have probably already noticed the p-values that are presented in R when you execute the <em>summary(reg1)</em> command. This is extremely helpful in inference. If you keep assuming smaller and smaller significance level, there will be a point at which the null hypothesis cannot be rejected anymore. The reason is that, by lowering the significance level, one wants to avoid more and more to make the error of rejecting a correct H0. That smallest value at which the null hypothesis is still rejected, is called the p-value of the hypothesis test. A small p-value is evidence against the null hypothesis because one would reject the null hypothesis even at small significance levels. A large p-value is evidence in favor of the null hypothesis. P-values are more informative than tests at fixed significance levels.</p>
+<p>The p-value is the significance level at which one is indifferent between rejecting and not rejecting the null hypothesis. In the two-sided case, the p-value is thus the probability that the t-distributed variable takes on a larger absolute value than the realized value of the test statistic, e.g. <span class="math inline">\(P(|t|&gt;1.85) = 2*(0.0359) = .0718\)</span>. From this, it is clear that a null hypothesis is rejected if and only if the corresponding p-value is smaller than the significance level. For example, for a significance level of 5% the t-statistic would not lie in the rejection region.</p>
+<div class="figure">
+<img src="499.png" />
+
+</div>
+<p>We have now learned how to test hypotheses. Don’t forget, however, that the magnitude of the coefficient is also very important. The statistical significance of a variable is determined entirely by the t-statistic, whereas the economic or practical significance of a variable is related to the size and sign of the estimated slope coefficient. Some guideline for discussing economic and statistical significance:</p>
+<ul>
+<li>If a variable is statistically significant, discuss the magnitude of the coefficient to get an idea of its economic or practical importance.</li>
+<li>The fact that a coefficient is statistically significant does not necessarily mean it is economically or practically significant!</li>
+<li>If a variable is statistically and economically important but has the “wrong” sign, the regression model might be misspecified.</li>
+<li>If a variable is statistically insignificant at the usual levels (10%, 5%, or 1%), one may think of dropping it from the regression.</li>
+<li>If the sample size is small, effects might be imprecisely estimated so that the case for dropping insignificant variables is less strong.</li>
+</ul>
+<p>Now we will introduce the confidence intervals. Under the CLM assumptions, we can easily construct a confidence interval (CI) for the population parameter <span class="math inline">\(\beta_j\)</span>. Confidence intervals are also called interval estimates because they provide a range of likely values for the population parameter instead of just a point estimate. Using Theorem 4.2, we can show that confidence interval for 95% confidence level is:</p>
+<div class="figure">
+<img src="4991.png" />
+
+</div>
+<p>In repeated samples, the interval that is constructed in the above way will cover the population regression coefficient in 95% of the cases. If our value of the null hypothesis (for example, 0 in <span class="math inline">\(H_0: \beta_j=0\)</span>) is not within the confidence interval, we reject the null hypothesis).</p>
+<p>You should remember that the confidence interval is only as good as the underlying assumptions use to construct it. If you have omitted variable bias or heteroskedasticity, the estimated confidence interval will not be the real 95% confidence interval.</p>
+<p>In some cases, we are interested to test a single hypothesis involving more than one parameter but rather a linear combination of the parameters. For example, you may want to test whether the there is a statistical difference between the returns to education from years spent in a two-year college vs four year college. For this case, the t-statistic is built as shown below. The difference between the estimates is normalized by the estimated standard deviation of the difference. The null hypothesis would have to be rejected if the statistic is “too negative” to believe that the true difference between the parameters is equal to zero.</p>
+<div class="figure">
+<img src="4994.png" />
+
+</div>
+<p>However, the standard error of the difference in parameters is impossible to compute with standard regression output.</p>
+<div class="figure">
+<img src="4995.png" />
+
+</div>
+<p>There is an alternative method to test the whether there is a statistical difference between the years spent in junior college vs four-year college. If we simply run a regression with junior college as one independent variable and total years of college (both junior and four-year), we can estimate if there is a statistical different effect on wage. Our new null hypothesis is <span class="math inline">\(H_0: \theta_1=0\)</span> against <span class="math inline">\(H_1: \theta_1&lt;0\)</span>.</p>
+<p>In R, execute the following code:</p>
+<pre class="r"><code>data(twoyear, package=&#39;wooldridge&#39;);
+reg1 = lm(lwage ~ jc+univ+exper, data=twoyear);
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ jc + univ + exper, data = twoyear)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.10362 -0.28132  0.00551  0.28518  1.78167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1.4723256  0.0210602  69.910   &lt;2e-16 ***
+## jc          0.0666967  0.0068288   9.767   &lt;2e-16 ***
+## univ        0.0768762  0.0023087  33.298   &lt;2e-16 ***
+## exper       0.0049442  0.0001575  31.397   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4301 on 6759 degrees of freedom
+## Multiple R-squared:  0.2224, Adjusted R-squared:  0.2221 
+## F-statistic: 644.5 on 3 and 6759 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The results are shown below. We compute the t-statistic to be -1.48, the confidence interval to be (-0.0237, 0.0003) and p-value to be 0.070. At 5% significance level, we fail to reject the null hypothesis.</p>
+<div class="figure">
+<img src="4996.png" />
+
+</div>
+<p>Frequently, we wish to test multiple hypotheses about the underlying parameters. To test whether a group of variables has no effect on the dependent variable, we use the F-test. It is often called a multiple hypotheses test or a joint hypotheses test, The null hypothesis constitutes exclusion restrictions. Let’s look at baseball player salary example. You postulate the following (unrestricted) regression model for the house price in: <span class="math display">\[log(salary)=\beta_0+\beta_1*years+\beta_2*gamesyr+\beta_3*bavg+\beta_4*hrunsyr+\beta_5*rbinsyr\]</span></p>
+<p>We want to test whether the performance measures (batting average, home runs per year, runs batter per year) have no effect on salary.</p>
+<div class="figure">
+<img src="4997.png" />
+
+</div>
+<p>In R, execute the following commands:</p>
+<pre class="r"><code>data(mlb1, package=&#39;wooldridge&#39;)
+reg1 = lm(log(salary)~ years+gamesyr+bavg+hrunsyr+rbisyr, data=mlb1);
+reg1s = summary(reg1); reg1s</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(salary) ~ years + gamesyr + bavg + hrunsyr + 
+##     rbisyr, data = mlb1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -3.02508 -0.45034 -0.04013  0.47014  2.68924 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1.119e+01  2.888e-01  38.752  &lt; 2e-16 ***
+## years       6.886e-02  1.211e-02   5.684 2.79e-08 ***
+## gamesyr     1.255e-02  2.647e-03   4.742 3.09e-06 ***
+## bavg        9.786e-04  1.104e-03   0.887    0.376    
+## hrunsyr     1.443e-02  1.606e-02   0.899    0.369    
+## rbisyr      1.077e-02  7.175e-03   1.500    0.134    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.7266 on 347 degrees of freedom
+## Multiple R-squared:  0.6278, Adjusted R-squared:  0.6224 
+## F-statistic: 117.1 on 5 and 347 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="figure">
+<img src="4998.png" />
+
+</div>
+<p>After we regress the original model, we then drop the variables and run the restricted model: <span class="math display">\[log(salary)=\beta_0+\beta_1*years+\beta_2*gamesyr\]</span></p>
+<p>In R, execute the following commands:</p>
+<pre class="r"><code>data(mlb1, package=&#39;wooldridge&#39;)
+reg2 = lm(log(salary)~ years+gamesyr, data=mlb1) 
+reg2s=summary(reg2); reg2s</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(salary) ~ years + gamesyr, data = mlb1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.66858 -0.46412 -0.01177  0.49219  2.68829 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 11.223804   0.108312 103.625  &lt; 2e-16 ***
+## years        0.071318   0.012505   5.703  2.5e-08 ***
+## gamesyr      0.020174   0.001343  15.023  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.7527 on 350 degrees of freedom
+## Multiple R-squared:  0.5971, Adjusted R-squared:  0.5948 
+## F-statistic: 259.3 on 2 and 350 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="figure">
+<img src="4999.png" />
+
+</div>
+<p>In R, we can simply run the following code to test the joint hypotheses:</p>
+<pre class="r"><code>library(car) #if youy have never used car package before, you need to first install the package by running: install.packages(&quot;car&quot;)</code></pre>
+<pre><code>## Loading required package: carData</code></pre>
+<pre class="r"><code>data(mlb1, package=&#39;wooldridge&#39;)
+reg1 = lm(log(salary)~ years+gamesyr+bavg+hrunsyr+rbisyr, data=mlb1);
+linearHypothesis(reg1, c(&quot;bavg=0&quot;,&quot;hrunsyr=0&quot;,&quot;rbisyr=0&quot;))</code></pre>
+<pre><code>## Linear hypothesis test
+## 
+## Hypothesis:
+## bavg = 0
+## hrunsyr = 0
+## rbisyr = 0
+## 
+## Model 1: restricted model
+## Model 2: log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr
+## 
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    350 198.31                                  
+## 2    347 183.19  3    15.125 9.5503 4.474e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We find that the F statistic is around 9.55 and the p-value is extremely low. Thus, we reject the null hypothesis. We can say that the three performance variables are jointly significant even though they are not significant when tested individually. There is likely high multicollinearity between these variables.</p>
+<p>Finally, using the F-test we can test the overall significance of a regression. The null hypothesis states that the explanatory variables are equal to zero, or, in other words, are not useful in explaining the dependent variable.</p>
+<div class="figure">
+<img src="49993.png" />
+
+</div>
+<p>For example, we are interested if the house price assessments are rational, or in other words, if the house price assessments are accurate: is a 1% in change in assessment associated with 1% change in house value.</p>
+<div class="figure">
+<img src="49994.png" />
+
+</div>
+<p>In R, execute the following:</p>
+<pre class="r"><code>data(hprice1, package=&#39;wooldridge&#39;)
+reg1 = lm(log(price)~ log(assess)+log(lotsize)+log(sqrft)+bdrms, data=hprice1) 
+reg1s = summary(reg1); reg1s</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(price) ~ log(assess) + log(lotsize) + log(sqrft) + 
+##     bdrms, data = hprice1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.53337 -0.06333  0.00686  0.07836  0.60825 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   0.263743   0.569665   0.463    0.645    
+## log(assess)   1.043066   0.151446   6.887 1.01e-09 ***
+## log(lotsize)  0.007438   0.038561   0.193    0.848    
+## log(sqrft)   -0.103239   0.138430  -0.746    0.458    
+## bdrms         0.033839   0.022098   1.531    0.129    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1481 on 83 degrees of freedom
+## Multiple R-squared:  0.7728, Adjusted R-squared:  0.7619 
+## F-statistic: 70.58 on 4 and 83 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>#To test the above hypothesis we use linearHypothesis command indicating the restrictions.
+library(car)
+linearHypothesis(reg1, c(&quot;log(assess)=1&quot;,&quot;log(lotsize)=0&quot;,&quot;log(sqrft)=0&quot;,&quot;bdrms=0&quot;))</code></pre>
+<pre><code>## Linear hypothesis test
+## 
+## Hypothesis:
+## log(assess) = 1
+## log(lotsize) = 0
+## log(sqrft) = 0
+## bdrms = 0
+## 
+## Model 1: restricted model
+## Model 2: log(price) ~ log(assess) + log(lotsize) + log(sqrft) + bdrms
+## 
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     87 1.8801                           
+## 2     83 1.8215  4   0.05862 0.6678 0.6162</code></pre>
+<p>We find that F=0.67 and the p-value of 0.61. We fail to reject the null hypothesis. In other words, we do not find evidence against the hypothesis that the assessed values are rational.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C1.<br />
+The following model can be used to study whether campaign expenditures affect election outcomes: <span class="math display">\[voteA = \beta_0 + \beta_1*log(expendA) + \beta_2*log(expendB) + \beta_3*prtystrA + u\]</span>, where <span class="math inline">\(voteA\)</span> is the percentage of the vote received by Candidate A, <span class="math inline">\(expendA\)</span> and <span class="math inline">\(expendB\)</span> are campaign expenditures by Candidates A and B, and <span class="math inline">\(prtystrA\)</span> is a measure of party strength for Candidate A (the percentage of the most recent presidential vote that went to A’s party). 1. What is the interpretation of <span class="math inline">\(\beta_1\)</span>?<br />
+2. In terms of the parameters, state the null hypothesis that a 1% increase in A’s expenditures is offset by a 1% increase in B’s expenditures.<br />
+3. Estimate the given model using the data in <strong>vote1</strong> and report the results in usual form. Do A’s expenditures affect the outcome? What about B’s expenditures? Can you use these results to test the hypothesis in part 2?<br />
+4. Estimate a model that directly gives the t statistic for testing the hypothesis in part 2. What do you conclude? (Use a two-sided alternative.)
+</p>
+<p class="comment">
+Computer Exercise C6.<br />
+Use the data in <strong>wage2</strong> for this exercise. 1. Consider the standard wage equation: <span class="math display">\[log(wage) = \beta_0 + \beta_1*educ + \beta_2*exper + \beta_3*tenure + u\]</span> State the null hypothesis that another year of general workforce experience has the same effect on log(wage) as another year of tenure with the current employer.<br />
+2. Test the null hypothesis in part 1 against a two-sided alternative, at the 5% significance level, by constructing a 95% confidence interval. What do you conclude?
+</p>
+<p class="comment">
+Computer Exercise C9.<br />
+Use the data in <strong>discrim</strong> to answer this question. (See also Computer Exercise C8 in Chapter 3.) 1. Use OLS to estimate the model <span class="math display">\[log(psoda) = \beta_0 + \beta_1*prpblck + \beta_2*log(income) + \beta_3*prppov + u\]</span> and report the results in the usual form. Is the estimated beta_1 statistically different from zero at the 5% level against a two-sided alternative? What about at the 1% level?<br />
+2. What is the correlation between log(income) and prppov? Is each variable statistically significant in any case? Report the two-sided p-values.<br />
+3. To the regression in part 1, add the variable log(hseval). Interpret its coefficient and report the two-sided p-value for H0: beta_(log(hseval)) = 0.<br />
+4. In the regression in part 3, what happens to the individual statistical significance of log(income) and prppov? Are these variables jointly significant? (Compute a p-value.) What do you make of your answers?<br />
+5. Given the results of the previous regressions, which one would you report as most reliable in determining whether the racial makeup of a zip code influences local fast-food prices?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
