@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 10</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 10</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-10-basic-regression-analysis-with-time-series-data" class="section level5">
+<h5>Chapter 10: Basic Regression Analysis with Time Series Data</h5>
+<p>The obvious characteristic of time series data is that it is ordered with respect to time (temporal ordering). When using time series data, we need to keep in mind that the past may affect the future (but not vice versa). Thus, typically, we have serial correlation or non-independence of observations,</p>
+<p>A sequence of random variables indexed by time is called a stochastic (random) process or a time series process. When we collect data, we obtain only one possible outcome or realization of the stochastic process. The sample size in time series data is the number of periods over which we observe the variables of interest.</p>
+<p>We will write <span class="math inline">\(_t\)</span> for time period <span class="math inline">\(t\)</span> and <span class="math inline">\(_{t-1}\)</span> for lagged time period.</p>
+<p>The simplest time series regression model is a static model. In static time series models, the current value of one variable is modeled as the result of the current values of explanatory variables. For example, Phillips curve which postulates a contemporaneous relationship between inflation and unemployment:</p>
+<p><span class="math display">\[ inf_t = \beta_0 + \beta_1 unem_t +u_t \]</span></p>
+<p>Another type of model in time series is the finite distributed lag model. In finite distributed lag models, the explanatory variables are allowed to influence the dependent variable with a time lag. This has very many useful applications. For example, the fertility rate may depend on the tax value of a child, but for biological and behavioral reasons, the effect may have a lag. If we allow for a finite number of lags, the model is called finite distributed (FDL) lag model. An example of FDL of order two is below:</p>
+<div class="figure">
+<img src="CaptureAA.png" />
+
+</div>
+<p>Also, firms’ behavior may change in response to a change in tax laws, however, it may take time for most firms to decide and implement the changes.</p>
+<p>In general, we can write FDL of order q like this:</p>
+<p><span class="math display">\[ y_t = \alpha_0+\delta_0 z_t +\delta_1 z_{t-1}+...+\delta_q z_{t-q} + u_t \]</span></p>
+<p>Let all z at all time periods be a constant, c, except <span class="math inline">\(z_{t}=c+1\)</span>, error equal zero and assume only two lags. Then, we can write</p>
+<div class="figure">
+<img src="CaptureAAVV.png" />
+
+</div>
+<p>As you can see, the shock <span class="math inline">\(z_t=c+1\)</span>, has an effect in later time periods. Deltas are usually called impact propensities or impact multipliers. The effect is normally biggest after a lag of one period. After that, the effect vanishes (if the initial shock was transitory). Graphically:</p>
+<div class="figure">
+<img src="CaptureAAVV2.png" />
+
+</div>
+<p>Long-run propensity (LRP) or long-run multiplier is the cumulative effect or the sum of the coefficients.</p>
+<p>Assumption TS.1: Linear in Parameters The stochastic process follows a linear model.</p>
+<p>Assumption TS.2: No Perfect Collinearity In the sample (and therefore in the underlying time series process), no independent variable is constant nor a perfect linear combination of the others.</p>
+<p>Assumption TS.3: Zero Conditional Mean The mean value of the unobserved factors is uncorrelated to the values of the explanatory variables in all periods.</p>
+<p>Assumption TS.3 is often called strict exogeneity. Contemporaneous exogeneity (or simply exogeneity) is when the mean of the error term is uncorrelated to the explanatory variables of the same period.</p>
+<div class="figure">
+<img src="CaptureAAAA.png" />
+
+</div>
+<p>TS.3 rules out feedback from the dependent variable on future values of the explanatory variables; this is often questionable especially if explanatory variables “adjust” to past changes in the dependent variable. If the error term is related to past values of the explanatory variables, one should include these values as contemporaneous regressors.</p>
+<p>Theorem 10.1: Unbiasedness of OLS Under assumptions TS.1 through TS.3, OLS estimators are unbiased conditional on X.</p>
+<p><span class="math display">\[ TS.1 - TS.2 \quad \rightarrow \quad E(\hat{\beta_j})=\beta_j, \quad j=0,1,..,k-1,k. \]</span></p>
+<p>Assumption TS.4: Homoskedasticity The volatility of errors must not be related to the explanatory variables in any of the periods.</p>
+<p>Assumption TS.5: No Serial Correlation Conditional on the explanatory variables, the unobserved factors must not be correlated over time.</p>
+<p>Serial correlation is a potential problem fro regression with time series data. The assumption may easily be violated if, conditional on knowing the values of the independent variables, omitted factors are correlated over time. The assumption may also serve as substitute for the random sampling assumption if sampling a cross-section is not done completely randomly. In this case, given the values of the explanatory variables, errors have to be uncorrelated across cross-sectional units (e.g. states).</p>
+<p>Theorem 10.2: OLS Sampling Variances Under assumptions TS.1 through TS.5</p>
+<div class="figure">
+<img src="Capture11111111.png" />
+
+</div>
+<p>Theorem 10.3: Unbiased Estimation of Error Variance</p>
+<p><span class="math display">\[ TS.1 - TS.5 \quad \rightarrow \quad E(\hat{\sigma}^2)=\sigma^2\]</span></p>
+<p>Theorem 10.4: Gauss-Markov Theorem Under assumptions TS.1 through TS.5, the OLS estimators have the minimal variance of all linear unbiased estimators of the regression coefficients.</p>
+<p>Assumption TS.6: Normality</p>
+<div class="figure">
+<img src="Capture111AAA.png" />
+
+</div>
+<p>Theorem 10.5: Normal Sampling Distributions Under assumptions TS.1 - TS.6, the OLS estimators have the usual normal distribution (conditional on <span class="math inline">\(x\)</span>). The usual F and t-tests are valid. In other words, everything we have learned about estimation and inference for cross-sectional regression directly applies to time series regressions with assumptions TS.1 through TS.6.</p>
+<p>Now, let’s look back at the inflation-unemployment trade-off example. Philips curve suggests a conemporaneous relationship between unemployment and inflation.</p>
+<pre class="r"><code>data(phillips,package=&#39;wooldridge&#39;)
+attach(phillips)
+reg1=lm(inf~unem)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = inf ~ unem)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.2176 -1.7812 -0.6659  1.1473  8.8795 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)   1.0536     1.5480   0.681   0.4990  
+## unem          0.5024     0.2656   1.892   0.0639 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.972 on 54 degrees of freedom
+## Multiple R-squared:  0.06215,    Adjusted R-squared:  0.04479 
+## F-statistic: 3.579 on 1 and 54 DF,  p-value: 0.06389</code></pre>
+<p>Our <span class="math inline">\(\beta_1\)</span> estimate is 0.5 indicating a positive relationship statistically significant at 10% level. This does not mean that there is no trade-off. We need to check if the assumptions are satisfied.</p>
+<p><strong>TS.1</strong>: The error term contains factors such as monetary shocks, income/demand shocks, oil price shocks, supply shocks, or exchange rate shocks. <strong>TS.2</strong>: A linear relationship might be restrictive, but it should be a good approximation. Perfect collinearity is not a problem as long as unemployment varies over time.</p>
+<div class="figure">
+<img src="TS3.png" />
+
+</div>
+<p>Let’s say now we are interested in measuring the effects of inflation and budget deficits on interest rates. In R, execute the following commands.</p>
+<pre class="r"><code>data(intdef,package=&#39;wooldridge&#39;)
+attach(intdef)
+reg2=lm(i3~inf+def)
+summary(reg2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = i3 ~ inf + def)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.9948 -1.1694  0.1959  0.9602  4.7224 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.73327    0.43197   4.012  0.00019 ***
+## inf          0.60587    0.08213   7.376 1.12e-09 ***
+## def          0.51306    0.11838   4.334 6.57e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.843 on 53 degrees of freedom
+## Multiple R-squared:  0.6021, Adjusted R-squared:  0.5871 
+## F-statistic: 40.09 on 2 and 53 DF,  p-value: 2.483e-11</code></pre>
+<p>Again, it is a good idea to check whether our assumptions are satisfied. <strong>TS.1</strong>: The error term represents other factors that determine interest rates in general, e.g. business cycle effects. <strong>TS.2</strong>: A linear relationship might be restrictive, but it should be a good approximation. Perfect collinearity will rarely be a problem in practice.</p>
+<div class="figure">
+<img src="Assump.png" />
+
+</div>
+<p>Time series regressions are not limited to level-level functional form. We can also use logs, squared terms and use dummies.</p>
+<p>Let’s look at the determinants of Puerto Rican employment. Castillo-Freeman and Freeman (1992) studied a similar model:</p>
+<p><span class="math display">\[ log(prepop_t) = \beta_0 + \beta_1*log(mincov_t) + \beta_2*log(usgnp_t) + u_t \]</span> where <span class="math inline">\(prepop_t\)</span> = employment rate in Puerto Rico during year t, <span class="math inline">\(mincov_t\)</span> = importance of the minimum wage relative to average wages during year t, <span class="math inline">\(usgnp_t\)</span> = real US gross national product in year t.</p>
+<p>In R, use the following commands.</p>
+<pre class="r"><code>data(prminwge, package=&#39;wooldridge&#39;)
+attach(prminwge)
+reg3=lm(log(prepop)~log(mincov)+log(usgnp))
+summary(reg3)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(prepop) ~ log(mincov) + log(usgnp))
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.117133 -0.036998 -0.005943  0.028181  0.113938 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) -1.05442    0.76541  -1.378   0.1771  
+## log(mincov) -0.15444    0.06490  -2.380   0.0229 *
+## log(usgnp)  -0.01219    0.08851  -0.138   0.8913  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.0557 on 35 degrees of freedom
+## Multiple R-squared:  0.6605, Adjusted R-squared:  0.6411 
+## F-statistic: 34.04 on 2 and 35 DF,  p-value: 6.17e-09</code></pre>
+<p>The estimated elasticity of <span class="math inline">\(prepop\)</span> with respect to <span class="math inline">\(mincov\)</span> is -0.154 and stantistically significant at 5% which is what we expected: an increase in minimum wage decreases employment. However, now we need to account for the time trend.</p>
+<p>What we measured above with <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> are called short-run elasticities. If we added additional lagged independent variables and summed them all up for the same variable, we would have a long-run elasticity - a percentage change in dependent variable after n periods given 1% change in independent variable.</p>
+<p>We also sometimes include binary variables in time series regressions. We usually call these type of analyses an event study. The goal is to see whether a particular event influences some outcome. We can have, for example, a dummy for WW2 years to account for differences during the wartime; in this case all years of WW2, the dummy variable equals to one, all other years - 0. Similarly, we could look at, for example, introduction of a new technology; in that case, we could let the dummy equal one starting the year the new technology was adopted and zero all the years leading up to it.</p>
+<p>Time trend is a tendency to move in some specific way over time. We need to account for that to make sure we do not find two factors which are both trending up, for example, to be associated. Linear time trend is the simplest form of time trend which resembles a straight line. In some cases, exponential trend is a better fit for data.</p>
+<p>If trending variables are regressed on each other, a spurious relationship may arise if the variables are driven by a common trend. In this case, it is important to include a trend in the regression.</p>
+<p>Let’s consider the per capita housing investment equation.</p>
+<pre class="r"><code>data(hseinv, package=&#39;wooldridge&#39;)
+attach(hseinv)
+reg5=lm(log(invpc)~log(price))
+reg6=lm(log(invpc)~log(price)+t)
+library(stargazer)
+stargazer(reg5,reg6,type=&quot;text&quot;,keep.stat = c(&quot;n&quot;,&quot;rsq&quot;))</code></pre>
+<pre><code>## 
+## =========================================
+##                  Dependent variable:     
+##              ----------------------------
+##                       log(invpc)         
+##                   (1)            (2)     
+## -----------------------------------------
+## log(price)      1.241***       -0.381    
+##                 (0.382)        (0.679)   
+##                                          
+## t                             0.010***   
+##                                (0.004)   
+##                                          
+## Constant       -0.550***      -0.913***  
+##                 (0.043)        (0.136)   
+##                                          
+## -----------------------------------------
+## Observations       42            42      
+## R2               0.208          0.341    
+## =========================================
+## Note:         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>We see that after we include time trend, the estimated coefficient for <span class="math inline">\(log(price)\)</span> changes sign and becomes insignificant. In original equation <span class="math inline">\((reg5)\)</span>, we found a spurious positive relationship between housing investment and house prices because they were both trending up.</p>
+<p>Let’s consider another example. See the equation predicting children birth over time below.</p>
+<pre class="r"><code>data(fertil3, package=&#39;wooldridge&#39;)
+attach(fertil3)
+reg3=lm(gfr~pe+ww2+pill)
+reg4=lm(gfr~pe+ww2+pill+t+tsq)
+summary(reg3)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = gfr ~ pe + ww2 + pill)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -27.0187  -9.6195   0.3393   9.4746  28.0730 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  98.68176    3.20813  30.760  &lt; 2e-16 ***
+## pe            0.08254    0.02965   2.784  0.00694 ** 
+## ww2         -24.23840    7.45825  -3.250  0.00180 ** 
+## pill        -31.59403    4.08107  -7.742 6.46e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 14.69 on 68 degrees of freedom
+## Multiple R-squared:  0.4734, Adjusted R-squared:  0.4502 
+## F-statistic: 20.38 on 3 and 68 DF,  p-value: 1.575e-09</code></pre>
+<pre class="r"><code>pred1=predict(reg3)
+plot(gfr~t)
+lines(pred1)</code></pre>
+<p><img src="etricsCh10_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Interpretation of the first model could be as follows: during World War II, the fertility rate was temporarily lower. It has been permanently lower since the introduction of the pill in 1963. However, after including quadratic time trend, we see that the pill has statistically insignificant effect.</p>
+<p>The questions is: when should we include a trend in our analysis? If the dependent variable displays an obvious trending behavior we should consider including a trend. If both the dependent and some independent variables have trends we need to consider including time trend. If only some of the independent variables have trends; their effect on the dependent variable may only be visible after a trend has been subtracted (detrending).</p>
+<p>Detrending (removing the trend) requires a few notes about the coefficients and goodness-of-fit statistic. It turns out that the OLS coefficients in a regression including a trend are the same as the coefficients in a regression without a trend but where all the variables have been detrended before the regression. This follows from the general interpretation of multiple regressions. Due to the trend, the variance of the dependent variable will be overstated. It is better to first detrend the dependent variable and then run the regression on all the independent variables (plus a trend if they are trending as well). The R-squared of this regression is a more adequate measure of fit.</p>
+<p>Time series also often exhibits seasonality: the variable increases in certain quarters or months and decreases in others. Think for example about ice-cream production and sales: much more ice-cream is produced and sold in the warm weather (<a href="https://fred.stlouisfed.org/series/IPN31152N" class="uri">https://fred.stlouisfed.org/series/IPN31152N</a>). To adjust for the seasonality, we can include a set of dummy variables to account for the seasonal changes.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C6.<br />
+Use the data in <strong>fertil3</strong> for this exercise.<br />
+1. Regress <span class="math inline">\(gfrt\)</span> on <span class="math inline">\(t\)</span> and <span class="math inline">\(t^2\)</span> and save the residuals. This gives a detrended <span class="math inline">\(gfrt\)</span>, which you can call, say, <span class="math inline">\(gf_t\)</span>.<br />
+2. Regress <span class="math inline">\(gf_t\)</span> on all of the variables in equation (10.35), including <span class="math inline">\(t\)</span> and <span class="math inline">\(t^2\)</span>. Compare the R-squared with that from (10.35). What do you conclude?<br />
+3. Reestimate equation (10.35) but add <span class="math inline">\(t^3\)</span> to the equation. Is this additional term statistically significant?
+</p>
+<p class="comment">
+Computer Exercise C7.<br />
+Use the data set <strong>consump</strong> for this exercise.<br />
+1. Estimate a simple regression model relating the growth in real per capita consumption (of nondurables and services) to the growth in real per capita disposable income. Use the change in the logarithms in both cases. Report the results in the usual form. Interpret the equation and discuss statistical significance.<br />
+2. Add a lag of the growth in real per capita disposable income to the equation from part 1. What do you conclude about adjustment lags in consumption growth?<br />
+3. Add the real interest rate to the equation in part 1. Does it affect consumption growth?
+</p>
+<p class="comment">
+Computer Exercise C9.<br />
+Use the data in <strong>volat</strong> for this exercise. The variable <span class="math inline">\(rsp500\)</span> is the monthly return on the Standard &amp; Poor’s 500 stock market index, at an annual rate. (This includes price changes as well as dividends.) The variable <span class="math inline">\(i3\)</span> is the return on three-month T-bills, and <span class="math inline">\(pcip\)</span> is the percentage change in industrial production; these are also at an annual rate.<br />
+1. Consider the equation <span class="math display">\[rsp500_t = b0 + b1*pcip_t + b2*i3_t + u_t.\]</span> What signs do you think <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> should have?<br />
+2. Estimate the previous equation by OLS, reporting the results in standard form. Interpret the signs and magnitudes of the coefficients.<br />
+3. Which of the variables is statistically significant?<br />
+4. Does your finding from part (iii) imply that the return on the S&amp;P 500 is predictable? Explain.
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss, CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

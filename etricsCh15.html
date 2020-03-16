@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 15</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 15</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-15-instrumental-variables-estimation-and-two-stage-least-squares" class="section level5">
+<h5>Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares</h5>
+<p>The problem of endogeneity occurs too often in economic research. In some cases, one or more of your important variables are not observed; in other cases, they may not be well measured. These issues may lead you to the issue of endogeneity - the error term is correlated with your observed explanatory variables.</p>
+<p>We should remember the simple solutions we suggested earlier:</p>
+<ol style="list-style-type: decimal">
+<li>We may ignore the variable that may cause endogeneity. However, this leads to biased and inconsistent estimators.</li>
+<li>We can try to find a suitable proxy variable for the unobserved variable. This is much harder than it may seem.</li>
+<li>We can also assume that the omitted variable does not change over time which means we can use fixed effects or first-differencing.</li>
+</ol>
+<p>In this chapter, we will learn another very popular technique to deal with endogeneity. This method is known as the Instrumental Variables (IV) method or IV method.</p>
+<p>Let’s consider a simple regression model. We expect education to have a positive effect on wages. However, if there are some variables that are correlated with education but we do not include them in the regression, we create endogeneity problem.</p>
+<div class="figure">
+<img src="Untitled1.png" />
+
+</div>
+<p>To see why, think about natural ability or talent. A person who may have more ability, may also end up acquiring more education. By not including ability in the regression, we prescribe all the effects of ability to education. In other words, we may significantly overestimate the returns to education.</p>
+<p>It turns out that we can still use the above equation given that we can find an instrumental variable. Instrumental variable is such that:</p>
+<ol style="list-style-type: decimal">
+<li>It does not appear in the regression.</li>
+<li>It is highly correlated with the endogenous variable.</li>
+<li>It is uncorrelated with the error term.</li>
+</ol>
+<p>Remember that in a simple OLS, we assume that X is uncorrelated with the error term and we know that OLS results are consistent as long as exogeneity holds.</p>
+<div class="figure">
+<img src="Untitled.png" />
+
+</div>
+<p>However, now assume that <span class="math inline">\(x\)</span> and <span class="math inline">\(u\)</span> are correlated (have a nonzero covariance). In presence of endogeneity, we need additional information. To be more specific, we need an observable variable <span class="math inline">\(z\)</span> which is uncorrelated with U but sufficiently correlated with <span class="math inline">\(x\)</span>.</p>
+<div class="figure">
+<img src="Untitled12.png" />
+
+</div>
+<p>This variable <span class="math inline">\(z\)</span> is called the instrumental variable or instrument for variable <span class="math inline">\(x\)</span>. The above requirement basically states that variable <span class="math inline">\(z\)</span> must be exogenous in the regression model. It should have no partial effect on Y after controlling for other relevant variables including the endogenous variable. Moreover, variable <span class="math inline">\(z\)</span> must be sufficiently correlated with the endogenous variable <span class="math inline">\(x\)</span>. Variable <span class="math inline">\(z\)</span> must be relevant in explaining variation in <span class="math inline">\(x\)</span>.</p>
+<p>Let’s consider an example. Suppose you are interested in estimating a causal relationship between skipping class and final exam score. You select the final exam score as a dependent variable (<span class="math inline">\(y\)</span>) and number of classes skipped in a semester as the independent variable (<span class="math inline">\(x\)</span>). In this kind of regression, we would be worried that highly motivated and highly able students who find the class easier may miss fewer classes. Thus, without an IV we would overestimate the effect of skipping classes on final exam score. A good IV must not have a direct effect on final exam score and is not correlated with student ability and motivation but is correlated with number of classes skipped. One may consider that the distance between student’s apartment and university may be a good IV. It is likely not correlated with student’s ability or motivation, has no direct effect on final exam score. However, distance may be correlated with these factors. A good analysis is due here. Secondly, is it correlated enough with number of classes skipped? This can be easily checked.</p>
+<p>Consider another example: you are measuring the returns to education. Running a simple OLS regression with <span class="math inline">\(log(wage)\)</span> as the dependent variable and education as the independent will most likely overstate the returns to education because individuals with higher ability/talent choose to get more education and earn more. Thus, when we estimate the returns to education, in a simple model, we combine the effects of both ability and education into one and thus overstate the true returns to education holding ability/talent constant. To correct this problem, we need a good IV. It must be uncorrelated with U or ability which is in U since we did not account for it explicitly but must be correlated with education.</p>
+<div class="figure">
+<img src="Untitled123.png" />
+
+</div>
+<p>Let’s consider this example in R. You write down a simple log-level regression model.</p>
+<pre class="r"><code>library(AER)
+library(stargazer)
+data(mroz, package=&#39;wooldridge&#39;)
+attach(mroz)
+reg1=lm(log(wage) ~ educ)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(wage) ~ educ)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -3.10256 -0.31473  0.06434  0.40081  2.10029 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -0.1852     0.1852  -1.000    0.318    
+## educ          0.1086     0.0144   7.545 2.76e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.68 on 426 degrees of freedom
+##   (325 observations deleted due to missingness)
+## Multiple R-squared:  0.1179, Adjusted R-squared:  0.1158 
+## F-statistic: 56.93 on 1 and 426 DF,  p-value: 2.761e-13</code></pre>
+<pre class="r"><code>reg2a=lm(educ ~ fatheduc)
+summary(reg2a)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = educ ~ fatheduc)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.1881 -1.1881  0.2240  0.8119  6.3537 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  9.79901    0.19854   49.36   &lt;2e-16 ***
+## fatheduc     0.28243    0.02089   13.52   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.046 on 751 degrees of freedom
+## Multiple R-squared:  0.1958, Adjusted R-squared:  0.1947 
+## F-statistic: 182.8 on 1 and 751 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>reg2b= ivreg(log(wage) ~ educ | fatheduc)
+stargazer(reg1,reg2b, type=&quot;text&quot;)</code></pre>
+<pre><code>## 
+## ===================================================================
+##                                        Dependent variable:         
+##                                ------------------------------------
+##                                             log(wage)              
+##                                          OLS           instrumental
+##                                                          variable  
+##                                          (1)               (2)     
+## -------------------------------------------------------------------
+## educ                                  0.109***            0.059*   
+##                                        (0.014)           (0.035)   
+##                                                                    
+## Constant                               -0.185             0.441    
+##                                        (0.185)           (0.446)   
+##                                                                    
+## -------------------------------------------------------------------
+## Observations                             428               428     
+## R2                                      0.118             0.093    
+## Adjusted R2                             0.116             0.091    
+## Residual Std. Error (df = 426)          0.680             0.689    
+## F Statistic                    56.929*** (df = 1; 426)             
+## ===================================================================
+## Note:                                   *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Estimate of <span class="math inline">\(\beta_1\)</span> implies that return for another year of education is almost 11%. Really high! However, we are afraid that education is correlated with other factors in U such as ability and that we overstated the returns to education. One possible IV can be father’s education. It does not need to go to the model itself and is (possibly) not related with person’s ability (thus uncorrelated with U). It is likely correlated with education of the person of interest (daughter). IV estimate for education is significantly smaller which is what we expected.</p>
+<div class="figure">
+<img src="Untitled1234.png" />
+
+</div>
+<p>Usually, it is very difficult to find good instrumental variables. Previous researches have used these IVs for education:</p>
+<ul>
+<li>The number of siblings.
+<ul>
+<li>No wage determinant</li>
+<li>Correlated with education because of resource constraints in hh</li>
+<li>Uncorrelated with innate ability</li>
+</ul></li>
+<li>College proximity when 16 years old
+<ul>
+<li>No wage determinant</li>
+<li>Correlated with education because more education if lived near college</li>
+<li>Uncorrelated with error (?)</li>
+</ul></li>
+<li>Month of Birth
+<ul>
+<li>No wage determinant</li>
+<li>Correlated with education because of compulsory school attendance laws</li>
+<li>Uncorrelated with error</li>
+</ul></li>
+</ul>
+<p>If one of the two conditions (strong correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span>, and exogeneity of <span class="math inline">\(z\)</span>) are not met, IV estimator can have large asymptotic bias.</p>
+<div class="figure">
+<img src="Untitled12345.png" />
+
+</div>
+<p>So far, we only looked at simple or univariate regression models but IV estimation is analogous in the multiple regression models.</p>
+<p>Now we will go through the two Stage Least Squares (2SLS or TSLS) estimation. It can be used when we have more than one exogenous variable that can be used as an IV for <span class="math inline">\(y_2\)</span> (the endogenous variable in the structural equation).</p>
+<p>Consider a linear model with many explanatory variables of which one is endogenous (it is correlated with <span class="math inline">\(u\)</span>).</p>
+<div class="figure">
+<img src="Untitled123456.png" />
+
+</div>
+<p>Having identified the endogenous variable (assume that the endogenous variable is <span class="math inline">\(y_2\)</span>) and all exogenous variables (<span class="math inline">\(z_1\)</span> to <span class="math inline">\(z_{k-1}\)</span>), we need to think of a good instrumental variable. It must be such that meets the three IV conditions:</p>
+<ol style="list-style-type: decimal">
+<li>Does not appear in regression equation</li>
+<li>Is uncorrelated with error term</li>
+<li>Is partially correlated with endogenous explanatory variable</li>
+</ol>
+<p>Assume that variable zk meets the above conditions.</p>
+<ol style="list-style-type: decimal">
+<li>In the first stage, we run a reduced form regression. The endogenous explanatory variable (<span class="math inline">\(y_2\)</span>) is predicted only using the exogenous explanatory variables (<span class="math inline">\(z_1\)</span> to <span class="math inline">\(z_{k-1}\)</span>) and the IV (<span class="math inline">\(z_k\)</span>).</li>
+</ol>
+<div class="figure">
+<img src="Untitled1234567.png" />
+
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>In the second stage, in the OLS regression model we use the $ predicted in the first stage instead of the original endogenous variable y2.</li>
+</ol>
+<div class="figure">
+<img src="Untitled12345678.png" />
+
+</div>
+<p>All variables in the second stage regression are exogenous because <span class="math inline">\(y_2\)</span> was replaced by a prediction based on only exogenous information. By using the prediction based on exogenous information, <span class="math inline">\(y_2\)</span> is purged of its endogenous part (the part that is related to the error term).</p>
+<p>The standard errors from the OLS second stage regression are wrong. However, it is not difficult to compute correct standard errors. If there is one endogenous variable and one instrument then 2SLS = IV. The 2SLS estimation can also be used if there is more than one endogenous variable and at least as many instruments.</p>
+<p>Let’s assume we are interested in measuring returns to education and we have two instrumental variables (father’s education and mother’s education). For the first stage, we regress education on all exogenous variables including the two IVs.</p>
+<div class="figure">
+<img src="Untitled123456789.png" />
+
+</div>
+<div class="figure">
+<img src="Untitled1234567890.png" />
+
+</div>
+<p>To work this example out in R, use the following R code:</p>
+<pre class="r"><code>data(mroz, package=&#39;wooldridge&#39;)
+sample &lt;- subset(mroz, !is.na(wage))
+regOLS=lm(log(wage)~educ+exper+expersq, data=sample)
+#summary(regOLS)
+#2SLS manually
+reg_1stage=lm(educ~exper+expersq+fatheduc+motheduc, data=sample)
+summary(reg_1stage)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = educ ~ exper + expersq + fatheduc + motheduc, data = sample)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.8057 -1.0520 -0.0371  1.0258  6.3787 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  9.102640   0.426561  21.340  &lt; 2e-16 ***
+## exper        0.045225   0.040251   1.124    0.262    
+## expersq     -0.001009   0.001203  -0.839    0.402    
+## fatheduc     0.189548   0.033756   5.615 3.56e-08 ***
+## motheduc     0.157597   0.035894   4.391 1.43e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.039 on 423 degrees of freedom
+## Multiple R-squared:  0.2115, Adjusted R-squared:  0.204 
+## F-statistic: 28.36 on 4 and 423 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>fitted_educ=reg_1stage$fitted.values
+reg_2stage=lm(log(wage)~fitted_educ+exper+expersq, data=sample)
+#summary(reg_2stage)
+#alternatively
+Quick2SLS=ivreg(log(wage)~educ+exper+expersq | motheduc+fatheduc+exper+expersq , data=sample)
+stargazer(regOLS,reg_2stage,Quick2SLS,type=&quot;text&quot;,keep.stat=c(&quot;n&quot;,&quot;rsq&quot;))</code></pre>
+<pre><code>## 
+## ============================================
+##                    Dependent variable:      
+##              -------------------------------
+##                         log(wage)           
+##                     OLS         instrumental
+##                                   variable  
+##                 (1)      (2)        (3)     
+## --------------------------------------------
+## educ         0.107***              0.061*   
+##               (0.014)             (0.031)   
+##                                             
+## fitted_educ             0.061*              
+##                        (0.033)              
+##                                             
+## exper        0.042***  0.044***   0.044***  
+##               (0.013)  (0.014)    (0.013)   
+##                                             
+## expersq      -0.001**  -0.001**   -0.001**  
+##              (0.0004)  (0.0004)   (0.0004)  
+##                                             
+## Constant     -0.522***  0.048      0.048    
+##               (0.199)  (0.420)    (0.400)   
+##                                             
+## --------------------------------------------
+## Observations    428      428        428     
+## R2             0.157    0.050      0.136    
+## ============================================
+## Note:            *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Obtained 2SLS estimates may have very large standard errors if multicollinearity is present.</p>
+<p>For example, consider college proximity as an IV for education in estimating the returns to education. Regressing <span class="math inline">\(log(wage)\)</span> on <span class="math inline">\(educ\)</span>, <span class="math inline">\(exper\)</span>, <span class="math inline">\(expersq\)</span>, <span class="math inline">\(black\)</span>, <span class="math inline">\(smsa\)</span>, <span class="math inline">\(south\)</span> and other controls and then using college proximity as IV you get that education does help explain <span class="math inline">\(log(wage)\)</span> even though the standard error for the IV estimate is many times larger.</p>
+<pre class="r"><code>library(AER);library(stargazer);
+data(card, package=&#39;wooldridge&#39;)
+# OLS
+ols&lt;-lm(log(wage)~educ+exper+I(exper^2)+black+smsa+south+smsa66+reg662+ reg663+reg664+reg665+reg666+reg667+reg668+reg669, data=card)
+# IV estimation
+iv &lt;-ivreg(log(wage)~educ+exper+I(exper^2)+black+smsa+south+smsa66+ reg662+reg663+reg664+reg665+reg666+reg667+reg668+reg669 | nearc4+exper+I(exper^2)+black+smsa+south+smsa66+ reg662+reg663+reg664+reg665+reg666+reg667+reg668+reg669 , data=card)
+# Pretty regression table of selected coefficients
+stargazer(ols,iv,type=&quot;text&quot;, keep=c(&quot;ed&quot;,&quot;near&quot;,&quot;exp&quot;,&quot;bl&quot;),keep.stat=c(&quot;n&quot;,&quot;rsq&quot;))</code></pre>
+<pre><code>## 
+## =========================================
+##                  Dependent variable:     
+##              ----------------------------
+##                       log(wage)          
+##                   OLS       instrumental 
+##                               variable   
+##                   (1)            (2)     
+## -----------------------------------------
+## educ            0.075***       0.132**   
+##                 (0.003)        (0.055)   
+##                                          
+## exper           0.085***      0.108***   
+##                 (0.007)        (0.024)   
+##                                          
+## I(exper2)      -0.002***      -0.002***  
+##                 (0.0003)      (0.0003)   
+##                                          
+## black          -0.199***      -0.147***  
+##                 (0.018)        (0.054)   
+##                                          
+## -----------------------------------------
+## Observations     3,010          3,010    
+## R2               0.300          0.238    
+## =========================================
+## Note:         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Regressing educ on all other exogenous variables (except <span class="math inline">\(nearc4\)</span>) indicates presence of multicollinearity with R-squared of 0.48.</p>
+<p>Another important issue in 2SLS is weak instruments. Weak instruments are those IVs that have small correlation with the endogenous variable. This can lead to very large inconsistency and bias. The quick rule or rule of thumb is to see if the F-statistic of the proposed IVs in the first-stage regression is at least 10. See an example below.</p>
+<pre class="r"><code>reg_1stage=lm(educ~exper+expersq+fatheduc+motheduc, data=sample)
+linearHypothesis(reg_1stage, c(&quot;motheduc=0&quot;,&quot;fatheduc=0&quot;))</code></pre>
+<pre><code>## Linear hypothesis test
+## 
+## Hypothesis:
+## motheduc = 0
+## fatheduc = 0
+## 
+## Model 1: restricted model
+## Model 2: educ ~ exper + expersq + fatheduc + motheduc
+## 
+##   Res.Df    RSS Df Sum of Sq    F    Pr(&gt;F)    
+## 1    425 2219.2                                
+## 2    423 1758.6  2    460.64 55.4 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>A few other notes on 2SLS/IV:</p>
+<ul>
+<li>If a second measurement of the mismeasured variable is available, this can be used as an instrumental variable for the mismeasured variable.</li>
+<li>Under assumptions completely analogous to OLS, but conditioning on <span class="math inline">\(z_i\)</span> rather than on <span class="math inline">\(x_i\)</span>, 2SLS/IV is consistent and asymptotically normal.</li>
+<li>2SLS/IV is typically much less precise because there is more multicollinearity and less explanatory variation in the second stage regression.</li>
+<li>Corrections for heteroskedasticity/serial correlation analogous to OLS.</li>
+<li>2SLS/IV easily extends to time series and panel data situations.</li>
+</ul>
+<p>Lastly, one does not want to use 2SLS due to large standard errors unless at least one variable is endogenous. Thus, one needs to check if any of the variables are endogenous. One can do a simple procedure to check for endogeneity.</p>
+<div class="figure">
+<img src="Untitled12345678901.png" />
+
+</div>
+<p>Let’s assume that you suspect <span class="math inline">\(y_2\)</span> to be endogenous while <span class="math inline">\(z_1\)</span> to <span class="math inline">\(z_{k-1}\)</span> are exogenous. First, you regress <span class="math inline">\(y_2\)</span> on all exogenous variables (even those that do not appear in the main regression). We collect the residuals (<span class="math inline">\(v_2\)</span>) from the reduced form regression.</p>
+<div class="figure">
+<img src="Untitled123456789012.png" />
+
+</div>
+<p>Finally, we run a test equation which is just like the original OLS regression but with residuals from the reduced form regression included as explanatory variable. If we find that <span class="math inline">\(\delta_1\)</span> is significantly different from zero (reject the null), then we conclude that <span class="math inline">\(y_2\)</span> is endogenous since <span class="math inline">\(u_1\)</span> and <span class="math inline">\(v_2\)</span> are correlated.</p>
+<div class="figure">
+<img src="Untitled1234567890123.png" />
+
+</div>
+<p>Let’s look at a few examples. Earlier we looked at the return to education for working women. To check whether educ is indeed endogenous, we will use the residuals from the first stage regression in the second stage. Try the following code:</p>
+<pre class="r"><code>data(mroz, package=&#39;wooldridge&#39;)
+sample &lt;- subset(mroz, !is.na(wage))
+regOLS=lm(log(wage)~educ+exper+expersq, data=sample)
+stage1=lm(educ~exper+I(exper^2)+motheduc+fatheduc, data=sample)
+stage2=lm(log(wage)~educ+exper+I(exper^2)+resid(stage1), data=sample)
+coeftest(stage2)</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                  Estimate  Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)    0.04810030  0.39457526  0.1219 0.9030329    
+## educ           0.06139663  0.03098494  1.9815 0.0481824 *  
+## exper          0.04417039  0.01323945  3.3363 0.0009241 ***
+## I(exper^2)    -0.00089897  0.00039591 -2.2706 0.0236719 *  
+## resid(stage1)  0.05816661  0.03480728  1.6711 0.0954406 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We find that t-value for the residuals from the first stage regression is 1.67 which indicates moderate evidence of positive correlation between <span class="math inline">\(u_1\)</span> and <span class="math inline">\(v_2\)</span>.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C1.<br />
+Use the data in <strong>wage2</strong> for this exercise.<br />
+1. In Example 15.2, if sibs is used as an instrument for educ, the IV estimate of the return to education is 0.122. To convince yourself that using sibs as an IV for educ is not the same as just plugging sibs in for educ and running an OLS regression, run the regression of log(wage) on sibs and explain your findings.<br />
+2. The variable brthord is birth order (brthord is one for a first-born child, two for a second-born child, and so on). Explain why educ and brthord might be negatively correlated. Regress educ on brthord to determine whether there is a statistically significant negative correlation.<br />
+3. Use brthord as an IV for educ in equation (15.1). Report and interpret the results.<br />
+4. Now, suppose that we include number of siblings as an explanatory variable in the wage equation; this controls for family background, to some extent: <span class="math display">\[log(wage) = b0 + b1*educ + b2*sibs + u.\]</span> Suppose that we want to use brthord as an IV for educ, assuming that sibs is exogenous. The reduced form for educ is <span class="math display">\[educ = p0 + p1*sibs + p2*brthord + v.\]</span> State and test the identification assumption.<br />
+5. Estimate the equation from part 4 using brthord as an IV for educ (and sibs as its own IV). Comment on the standard errors for estimates of educ and sibs.<br />
+6. Using the fitted values from part 4, educ, compute the correlation between educ and sibs. Use this result to explain your findings from part 5.
+</p>
+<p class="comment">
+Computer Exercise C4.<br />
+Use the data in INTDEF for this exercise. A simple equation relating the three-month T-bill rate to the inflation rate (constructed from the Consumer Price Index) is <span class="math display">\[i3_t = b0 + b1*inf_t + u_t\]</span> 1. Estimate this equation by OLS, omitting the first time period for later comparisons. Report the results in the usual form.<br />
+2. Some economists feel that the Consumer Price Index mismeasures the true rate of inflation, so that the OLS from part 1 suffers from measurement error bias. Reestimate the equation from part 1, using <span class="math inline">\(inf_{t-1}\)</span> as an IV for <span class="math inline">\(inf_t\)</span>. How does the IV estimate of <span class="math inline">\(b1\)</span> compare with the OLS estimate? 3. Now, first difference the equation: <span class="math display">\[\Delta i3_t = b0 + b1*\Delta inf_t + \Delta u_t.\]</span> Estimate this by OLS and compare the estimate of b1 with the previous estimates.<br />
+4. Can you use <span class="math inline">\(\Delta inf_{t-1}\)</span> as an IV for <span class="math inline">\(\Delta inf_t\)</span> in the differenced equation in part 3? Explain. (Hint: Are <span class="math inline">\(\Delta inf_t\)</span> and <span class="math inline">\(\Delta inf_{t-1}\)</span> sufficiently correlated?)
+</p>
+<p class="comment">
+Computer Exercise C6.<br />
+Use the data in <strong>murder</strong> for this exercise. The variable <span class="math inline">\(mrdrte\)</span> is the murder rate, that is, the number of murders per 100,000 people. The variable <span class="math inline">\(exec\)</span> is the total number of prisoners executed for the current and prior two years; <span class="math inline">\(unem\)</span> is the state unemployment rate.<br />
+1. How many states executed at least one prisoner in 1991, 1992, or 1993? Which state had the most executions?<br />
+2. Using the two years 1990 and 1993, do a pooled regression of <span class="math inline">\(mrdrte\)</span> on <span class="math inline">\(d93\)</span>, <span class="math inline">\(exec\)</span>, and <span class="math inline">\(unem\)</span>. What do you make of the coefficient on <span class="math inline">\(exec\)</span>?<br />
+3. Using the changes from 1990 to 1993 only (for a total of 51 observations), estimate the equation <span class="math display">\[ \Delta mrdrte = d0 + b1*\Delta exec + b2*\Delta unem + \Delta u \]</span> by OLS and report the results in the usual form. Now, does capital punishment appear to have a deterrent effect?<br />
+4. The change in executions may be at least partly related to changes in the expected murder rate, so that <span class="math inline">\(\Delta exec\)</span> is correlated with <span class="math inline">\(\Delta u\)</span> in part (iii). It might be reasonable to assume that <span class="math inline">\(\Delta exec_{-1}\)</span> is uncorrelated with <span class="math inline">\(\Delta u\)</span>. (After all, <span class="math inline">\(\Delta exec_{-1}\)</span> depends on executions that occurred three or more years ago.) Regress <span class="math inline">\(\Delta exec\)</span> on <span class="math inline">\(\Delta exec_{-1}\)</span> to see if they are sufficiently correlated; interpret the coefficient on <span class="math inline">\(\Delta exec_{-1}\)</span>. 5. Reestimate the equation from part 3, using <span class="math inline">\(\Delta exec_{-1}\)</span> as an IV for <span class="math inline">\(\Delta exec\)</span>. Assume that <span class="math inline">\(\Delta unem\)</span> is exogenous. How do your conclusions change from part 3?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss, CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
