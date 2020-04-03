@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Output Using googleVis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Output Using googleVis</h1>
+
+</div>
+
+
+<div id="figure-1" class="section level4">
+<h4>Figure 1</h4>
+<!-- GeoChart generated in R 3.5.3 by googleVis 0.6.4 package -->
+<!-- Fri Apr 03 13:32:00 2020 -->
+<!-- jsHeader -->
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataGeoChartID437c5ada5611 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Alabama",
+10892,
+12487
+],
+[
+"Alaska",
+7847,
+8512
+],
+[
+"Arkansas",
+9275,
+10988
+],
+[
+"Arizona",
+29348,
+18108
+],
+[
+"California",
+186333,
+421912
+],
+[
+"Colorado",
+19774,
+21309
+],
+[
+"Connecticut",
+25100,
+44194
+],
+[
+"Delaware",
+10776,
+5297
+],
+[
+"District of Columbia",
+14462,
+7378
+],
+[
+"Florida",
+74313,
+33728
+],
+[
+"Georgia",
+12140,
+27507
+],
+[
+"Hawaii",
+8817,
+6472
+],
+[
+"Idaho",
+13586,
+7869
+],
+[
+"Illinois",
+114114,
+125437
+],
+[
+"Indiana",
+59755,
+20778
+],
+[
+"Iowa",
+40952,
+26496
+],
+[
+"Kansas",
+23563,
+9973
+],
+[
+"Kentucky",
+49023,
+22328
+],
+[
+"Louisiana",
+72438,
+14143
+],
+[
+"Maine",
+21459,
+8703
+],
+[
+"Maryland",
+42981,
+26467
+],
+[
+"Massachusetts",
+148452,
+83127
+],
+[
+"Michigan",
+128006,
+75075
+],
+[
+"Minnesota",
+115773,
+66787
+],
+[
+"Mississippi",
+5519,
+6667
+],
+[
+"Missouri",
+42246,
+21538
+],
+[
+"Montana",
+15349,
+9818
+],
+[
+"North Carolina",
+94083,
+20652
+],
+[
+"North Dakota",
+5662,
+6169
+],
+[
+"Nebraska",
+15700,
+4859
+],
+[
+"New Hampshire",
+29379,
+4024
+],
+[
+"New Jersey",
+115815,
+105840
+],
+[
+"New Mexico",
+18105,
+9288
+],
+[
+"Nevada",
+92298,
+19822
+],
+[
+"New York",
+79999,
+167214
+],
+[
+"Ohio",
+196309,
+68323
+],
+[
+"Oklahoma",
+21926,
+16854
+],
+[
+"Oregon",
+30054,
+30523
+],
+[
+"Pennsylvania",
+377451,
+128029
+],
+[
+"Puerto Rico",
+20148,
+15239
+],
+[
+"Rhode Island",
+35847,
+10857
+],
+[
+"South Carolina",
+31826,
+15111
+],
+[
+"South Dakota",
+1761,
+2674
+],
+[
+"Tennessee",
+38077,
+18350
+],
+[
+"Texas",
+155426,
+126427
+],
+[
+"Utah",
+19690,
+10826
+],
+[
+"Vermont",
+3784,
+4810
+],
+[
+"Virgin Islands",
+123,
+584
+],
+[
+"Virginia",
+46277,
+21628
+],
+[
+"Washington",
+129909,
+62623
+],
+[
+"West Virginia",
+3536,
+14154
+],
+[
+"Wisconsin",
+51031,
+43607
+],
+[
+"Wyoming",
+3653,
+3197
+] 
+];
+data.addColumn('string','State');
+data.addColumn('number','Initial.Claims');
+data.addColumn('number','Continued.Claims');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartGeoChartID437c5ada5611() {
+var data = gvisDataGeoChartID437c5ada5611();
+var options = {};
+options["width"] = 600;
+options["height"] = 400;
+options["region"] = "US";
+options["displayMode"] = "regions";
+options["resolution"] = "provinces";
+options["colorAxis"] = {values:[10000,100000,200000],
+colors:['green', 'orange', 'red']};
+
+
+    var chart = new google.visualization.GeoChart(
+    document.getElementById('GeoChartID437c5ada5611')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "geochart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartGeoChartID437c5ada5611);
+})();
+function displayChartGeoChartID437c5ada5611() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID437c5ada5611"></script>
+<!-- divChart -->
+<div id="GeoChartID437c5ada5611" style="width: 600; height: 400;">
+
+</div>
+<p><br />
+<br />
+<br />
+</p>
+</div>
+<div id="figure-2" class="section level4">
+<h4>Figure 2</h4>
+<!-- GeoChart generated in R 3.5.3 by googleVis 0.6.4 package -->
+<!-- Fri Apr 03 13:49:27 2020 -->
+<!-- jsHeader -->
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataGeoChartID437c4b3c5adb () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Alabama",
+498.8,
+9.4
+],
+[
+"Alaska",
+600.6,
+37.4
+],
+[
+"Arkansas",
+571.1,
+-25
+],
+[
+"Arizona",
+663.5,
+14.5
+],
+[
+"California",
+223.5,
+32.8
+],
+[
+"Colorado",
+752,
+24.5
+],
+[
+"Connecticut",
+629.7,
+36.1
+],
+[
+"Delaware",
+2183.1,
+-8.9
+],
+[
+"District of Columbia",
+1092.3,
+157.5
+],
+[
+"Florida",
+1049.8,
+21.4
+],
+[
+"Georgia",
+123,
+19.2
+],
+[
+"Hawaii",
+454.9,
+24.6
+],
+[
+"Idaho",
+1217.7,
+9.9
+],
+[
+"Illinois",
+949.8,
+24.6
+],
+[
+"Indiana",
+2201.8,
+16.8
+],
+[
+"Iowa",
+1737.2,
+0.4
+],
+[
+"Kansas",
+1242.6,
+28.6
+],
+[
+"Kentucky",
+1660.3,
+13.1
+],
+[
+"Louisiana",
+3112.3,
+32.8
+],
+[
+"Maine",
+3284.7,
+-11.3
+],
+[
+"Maryland",
+1012.3,
+44.4
+],
+[
+"Massachusetts",
+1892.9,
+58.1
+],
+[
+"Michigan",
+2298,
+3.7
+],
+[
+"Minnesota",
+2787.1,
+15
+],
+[
+"Mississippi",
+381.2,
+30.5
+],
+[
+"Missouri",
+951.9,
+34.1
+],
+[
+"Montana",
+1778.7,
+14.4
+],
+[
+"North Carolina",
+2563,
+37.2
+],
+[
+"North Dakota",
+1264.3,
+-1.9
+],
+[
+"Nebraska",
+1874.8,
+58.7
+],
+[
+"New Hampshire",
+4476.2,
+29.7
+],
+[
+"New Jersey",
+1123.4,
+18.4
+],
+[
+"New Mexico",
+1983.4,
+25.9
+],
+[
+"Nevada",
+1352.1,
+175.3
+],
+[
+"New York",
+460.5,
+1.7
+],
+[
+"Ohio",
+2686.1,
+7.7
+],
+[
+"Oklahoma",
+1094.2,
+17
+],
+[
+"Oregon",
+604,
+2.8
+],
+[
+"Pennsylvania",
+2344.8,
+26.3
+],
+[
+"Puerto Rico",
+1619.1,
+-12.7
+],
+[
+"Rhode Island",
+3135.3,
+58.3
+],
+[
+"South Carolina",
+1420.6,
+10.8
+],
+[
+"South Dakota",
+826.8,
+2.7
+],
+[
+"Tennessee",
+1309.2,
+33
+],
+[
+"Texas",
+860.8,
+12.7
+],
+[
+"Utah",
+1408.8,
+28.6
+],
+[
+"Vermont",
+474.2,
+47.8
+],
+[
+"Virgin Islands",
+179.5,
+-31.2
+],
+[
+"Virginia",
+1610.2,
+7.1
+],
+[
+"Washington",
+812.3,
+115.2
+],
+[
+"West Virginia",
+308.8,
+-16.3
+],
+[
+"Wisconsin",
+883.3,
+2.7
+],
+[
+"Wyoming",
+606.6,
+-3.2
+] 
+];
+data.addColumn('string','State');
+data.addColumn('number','PCinIC_3_21');
+data.addColumn('number','PCinIC_3_15');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartGeoChartID437c4b3c5adb() {
+var data = gvisDataGeoChartID437c4b3c5adb();
+var options = {};
+options["width"] = 600;
+options["height"] = 400;
+options["region"] = "US";
+options["displayMode"] = "regions";
+options["resolution"] = "provinces";
+options["colorAxis"] = {values:[0,1000,2000,3000],
+                                 colors:['green', 'orange', 'red', 'black']};
+
+
+    var chart = new google.visualization.GeoChart(
+    document.getElementById('GeoChartID437c4b3c5adb')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "geochart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartGeoChartID437c4b3c5adb);
+})();
+function displayChartGeoChartID437c4b3c5adb() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID437c4b3c5adb"></script>
+<!-- divChart -->
+<div id="GeoChartID437c4b3c5adb" style="width: 600; height: 400;">
+
+</div>
+<p><br />
+<br />
+<br />
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
