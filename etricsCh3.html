@@ -658,8 +658,8 @@ summary( lm(prate ~ mrate+age, data=k401k) )</code></pre>
 </ul></li>
 <li>Linear relationships among the independent variables:
 <ul>
-<li>Regress <span class="math inline">\(x_j\)</span> on all other independent variables (including constant). The R-squared of this regression will be the higher when Xj can be better explained by the other independent variables.</li>
-<li>The sampling variance of the slope estimator for Xj will be higher when Xj can be better explained by the other independent variables.</li>
+<li>Regress <span class="math inline">\(x_j\)</span> on all other independent variables (including constant). The R-squared of this regression will be the higher when <span class="math inline">\(x_j\)</span> can be better explained by the other independent variables.</li>
+<li>The sampling variance of the slope estimator for <span class="math inline">\(x_j\)</span> will be higher when <span class="math inline">\(x_j\)</span> can be better explained by the other independent variables.</li>
 <li>Under perfect multicollinearity, the variance of the slope estimator will approach infinity.</li>
 </ul></li>
 </ol>
@@ -691,7 +691,7 @@ summary( lm(prate ~ mrate+age, data=k401k) )</code></pre>
 <img src="A9996.png" />
 
 </div>
-<p>Standard error of the regression (SER) is the positive square root of the variance. SER is an estimator of the standard deviation of the error term. To construct confidence intervals and conduct tests, we will need to estimate the standard deviation of beta_j^hat which is just he square root of the variance. However, since sigma is unknown, we will replace it with sigma estimator. That is called the standard error.</p>
+<p>Standard error of the regression (SER) is the positive square root of the variance. SER is an estimator of the standard deviation of the error term. To construct confidence intervals and conduct tests, we will need to estimate the standard deviation of <span class="math inline">\(\hat{\beta_j}\)</span> which is just he square root of the variance. However, since sigma is unknown, we will replace it with sigma estimator. That is called the standard error.</p>
 <div class="figure">
 <img src="A997.png" />
 

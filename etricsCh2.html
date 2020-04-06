@@ -509,11 +509,11 @@ points(exp(reg1$fitted.values)*a0~ceosal1$sales,col=&quot;green&quot;,lwd=4)</co
 <p>Regression results are as follows. Estimated <span class="math inline">\(\beta_0\)</span> coefficient is 4.822 and estimated <span class="math inline">\(\beta_1\)</span> coefficient is 0.257. This can be interpreted as follows: for 10% increase in sales, CEO salary is expected to be higher by 2.57%.</p>
 <p>If a new random sample is taken, we would get different values for the estimated coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. The question is what the estimators will estimate on average and how large will their variability be in repeated samples. OLS regression estimates “well” (we will discuss what that means below), we need to make a few assumptions. We call them Gauss-Markov assumptions for simple regression.</p>
 <ul>
-<li>SLR.1: The relationship between X and Y is linear. (Linear in Parameters)</li>
+<li>SLR.1: The relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is linear. (Linear in Parameters)</li>
 <li>SLR.2: We have a random sample following population model. (Random Sampling)</li>
-<li>SLR.3: The sample outcomes on X, are not all the same value. (Sample Variation)</li>
-<li>SLR.4: The error U has a zero conditional mean. E(u|x)=0. (Zero Conditional Mean)</li>
-<li>SLR.5: The error U has the same variance given any value of X. (Homoskedasticity)</li>
+<li>SLR.3: The sample outcomes on <span class="math inline">\(x\)</span>, are not all the same value. (Sample Variation)</li>
+<li>SLR.4: The error <span class="math inline">\(u\)</span> has a zero conditional mean. <span class="math inline">\(E(u|x)=0\)</span>. (Zero Conditional Mean)</li>
+<li>SLR.5: The error <span class="math inline">\(u\)</span> has the same variance given any value of <span class="math inline">\(x\)</span>. (Homoskedasticity)</li>
 </ul>
 <p>Given the first four assumptions (SLR.1 through SLR.4), we can show that OLS estimates are unbiased. In other words, it means that if we take many samples from the same population, on average, the estimated coefficients will be equal to the values that characterize the true/actual/real relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> in the population.</p>
 <p>Theorem 2.1: Unbiasedness of OLS <span class="math display">\[ SLR.1-SLR.4 \quad \rightarrow \quad E(\hat{\beta_0})=\beta_0, \quad E(\hat{\beta_1})= \beta_1\]</span></p>

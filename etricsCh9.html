@@ -331,16 +331,9 @@ border-radius: 5px;
 <p><span class="math display">\[log(price) = beta_0 + beta_1*log(lotsize) + beta_2*log(sqrft) + beta_3*bdrms + u\]</span></p>
 <p>For R, you can use the following code.</p>
 <pre class="r"><code>data(hprice1, package=&#39;wooldridge&#39;)
-library(car);</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
-<pre class="r"><code>library(lmtest);</code></pre>
-<pre><code>## Loading required package: zoo</code></pre>
-<pre><code>## 
-## Attaching package: &#39;zoo&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     as.Date, as.Date.numeric</code></pre>
-<pre class="r"><code>reg1 = lm(price ~ lotsize+sqrft+bdrms, data=hprice1)
+library(car);
+library(lmtest);
+reg1 = lm(price ~ lotsize+sqrft+bdrms, data=hprice1)
 reg2 = lm(log(price) ~ log(lotsize)+log(sqrft)+bdrms, data=hprice1)
 resettest(reg1)# RESET test for reg1</code></pre>
 <pre><code>## 
@@ -385,12 +378,8 @@ linearHypothesis(RESETreg, matchCoefs(RESETreg,&quot;fitted&quot;)) </code></pre
 <p>Another difficult problem arises when our model excludes a key variable due to data unavailability. If the data on key variable is lacking, one way to resolve it is to use a proxy variable for the omitted variable. Loosely speaking, a proxy variable is something that is related to the unobserved variable that we would like to control in our analysis. For example, one could use IQ as a proxy for natural ability. While we know that IQ and ability is not the same, we may think that they are sufficiently correlated. Moreover, the proxy variable must not be correlated with the error term. If the error and the proxy were correlated, the proxy would actually have to be included in the population regression function. The proxy variable is a “good” proxy for the omitted variable if using other variables in addition will not help to predict the omitted variable.</p>
 <p>Let’s look at the wage example. We know that ability is a determinant of wage but measurement for ability is at best approximate. Some researchers have used IQ score as a proxy for ability (how good is it as a proxy is a separate discussion). In R, execute the following.</p>
 <pre class="r"><code>data(wage2, package=&#39;wooldridge&#39;)
-library(stargazer);</code></pre>
-<pre><code>## 
-## Please cite as:</code></pre>
-<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
-<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
-<pre class="r"><code>reg3=lm(log(wage)~educ+exper+tenure+married+south+urban+black,data=wage2)
+library(stargazer);
+reg3=lm(log(wage)~educ+exper+tenure+married+south+urban+black,data=wage2)
 reg4=lm(log(wage)~educ+exper+tenure+married+south+urban+black+IQ,data=wage2)
 reg5=lm(log(wage)~educ+exper+tenure+married+south+urban+black+IQ+(educ*IQ),data=wage2)
 stargazer(reg3,reg4,reg5, type=&quot;text&quot;,keep.stat=c(&quot;n&quot;,&quot;rsq&quot;))</code></pre>

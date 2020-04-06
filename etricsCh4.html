@@ -640,9 +640,8 @@ reg2s=summary(reg2); reg2s</code></pre>
 
 </div>
 <p>In R, we can simply run the following code to test the joint hypotheses:</p>
-<pre class="r"><code>library(car) #if youy have never used car package before, you need to first install the package by running: install.packages(&quot;car&quot;)</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
-<pre class="r"><code>data(mlb1, package=&#39;wooldridge&#39;)
+<pre class="r"><code>library(car) #if youy have never used car package before, you need to first install the package by running: install.packages(&quot;car&quot;)
+data(mlb1, package=&#39;wooldridge&#39;)
 reg1 = lm(log(salary)~ years+gamesyr+bavg+hrunsyr+rbisyr, data=mlb1);
 linearHypothesis(reg1, c(&quot;bavg=0&quot;,&quot;hrunsyr=0&quot;,&quot;rbisyr=0&quot;))</code></pre>
 <pre><code>## Linear hypothesis test

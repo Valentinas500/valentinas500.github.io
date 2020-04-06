@@ -343,14 +343,8 @@ border-radius: 5px;
 <p><span class="math display">\[price = beta_0 + beta_1*lotsize + beta_2*sqrft + beta_3*bdrms + u\]</span></p>
 <p><span class="math display">\[log(price) = beta_0 + beta_1*lotsize + beta_2*sqrft + beta_3*bdrms + u\]</span></p>
 <p>R code is provided below.</p>
-<pre class="r"><code>library(lmtest); # you may need to install package lmtest if you never used it before</code></pre>
-<pre><code>## Loading required package: zoo</code></pre>
-<pre><code>## 
-## Attaching package: &#39;zoo&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     as.Date, as.Date.numeric</code></pre>
-<pre class="r"><code>data(hprice1, package=&#39;wooldridge&#39;)
+<pre class="r"><code>library(lmtest); # you may need to install package lmtest if you never used it before
+data(hprice1, package=&#39;wooldridge&#39;)
 reg1 = lm(price~lotsize+sqrft+bdrms, data=hprice1)
 summary(reg1)</code></pre>
 <pre><code>## 
@@ -449,12 +443,8 @@ bptest(reg2) # BP test</code></pre>
 <p>Weighted Least Squares (WLS) requires us to know the form of heteroskedasticity. In WLS, we adjust independent variables in such way to eliminate heteroskedasticity. If the other Gauss-Markov assumptions hold as well, OLS applied to the transformed model is the best linear unbiased estimator. Why is WLS more efficient than OLS in the original model? Observations with a large variance are less informative than observations with small variance and therefore should get less weight. WLS is a special case of generalized least squares (GLS)</p>
 <p>For example, let’s look at how net total financial wealth depends on income for single people. Run the following code in R.</p>
 <pre class="r"><code>data(k401ksubs, package=&#39;wooldridge&#39;)
-library(stargazer);</code></pre>
-<pre><code>## 
-## Please cite as:</code></pre>
-<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
-<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
-<pre class="r"><code>library(sandwich);
+library(stargazer);
+library(sandwich);
 reg3=lm(nettfa ~ inc + I((age-25)^2) + male + e401k, data=k401ksubs, subset=(fsize==1))
 bptest(reg3)</code></pre>
 <pre><code>## 

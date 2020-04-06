@@ -396,7 +396,7 @@ lines(x, pred_m2[,1], pch=19, col=&quot;red&quot;, type=&quot;b&quot;)
 legend(0, 25, legend=c(&quot;Male&quot;, &quot;Female&quot;),col=c(&quot;red&quot;, &quot;blue&quot;), lty=1:2, cex=1.5)</code></pre>
 <p><img src="etricsCh7_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>We will see that as we are able to control more factors, the wage gap gets smaller, however, it is still relatively large.</p>
-<p>We have already discussed that usually it is more appropriate to use log(wages) and that we may likely have nonlinear (quadratic) relationships. Let’s consider a more complicated model adding squared terms of experience and tenure and using log of wage: <span class="math display">\[log(wage) = b_0 + b_1*educ + b_2*female + b_3*exper + b_4*tenure + b_5*exper^2+ b_6*tenure^2 + u\]</span> Use the following syntax in R.</p>
+<p>We have already discussed that usually it is more appropriate to use log(wages) and that we may likely have nonlinear (quadratic) relationships. Let’s consider a more complicated model adding squared terms of experience and tenure and using log of wage: <span class="math display">\[log(wage) = b_0 + b_1*educ + b_2*female + b_3*exper + b_4*tenure + b_5*exper^2+ b_6*tenure^2 + u\]</span> Use the following commands in R.</p>
 <pre class="r"><code>data(wage1, package=&#39;wooldridge&#39;)
 reg3=lm(log(wage)~educ+female+exper+tenure+expersq+tenursq, data=wage1)
 summary(reg3)</code></pre>
@@ -437,12 +437,8 @@ reg4f=lm(log(wage)~belavg+abvavg+educ+exper+expersq+married+black,data=dff)
 reg4m=lm(log(wage)~belavg+abvavg+educ+exper+expersq+married+black,data=dfm)
 reg4=lm(log(wage)~belavg+abvavg+educ+exper+expersq+married+black+female,data=df)
 reg4alt=lm(log(wage)~looks+educ+exper+expersq+married+black+female,data=df)
-library(stargazer);</code></pre>
-<pre><code>## 
-## Please cite as:</code></pre>
-<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
-<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
-<pre class="r"><code>stargazer(list(reg4m,reg4f,reg4,reg4alt),type=&quot;text&quot;,keep.stat=c(&quot;n&quot;,&quot;rsq&quot;)) #need to install &quot;stargazer&quot; first: install.packages(&quot;stargazer&quot;)</code></pre>
+library(stargazer);
+stargazer(list(reg4m,reg4f,reg4,reg4alt),type=&quot;text&quot;,keep.stat=c(&quot;n&quot;,&quot;rsq&quot;)) #need to install &quot;stargazer&quot; first: install.packages(&quot;stargazer&quot;)</code></pre>
 <pre><code>## 
 ## ====================================================
 ##                        Dependent variable:          
@@ -583,9 +579,8 @@ summary(reg6a)</code></pre>
 ## Residual standard error: 0.4629 on 520 degrees of freedom
 ## Multiple R-squared:  0.2487, Adjusted R-squared:  0.2415 
 ## F-statistic: 34.43 on 5 and 520 DF,  p-value: &lt; 2.2e-16</code></pre>
-<pre class="r"><code>library(car);</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
-<pre class="r"><code>linearHypothesis(reg6b, c(&quot;female=0&quot;,&quot;female:exper=0&quot;,&quot;female:expersq=0&quot;))</code></pre>
+<pre class="r"><code>library(car);
+linearHypothesis(reg6b, c(&quot;female=0&quot;,&quot;female:exper=0&quot;,&quot;female:expersq=0&quot;))</code></pre>
 <pre><code>## Linear hypothesis test
 ## 
 ## Hypothesis:
