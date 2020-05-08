@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 13</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 13</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-13-pooling-cross-sections-across-time-simple-panel-data-methods" class="section level5">
+<h5>Chapter 13: Pooling Cross Sections across Time: Simple Panel Data Methods</h5>
+<p>More and more research uses data sets that have both cross sectional and time series dimensions. Such data has some important advantages over purely cross sectional or time series data.</p>
+<p>We will consider two types of data sets: independently pooled cross section and panel data.</p>
+<p>Independently pooled cross section is obtained by sampling randomly from a large population at different points in time. For example, every year, we get a random sample of workers in a country and ask them about their wages, education and so on. European Social Survey is such survey. In the participating countries, every two years a new sample is surveyed. Such data consists of independently sampled observations. It rules out correlation in the error terms across different observations. With such data, it is important to remember and account for the fact that distributions of wages, education, attitudes and other factors change over time.</p>
+<p>A panel (or longitudinal) data set follows the same individuals, firms, cities, countries over time. For example, in Health and Retirement Study (HRS) of older Americans and Survey of Health, Ageing and Retirement in Europe (SHARE) of older Europeans, the same individuals are followed over the years and various data about them is collected. This gives us data on their consumption, income, assets, health and other variables in different years. Panel data is very useful as we are able to make sure that the some of the unobservables such as innate ability do not change since we follow the same person.</p>
+<p>Let’s start with independently pooled cross section. There are quite a few examples. Among them, Current Population Survey and European Social Survey. By pooling the random samples over time, we increase the sample size giving our analysis more precise estimators and test statistics with more power. Before pooling samples obtained in different points in time, one must make sure that at least some of the relationships between the dependent and independent variables must remain constant over time. Sometimes, the pattern of coefficients on the year dummy variables is itself an interest. For example, one may ask: “After controlling for state demographic and economic factors, what is the pattern of loan discrimination between 1940 and 1980?” This could be answered by using multiple regression analysis with year dummy variables.</p>
+<p>Let’s look at Example 13.1 in the textbook. In this example, we use General Social Survey for the given years to estimate a model explaining the total number of kids born to a woman. One could be interested in the fertility rate over time, after controlling for other observable factors.</p>
+<pre class="r"><code>library(wooldridge)
+data(fertil1, package=&#39;wooldridge&#39;)
+reg1=lm(kids~educ+age+I(age^2)+black+east+northcen+west
++farm+othrural+town+smcity+y74+y76+y78+y80+y82+y84, data=fertil1)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = kids ~ educ + age + I(age^2) + black + east + northcen + 
+##     west + farm + othrural + town + smcity + y74 + y76 + y78 + 
+##     y80 + y82 + y84, data = fertil1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.9878 -1.0086 -0.0767  0.9331  4.6548 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -7.742457   3.051767  -2.537 0.011315 *  
+## educ        -0.128427   0.018349  -6.999 4.44e-12 ***
+## age          0.532135   0.138386   3.845 0.000127 ***
+## I(age^2)    -0.005804   0.001564  -3.710 0.000217 ***
+## black        1.075658   0.173536   6.198 8.02e-10 ***
+## east         0.217324   0.132788   1.637 0.101992    
+## northcen     0.363114   0.120897   3.004 0.002729 ** 
+## west         0.197603   0.166913   1.184 0.236719    
+## farm        -0.052557   0.147190  -0.357 0.721105    
+## othrural    -0.162854   0.175442  -0.928 0.353481    
+## town         0.084353   0.124531   0.677 0.498314    
+## smcity       0.211879   0.160296   1.322 0.186507    
+## y74          0.268183   0.172716   1.553 0.120771    
+## y76         -0.097379   0.179046  -0.544 0.586633    
+## y78         -0.068666   0.181684  -0.378 0.705544    
+## y80         -0.071305   0.182771  -0.390 0.696511    
+## y82         -0.522484   0.172436  -3.030 0.002502 ** 
+## y84         -0.545166   0.174516  -3.124 0.001831 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.555 on 1111 degrees of freedom
+## Multiple R-squared:  0.1295, Adjusted R-squared:  0.1162 
+## F-statistic: 9.723 on 17 and 1111 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The coefficients on the year dummy show a drop in fertility rates in the early 80s. Other slopes are as predicted: educ is negatively related, age is positive but decreasing, etc. The model we estimated here assumes the effects to be constant over time. This may or may not be true. One should also check heteroskedasticity in the error term and may use heteroskedasticity-robust standard errors.</p>
+<p>Let’s look at another example: changes in return to education and gender wage gap. <span class="math inline">\(\beta_7\)</span> (in reg2a) measures the <span class="math inline">\(log(wage)\)</span> differential. If nothing changed from 1978 to 1985 to the gender wage gap, we expect to see <span class="math inline">\(\beta_8\)</span> (in reg2a) not significantly different from 0.</p>
+<pre class="r"><code>data(cps78_85, package=&#39;wooldridge&#39;)
+reg2a = lm(lwage ~ y85 + educ + educ*y85 + exper + I(exper^2) + union + female + female*y85, data=cps78_85)
+#You can similarly use a shorter notation as shown below.
+reg2b = lm(lwage ~ y85*(educ+female) +exper+ I(exper^2) + union, data=cps78_85) 
+summary(reg2a)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ y85 + educ + educ * y85 + exper + I(exper^2) + 
+##     union + female + female * y85, data = cps78_85)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.56098 -0.25828  0.00864  0.26571  2.11669 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.589e-01  9.345e-02   4.911 1.05e-06 ***
+## y85          1.178e-01  1.238e-01   0.952   0.3415    
+## educ         7.472e-02  6.676e-03  11.192  &lt; 2e-16 ***
+## exper        2.958e-02  3.567e-03   8.293 3.27e-16 ***
+## I(exper^2)  -3.994e-04  7.754e-05  -5.151 3.08e-07 ***
+## union        2.021e-01  3.029e-02   6.672 4.03e-11 ***
+## female      -3.167e-01  3.662e-02  -8.648  &lt; 2e-16 ***
+## y85:educ     1.846e-02  9.354e-03   1.974   0.0487 *  
+## y85:female   8.505e-02  5.131e-02   1.658   0.0977 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4127 on 1075 degrees of freedom
+## Multiple R-squared:  0.4262, Adjusted R-squared:  0.4219 
+## F-statistic:  99.8 on 8 and 1075 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Running the above equation yields the following result: the gender wage gap in 1975 is estimated to be around 31% (statistically significant at 5%). However, it seems to have fallen in the following years around 8.5 percentage points (also statistically significant at 5% level).</p>
+<p>In the example above we interacted some variables with a time dummy variable to be estimate how the effects of a variable changed over time. Note that if you interact all variables with the time dummy, it is the same as running two separate equations, one for one sample in time period 1 and one in time period 2. See the code for each regression on each of these samples separately below.</p>
+<pre class="r"><code>data(cps78_85, package=&#39;wooldridge&#39;)
+reg2c = lm(lwage ~ y85 + y85*(educ + exper + I(exper^2) + union + female), data=cps78_85)
+summary(reg2c)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ y85 + y85 * (educ + exper + I(exper^2) + 
+##     union + female), data = cps78_85)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.55317 -0.25818  0.00812  0.26686  2.14184 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     0.4582570  0.1021541   4.486 8.04e-06 ***
+## y85             0.1219978  0.1509545   0.808  0.41917    
+## educ            0.0768148  0.0069137  11.110  &lt; 2e-16 ***
+## exper           0.0249177  0.0050303   4.954 8.46e-07 ***
+## I(exper^2)     -0.0002844  0.0001083  -2.625  0.00879 ** 
+## union           0.2039824  0.0393500   5.184 2.60e-07 ***
+## female         -0.3155108  0.0367901  -8.576  &lt; 2e-16 ***
+## y85:educ        0.0139270  0.0101560   1.371  0.17057    
+## y85:exper       0.0095289  0.0071382   1.335  0.18219    
+## y85:I(exper^2) -0.0002399  0.0001553  -1.544  0.12277    
+## y85:union      -0.0018095  0.0617285  -0.029  0.97662    
+## y85:female      0.0846136  0.0518164   1.633  0.10277    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4128 on 1072 degrees of freedom
+## Multiple R-squared:  0.4276, Adjusted R-squared:  0.4217 
+## F-statistic: 72.79 on 11 and 1072 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>reg2d = lm(lwage ~ educ + exper + I(exper^2) + union + female, data=cps78_85[which(cps78_85$y85==0),])
+
+reg2e = lm(lwage ~ educ + exper + I(exper^2) + union + female, data=cps78_85[which(cps78_85$y85==1),])
+
+summary(reg2d)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ educ + exper + I(exper^2) + union + female, 
+##     data = cps78_85[which(cps78_85$y85 == 0), ])
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.55317 -0.23310  0.01338  0.22015  1.29929 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.4582570  0.0957004   4.788 2.17e-06 ***
+## educ         0.0768148  0.0064769  11.860  &lt; 2e-16 ***
+## exper        0.0249177  0.0047125   5.288 1.80e-07 ***
+## I(exper^2)  -0.0002844  0.0001015  -2.802  0.00526 ** 
+## union        0.2039824  0.0368640   5.533 4.89e-08 ***
+## female      -0.3155108  0.0344658  -9.154  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3867 on 544 degrees of freedom
+## Multiple R-squared:  0.3833, Adjusted R-squared:  0.3776 
+## F-statistic: 67.61 on 5 and 544 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>summary(reg2e)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lwage ~ educ + exper + I(exper^2) + union + female, 
+##     data = cps78_85[which(cps78_85$y85 == 1), ])
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.19388 -0.28944 -0.00682  0.29548  2.14184 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.5802548  0.1179364   4.920 1.16e-06 ***
+## educ         0.0907418  0.0078944  11.494  &lt; 2e-16 ***
+## exper        0.0344467  0.0053743   6.409 3.24e-10 ***
+## I(exper^2)  -0.0005243  0.0001181  -4.438 1.11e-05 ***
+## union        0.2021730  0.0504693   4.006 7.07e-05 ***
+## female      -0.2308973  0.0387206  -5.963 4.53e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.438 on 528 degrees of freedom
+## Multiple R-squared:  0.3175, Adjusted R-squared:  0.3111 
+## F-statistic: 49.13 on 5 and 528 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>As you can see, for the year 1985 (reg2e), the intercept is 0.5802548 which is exactly the same as the intercept in the regression reg2c for the observations in the year 1985: 0.4582570+0.1219978.</p>
+<p>Pooled cross sections can be useful in evaluating the effects of a certain event or policy. With data before and after the event (or policy), one is able to infer about the impact of that event.</p>
+<p>Example 13.3</p>
+<pre class="r"><code>data(kielmc, package=&#39;wooldridge&#39;)
+# Separate regressions for 1978 and 1981: report coeeficients only
+coef( lm(rprice~nearinc, data=kielmc, subset=(year==1978)) )</code></pre>
+<pre><code>## (Intercept)     nearinc 
+##    82517.23   -18824.37</code></pre>
+<pre class="r"><code>coef( lm(rprice~nearinc, data=kielmc, subset=(year==1981)) )</code></pre>
+<pre><code>## (Intercept)     nearinc 
+##   101307.51   -30688.27</code></pre>
+<pre class="r"><code># Joint regression including an interaction term 
+library(lmtest)
+coeftest( lm(rprice~nearinc*y81, data=kielmc) )</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##             Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)  82517.2     2726.9 30.2603 &lt; 2.2e-16 ***
+## nearinc     -18824.4     4875.3 -3.8612 0.0001368 ***
+## y81          18790.3     4050.1  4.6395 5.117e-06 ***
+## nearinc:y81 -11863.9     7456.6 -1.5911 0.1125948    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>RegA=lm((rprice)~nearinc*y81, data=kielmc)
+RegB=lm((rprice)~nearinc*y81 + age +I(age^2), data=kielmc)
+RegC=lm((rprice)~nearinc*y81+age+I(age^2)+log(intst)+log(land)+log(area)+rooms+baths, data=kielmc)
+library(stargazer)
+stargazer(RegA,RegB,RegC, type=&quot;text&quot;)</code></pre>
+<pre><code>## 
+## ============================================================================================
+##                                               Dependent variable:                           
+##                     ------------------------------------------------------------------------
+##                                                     (rprice)                                
+##                               (1)                     (2)                     (3)           
+## --------------------------------------------------------------------------------------------
+## nearinc                 -18,824.370***            9,397.936*              10,941.230**      
+##                           (4,875.322)             (4,812.222)             (4,683.912)       
+##                                                                                             
+## y81                      18,790.290***           21,321.040***           16,270.670***      
+##                           (4,050.065)             (3,443.631)             (2,811.080)       
+##                                                                                             
+## age                                              -1,494.424***            -704.170***       
+##                                                    (131.860)               (139.188)        
+##                                                                                             
+## I(age2)                                            8.691***                 3.496***        
+##                                                     (0.848)                 (0.855)         
+##                                                                                             
+## log(intst)                                                                -7,024.937**      
+##                                                                           (3,107.732)       
+##                                                                                             
+## log(land)                                                                10,359.430***      
+##                                                                           (2,415.652)       
+##                                                                                             
+## log(area)                                                                32,442.580***      
+##                                                                           (5,078.362)       
+##                                                                                             
+## rooms                                                                      2,842.505*       
+##                                                                           (1,709.086)       
+##                                                                                             
+## baths                                                                     7,092.305***      
+##                                                                           (2,734.712)       
+##                                                                                             
+## nearinc:y81               -11,863.900           -21,920.270***           -17,767.930***     
+##                           (7,456.646)             (6,359.745)             (5,126.169)       
+##                                                                                             
+## Constant                 82,517.230***           89,116.540***          -238,591.100***     
+##                           (2,726.910)             (2,406.051)             (41,020.560)      
+##                                                                                             
+## --------------------------------------------------------------------------------------------
+## Observations                  321                     321                     321           
+## R2                           0.174                   0.414                   0.643          
+## Adjusted R2                  0.166                   0.405                   0.632          
+## Residual Std. Error  30,242.900 (df = 317)   25,543.290 (df = 315)   20,102.690 (df = 310)  
+## F Statistic         22.251*** (df = 3; 317) 44.591*** (df = 5; 315) 55.854*** (df = 10; 310)
+## ============================================================================================
+## Note:                                                            *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<pre class="r"><code>#Using log(price)
+summary( lm(log(price)~nearinc*y81, data=kielmc) )</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(price) ~ nearinc * y81, data = kielmc)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.11957 -0.20328  0.02226  0.18909  1.66604 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 11.28542    0.03051 369.839  &lt; 2e-16 ***
+## nearinc     -0.33992    0.05456  -6.231 1.48e-09 ***
+## y81          0.45700    0.04532  10.084  &lt; 2e-16 ***
+## nearinc:y81 -0.06265    0.08344  -0.751    0.453    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3384 on 317 degrees of freedom
+## Multiple R-squared:  0.4091, Adjusted R-squared:  0.4035 
+## F-statistic: 73.15 on 3 and 317 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>In economics and other social sciences, a natural experiment (quasi-experiment) occurs when some exogenous event (for example, a change in government policy) changes the environment in which individuals, firms, cities operate. There is a control group which is not affected by the policy change and the treatment group which is thought to be affected by the policy change. Note that in a true experiment, the two groups are randomly chosen. In natural experiments, the assignment of treatment to individuals or cities is not random thus we need to control for differences between the two groups. To control for systemic differences between the control and treatment groups in a natural experiment, we need at least two years of data, one before and one after the policy change. Thus, we can break down our sample into four groups: (1) control group before the policy change, (2) control group after the policy change, (3) treatment group before the policy change, (4) treatment group after the policy change.</p>
+<p>We can specify the following equation: <span class="math display">\[
+y=\beta_0+\delta_0(after)+\beta_1(treated)+\delta_1(after)(treated)+(other\_factors)
+\]</span> where <span class="math inline">\(treated\)</span> equals 1 if the observed unit is in the treatment group, and <span class="math inline">\(after\)</span> equals 1 for all observations in the second time period. Here <span class="math inline">\(\hat \delta_1\)</span> compares the outcomes of two groups before and after the policy change. <span class="math display">\[
+\hat \delta_1=(\bar y_{1,treated}-\bar y_{1,control})-(\bar y_{0,treated}-\bar y_{0,control})
+\]</span></p>
+<p>In the above equation, our interest lies in <span class="math inline">\(\delta_1\)</span>. We call delta1 the difference-in-difference estimator. In essence it shows the difference between the change treatment group and the change in the control group. Compare the difference in outcomes of the units that are affected by the policy change (= treatment group) and those who are not affected (= control group) before and after the policy was enacted. If the change in the treatment group was found to be significantly larger than the change in the control group and no other external factors changed across the two time periods, we have found a good estimator of the causal impact of the program.</p>
+<p>For example, the level of unemployment benefits is cut but only for group A (= treatment group). Group A normally has longer unemployment duration than group B (= control group). If the difference in unemployment duration between group A and group B becomes smaller after the reform, reducing unemployment benefits reduces unemployment duration for those affected.</p>
+<p>Keep in mind that difference-in-difference only works if the difference in outcomes between the two groups is not changed by other factors than the policy change (e.g. there must be no differential trends).</p>
+<p>Example 13.4</p>
+<pre class="r"><code>data(injury, package=&#39;wooldridge&#39;)
+reg4=lm(log(durat)~afchnge + highearn + afchnge*highearn, data=injury)
+summary(reg4)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log(durat) ~ afchnge + highearn + afchnge * highearn, 
+##     data = injury)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.0128 -0.7214 -0.0171  0.7714  4.0047 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       1.19934    0.02711  44.241  &lt; 2e-16 ***
+## afchnge           0.02364    0.03970   0.595  0.55164    
+## highearn          0.21520    0.04336   4.963 7.11e-07 ***
+## afchnge:highearn  0.18835    0.06279   2.999  0.00271 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.298 on 7146 degrees of freedom
+## Multiple R-squared:  0.01584,    Adjusted R-squared:  0.01543 
+## F-statistic: 38.34 on 3 and 7146 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>It is often a good idea to expand a simple DD (difference-in-difference) methodology by obtaining multiple treatment and control groups as well as more time periods. We can easily create a general framework for policy analysis by allowing a general pattern of interventions, where some units are never treated, others get treated at various time periods.</p>
+<p>Now suppose you have panel data instead of pooled cross section. This means that you have data on the same individuals/firms/cities over a few periods of time.</p>
+<p>Example. Assume your job is to find the effect of unemployment on city crime rate. Assume that no other explanatory variables are available except crime rate and unemployment. Will it be possible to estimate the causal effect of unemployment on crime? Let <span class="math inline">\(i\)</span> denote the unit (city) and <span class="math inline">\(t\)</span> denote time period. We can now write an example fixed effects model explaining the crime rate:</p>
+<div class="figure">
+<img src="a22a.png" />
+
+</div>
+<p>The dummy variable <span class="math inline">\(d87_t\)</span> equals 1 for the year 1987 and 0 for the year 1982. Variable <span class="math inline">\(a_i\)</span> is referred to as a fixed effect (since it is fixed -&gt; no <span class="math inline">\(t\)</span> subscript). In this case, it represents the city unobserved effect, such as geographical features, demographic features (assuming they do not change over short period of time) and so on. How crime rates are reported may also be in <span class="math inline">\(a_i\)</span>. The error <span class="math inline">\(u_{it}\)</span> is often called the idiosyncratic error or time varying error because it represents factors that change over time.</p>
+<p>If we simply pool the data and run an OLS regression, we will run into a big problem. Since <span class="math inline">\(a_i\)</span> will be in the error term, and we know that those factors in <span class="math inline">\(a_i\)</span> are most likely correlated with unemployment, we will get biased estimators. The resulting bias in pooled OLS is sometimes called heterogeneity bias but really it is simply a bias due to omitting a time-constant variable.</p>
+<p>To run a pooled OLS, use the following:</p>
+<pre class="r"><code>data(crime2, package=&#39;wooldridge&#39;)
+reg5=lm(crmrte~d87+unem, data=crime2)
+summary(reg5)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = crmrte ~ d87 + unem, data = crime2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -53.474 -21.794  -6.266  18.297  75.113 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  93.4202    12.7395   7.333 9.92e-11 ***
+## d87           7.9404     7.9753   0.996    0.322    
+## unem          0.4265     1.1883   0.359    0.720    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 29.99 on 89 degrees of freedom
+## Multiple R-squared:  0.01221,    Adjusted R-squared:  -0.009986 
+## F-statistic: 0.5501 on 2 and 89 DF,  p-value: 0.5788</code></pre>
+<p>We find that the resulting sign on the estimate of unemp is in the right direction but the significance is very low. Using pooled OLS does not solve omitted variable problem. Thus, we should do something more sophisticated. In the crime equation, we want to allow the unmeasured city factors in <span class="math inline">\(a_i\)</span> that affect the crime rate also to be correlated with the unemployment rate. Since a_i does not change over time, we can difference the data across two years. This would look as follows:</p>
+<div class="figure">
+<img src="a33a.png" />
+
+</div>
+<p>The resulting equation is called the first-differenced equation. It is just like a cross-sectional equation before but each variables is differenced over time. The unobserved effect, <span class="math inline">\(a_i\)</span>, does not appear in the equation because it has been differenced away. The intercept in the final equation is also constant over time (what we wanted). Before estimating, we should ask if the OLS assumptions are satisfied, mainly is the exogeneity assumption satisfied or is the change in u uncorrelated with the change in unemployment. For example, suppose that law enforcement effort (which is in <span class="math inline">\(u\)</span>) increases more in cities where unemployment rate decreases. This would violate the exogeneity assumption because change in u would be negatively correlated with change in unemployment. Including more factors into the regression equation, allows us to partly overcome this problem. One also must have some variation in independent variables.</p>
+<p>We can now estimate our model using the following code:</p>
+<pre class="r"><code>data(crime2, package=&#39;wooldridge&#39;)
+reg6=lm(ccrmrte~cunem, data=crime2)
+summary(reg6)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = ccrmrte ~ cunem, data = crime2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -36.912 -13.369  -5.507  12.446  52.915 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)  15.4022     4.7021   3.276  0.00206 **
+## cunem         2.2180     0.8779   2.527  0.01519 * 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 20.05 on 44 degrees of freedom
+##   (46 observations deleted due to missingness)
+## Multiple R-squared:  0.1267, Adjusted R-squared:  0.1069 
+## F-statistic: 6.384 on 1 and 44 DF,  p-value: 0.01519</code></pre>
+<p>The above results point to a positive statistically significant relationship between unemployment and crime rate. It shows that elimination of the time-constant effects (by differencing) was very important. Also, if we look at the intercept, we see that even if the change in unemployment is zero, we predict an increase in the crime rate. We call this a secular upward trend in crime rates in that period.</p>
+<p>Example 13.5</p>
+<pre class="r"><code>data(slp75_81,package=&#39;wooldridge&#39;)
+attach(slp75_81)
+regE5=lm(cslpnap~+ctotwrk+ceduc+cmarr+cyngkid+cgdhlth)
+summary(regE5)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = cslpnap ~ +ctotwrk + ceduc + cmarr + cyngkid + cgdhlth)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2454.2  -307.2    79.8   334.4  2037.9 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -92.63404   45.86590  -2.020   0.0446 *  
+## ctotwrk      -0.22667    0.03605  -6.287 1.58e-09 ***
+## ceduc        -0.02447   48.75938  -0.001   0.9996    
+## cmarr       104.21395   92.85536   1.122   0.2629    
+## cyngkid      94.66540   87.65252   1.080   0.2813    
+## cgdhlth      87.57785   76.59913   1.143   0.2541    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 598.6 on 233 degrees of freedom
+## Multiple R-squared:  0.1495, Adjusted R-squared:  0.1313 
+## F-statistic: 8.191 on 5 and 233 DF,  p-value: 3.827e-07</code></pre>
+<p>Example 13.6</p>
+<pre class="r"><code>data(crime3,package=&#39;wooldridge&#39;)
+attach(crime3)
+regE6=lm(clcrime~d78+clrprc1+clrprc2)
+summary(regE6)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = clcrime ~ d78 + clrprc1 + clrprc2)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.71931 -0.28433  0.04374  0.18731  1.01998 
+## 
+## Coefficients: (1 not defined because of singularities)
+##               Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)  0.6268644  0.1861254   3.368  0.00146 **
+## d78                 NA         NA      NA       NA   
+## clrprc1      0.0007601  0.0056674   0.134  0.89385   
+## clrprc2     -0.0114357  0.0058377  -1.959  0.05571 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3625 on 50 degrees of freedom
+##   (53 observations deleted due to missingness)
+## Multiple R-squared:  0.1074, Adjusted R-squared:  0.07165 
+## F-statistic: 3.007 on 2 and 50 DF,  p-value: 0.05848</code></pre>
+<p>When dealing with panel data, a researcher should carefully store the data so that different units and time periods are easily linked. One way to do it is to have for each unit two entries in the data set: one for time period 1, another for time period 2. Then the second unit follows with an entry for each time period. This easily allows to use the data both for panel study and for pooled cross sectional analysis.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Unit</th>
+<th>Time Period</th>
+<th>Wage</th>
+<th>Married</th>
+<th>Child</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>2</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>1</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>2</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>2</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>Another approach is to store the data with separate columns for each observed independent variable values in each time period creating only one entry for each unit.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Unit</th>
+<th>Wage_1</th>
+<th>Wage_2</th>
+<th>Married_1</th>
+<th>Married_2</th>
+<th>Child_1</th>
+<th>Child_2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>Panel data sets are very useful for policy analysis, in particular, program evaluation. A sample of individuals, firms, cities, is obtained in the first period. Some of these take part in the program (treatment group) and others do not (control group).</p>
+<p>For example, let’s assume we are assigned to evaluate the effect of Michigan job training program on worker productivity of manufacturing firms in 1987 and 1988. <span class="math display">\[
+scrap_{it}=\beta_0 + \delta_0*y88_t + \beta_1*grant_{it} + a_i + u_{it}, \quad     t=(1,2) \text{ or } (1987,1988)
+\]</span> <span class="math inline">\(scrap_{it}\)</span> is the scrap rate of the firm i in period <span class="math inline">\(t\)</span>, <span class="math inline">\(grant_{it}\)</span> is the dummy variable equal one if firm <span class="math inline">\(i\)</span> in period <span class="math inline">\(t\)</span> received the job training grant, <span class="math inline">\(y88_t\)</span> is the dummy variable for observations in 1988, <span class="math inline">\(a_i\)</span> is the unobserved firm effect that is time invariant.</p>
+<p>The problem lies in the fact that <span class="math inline">\(a_i\)</span> may be systemically related to whether a firm gets a grant. Since grants are typically not assigned randomly some kind of firms may be preferred to others. To eliminate this problem and producing biased and inconsistent estimators, we can use first differencing. This yields the following: <span class="math display">\[
+\Delta scrap_i = \delta_0 + \beta_1*\Delta grant_{i} + \Delta u_{i}
+\]</span></p>
+<p>We will simply regress the change in scrap rate on the change in grant indicator. We have removed the unobserved firm characteristics from the regression eliminating the main problem. We can also use log(scrap_it) for the dependent variable to estimate the percentage effect. After differencing, the model is: <span class="math display">\[
+\Delta \log (scrap_i) = \delta_0 + \beta_1*\Delta grant_{i} + \Delta u_{i}
+\]</span></p>
+<p>Estimating the above two equations yields the following results. Check out the R code to replicate the analysis.</p>
+<p>Example 13.7</p>
+<pre class="r"><code>data(traffic1,package=&#39;wooldridge&#39;)
+attach(traffic1)
+regE7=lm(cdthrte~copen+cadmn)
+summary(regE7)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = cdthrte ~ copen + cadmn)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.25261 -0.14337 -0.00321  0.19679  0.79679 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.49679    0.05243  -9.476 1.43e-12 ***
+## copen       -0.41968    0.20559  -2.041   0.0467 *  
+## cadmn       -0.15060    0.11682  -1.289   0.2035    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3435 on 48 degrees of freedom
+## Multiple R-squared:  0.1187, Adjusted R-squared:  0.08194 
+## F-statistic: 3.231 on 2 and 48 DF,  p-value: 0.04824</code></pre>
+<p>As we use differencing with two time periods, we can use the same technique with more than two periods. For example, you obtain 10 individuals’ data (N=10) in 3 different time periods (T=3). The general unobserved effects model is: <span class="math display">\[
+y_{it} = \delta_1 + \delta2*d2_t + \delta3*d3_t + \beta_1*x_{it1} + \beta_2*x_{it2} + ... + \beta_k*x_{itk} + a_i + u_{it} 
+\]</span></p>
+<p>The total number of observations is N*T because each individual is observed T times. The key assumption is that the idiosyncratic errors are uncorrelated with the explanatory variable in each time period: <span class="math display">\[
+Cov(x_{itj}, u_{is}) = 0  \quad   \text{ for all, t,s, and j}
+\]</span> Omitted variables or measurement bias are very likely to violate this assumption.</p>
+<p>As previously, we can eliminate the <span class="math inline">\(a_i\)</span> by differencing adjacent periods. In the three period case, we subtract time period one from time period two, and next we subtract time period two from time period three. This gives us two observed changes (for t = 2 and 3): <span class="math display">\[
+\Delta y_{it} = \delta_2*d2_t + \delta3*\Delta d3_t + \beta_1*\Delta x_{it1} + \beta_2*\Delta x_{it2} + ... +\ \beta_k*\Delta x_{itk} + \Delta u_{it}
+\]</span></p>
+<p>We do not have a differenced equation for t=1 because there is no observation in the year prior to t=1. The above differenced equation represents two time periods for each individual in the sample. If the equation satisfies the classical linear model assumptions, then pooled OLS gives unbiased estimators, and the usual t and F statistics are valid of hypotheses testing. The important requirement for OLS is that <span class="math inline">\(\Delta u_{it}\)</span> is uncorrelated with <span class="math inline">\(\Delta x_{itj}\)</span> for all j and t = 2 and 3.</p>
+<p>As you can notice, in the differenced equation above the intercept is not present (as it was differenced away). For the purpose of computing the R-squared, we can use a simple transformation by reworking the time dummies to obtain the following equation: <span class="math display">\[
+\Delta y_{it} = \alpha_0 + \alpha_1*d3_t + \beta_1*\Delta x_{it1} + \beta_2*\Delta x_{it2} + ... + \beta_k*\Delta x_{itk} + \Delta u_{it}
+\]</span></p>
+<p>If we have the same T time periods for each of N cross-sectional units, we say that the data set is a balanced panel: we have the same time periods for all individuals, firms or cities.</p>
+<p>If the researcher detects serial correlation (<span class="math inline">\(\Delta u_{i,t}\)</span> and <span class="math inline">\(\Delta u_{i,t-1}\)</span> have a specific relationship), it is possible to adjust the standard errors to allow for unrestricted forms of serial correlation and heteroskedasticity. If there is no serial correlation in the errors, the usual methods for dealing with heteroskedasticity are valid. We can use Breusch-Pagan and White tests for heteroskedasticity and simply use the usual heteroskedasticity-robust standard errors.</p>
+<p>Often, we are interested in slope coefficients have changed over time. We can easily carry out such tests by interacting the explanatory variables of interest with time-period dummies. Suppose you observe 3 years of data on a random sample of workers in 2000, 2002 and 2004, and specify the following model: <span class="math display">\[
+log(wage_{it}) = \beta_0 + \delta_1*d02_t + \delta_2*d04_t + \beta_1*female_i + \gamma_1*d02_t*female_i + \gamma_2*d04_t*female_i + ... + a_i + u_{it}
+\]</span></p>
+<p>In this case, first differencing will eliminate the intercept for the year 2000 (<span class="math inline">\(\beta_0\)</span>), and the gender wage gap for 2000 (<span class="math inline">\(\beta_1*female_i\)</span>). However, the change in <span class="math inline">\(d02_t*female_i\)</span> is <span class="math inline">\(\Delta (d02_t)*female_i\)</span> does not disappear thus we are able to estimate how the wage gap has changed in 2002 and, similarly, 2004 relative to 2000.</p>
+<p>Example 13.9</p>
+<pre class="r"><code>library(plm);library(lmtest)
+data(crime4, package=&#39;wooldridge&#39;)
+
+crime4.p &lt;- pdata.frame(crime4, index=c(&quot;county&quot;,&quot;year&quot;) )
+pdim(crime4.p)</code></pre>
+<pre><code>## Balanced Panel: n = 90, T = 7, N = 630</code></pre>
+<pre class="r"><code># manually calculate first differences of crime rate:
+crime4.p$dcrmrte &lt;- diff(crime4.p$crmrte)
+
+# Display selected variables for observations 1-9:
+crime4.p[1:9, c(&quot;county&quot;,&quot;year&quot;,&quot;crmrte&quot;,&quot;dcrmrte&quot;)]</code></pre>
+<pre><code>##      county year    crmrte       dcrmrte
+## 1-81      1   81 0.0398849            NA
+## 1-82      1   82 0.0383449 -0.0015399978
+## 1-83      1   83 0.0303048 -0.0080401003
+## 1-84      1   84 0.0347259  0.0044211000
+## 1-85      1   85 0.0365730  0.0018470995
+## 1-86      1   86 0.0347524 -0.0018206015
+## 1-87      1   87 0.0356036  0.0008512028
+## 3-81      3   81 0.0163921            NA
+## 3-82      3   82 0.0190651  0.0026730001</code></pre>
+<pre class="r"><code># Estimate FD model:
+coeftest(plm(log(crmrte)~d83+d84+d85+d86+d87+lprbarr+lprbconv+lprbpris+lavgsen
+                        +lpolpc,data=crime4.p, model=&quot;fd&quot;) )</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##               Estimate Std. Error  t value  Pr(&gt;|t|)    
+## (Intercept)  0.0077134  0.0170579   0.4522 0.6513193    
+## d83         -0.0998658  0.0238953  -4.1793 3.421e-05 ***
+## d84         -0.1478033  0.0412794  -3.5806 0.0003744 ***
+## d85         -0.1524144  0.0584000  -2.6098 0.0093152 ** 
+## d86         -0.1249001  0.0760042  -1.6433 0.1009087    
+## d87         -0.0840734  0.0940003  -0.8944 0.3715175    
+## lprbarr     -0.3274942  0.0299801 -10.9237 &lt; 2.2e-16 ***
+## lprbconv    -0.2381066  0.0182341 -13.0583 &lt; 2.2e-16 ***
+## lprbpris    -0.1650463  0.0259690  -6.3555 4.488e-10 ***
+## lavgsen     -0.0217606  0.0220909  -0.9850 0.3250506    
+## lpolpc       0.3984264  0.0268820  14.8213 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We have discussed that differencing allows us to eliminate the constant unobserved effects which is extremely useful in policy analysis. However, there are a few things we need to keep in mind: (1) we need sufficient variation in the explanatory variables over time, (2) first-differenced estimation can also be subject to serious biases (due to failure of strict exogeneity assumption), (3) having measurement error in explanatory variables may result in potentially sizable bias.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Problem 5.<br />
+Suppose that we want to estimate the effect of several variables on annual saving and that we have a panel data set on individuals collected on January 31, 1990, and January 31, 1992. If we include a year dummy for 1992 and use first differencing, can we also include age in the original model? Explain.
+</p>
+<p class="comment">
+Computer Exercise C1.<br />
+Use data set <strong>fertil1</strong> from package <strong>wooldridge</strong> for this exercise.<br />
+1. In the equation estimated in Example 13.1, test whether living environment at age 16 has an effect on fertility. (The base group is large city.) Report the value of the F statistic and the p-value.<br />
+2. Test whether region of the country at age 16 (South is the base group) has an effect on fertility.<br />
+3. Let <span class="math inline">\(u\)</span> be the error term in the population equation. Suppose you think that the variance of <span class="math inline">\(u\)</span> changes over time (but not with educ, age, and so on). A model that captures this is <span class="math inline">\(u^2 = \gamma_0 + \gamma_1*y74 + \gamma_2*y76 + ... + \gamma_6*y84 + v\)</span>. Using this model, test for heteroskedasticity in <span class="math inline">\(u\)</span>. (Hint: Your F test should have 6 and 1,122 degrees of freedom.)<br />
+4. Add the interaction terms <span class="math inline">\(y74*educ, y76*educ, ..., y84*educ\)</span> to the model estimated in Table 13.1. Explain what these terms represent. Are they jointly significant?
+</p>
+<p class="comment">
+Computer Exercise C3.<br />
+Use data set <strong>kielmc</strong> from package <strong>wooldridge</strong> for this exercise.<br />
+1. The variable <span class="math inline">\(dist\)</span> is the distance from each home to the incinerator site, in feet. Consider the model: <span class="math inline">\(log(price) = b_0 + d_0*y81 + b_1*log(dist) + d_1*y81*log(dist) + u.\)</span> If building the incinerator reduces the value of homes closer to the site, what is the sign of <span class="math inline">\(d_1\)</span>? What does it mean if <span class="math inline">\(b_1 &gt; 0\)</span>?<br />
+2. Estimate the model from part (1) and report the results in the usual form. Interpret the coefficient on <span class="math inline">\(y81*log(dist)\)</span>. What do you conclude?<br />
+3. Add <span class="math inline">\(age\)</span>, <span class="math inline">\(age^2\)</span>, <span class="math inline">\(rooms\)</span>, <span class="math inline">\(baths\)</span>, <span class="math inline">\(log(intst)\)</span>, <span class="math inline">\(log(land)\)</span>, and <span class="math inline">\(log(area)\)</span> to the equation. Now, what do you conclude about the effect of the incinerator on housing values?<br />
+4. Why is the coefficient on <span class="math inline">\(log(dist)\)</span> positive and statistically significant in part (2) but not in part (3)? What does this say about the controls used in part (3)?
+</p>
+<p class="comment">
+Computer Exercise C5.<br />
+Use data set <strong>rental</strong> from package <strong>wooldridge</strong> for this exercise. The data for the years 1980 and 1990 include rental prices and other variables for college towns. The idea is to see whether a stronger presence of students affects rental rates. The unobserved effects model is <span class="math inline">\(log(rent_{it}) = b0 + d0*y90_t + b1*log(pop_{it}) + b2*log(avginc_{it}) + b3*pctstu_{it} + a_i + u_{it}\)</span>, where <span class="math inline">\(pop\)</span> is city population, <span class="math inline">\(avginc\)</span> is average income, and <span class="math inline">\(pctstu\)</span> is student population as a percentage of city population (during the school year).<br />
+1. Estimate the equation by pooled OLS and report the results in standard form. What do you make of the estimate on the 1990 dummy variable? What do you get for <span class="math inline">\(b_3\)</span>?<br />
+2. Are the standard errors you report in part (1) valid? Explain.<br />
+3. Now, difference the equation and estimate by OLS. Compare your estimate of <span class="math inline">\(b_3\)</span> with that from part (2). Does the relative size of the student population appear to affect rental prices?<br />
+4. Obtain the heteroskedasticity-robust standard errors for the first-differenced equation in part (3). Does this change your conclusions?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss, CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

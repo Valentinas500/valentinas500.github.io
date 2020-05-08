@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 16</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 16</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-16-simultaneous-equations-models" class="section level5">
+<h5>Chapter 16: Simultaneous Equations Models</h5>
+<p>While in the previous chapters we discussed the solution to endogeneity arising from omitted variables and mismeasurement, we have not touched upon the issue of simultaneity. Simultaneity is a situation in which explanatory variables are jointly determined with the dependent variable. In this situation, we use simultaneous equations models. The most popular method to estimate simulation equations models is the method of instrumental variables.</p>
+<p>As the name suggests a simultaneous equations models have multiple equations or a system of equations. Each equation in the system should have a cateris paribus interpretation.</p>
+<p>The observed data only gives us only the equilibrium outcomes. Thus, when building a simultaneous equations model, we need to use counterfactual reasoning.</p>
+<p>The classic example of simultaneous equation model is a supply and demand model for a particular good or service. SEM or simultaneous equation model can also be used to study the effect of law enforcement size on the murder rate. A simple cross-sectional model to address this issue can be stated as</p>
+<p><span class="math display">\[
+murder.pc=\alpha_1 (police.pc)+\beta_{10}+\beta_{11}(inc.pc)+u_1
+\]</span></p>
+<p>Here, <span class="math inline">\(murder.pc\)</span> is the murder rate in the city per capita, <span class="math inline">\(police.pc\)</span> is the number of police officers per capita, and <span class="math inline">\(inc.pc\)</span> is the income per capita.</p>
+<p>Such model alone has a major issue. Police force size depends on the crime rate. There is a two-way or simultaneous relationship between crime and the size of police force. To address this issue, we can consider another relationship:</p>
+<p><span class="math display">\[
+pol.pc=\alpha_2 (murder.pc) +\beta_{20} (Other) + u_2
+\]</span></p>
+<p>You can now estimate the effects of additional police force on the murder rates. [We hold of the actual estimation until later.] We call such equations structural equations as we postulate them using economic theory. In this model, <span class="math inline">\(murder.pc\)</span> and <span class="math inline">\(police.pc\)</span> are endogenous (determined within the model) while <span class="math inline">\(inc.pc\)</span> and <span class="math inline">\(Other\)</span> are exogenous or determined outside the model.</p>
+<p>First, we need to understand a simultaneity bias in OLS when dealing with simultaneous equations models. Consider a two-equation structural model (we supress the intercept for simplicity).</p>
+<p><span class="math display">\[
+y_1=\alpha_1 y_2 + \beta_1 z_1 + u_1
+\]</span> <span class="math display">\[
+y_2=\alpha_2 y_1 + \beta_2 z_2 + u_2
+\]</span></p>
+<p>We can solve the model using substitution.</p>
+<p><span class="math display">\[
+y_2=\alpha_2 y_1 + \beta_2 z_2 + u_2 
+\]</span> <span class="math display">\[
+y_2= \alpha_2 (\alpha_1 y_2 + \beta_1 z_1 + u_1) + \beta_2 z_2 + u_2
+\]</span> Rearranging yields <span class="math display">\[
+(1-\alpha_2 \alpha_1)y_2= \alpha_2 \beta_1 z_1 + \beta_2 z_2 + \alpha_2 u_1 + u_2
+\]</span></p>
+<p>Assuming that <span class="math inline">\(\alpha_2 \alpha_1 \neq 0\)</span>, we can solve for <span class="math inline">\(y_2\)</span>. Dividing by <span class="math inline">\((1-\alpha_2 \alpha_1)\)</span> gives us <span class="math display">\[
+y_2= \frac{\alpha_2 \beta_1}{(1-\alpha_2 \alpha_1)} z_1 + \frac{\beta_2}{(1-\alpha_2 \alpha_1)} z_2 + \frac{\alpha_2 u_1 + u_2}{(1-\alpha_2 \alpha_1)}  
+\]</span></p>
+<p>This we call a reduced form equation for <span class="math inline">\(y_2\)</span>; <span class="math inline">\(\frac{\alpha_2 \beta_1}{(1-\alpha_2 \alpha_1)}\)</span> and <span class="math inline">\(\frac{\beta_2}{(1-\alpha_2 \alpha_1)}\)</span> – reduced form parameters. The reduced form error is <span class="math inline">\(\frac{\alpha_2 u_1 + u_2}{(1-\alpha_2 \alpha_1)}\)</span>. Since <span class="math inline">\(u_1\)</span> and <span class="math inline">\(u_2\)</span> are ucorrelated with <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_2\)</span>, the reduced form error is also uncorrelated with <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_2\)</span> and thus we estimate the regression by OLS.</p>
+<p>Because <span class="math inline">\(z_1\)</span> and <span class="math inline">\(u_1\)</span> are uncorrelated by assumption, the issue is whether <span class="math inline">\(y_2\)</span> and <span class="math inline">\(u_1\)</span> are uncorrelated. When <span class="math inline">\(y_2\)</span> is correlated with <span class="math inline">\(u_1\)</span> because of simultaneity, we say that OLS suffers from simultaneity bias. In simple models you may be able to determine the direction of the bias but in more complex models (with multiple explanatory variables) this can be complicated.</p>
+<p>As with endogeineity due to mismeasurement or omitted variables, 2SLS can be applied to treat simultaneity in simultaneous equation models.</p>
+<p>The key condition in OLS is the that each explanatory variable is uncorrelated with the error term. While this condition may not hold with simultaneous equation models, we can still identify or consistently estimate the parameters in the model if we have some instrumental variables.</p>
+<p>Consider a simple demand (<span class="math inline">\(q_d\)</span>) and supply (<span class="math inline">\(q_s\)</span>) model. <span class="math display">\[ q_s=\alpha_1 p + \beta_1 z_1 + u_1\]</span> <span class="math display">\[ q_d=\alpha_2 p + u_2\]</span></p>
+<p>We have a variable <span class="math inline">\(z_1\)</span> that shifts the supply equation but does not affect the demand. As we vary <span class="math inline">\(z_1\)</span>, supply function shifts but the demand function does not, thus the observed price and quantity outcomes must be on the same demand function. Varying <span class="math inline">\(z_1\)</span> alows us to find the demand function. Then the supply function can be identified. In general, SEM must satisfy the order condition to be identified. The order condition states that at least one exogenous variable is excluded from an identified equation.</p>
+<p>Consider a labor supply model for married working women. The hours a woman works is a function of wage and other factors (supply function). The demand function is the wage offer to the woman which depends on her education and experience. See the two structural equations below.</p>
+<p><span class="math display">\[hours = \alpha_1 log(wage) + \beta_{10} + \beta_{11}educ + \beta_{12}age + \beta_{13}kidslt6 + \beta_{14}nwifeinc + u_1\]</span></p>
+<p><span class="math display">\[log(wage) = \alpha_2 hours + \beta_{20} + \beta_{21}educ + \beta_{22}exper + \beta_{23} exper^2 + u_2\]</span></p>
+<p>Using substitution we can derive the following.</p>
+<p><span class="math display">\[log(wage) = \alpha_2 (\alpha_1 log(wage) + \beta_{10} + \beta_{11}educ + \beta_{12}age + \beta_{13}kidslt6 + \beta_{14}nwifeinc + u_1) + \\ \beta_{20} + \beta_{21}educ + \beta_{22}exper + \beta_{23} exper^2 + u_2\]</span></p>
+<p>Solving further yields the following.</p>
+<p><span class="math display">\[
+log(wage) = \frac{\beta_{20}+\alpha_2 \beta_{10}}{1-\alpha_1 \alpha_2} +
+\frac{\alpha_2 \beta_{11} +\beta_{21}}{1-\alpha_1 \alpha_2} educ +
+\frac{\alpha_2 \beta_{12}}{1-\alpha_1 \alpha_2} age +
+\frac{\alpha_2 \beta_{13}}{1-\alpha_1 \alpha_2} kidslt6 +
+\frac{\alpha_2 \beta_{14}}{1-\alpha_1 \alpha_2} nwifeinc + \\
+\frac{\beta_{22}}{1-\alpha_1 \alpha_2} exper +
+\frac{\beta_{23}}{1-\alpha_1 \alpha_2} exper^2 +
+\frac{\alpha_2 u_1 + u_2}{1-\alpha_1 \alpha_2} 
+\]</span> For brevity, we can simply write the following.</p>
+<p><span class="math display">\[
+log(wage) = \pi_{20} +
+\pi_{21} educ +
+\pi_{22} age +
+\pi_{23} kidslt6 +
+\pi_{24} nwifeinc + \\
+\pi_{25} exper +
+\pi_{26} exper^2 +
+v_2
+\]</span></p>
+<p>The simultaneous equations model above can be estimated by two stage least squares using the R code below.</p>
+<pre class="r"><code>library(systemfit)
+data(mroz, package=&#39;wooldridge&#39;)
+
+eq.hrs   = hours    ~ log(wage)+educ+age+kidslt6+nwifeinc
+eq.wage  = log(wage)~ hours    +educ+exper+I(exper^2)
+eq.system= list(eq.hrs, eq.wage)
+instrum  = ~educ+age+kidslt6+nwifeinc+exper+I(exper^2)
+summary(systemfit(eq.system,inst=instrum,
+                  data=subset(mroz,!is.na(wage)),
+                  method=&quot;2SLS&quot;))</code></pre>
+<pre><code>## 
+## systemfit results 
+## method: 2SLS 
+## 
+##          N  DF       SSR detRCov   OLS-R2 McElroy-R2
+## system 856 845 773893309  155089 -2.00762   0.748802
+## 
+##       N  DF         SSR         MSE        RMSE        R2    Adj R2
+## eq1 428 422 7.73893e+08 1.83387e+06 1354.204541 -2.007617 -2.043253
+## eq2 428 423 1.95266e+02 4.61621e-01    0.679427  0.125654  0.117385
+## 
+## The covariance matrix of the residuals
+##             eq1         eq2
+## eq1 1833869.938 -831.542690
+## eq2    -831.543    0.461621
+## 
+## The correlations of the residuals
+##           eq1       eq2
+## eq1  1.000000 -0.903769
+## eq2 -0.903769  1.000000
+## 
+## 
+## 2SLS estimates for &#39;eq1&#39; (equation 1)
+## Model Formula: hours ~ log(wage) + educ + age + kidslt6 + nwifeinc
+## Instruments: ~educ + age + kidslt6 + nwifeinc + exper + I(exper^2)
+## 
+##               Estimate Std. Error  t value   Pr(&gt;|t|)    
+## (Intercept) 2225.66182  574.56412  3.87365 0.00012424 ***
+## log(wage)   1639.55561  470.57568  3.48415 0.00054535 ***
+## educ        -183.75128   59.09981 -3.10917 0.00200323 ** 
+## age           -7.80609    9.37801 -0.83238 0.40566404    
+## kidslt6     -198.15429  182.92914 -1.08323 0.27932497    
+## nwifeinc     -10.16959    6.61474 -1.53741 0.12494167    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1354.204541 on 422 degrees of freedom
+## Number of observations: 428 Degrees of Freedom: 422 
+## SSR: 773893113.843842 MSE: 1833869.938019 Root MSE: 1354.204541 
+## Multiple R-Squared: -2.007617 Adjusted R-Squared: -2.043253 
+## 
+## 
+## 2SLS estimates for &#39;eq2&#39; (equation 2)
+## Model Formula: log(wage) ~ hours + educ + exper + I(exper^2)
+## Instruments: ~educ + age + kidslt6 + nwifeinc + exper + I(exper^2)
+## 
+##                 Estimate   Std. Error  t value   Pr(&gt;|t|)    
+## (Intercept) -0.655725440  0.337788292 -1.94123   0.052894 .  
+## hours        0.000125900  0.000254611  0.49448   0.621223    
+## educ         0.110330004  0.015524358  7.10690 5.0768e-12 ***
+## exper        0.034582356  0.019491555  1.77422   0.076746 .  
+## I(exper^2)  -0.000705769  0.000454080 -1.55428   0.120865    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.679427 on 423 degrees of freedom
+## Number of observations: 428 Degrees of Freedom: 423 
+## SSR: 195.26556 MSE: 0.461621 Root MSE: 0.679427 
+## Multiple R-Squared: 0.125654 Adjusted R-Squared: 0.117385</code></pre>
+<p>As we can see, that all else held constant, the labor supply slopes upward: the coefficient for wage is positive. We can compute labor supply elasticity. Elasticity measures the percentage change in y (hours) due to percentage change in x (wages).</p>
+<p>The estimated coefficient for <span class="math inline">\(log(wage)\)</span>, <span class="math inline">\(\alpha_1\)</span> in the labor supply function (function that determines the hours), is approximately 1640. <span class="math display">\[
+\Delta \widehat{hours} \approx \frac{1640}{100} (\% \Delta wage)
+\]</span> Multiplying both sides by <span class="math inline">\(100/hours\)</span> yields the following. <span class="math display">\[
+100 \frac{\Delta \widehat{hours}}{hours} \approx \frac{100}{hours} \frac{1640}{100} (\% \Delta wage)
+\]</span> <span class="math display">\[
+\% \Delta \widehat{hours} \approx \frac{1640}{hours} (\% \Delta wage)
+\]</span> At the average hours worked (<span class="math inline">\(1,303\)</span>), the estimated elasticity is <span class="math inline">\(1,640/ 1,303 \approx 1.26\)</span> which is relatively large.</p>
+<p>Looking at the wage equation, we now find that hours worked is not significant (what you find running a multiple regresion model estimtaed by OLS) so the endogeneity issue was addressed.</p>
+<p>See the results of equations estimated individually by OLS by running the code below.</p>
+<pre class="r"><code>data(mroz, package=&#39;wooldridge&#39;)
+eq.hrs   = hours    ~ log(wage)+educ+age+kidslt6+nwifeinc
+eq.wage  = log(wage)~ hours    +educ+exper+I(exper^2)
+summary(lm(eq.hrs,data=subset(mroz,!is.na(wage))))
+summary(lm(eq.wage,data=subset(mroz,!is.na(wage)))) </code></pre>
+<p><a href="https://eml.berkeley.edu/~dromer/papers/DRomer_QJE1993.pdf">David Romer (1993)</a> proposed that more open economies should have lower rates of inflation, all else the same. The model he suggests can be stated as a symultaneous equations model: <span class="math display">\[
+inf=\beta_{10}+\alpha_{1}open+\beta_{11}log(pcinc)+u_1
+\]</span> <span class="math display">\[
+open=\beta_{20}+\alpha_{2}+\beta_{21}+\beta_{22}log(land)+u_2
+\]</span> Here, <span class="math inline">\(pcinc\)</span> is per capita income, <span class="math inline">\(open\)</span> is the share of imports relative to GDP and <span class="math inline">\(land\)</span> is the area of a country. Runing the code below, we find that open economies have lower rates of inflation. The result is significant at 1% level.</p>
+<pre class="r"><code>data(openness, package=&#39;wooldridge&#39;)
+
+#A system of equations
+eq.1   = open~inf+log(pcinc)+log(land)
+eq.2  = inf~open+log(pcinc)
+eq.system= list(eq.1, eq.2)
+instrum  = ~log(land)+log(pcinc)
+summary(systemfit(eq.system,inst=instrum,
+                  data=openness,
+                  method=&quot;2SLS&quot;))</code></pre>
+<pre><code>## 
+## systemfit results 
+## method: 2SLS 
+## 
+##          N  DF    SSR detRCov   OLS-R2 McElroy-R2
+## system 228 221 979617 15553.7 -6.60387   0.994595
+## 
+##       N  DF      SSR      MSE    RMSE         R2     Adj R2
+## eq1 114 110 916552.8 8332.298 91.2814 -13.375497 -13.767556
+## eq2 114 111  63064.2  568.146 23.8358   0.030876   0.013415
+## 
+## The covariance matrix of the residuals
+##         eq1      eq2
+## eq1 8332.30 2172.190
+## eq2 2172.19  568.146
+## 
+## The correlations of the residuals
+##          eq1      eq2
+## eq1 1.000000 0.998356
+## eq2 0.998356 1.000000
+## 
+## 
+## 2SLS estimates for &#39;eq1&#39; (equation 1)
+## Model Formula: open ~ inf + log(pcinc) + log(land)
+## Instruments: ~log(land) + log(pcinc)
+## 
+##                 Estimate   Std. Error t value Pr(&gt;|t|)
+## (Intercept)  6.86167e+01  1.40977e+08       0        1
+## inf         -3.84203e+00  1.11752e+07       0        1
+## log(pcinc)   1.28182e+00  2.13887e+06       0        1
+## log(land)    2.24466e+00  2.85392e+07       0        1
+## 
+## Residual standard error: 91.281424 on 110 degrees of freedom
+## Number of observations: 114 Degrees of Freedom: 110 
+## SSR: 916552.812952 MSE: 8332.2983 Root MSE: 91.281424 
+## Multiple R-Squared: -13.375497 Adjusted R-Squared: -13.767556 
+## 
+## 
+## 2SLS estimates for &#39;eq2&#39; (equation 2)
+## Model Formula: inf ~ open + log(pcinc)
+## Instruments: ~log(land) + log(pcinc)
+## 
+##              Estimate Std. Error  t value Pr(&gt;|t|)  
+## (Intercept) 26.899337  15.401196  1.74657 0.083477 .
+## open        -0.337487   0.144121 -2.34169 0.020981 *
+## log(pcinc)   0.375825   2.015081  0.18651 0.852388  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 23.835811 on 111 degrees of freedom
+## Number of observations: 114 Degrees of Freedom: 111 
+## SSR: 63064.19425 MSE: 568.145894 Root MSE: 23.835811 
+## Multiple R-Squared: 0.030876 Adjusted R-Squared: 0.013415</code></pre>
+<pre class="r"><code>#Alternatively, can run as a standard IV model
+#rfreg= lm(open~log(pcinc)+log(land),data=openness) #First stage
+#ssreg= lm(inf~rfreg$fitted.values+log(pcinc),data=openness) #Second stage</code></pre>
+<p>Permanent Income Hypothesis is a hypothesis about consumer spending. It states that people will spend consistent not with their current income but with their expected long-term (or permanent) income. The main equation can be stated as <span class="math display">\[
+gc_t = \beta_0 + \beta_1 gy_t + \beta_2 r3_t +u_t
+\]</span> Here, $ gc_t$ is annual growth in real per capita consumption, measured as change in log of consumption, <span class="math inline">\(gy_t\)</span> is growth in real disposable income, <span class="math inline">\(r3_t\)</span> is the ex post real interest rate as measured by the return on three-month T-bill rates, or <span class="math inline">\(r3_t = i3_t - inf_t\)</span>. Traditionally, we think of incomes and interest rates as jointly determined. The full model can be stated as 3 equation system. <span class="math display">\[
+gc_t = \beta_{10} + \beta_{11} gy_t + \beta_{12} r3_t +u_t
+\]</span> <span class="math display">\[
+gy_t = \beta_{20} + \beta_{21} gc_{t-1} + \beta_{22} gy_{t-1} + \beta_{23} r3_{t-1}
+\]</span> <span class="math display">\[
+r_t = \beta_{30} + \beta_{31} gc_{t-1} + \beta_{32} gy_{t-1} + \beta_{33} r3_{t-1}
+\]</span></p>
+<pre class="r"><code>data(consump, package=&#39;wooldridge&#39;)
+
+#A system of equations
+eq.1   = gy~gc_1+gy_1+r3_1
+eq.2   = r3~gc_1+gy_1+r3_1
+eq.3  = gc~gy+r3
+eq.system= list(eq.1, eq.2, eq.3)
+instrum  = ~gc_1+gy_1+r3_1
+summary(systemfit(eq.system,inst=instrum,
+                  data=consump,
+                  method=&quot;2SLS&quot;))</code></pre>
+<pre><code>## 
+## systemfit results 
+## method: 2SLS 
+## 
+##          N DF     SSR detRCov   OLS-R2 McElroy-R2
+## system 105 94 52.8161       0 0.651848    0.61607
+## 
+##      N DF       SSR      MSE     RMSE       R2   Adj R2
+## eq1 35 31  0.008233 0.000266 0.016297 0.279087 0.209321
+## eq2 35 31 52.806075 1.703422 1.305152 0.651875 0.618186
+## eq3 35 32  0.001786 0.000056 0.007471 0.677905 0.657774
+## 
+## The covariance matrix of the residuals
+##              eq1         eq2          eq3
+## eq1  2.65584e-04 0.009452045 -1.30518e-06
+## eq2  9.45205e-03 1.703421775  1.71743e-04
+## eq3 -1.30518e-06 0.000171743  5.58191e-05
+## 
+## The correlations of the residuals
+##            eq1       eq2        eq3
+## eq1  1.0000000 0.4443897 -0.0107196
+## eq2  0.4443897 1.0000000  0.0176127
+## eq3 -0.0107196 0.0176127  1.0000000
+## 
+## 
+## 2SLS estimates for &#39;eq1&#39; (equation 1)
+## Model Formula: gy ~ gc_1 + gy_1 + r3_1
+## Instruments: ~gc_1 + gy_1 + r3_1
+## 
+##                 Estimate   Std. Error  t value  Pr(&gt;|t|)   
+## (Intercept)  0.006744291  0.005473074  1.23227 0.2271140   
+## gc_1         1.234539605  0.395506414  3.12141 0.0038783 **
+## gy_1        -0.522556240  0.278144227 -1.87872 0.0697142 . 
+## r3_1         0.000846557  0.001394895  0.60690 0.5483388   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.016297 on 31 degrees of freedom
+## Number of observations: 35 Degrees of Freedom: 31 
+## SSR: 0.008233 MSE: 0.000266 Root MSE: 0.016297 
+## Multiple R-Squared: 0.279087 Adjusted R-Squared: 0.209321 
+## 
+## 
+## 2SLS estimates for &#39;eq2&#39; (equation 2)
+## Model Formula: r3 ~ gc_1 + gy_1 + r3_1
+## Instruments: ~gc_1 + gy_1 + r3_1
+## 
+##               Estimate Std. Error  t value Pr(&gt;|t|)    
+## (Intercept)   0.832247   0.438320  1.89872 0.066944 .  
+## gc_1         16.445541  31.674802  0.51920 0.607309    
+## gy_1        -42.900522  22.275653 -1.92589 0.063332 .  
+## r3_1          0.849559   0.111712  7.60487 1.42e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.305152 on 31 degrees of freedom
+## Number of observations: 35 Degrees of Freedom: 31 
+## SSR: 52.806075 MSE: 1.703422 Root MSE: 1.305152 
+## Multiple R-Squared: 0.651875 Adjusted R-Squared: 0.618186 
+## 
+## 
+## 2SLS estimates for &#39;eq3&#39; (equation 3)
+## Model Formula: gc ~ gy + r3
+## Instruments: ~gc_1 + gy_1 + r3_1
+## 
+##                 Estimate   Std. Error  t value   Pr(&gt;|t|)    
+## (Intercept)  0.008059689  0.003232742  2.49314 0.01802571 *  
+## gy           0.586188030  0.134573716  4.35589 0.00012763 ***
+## r3          -0.000269401  0.000764035 -0.35260 0.72669802    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.007471 on 32 degrees of freedom
+## Number of observations: 35 Degrees of Freedom: 32 
+## SSR: 0.001786 MSE: 5.6e-05 Root MSE: 0.007471 
+## Multiple R-Squared: 0.677905 Adjusted R-Squared: 0.657774</code></pre>
+<p>Since we find that the the estimated coefficient for <span class="math inline">\(gy_t\)</span> on <span class="math inline">\(gc_t\)</span> equation is positive and statistically significant, we must reject the permanent income hypothesis. Higher current disposable income does increase consumtpion.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C1.<br />
+Use data set <strong>smoke</strong> from package <strong>wooldridge</strong> for this exercise.<br />
+1. A model to estimate the effects of smoking on annual income (perhaps through lost work days due to illness, or productivity effects) is <span class="math display">\[log(income) = \beta_0 + \beta_1*cigs + \beta_2*educ +\beta_3*age+\beta_4*age^2 + u.\]</span> where <em>cigs</em> is number of cigarettes smoked per day, on average. How do you interpret <span class="math inline">\(\beta_1\)</span>?<br />
+2. To reflect the fact that cigarette consumption might be jointly determined with income, a demand for cigarettes equation is <span class="math display">\[ cigs = \gamma_0 + \gamma_1* *log(income) + \gamma_2*educ + \gamma_3*age + \gamma_4*age^2 + \gamma_5*log(cigpric) + \gamma_6*restaurn + u_2 \]</span> where <em>cigpric</em> is the price of a pack of cigarettes (in cents) and <em>restaurn</em> is a binary variable equal to unity if the person lives in a state with restaurant smoking restrictions. Assuming these are exogenous to the individual, what signs would you expect for <span class="math inline">\(\gamma_5\)</span> and <span class="math inline">\(\gamma_6\)</span>?<br />
+3. Under what assumption is the income equation from part 1 identified?<br />
+4. Estimate the income equation by OLS and discuss the estimate of <span class="math inline">\(\beta_1\)</span>.<br />
+5. Estimate the reduced form for <em>cigs</em>. (Recall that this entails regressing <em>cigs</em> on all exogenous variables.) Are <em>log(cigpric)</em> and <em>restaurn</em> significant in the reduced form?<br />
+6. Now, estimate the income equation by 2SLS. Discuss how the estimate of _1 compares with the OLS estimate.<br />
+7. Do you think that cigarette prices and restaurant smoking restrictions are exogenous in the income equation?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss, CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
