@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 11</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 11</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-11-further-issues-in-using-ols-with-time-series-data" class="section level5">
+<h5>Chapter 11: Further Issues in Using OLS with Time Series Data</h5>
+<p>Loosely speaking, a time series is <strong>stationary</strong> if its stochastic properties and its temporal dependence structure do not change over time. If we take any collection of random variables in the sequence and then shift that sequence ahead h time periods, the joint probability distribution must remain unchanged. More specifically, a stochastic process <span class="math inline">\(\{xt: t = 1,2,...\}\)</span> is stationary, if for every collection of indices $1 t_1 t_2 … t_m $ the joint distribution of (<span class="math inline">\(x_{1t}, x_{2t},...,x_{mt}\)</span>) is the same as that of (<span class="math inline">\(x_{1,t+h}, x_{2,t+h}, ...,x_{m,t+h}\)</span>) for all integers <span class="math inline">\(h \geq 1\)</span>.</p>
+<p>A stochastic process that is not stationary is called a <strong>nonstationary</strong> process. It can often be very difficult to determine whether the data we collected were generated by a stationary process. However, is is easy to spot certain sequences that are not stationary, as, for example, a time series with a trend.</p>
+<p>A stochastic process <span class="math inline">\(\{x_t: t = 1,2,...\}\)</span> is covariance stationary, if its expected value, its variance, and its covariance are constant over time:</p>
+<p><span class="math display">\[
+E(x_T)=\mu \quad\quad Var(x_t)=\sigma^2 \quad\quad Cov(x_t,x_{t+h})=f(h)
+\]</span></p>
+<p>Covariance stationarity focuses only on the first two moments of the stochastic process: the mean and the variance are constant across time, and the covariance between <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t+h}\)</span> depends only on the distance between the two terms, <span class="math inline">\(h\)</span>.</p>
+<p>If we want to understand a relationship between two or more variables using regression analysis, we need some sort of stability over time. If we allow the relationship between two variables to change arbitrarily in each time period, we cannot hope to learn much about how a change in one variable affects the other variable having access to only one time series realization.</p>
+<p>Loosely speaking, a stationary time series process <span class="math inline">\(\{xt: t = 1,2,...\}\)</span> is said to be weakly dependent if <span class="math inline">\(x_{t}\)</span> and <span class="math inline">\(x_{t+h}\)</span> are “almost independent” as <span class="math inline">\(h\)</span> grows to infinity (for all <span class="math inline">\(t\)</span>).</p>
+<p>An implication of weak dependence is that the correlation between xt and xt+h must converge to zero if h grows to infinity. For the LLN and the CLT to hold, the individual observations must not be too strongly related to each other; in particular their relation must become weaker (and this fast enough) the farther they are apart. Note that a series may be nonstationary but weakly dependent.</p>
+<p>The simplest example of a weakly dependent time series is an independent, identically distributed (iid) sequence: a sequence that is independent is trivially weakly dependent. For example, a coin flip is iid.</p>
+<p>A much more interesting case is the moving average process of order 1 usually written as MA(1). The current realization (<span class="math inline">\(x_t\)</span>) depends on the current random iid shock <span class="math inline">\(e_t\)</span> and shock realized in the previous time period, <span class="math inline">\(e_{t-1}\)</span>.</p>
+<div class="figure">
+<img src="1212.png" />
+
+</div>
+<p>Another popular process is called autoregressive process of order 1 written as AR(1). The stability condition requires the absolute value of <span class="math inline">\(\rho_1\)</span> to be less than 1 (it is then called a stable AR(1) process).</p>
+<div class="figure">
+<img src="1212b.png" />
+
+</div>
+<p>A trending series is nonstationary, however, it can be weakly dependent. A series that is stationary about its time trend, as well as weakly dependent, is often called a trend-stationary process. Trend-stationary processes also satisfy assumption TS.1’.</p>
+<ul>
+<li>Assumption TS.1’: Stochastic process follows a linear model, is stationary and weakly dependent.</li>
+<li>Assumption TS.2’: No Perfect Collinearity</li>
+<li>Assumption TS.3’: Zero Conditional Mean (explanatory variables are contemporaneosly exogenous)</li>
+<li>Assumption TS.4’: Homoskedasticity (errors are contemporaneously homoskedastic)</li>
+<li>Assumption TS.5’: No Serial Correlation</li>
+</ul>
+<p>Theorem 11.1: Under TS.1’ through TS.3’, the OLS estimators are consistent: <span class="math inline">\(\text{plim }\hat \beta_j = \beta_j\)</span> for <span class="math inline">\(j=0, 1, 2, ...,k\)</span>.</p>
+<p>Theorem 11.2: Under assumptions TS.1’ - TS.5’, the OLS estimators are asymptotically normally distributed. Further, the usual OLS standard errors, t-statistics, F-statistics, and LM statistics are asymptotically valid.</p>
+<p>Let’s look at Efficient Markets Hypothesis (EMH) which states that current asset prices fully reflect all the available information and so it is impossible to consistently beat the market. Investor cannot gain an advantage because all the available information is already reflected in the current asset price. A simplification assumes in addition that only past returns are considered as relevant information to predict the return in week <span class="math inline">\(t\)</span>. This implies that: <span class="math display">\[
+E(return_t|return_{t-1},return_{t-2},return_{t-3},...)=E(return_t)
+\]</span></p>
+<p>A simple way to test the EMH is to specify an AR(1) model. Under the EMH, assumption TS.3’ holds so that an OLS regression can be used to test whether this week’s returns depend on last week’s returns. You can run the following test yourself in R using the code below:</p>
+<pre class="r"><code>library(dynlm); library(stargazer)
+data(nyse, package=&#39;wooldridge&#39;)
+# Define time series (numbered 1,...,n)
+tsdata = ts(nyse)
+# Linear regression of models with lags:
+reg1 = dynlm(return~L(return), data=tsdata) 
+reg2 = dynlm(return~L(return)+L(return,2), data=tsdata) 
+reg3 = dynlm(return~L(return)+L(return,2)+L(return,3), data=tsdata) 
+# Pretty regression table
+stargazer(reg1, reg2, reg3, type=&quot;text&quot;, keep.stat=c(&quot;n&quot;,&quot;rsq&quot;,&quot;adj.rsq&quot;,&quot;f&quot;))</code></pre>
+<pre><code>## 
+## ========================================================================
+##                                  Dependent variable:                    
+##              -----------------------------------------------------------
+##                                        return                           
+##                      (1)                 (2)                 (3)        
+## ------------------------------------------------------------------------
+## L(return)           0.059               0.060               0.061       
+##                    (0.038)             (0.038)             (0.038)      
+##                                                                         
+## L(return, 2)                           -0.038              -0.040       
+##                                        (0.038)             (0.038)      
+##                                                                         
+## L(return, 3)                                                0.031       
+##                                                            (0.038)      
+##                                                                         
+## Constant           0.180**             0.186**             0.179**      
+##                    (0.081)             (0.081)             (0.082)      
+##                                                                         
+## ------------------------------------------------------------------------
+## Observations         689                 688                 687        
+## R2                  0.003               0.005               0.006       
+## Adjusted R2         0.002               0.002               0.001       
+## F Statistic  2.399 (df = 1; 687) 1.659 (df = 2; 685) 1.322 (df = 3; 683)
+## ========================================================================
+## Note:                                        *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>As you can see the standard error of the estimate of interest is large relative to the coefficient leading to a relative small t-statistic and a failure to reject the null hypothesis. While the results of this simple test suggest a small positive correlation, we fail to reject the efficient market hypothesis.</p>
+<p>Unfortunately many economic time series violate weak dependence because they are highly persistent (= strongly dependent). In this case OLS methods are generally invalid (unless the CLM holds). In some cases transformations to weak dependence are possible.</p>
+<p>A very simple but well studied case is the random walk. Random walk is such a process for which the value <span class="math inline">\(y\)</span> at time <span class="math inline">\(t\)</span> is obtained by starting at the previous value and adding a random shock. A random walk is a special case of a unit root process. Unit root processes are defined as a random walk, but et may be an arbitrary weakly dependent process.</p>
+<p>From an economic point of view it is important to know whether a time series is highly persistent. In highly persistent time series, shocks or policy changes have lasting/permanent effects, in weakly dependent processes their effects are transitory.</p>
+<p><img src="11aa.png" /> <img src="11bb.png" /></p>
+<p>For example, an interest rate (by which we usually mean the three-month T-bill) can be considered a random walk.</p>
+<div class="figure">
+<img src="aa11.png" />
+
+</div>
+<p>It is often the case that a highly persistent series also contains a clear trend. Such behavior is called a random walk with a drift.</p>
+<p><img src="1a1.png" /> <img src="1a2.png" /> <img src="1a3.png" /></p>
+<p>Using time series with strong persistence of the type displayed by a unit root process in a regression equation can lead to very misleading results if the CLM assumptions are violated. Fortunately, simple transformations are available that render a unit-root process weakly dependent.</p>
+<p>Weakly dependent processes are said to be integrated of order zero, or I(0). This means that nothing needs to be done with the series before using it in a regression analysis.</p>
+<p>Unit root processes, such as random walk (with or without a drift), are said to be integrated of order one, or I(1). This means that the first difference of the series is weakly dependent (and often stationary). The first difference of a time series is the series of changes from one period to the next.</p>
+<div class="figure">
+<img src="11a1.png" />
+
+</div>
+<p>There are statistical tests (unit root tests) for testing whether a time series is I(1); these will be covered in later chapters. Alternatively, look at the sample first order autocorrelation:</p>
+<div class="figure">
+<img src="11a2.png" />
+
+</div>
+<p>If the sample first order autocorrelation is close to one, this suggests that the time series may be highly persistent (= contains a unit root). Alternatively, the series may have a deterministic trend. Both unit root and trend may be eliminated by differencing.</p>
+<p>In previous chapter, we discussed that general fertility rate may depend on the value of the personal exemption that people with children receive. However, if we look at the first order autocorrelations, we will find that these are found to be very large suggesting unit root behavior (as the autocorrelation coefficients are very close to 1). It is therefore better to estimate the equation in first differences. This makes sense because if the equation holds in levels, it also has to hold in first differences. We can replicate the estimation using the code below.</p>
+<pre class="r"><code>library(dynlm); library(stargazer)
+data(fertil3, package=&#39;wooldridge&#39;)
+# Define Yearly time series beginning in 1913
+tsdata &lt;- ts(fertil3, start=1913)
+# Linear regression of model with first differences:
+res1 &lt;- dynlm( d(gfr) ~ d(pe), data=tsdata)
+# Linear regression of model with lagged differences:
+res2 &lt;- dynlm( d(gfr) ~ d(pe) + L(d(pe)) + L(d(pe),2), data=tsdata)
+# Pretty regression table
+stargazer(res1,res2,type=&quot;text&quot;)</code></pre>
+<pre><code>## 
+## ============================================================
+##                               Dependent variable:           
+##                     ----------------------------------------
+##                                      d(gfr)                 
+##                            (1)                  (2)         
+## ------------------------------------------------------------
+## d(pe)                     -0.043              -0.036        
+##                          (0.028)              (0.027)       
+##                                                             
+## L(d(pe))                                      -0.014        
+##                                               (0.028)       
+##                                                             
+## L(d(pe), 2)                                  0.110***       
+##                                               (0.027)       
+##                                                             
+## Constant                  -0.785             -0.964**       
+##                          (0.502)              (0.468)       
+##                                                             
+## ------------------------------------------------------------
+## Observations                71                  69          
+## R2                        0.032                0.232        
+## Adjusted R2               0.018                0.197        
+## Residual Std. Error  4.221 (df = 69)      3.859 (df = 65)   
+## F Statistic         2.263 (df = 1; 69) 6.563*** (df = 3; 65)
+## ============================================================
+## Note:                            *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>In our final estimation, we see that even though contemporaneous and first lag estimates are insignificant (negative too), the second lag is positive and statistically significant indicating a lagged positive relationship. This makes a lot more sense than a contemporaneous relationship. For the final example, we have the average hourly wage in the US and output per hour. We are interested in estimating the elasticity of hourly wage with respect to output per hour, so we start with a simple equation with a time trend (since both of the variables of interest have a clear upward trend):</p>
+<p><span class="math display">\[
+\log(hrwage) = \beta_0 + \beta_1*\log(outphr) + t + u
+\]</span></p>
+<p>Our findings (see below), indicate unreasonably high elasticity. It would be difficult to believe that for 1% in increase in productivity, workers get paid 1.6% more. High autocorrelations suggest that both series have unit roots so we reestimate the equation in first differences. Note that time trend is no longer needed.</p>
+<p><span class="math display">\[
+\Delta \log(hrwage) = \beta_0 + \beta_1*\Delta \log(outphr) + u
+\]</span></p>
+<p>We see that now the elasticity is found to be around 0.8 which means that for 10% increase in worker’s productivity (output per hour), workers’ hourly salary increases by 8%. R-squared shows that the growth in output explains about 35% of the growth in real wages.</p>
+<pre class="r"><code>data(earns, package=&#39;wooldridge&#39;)
+tsdata = ts(earns)
+attach(earns)
+plot(hrwage)</code></pre>
+<p><img src="etricsCh11_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>plot(outphr)</code></pre>
+<p><img src="etricsCh11_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>#simple log-log regression
+reg1=lm(lhrwage~loutphr+t, data=tsdata)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = lhrwage ~ loutphr + t, data = tsdata)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.059230 -0.026151  0.002411  0.020322  0.051966 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -5.328454   0.374449  -14.23  &lt; 2e-16 ***
+## loutphr      1.639639   0.093347   17.57  &lt; 2e-16 ***
+## t           -0.018230   0.001748  -10.43 1.05e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.02854 on 38 degrees of freedom
+## Multiple R-squared:  0.9712, Adjusted R-squared:  0.9697 
+## F-statistic: 641.2 on 2 and 38 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>#detrended or first-differenced regression
+reg2=dynlm( d(lhrwage) ~ d(loutphr), data=tsdata)
+summary(reg2)</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 2, End = 41
+## 
+## Call:
+## dynlm(formula = d(lhrwage) ~ d(loutphr), data = tsdata)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.040921 -0.010165 -0.000383  0.007969  0.040329 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.003662   0.004220  -0.868    0.391    
+## d(loutphr)   0.809316   0.173454   4.666 3.75e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.01695 on 38 degrees of freedom
+## Multiple R-squared:  0.3642, Adjusted R-squared:  0.3475 
+## F-statistic: 21.77 on 1 and 38 DF,  p-value: 3.748e-05</code></pre>
+<p>A model is said to be dynamically complete if enough lagged variables have been included as explanatory variables so that further lags do not help to explain the dependent variable:</p>
+<p><span class="math display">\[
+E(y_t|x_t,y_{t-1},x_{t-1},y_{t-2},...)=E(y_t|x_t)
+\]</span></p>
+<p>Dynamic completeness implies absence of serial correlation. If further lags actually belong in the regression, their omission will cause serial correlation (if the variables are serially correlated). One can easily test for dynamic completeness. If lags cannot be excluded, this suggests there is serial correlation.</p>
+<p>A set of explanatory variables is said to be sequentially exogenous if “enough” lagged explanatory variables have been included:</p>
+<p><span class="math display">\[
+E(u_t|x_t,x_{t-1},...)=E(u_t)=0, \quad t=1,2,...
+\]</span></p>
+<p>Sequential exogeneity is weaker than strict exogeneity. Sequential exogeneity is equivalent to dynamic completeness if the explanatory variables contain a lagged dependent variable.</p>
+<p>Should all regression models be dynamically complete? Not necessarily: If sequential exogeneity holds, causal effects will be correctly estimated; absence of serial correlation is not crucial.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C1.<br />
+Use data set <strong>hseinv</strong> from package <strong>wooldridge</strong> for this exercise.<br />
+1. Find the first order autocorrelation in <span class="math inline">\(\log(invpc)\)</span>. Now, find the autocorrelation after linearly detrending <span class="math inline">\(\log(invpc)\)</span>. Do the same for <span class="math inline">\(\log(price)\)</span>. Which of the two series may have a unit root?<br />
+2. Based on your findings in part 1, estimate the equation: $ (invpc_t)=_0 + _1 (price_t)+_2t+u_t$ and report the results in standard form. Interpret the coefficient b1 and determine whether it is statistically significant.<br />
+3. Linearly detrend <span class="math inline">\(\log(invpc_t)\)</span> and use the detrended version as the dependent variable in the regression from part 2 (see Section 10-5). What happens to R-squared?<br />
+4. Now use <span class="math inline">\(\Delta \log(invpc_t)\)</span> as the dependent variable. How do your results change from part 2? Is the time trend still significant? Why or why not?
+</p>
+<p class="comment">
+Computer Exercise C3.<br />
+Use data set <strong>nyse</strong> from package <strong>wooldridge</strong> for this exercise.<br />
+1. In Example 11.4, it may be that the expected value of the return at time t, given past returns, is a quadratic function of returnt21. To check this possibility, use the data in NYSE to estimate $ return_t =_0 +<em>1 return</em>{t-1} + <em>2 return^2</em>{t-1} + u_t$ and report the results in standard form.<br />
+2. State and test the null hypothesis that <span class="math inline">\(E(return_t|return_{t-1})\)</span> does not depend on <span class="math inline">\(return_{t-1}\)</span>. (Hint: There are two restrictions to test here.) What do you conclude?<br />
+3. Drop <span class="math inline">\(return_{t-1}^2\)</span> from the model, but add the interaction term <span class="math inline">\(return_{t-1}*return_{t-2}\)</span>. Now test the efficient markets hypothesis.<br />
+4. What do you conclude about predicting weekly stock returns based on past stock returns?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss, CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
