@@ -520,8 +520,10 @@ summary(reg3)</code></pre>
 ## Multiple R-squared:  0.4734, Adjusted R-squared:  0.4502 
 ## F-statistic: 20.38 on 3 and 68 DF,  p-value: 1.575e-09</code></pre>
 <pre class="r"><code>pred1=predict(reg3)
+pred2=predict(reg4)
 plot(gfr~t)
-lines(pred1)</code></pre>
+lines(pred1,col=1)
+lines(pred2,col=2)</code></pre>
 <p><img src="etricsCh10_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Interpretation of the first model could be as follows: during World War II, the fertility rate was temporarily lower. It has been permanently lower since the introduction of the pill in 1963. However, after including quadratic time trend, we see that the pill has statistically insignificant effect.</p>
 <p>The questions is: when should we include a trend in our analysis? If the dependent variable displays an obvious trending behavior we should consider including a trend. If both the dependent and some independent variables have trends we need to consider including time trend. If only some of the independent variables have trends; their effect on the dependent variable may only be visible after a trend has been subtracted (detrending).</p>
