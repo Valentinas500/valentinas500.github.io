@@ -12,7 +12,7 @@
 
 
 
-<title>Introductory Econometrics</title>
+<title>Correlation in R</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -306,71 +306,69 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Introductory Econometrics</h1>
+<h1 class="title toc-ignore">Correlation in R</h1>
 
 </div>
 
 
-<div id="taught-courses" class="section level4">
-<h4>Taught Courses</h4>
-<ul>
-<li><p><a href="etricsSpring2020.html">ECON 3885, Spring 2020 at Fordham University</a></p></li>
-<li><p><a href="https://drive.google.com/file/d/1kslihwSkY2TlmGkCMA-M_zcFmrqxy39e/view?usp=sharing">ECON 3885, Fall 2019, Fordham University</a></p></li>
-</ul>
-</div>
-<div id="notes-on-introductory-econometrics" class="section level4">
-<h4>Notes on Introductory Econometrics</h4>
-<p><em>Based on Wooldridge, J. (2019). Introductory Econometrics: A Modern Approach. Boston, MA: Cengage.</em></p>
-<ul>
-<li><a href="etricsCh1.html">Chapter 1: The Nature of Econometrics and Economic Data</a></li>
-<li><a href="etricsCh2.html">Chapter 2: The Simple Regression Model</a></li>
-<li><a href="etricsCh3.html">Chapter 3: The Multiple Regression Analysis: Estimation</a></li>
-<li><a href="etricsCh4.html">Chapter 4: The Multiple Regression Analysis: Inference</a></li>
-<li><a href="etricsCh5.html">Chapter 5: The Multiple Regression Analysis: OLS Asymptotics</a></li>
-<li><a href="etricsCh6.html">Chapter 6: Multiple Regression Analysis: Further Issues</a></li>
-<li><a href="etricsCh7.html">Chapter 7: Multiple Regression Analysis with Dummy Variables</a></li>
-<li><a href="etricsCh8.html">Chapter 8: Heteroskedasticity</a></li>
-<li><a href="etricsCh9.html">Chapter 9: Specification and Data Issues</a></li>
-<li><a href="etricsCh10.html">Chapter 10: Basic Regression Analysis with Time Series Data</a></li>
-<li><a href="etricsCh11.html">Chapter 11: Issues in Using OLS with Time Series Data</a></li>
-<li>Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions</li>
-<li><a href="etricsCh13.html">Chapter 13: Pooling Cross Sections across Time: Simple Panel Data Methods</a></li>
-<li>Chapter 14: Advanced Panel Data Methods</li>
-<li><a href="etricsCh15.html">Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares</a></li>
-<li><a href="etricsCh16.html">Chapter 16: Simultaneous Equation Models</a></li>
-<li><a href="etricsCh17.html">Chapter 17: Limited Dependent Variable Models: Logit and Probit</a></li>
-<li>Chapter 18: Advanced Time Series Topics</li>
-<li><a href="etricsCh19.html">Chapter 19: Carrying Out an Empirical Project</a></li>
-</ul>
-</div>
-<div id="notes-on-practical-data-science-with-r" class="section level4">
-<h4>Notes on Practical Data Science With R</h4>
-<p><em>Based on Zumel, N., &amp; Mount, J. (2014). Practical Data Science With R. Manning Publications Co.</em></p>
-<ul>
-<li><a href="dataCh2.html">Chapter 2: Starting with R and Data</a></li>
-<li><a href="dataCh3.html">Chapter 3: Exploring Data: Summary Statistics and Plots</a></li>
-</ul>
-</div>
-<div id="notes-on-other-topics-in-data-analysis-in-r" class="section level4">
-<h4>Notes on Other Topics in Data Analysis in R</h4>
-<ul>
-<li>Data Visualization And Regression Reporting in R</li>
-<li>Introduction to Graphs in R for Econometricians</li>
-<li><a href="etrics_correlation.html">Correlation in R</a></li>
-<li><a href="etrics_compareregressionresults.html">Reporting and Comparing Regression Results in R</a></li>
-<li>Time Series Analysis and Visualization in R</li>
-<li>Panel Data Visualization in R</li>
-<li>Data Visualization Using ‘googleVis’</li>
-<li>Data Manipulation and Visualization in R with ‘tidyverse’</li>
-<li>Interactive Apps Using ‘shiny’ In R</li>
-<li>Topics in Advanced Econometrics</li>
-<li>Nonparametric Econometrics in R</li>
-<li>Advanced Time Series Analysis in R</li>
-<li>Quantile Regressions in R</li>
-<li>Simple Machine Learning Algorithms in R</li>
-<li>K-Nearest Neighbors Algorithm in R</li>
-</ul>
-</div>
+<p>Correlation is a statistical relationship between bivariate data. It indicates the degree to which two variables are linearly related. Correlation ranges from +1 to -1. +1 indicates a perfect linear relationship, 0 indicates no relationship, and -1 indicates a perfect negative relationship.</p>
+<p>In R, there are a number of packages and commands to compute correlation and display correlation matrices. In this short intro, we will cover only a few.</p>
+<p>Using data set <strong>wage1</strong> in package <strong>wooldridge</strong> and basic statistics comman <strong>cor</strong>, let’s produce a correlation table for variables <span class="math inline">\(educ, exper, tenure, nonwhite, female\)</span>.</p>
+<pre class="r"><code>data(wage1, package=&#39;wooldridge&#39;)
+matrix1 = cor(wage1[,c(2,3,4,5,6)])
+round(matrix1, 2)</code></pre>
+<pre><code>##           educ exper tenure nonwhite female
+## educ      1.00 -0.30  -0.06    -0.08  -0.09
+## exper    -0.30  1.00   0.50     0.01  -0.04
+## tenure   -0.06  0.50   1.00     0.01  -0.20
+## nonwhite -0.08  0.01   0.01     1.00  -0.01
+## female   -0.09 -0.04  -0.20    -0.01   1.00</code></pre>
+<p>Using package <strong>Hmisc</strong> and command <strong>rcorr</strong>, we can indicate if we want to use Pearson corrleation (used for continuous variables) or Spearman (used for ordinal variables). Before using any of these, you need to check the underlying assumptions of each. <strong>rcorr</strong> command also provides us with p-values that tell us the probability of finding the current result when actually there is no correlation between the two variables.</p>
+<pre class="r"><code>library(Hmisc)
+CorMat1=rcorr(as.matrix(wage1[,c(2,3,4)]), type = c(&quot;pearson&quot;))
+CorMat2=rcorr(as.matrix(wage1[,c(5,6)]), type = c(&quot;spearman&quot;))
+CorMat1</code></pre>
+<pre><code>##         educ exper tenure
+## educ    1.00  -0.3  -0.06
+## exper  -0.30   1.0   0.50
+## tenure -0.06   0.5   1.00
+## 
+## n= 526 
+## 
+## 
+## P
+##        educ   exper  tenure
+## educ          0.0000 0.1984
+## exper  0.0000        0.0000
+## tenure 0.1984 0.0000</code></pre>
+<pre class="r"><code>CorMat2</code></pre>
+<pre><code>##          nonwhite female
+## nonwhite     1.00  -0.01
+## female      -0.01   1.00
+## 
+## n= 526 
+## 
+## 
+## P
+##          nonwhite female
+## nonwhite          0.8027
+## female   0.8027</code></pre>
+<p>Very often, it is a good idea to show these results visually, especially, if you plan to publish your results in a report. Among many packages that can help you, there is <strong>corrplot</strong>. It allows a user to call a variety of visual figures to represent the correlation matrix. For examples of what kind of figures you can create using this package, see this <a href="https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html">link</a>. Let’s try a few plots.</p>
+<pre class="r"><code>library(corrplot)
+corrplot(CorMat1$r, method = &quot;square&quot;)</code></pre>
+<p><img src="etrics_correlation_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>corrplot(matrix1, type = &quot;upper&quot;, order = &quot;hclust&quot;, tl.col = &quot;black&quot;, tl.srt = 45)</code></pre>
+<p><img src="etrics_correlation_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>corrplot(CorMat1$r, type=&quot;upper&quot;, order=&quot;hclust&quot;,
+                p.mat = CorMat1$P, sig.level = 0.05, insig = &quot;blank&quot;)</code></pre>
+<p><img src="etrics_correlation_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<p>Using <strong>PerformanceAnalytics</strong> package and command <strong>chart.Correlation</strong>, we can create a correlation chart which provides with scatter plots between the two variables, correlation coefficient and the histogram of the variable itself. Using command ‘heatmap’, we can create a heatmap of the correlation matrix as can be seen below.</p>
+<pre class="r"><code>library(&quot;PerformanceAnalytics&quot;)
+chart.Correlation(wage1[,c(2,3,4,5,6)], histogram=TRUE, pch=19)</code></pre>
+<p><img src="etrics_correlation_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>heatmap(x = matrix1, col = heat.colors(100, alpha=0.8), symm = TRUE)</code></pre>
+<p><img src="etrics_correlation_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<hr />
 
 
 
