@@ -1,0 +1,3987 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Visualization Using Package googleVis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Data Visualization Using Package googleVis</h1>
+
+</div>
+
+
+<p>Google team has provided R users with very neat visualization package called <strong>googleVis</strong>. There is a number of options to choose from, it allows the representation of spatial data using US and World maps, as well as regular Google maps. Moreover, your figures are interactive and can easily be inserted into into websites.</p>
+<p>Let’s start by installing and loading <strong>googleVis</strong> package. Remember that you only need to install a package once.</p>
+<pre class="r"><code>#install.packages(&quot;googleVis&quot;)
+#install.packages(&quot;wooldridge&quot;)
+
+library(googleVis)
+data(wage1, package=&#39;wooldridge&#39;)
+
+df=data.frame(stat=c(&quot;white&quot;,&quot;nonwhite&quot;),
+              male=  c(mean(wage1$wage[wage1$nonwhite==0&amp;wage1$female==0]), mean(wage1$wage[wage1$nonwhite==1&amp;wage1$female==0])),
+              female=c(mean(wage1$wage[wage1$nonwhite==0&amp;wage1$female==1]), mean(wage1$wage[wage1$nonwhite==1&amp;wage1$female==1])))
+
+LineChart &lt;- gvisLineChart(df, options=list(title=&quot;Average Hourly Wages&quot;))
+plot(LineChart)</code></pre>
+<!-- LineChart generated in R 3.5.3 by googleVis 0.6.4 package -->
+<!-- Sun Jan 12 15:07:11 2020 -->
+<!-- jsHeader -->
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataLineChartID57a474b2145d () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"white",
+7.165306137,
+4.626211464
+],
+[
+"nonwhite",
+6.543448308,
+4.237600012
+] 
+];
+data.addColumn('string','stat');
+data.addColumn('number','male');
+data.addColumn('number','female');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartLineChartID57a474b2145d() {
+var data = gvisDataLineChartID57a474b2145d();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Average Hourly Wages";
+
+
+    var chart = new google.visualization.LineChart(
+    document.getElementById('LineChartID57a474b2145d')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartLineChartID57a474b2145d);
+})();
+function displayChartLineChartID57a474b2145d() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartLineChartID57a474b2145d"></script>
+<!-- divChart -->
+<div id="LineChartID57a474b2145d" style="width: 650; height: automatic;">
+
+</div>
+<p>Another popular visual that is often used by Excel users, is the the bar chart. To use the bar chart, use ‘gvisBarChart’ command.</p>
+<pre class="r"><code>BarChart &lt;- gvisBarChart(df, options=list(title=&quot;Average Hourly Wages&quot;))
+plot(BarChart)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataBarChartID57a45fc848ae () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"white",
+7.165306137,
+4.626211464
+],
+[
+"nonwhite",
+6.543448308,
+4.237600012
+] 
+];
+data.addColumn('string','stat');
+data.addColumn('number','male');
+data.addColumn('number','female');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartBarChartID57a45fc848ae() {
+var data = gvisDataBarChartID57a45fc848ae();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Average Hourly Wages";
+
+
+    var chart = new google.visualization.BarChart(
+    document.getElementById('BarChartID57a45fc848ae')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartBarChartID57a45fc848ae);
+})();
+function displayChartBarChartID57a45fc848ae() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartBarChartID57a45fc848ae"></script>
+<!-- divChart -->
+<div id="BarChartID57a45fc848ae" style="width: 650; height: automatic;">
+
+</div>
+<p>To plot the bars vertically, use ‘gvisColumnChart’ command.</p>
+<pre class="r"><code>ColumnChart &lt;- gvisColumnChart(df, options=list(title=&quot;Average Hourly Wages&quot;))
+plot(ColumnChart)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataColumnChartID57a46b2c77dc () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"white",
+7.165306137,
+4.626211464
+],
+[
+"nonwhite",
+6.543448308,
+4.237600012
+] 
+];
+data.addColumn('string','stat');
+data.addColumn('number','male');
+data.addColumn('number','female');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartColumnChartID57a46b2c77dc() {
+var data = gvisDataColumnChartID57a46b2c77dc();
+var options = {};
+options["allowHtml"] = true;
+options["title"] = "Average Hourly Wages";
+
+
+    var chart = new google.visualization.ColumnChart(
+    document.getElementById('ColumnChartID57a46b2c77dc')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartColumnChartID57a46b2c77dc);
+})();
+function displayChartColumnChartID57a46b2c77dc() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartColumnChartID57a46b2c77dc"></script>
+<!-- divChart -->
+<div id="ColumnChartID57a46b2c77dc" style="width: 650; height: automatic;">
+
+</div>
+<p>Pie chart is typically used to show the distribution or allocation. To see what percentage of all sample is men and women, white and nonwhite adults in our dataset, we can use the following commands.</p>
+<pre class="r"><code>df2=data.frame(stat=c(&quot;female&quot;,&quot;male&quot;), c(mean(wage1$female),1-mean(wage1$female)))
+Pie1 &lt;- gvisPieChart(df2)
+plot(Pie1)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataPieChartID57a434c82386 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"female",
+0.4790874525
+],
+[
+"male",
+0.5209125475
+] 
+];
+data.addColumn('string','stat');
+data.addColumn('number','c.mean.wage1.female...1...mean.wage1.female..');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartPieChartID57a434c82386() {
+var data = gvisDataPieChartID57a434c82386();
+var options = {};
+options["allowHtml"] = true;
+
+
+    var chart = new google.visualization.PieChart(
+    document.getElementById('PieChartID57a434c82386')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartPieChartID57a434c82386);
+})();
+function displayChartPieChartID57a434c82386() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartPieChartID57a434c82386"></script>
+<!-- divChart -->
+<div id="PieChartID57a434c82386" style="width: 650; height: automatic;">
+
+</div>
+<pre class="r"><code>df3=data.frame(stat=c(&quot;Nonwhite&quot;,&quot;White&quot;), c(mean(wage1$nonwhite),1-mean(wage1$nonwhite)))
+Pie2 &lt;- gvisPieChart(df3)
+plot(Pie2)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataPieChartID57a463873e82 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Nonwhite",
+0.102661597
+],
+[
+"White",
+0.897338403
+] 
+];
+data.addColumn('string','stat');
+data.addColumn('number','c.mean.wage1.nonwhite...1...mean.wage1.nonwhite..');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartPieChartID57a463873e82() {
+var data = gvisDataPieChartID57a463873e82();
+var options = {};
+options["allowHtml"] = true;
+
+
+    var chart = new google.visualization.PieChart(
+    document.getElementById('PieChartID57a463873e82')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartPieChartID57a463873e82);
+})();
+function displayChartPieChartID57a463873e82() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartPieChartID57a463873e82"></script>
+<!-- divChart -->
+<div id="PieChartID57a463873e82" style="width: 650; height: automatic;">
+
+</div>
+<p>We can also examine in what kind of industries do the individuals in the sample work.</p>
+<pre class="r"><code>df4=data.frame(ind=c(&quot;Construction&quot;,&quot;Nondurables Manufacuring&quot;,&quot;Transp, Comm&quot;,
+                          &quot;Trade&quot;,&quot;Services&quot;,&quot;Prof. Services&quot;),
+               share=c( mean(wage1$construc),mean(wage1$ndurman),mean(wage1$trcommpu),
+                        mean(wage1$trade), mean(wage1$services),mean(wage1$profserv))  )
+Pie3 &lt;- gvisPieChart(df4)
+plot(Pie3)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataPieChartID57a463257dce () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Construction",
+0.04562737643
+],
+[
+"Nondurables Manufacuring",
+0.1140684411
+],
+[
+"Transp, Comm",
+0.04372623574
+],
+[
+"Trade",
+0.2870722433
+],
+[
+"Services",
+0.1007604563
+],
+[
+"Prof. Services",
+0.2585551331
+] 
+];
+data.addColumn('string','ind');
+data.addColumn('number','share');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartPieChartID57a463257dce() {
+var data = gvisDataPieChartID57a463257dce();
+var options = {};
+options["allowHtml"] = true;
+
+
+    var chart = new google.visualization.PieChart(
+    document.getElementById('PieChartID57a463257dce')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartPieChartID57a463257dce);
+})();
+function displayChartPieChartID57a463257dce() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartPieChartID57a463257dce"></script>
+<!-- divChart -->
+<div id="PieChartID57a463257dce" style="width: 650; height: automatic;">
+
+</div>
+<p>Even though it does not look very professional, gauge chart can be useful in certain instances. Here, we show the average wages in each industry.</p>
+<pre class="r"><code>df5=data.frame(ind=c(&quot;Constr&quot;,&quot;ND Mnf&quot;,&quot;Tra,com&quot;,
+                     &quot;Trade&quot;,&quot;Services&quot;,&quot;Prof. Serv&quot;),
+               avgwage=c( mean(wage1$wage[wage1$construc==1]),mean(wage1$wage[wage1$ndurman==1]), mean(wage1$wage[wage1$trcommpu==1]),
+                        mean(wage1$wage[wage1$trade==1]), mean(wage1$wage[wage1$services==1]),mean(wage1$wage[wage1$profserv==1]))  )
+
+Gauge &lt;-  gvisGauge(df5, 
+                    options=list(min=4, max=7, greenFrom=6, greenTo=7,
+                                 yellowFrom=5, yellowTo=6,
+                                 redFrom=4, redTo=5, width=400, height=300))
+plot(Gauge)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataGaugeID57a41650660a () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Constr",
+5.964166641
+],
+[
+"ND Mnf",
+6.65416671
+],
+[
+"Tra,com",
+6.861304335
+],
+[
+"Trade",
+4.792251662
+],
+[
+"Services",
+4.335094357
+],
+[
+"Prof. Serv",
+6.428455896
+] 
+];
+data.addColumn('string','ind');
+data.addColumn('number','avgwage');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartGaugeID57a41650660a() {
+var data = gvisDataGaugeID57a41650660a();
+var options = {};
+options["allowHtml"] = true;
+options["min"] = 4;
+options["max"] = 7;
+options["greenFrom"] = 6;
+options["greenTo"] = 7;
+options["yellowFrom"] = 5;
+options["yellowTo"] = 6;
+options["redFrom"] = 4;
+options["redTo"] = 5;
+options["width"] = 400;
+options["height"] = 300;
+
+
+    var chart = new google.visualization.Gauge(
+    document.getElementById('GaugeID57a41650660a')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "gauge";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartGaugeID57a41650660a);
+})();
+function displayChartGaugeID57a41650660a() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGaugeID57a41650660a"></script>
+<!-- divChart -->
+<div id="GaugeID57a41650660a" style="width: 650; height: 300;">
+
+</div>
+<p>Some of the best use of this package has to do with wonderful visual spatial representation of the United States. For example, we can visually show the executions and murder rate by US state using the following commands.</p>
+<pre class="r"><code>data(murder, package=&#39;wooldridge&#39;)
+murderNoDC=murder[!murder$state==&quot;DC&quot;,]
+states &lt;- rep(state.name, each=3)
+murderNoDC$state1=states;
+
+GeoStates &lt;- gvisGeoChart(murderNoDC[murderNoDC$year==87,], &quot;state1&quot;, &quot;exec&quot;,&quot;mrdrte&quot;,
+                          options=list(region=&quot;US&quot;, 
+                                       displayMode=&quot;regions&quot;, 
+                                       resolution=&quot;provinces&quot;,
+                                       width=600, height=400))
+plot(GeoStates)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataGeoChartID57a476dc258d () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Alabama",
+2,
+9.300000191
+],
+[
+"Alaska",
+0,
+10.10000038
+],
+[
+"Arizona",
+0,
+7.5
+],
+[
+"Arkansas",
+0,
+7.599999905
+],
+[
+"California",
+0,
+10.60000038
+],
+[
+"Colorado",
+0,
+5.800000191
+],
+[
+"Connecticut",
+0,
+4.900000095
+],
+[
+"Delaware",
+0,
+5.099999905
+],
+[
+"Florida",
+7,
+11.39999962
+],
+[
+"Georgia",
+9,
+11.80000019
+],
+[
+"Hawaii",
+0,
+4.800000191
+],
+[
+"Idaho",
+0,
+3.099999905
+],
+[
+"Illinois",
+0,
+8.300000191
+],
+[
+"Indiana",
+1,
+5.599999905
+],
+[
+"Iowa",
+0,
+2.099999905
+],
+[
+"Kansas",
+0,
+4.400000095
+],
+[
+"Kentucky",
+0,
+7.5
+],
+[
+"Louisiana",
+9,
+11.10000038
+],
+[
+"Maine",
+0,
+2.5
+],
+[
+"Maryland",
+0,
+9.600000381
+],
+[
+"Massachusetts",
+0,
+3
+],
+[
+"Michigan",
+0,
+12.19999981
+],
+[
+"Minnesota",
+0,
+2.599999905
+],
+[
+"Mississippi",
+2,
+10.19999981
+],
+[
+"Missouri",
+0,
+8.300000191
+],
+[
+"Montana",
+0,
+4.099999905
+],
+[
+"Nebraska",
+0,
+3.5
+],
+[
+"Nevada",
+1,
+8.399999619
+],
+[
+"New Hampshire",
+0,
+3
+],
+[
+"New Jersey",
+0,
+4.599999905
+],
+[
+"New Mexico",
+0,
+10.10000038
+],
+[
+"New York",
+0,
+11.30000019
+],
+[
+"North Carolina",
+1,
+8.100000381
+],
+[
+"North Dakota",
+0,
+1.5
+],
+[
+"Ohio",
+0,
+5.800000191
+],
+[
+"Oklahoma",
+0,
+7.5
+],
+[
+"Oregon",
+0,
+5.599999905
+],
+[
+"Pennsylvania",
+0,
+5.400000095
+],
+[
+"Rhode Island",
+0,
+3.5
+],
+[
+"South Carolina",
+2,
+9.300000191
+],
+[
+"South Dakota",
+0,
+1.799999952
+],
+[
+"Tennessee",
+0,
+9.100000381
+],
+[
+"Texas",
+22,
+11.69999981
+],
+[
+"Utah",
+1,
+3.299999952
+],
+[
+"Vermont",
+0,
+2.700000048
+],
+[
+"Virginia",
+4,
+7.400000095
+],
+[
+"Washington",
+0,
+5.599999905
+],
+[
+"West Virginia",
+0,
+4.800000191
+],
+[
+"Wisconsin",
+0,
+3.5
+],
+[
+"Wyoming",
+0,
+2
+] 
+];
+data.addColumn('string','state1');
+data.addColumn('number','exec');
+data.addColumn('number','mrdrte');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartGeoChartID57a476dc258d() {
+var data = gvisDataGeoChartID57a476dc258d();
+var options = {};
+options["width"] = 600;
+options["height"] = 400;
+options["region"] = "US";
+options["displayMode"] = "regions";
+options["resolution"] = "provinces";
+
+
+    var chart = new google.visualization.GeoChart(
+    document.getElementById('GeoChartID57a476dc258d')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "geochart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartGeoChartID57a476dc258d);
+})();
+function displayChartGeoChartID57a476dc258d() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID57a476dc258d"></script>
+<!-- divChart -->
+<div id="GeoChartID57a476dc258d" style="width: 650; height: 400;">
+
+</div>
+<pre class="r"><code>NewDF &lt;- data.frame(States=state.name, 
+                 ExecutionsIn87=murderNoDC[murderNoDC$year==87,5], 
+                 ExecutionsIn90=murderNoDC[murderNoDC$year==90,5], 
+                 ExecutionsIn93=murderNoDC[murderNoDC$year==93,5], 
+                 stringsAsFactors=FALSE)
+
+GeoStates1 &lt;- gvisGeoChart(NewDF, &quot;States&quot;, &quot;ExecutionsIn87&quot;,&quot;ExecutionsIn93&quot;,
+                          options=list(region=&quot;US&quot;, 
+                                       displayMode=&quot;regions&quot;, 
+                                       resolution=&quot;provinces&quot;,
+                                       width=600, height=400))
+plot(GeoStates1)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataGeoChartID57a47c8e284d () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Alabama",
+2,
+2
+],
+[
+"Alaska",
+0,
+0
+],
+[
+"Arizona",
+0,
+3
+],
+[
+"Arkansas",
+0,
+2
+],
+[
+"California",
+0,
+2
+],
+[
+"Colorado",
+0,
+0
+],
+[
+"Connecticut",
+0,
+0
+],
+[
+"Delaware",
+0,
+0
+],
+[
+"Florida",
+7,
+7
+],
+[
+"Georgia",
+9,
+3
+],
+[
+"Hawaii",
+0,
+0
+],
+[
+"Idaho",
+0,
+0
+],
+[
+"Illinois",
+0,
+0
+],
+[
+"Indiana",
+1,
+0
+],
+[
+"Iowa",
+0,
+0
+],
+[
+"Kansas",
+0,
+0
+],
+[
+"Kentucky",
+0,
+0
+],
+[
+"Louisiana",
+9,
+2
+],
+[
+"Maine",
+0,
+0
+],
+[
+"Maryland",
+0,
+0
+],
+[
+"Massachusetts",
+0,
+0
+],
+[
+"Michigan",
+0,
+0
+],
+[
+"Minnesota",
+0,
+0
+],
+[
+"Mississippi",
+2,
+0
+],
+[
+"Missouri",
+0,
+6
+],
+[
+"Montana",
+0,
+0
+],
+[
+"Nebraska",
+0,
+0
+],
+[
+"Nevada",
+1,
+0
+],
+[
+"New Hampshire",
+0,
+0
+],
+[
+"New Jersey",
+0,
+0
+],
+[
+"New Mexico",
+0,
+0
+],
+[
+"New York",
+0,
+0
+],
+[
+"North Carolina",
+1,
+2
+],
+[
+"North Dakota",
+0,
+0
+],
+[
+"Ohio",
+0,
+0
+],
+[
+"Oklahoma",
+0,
+2
+],
+[
+"Oregon",
+0,
+0
+],
+[
+"Pennsylvania",
+0,
+0
+],
+[
+"Rhode Island",
+0,
+0
+],
+[
+"South Carolina",
+2,
+1
+],
+[
+"South Dakota",
+0,
+0
+],
+[
+"Tennessee",
+0,
+0
+],
+[
+"Texas",
+22,
+34
+],
+[
+"Utah",
+1,
+1
+],
+[
+"Vermont",
+0,
+0
+],
+[
+"Virginia",
+4,
+11
+],
+[
+"Washington",
+0,
+1
+],
+[
+"West Virginia",
+0,
+0
+],
+[
+"Wisconsin",
+0,
+0
+],
+[
+"Wyoming",
+0,
+1
+] 
+];
+data.addColumn('string','States');
+data.addColumn('number','ExecutionsIn87');
+data.addColumn('number','ExecutionsIn93');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartGeoChartID57a47c8e284d() {
+var data = gvisDataGeoChartID57a47c8e284d();
+var options = {};
+options["width"] = 600;
+options["height"] = 400;
+options["region"] = "US";
+options["displayMode"] = "regions";
+options["resolution"] = "provinces";
+
+
+    var chart = new google.visualization.GeoChart(
+    document.getElementById('GeoChartID57a47c8e284d')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "geochart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartGeoChartID57a47c8e284d);
+})();
+function displayChartGeoChartID57a47c8e284d() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID57a47c8e284d"></script>
+<!-- divChart -->
+<div id="GeoChartID57a47c8e284d" style="width: 650; height: 400;">
+
+</div>
+<p>Using data on countries’ populations, we can plot a specific region of interest and data associated in countries of that region. For example, see population data in European countries.</p>
+<pre class="r"><code>WorldPopulation=data.frame(Country=Population$Country, 
+                                                      Population.in.millions=round(Population$Population/1e6,0),
+                                                      Rank=paste(Population$Country, &quot;Rank:&quot;, Population$Rank))
+G5 = gvisGeoChart(WorldPopulation, &quot;Country&quot;, &quot;Population.in.millions&quot;, &quot;Rank&quot;, 
+                                    options=list(region=&quot;150&quot;, width=600, height=300))
+plot(G5)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataGeoChartID57a4223318c3 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"China",
+1340,
+36
+],
+[
+"India",
+1189,
+77
+],
+[
+"United States",
+310,
+185
+],
+[
+"Indonesia",
+238,
+78
+],
+[
+"Brazil",
+194,
+24
+],
+[
+"Pakistan",
+171,
+129
+],
+[
+"Bangladesh",
+164,
+14
+],
+[
+"Nigeria",
+158,
+125
+],
+[
+"Russia",
+142,
+143
+],
+[
+"Japan",
+127,
+85
+],
+[
+"Mexico",
+108,
+110
+],
+[
+"Philippines",
+94,
+136
+],
+[
+"Vietnam",
+86,
+191
+],
+[
+"Ethiopia",
+85,
+57
+],
+[
+"Germany",
+82,
+65
+],
+[
+"Egypt",
+79,
+52
+],
+[
+"Iran",
+75,
+79
+],
+[
+"Turkey",
+73,
+178
+],
+[
+"Dem. Rep. of Congo",
+68,
+45
+],
+[
+"Thailand",
+67,
+173
+],
+[
+"France",
+65,
+61
+],
+[
+"United Kingdom",
+62,
+184
+],
+[
+"Italy",
+60,
+83
+],
+[
+"Myanmar",
+50,
+117
+],
+[
+"South Africa",
+50,
+161
+],
+[
+"South Korea",
+50,
+162
+],
+[
+"Spain",
+46,
+163
+],
+[
+"Ukraine",
+46,
+182
+],
+[
+"Colombia",
+46,
+37
+],
+[
+"Tanzania",
+45,
+172
+],
+[
+"Sudan",
+43,
+165
+],
+[
+"Argentina",
+41,
+7
+],
+[
+"Kenya",
+39,
+88
+],
+[
+"Poland",
+38,
+137
+],
+[
+"Algeria",
+35,
+3
+],
+[
+"Canada",
+34,
+31
+],
+[
+"Uganda",
+34,
+181
+],
+[
+"Morocco",
+32,
+115
+],
+[
+"Iraq",
+31,
+80
+],
+[
+"Nepal",
+30,
+120
+],
+[
+"Peru",
+29,
+135
+],
+[
+"Afghanistan",
+29,
+1
+],
+[
+"Venezuela",
+29,
+190
+],
+[
+"Malaysia",
+28,
+103
+],
+[
+"Uzbekistan",
+28,
+187
+],
+[
+"Saudi Arabia",
+27,
+151
+],
+[
+"Ghana",
+24,
+66
+],
+[
+"Yemen",
+24,
+193
+],
+[
+"North Korea",
+24,
+126
+],
+[
+"Mozambique",
+23,
+116
+],
+[
+"Syria",
+23,
+170
+],
+[
+"Australia",
+22,
+9
+],
+[
+"Cote d'Ivoire",
+22,
+40
+],
+[
+"Romania",
+21,
+142
+],
+[
+"Sri Lanka",
+20,
+164
+],
+[
+"Madagascar",
+20,
+101
+],
+[
+"Cameroon",
+20,
+30
+],
+[
+"Angola",
+19,
+5
+],
+[
+"Chile",
+17,
+35
+],
+[
+"Netherlands",
+17,
+121
+],
+[
+"Burkina Faso",
+16,
+27
+],
+[
+"Kazakhstan",
+16,
+87
+],
+[
+"Niger",
+16,
+124
+],
+[
+"Malawi",
+16,
+102
+],
+[
+"Mali",
+15,
+105
+],
+[
+"Guatemala",
+14,
+69
+],
+[
+"Ecuador",
+14,
+51
+],
+[
+"Cambodia",
+13,
+29
+],
+[
+"Zambia",
+13,
+194
+],
+[
+"Senegal",
+13,
+152
+],
+[
+"Zimbabwe",
+13,
+195
+],
+[
+"Chad",
+12,
+34
+],
+[
+"Greece",
+11,
+67
+],
+[
+"Cuba",
+11,
+42
+],
+[
+"Belgium",
+11,
+17
+],
+[
+"Portugal",
+11,
+138
+],
+[
+"Czech Republic",
+11,
+44
+],
+[
+"Tunisia",
+10,
+177
+],
+[
+"Guinea",
+10,
+71
+],
+[
+"Rwanda",
+10,
+144
+],
+[
+"Dominican Republic",
+10,
+49
+],
+[
+"Haiti",
+10,
+73
+],
+[
+"Bolivia",
+10,
+21
+],
+[
+"Hungary",
+10,
+75
+],
+[
+"Serbia",
+10,
+153
+],
+[
+"Belarus",
+9,
+16
+],
+[
+"Sweden",
+9,
+168
+],
+[
+"Somalia",
+9,
+160
+],
+[
+"Benin",
+9,
+19
+],
+[
+"Azerbaijan",
+9,
+11
+],
+[
+"Burundi",
+9,
+28
+],
+[
+"Austria",
+8,
+10
+],
+[
+"Switzerland",
+8,
+169
+],
+[
+"Israel",
+8,
+82
+],
+[
+"Honduras",
+8,
+74
+],
+[
+"Bulgaria",
+8,
+26
+],
+[
+"Tajikistan",
+7,
+171
+],
+[
+"Papua New Guinea",
+7,
+133
+],
+[
+"Togo",
+7,
+174
+],
+[
+"Libya",
+7,
+97
+],
+[
+"Jordan",
+6,
+86
+],
+[
+"Paraguay",
+6,
+134
+],
+[
+"Laos",
+6,
+92
+],
+[
+"El Salvador",
+6,
+53
+],
+[
+"Sierra Leone",
+6,
+155
+],
+[
+"Nicaragua",
+6,
+123
+],
+[
+"Kyrgyzstan",
+6,
+91
+],
+[
+"Denmark",
+6,
+46
+],
+[
+"Slovakia",
+5,
+157
+],
+[
+"Finland",
+5,
+60
+],
+[
+"Eritrea",
+5,
+55
+],
+[
+"Turkmenistan",
+5,
+179
+],
+[
+"Singapore",
+5,
+156
+],
+[
+"Norway",
+5,
+127
+],
+[
+"United Arab Emirates",
+5,
+183
+],
+[
+"Costa Rica",
+5,
+39
+],
+[
+"Central African Republic",
+5,
+33
+],
+[
+"Ireland",
+4,
+81
+],
+[
+"Georgia",
+4,
+64
+],
+[
+"Croatia",
+4,
+41
+],
+[
+"New Zealand",
+4,
+122
+],
+[
+"Lebanon",
+4,
+94
+],
+[
+"Liberia",
+4,
+96
+],
+[
+"Palestinian territories",
+4,
+131
+],
+[
+"Bosnia and Herzegovina",
+4,
+22
+],
+[
+"Republic of the Congo",
+4,
+141
+],
+[
+"Moldova",
+4,
+111
+],
+[
+"Uruguay",
+3,
+186
+],
+[
+"Mauritania",
+3,
+108
+],
+[
+"Lithuania",
+3,
+99
+],
+[
+"Panama",
+3,
+132
+],
+[
+"Armenia",
+3,
+8
+],
+[
+"Albania",
+3,
+2
+],
+[
+"Kuwait",
+3,
+90
+],
+[
+"Oman",
+3,
+128
+],
+[
+"Mongolia",
+3,
+113
+],
+[
+"Jamaica",
+3,
+84
+],
+[
+"Latvia",
+2,
+93
+],
+[
+"Namibia",
+2,
+118
+],
+[
+"Lesotho",
+2,
+95
+],
+[
+"Slovenia",
+2,
+158
+],
+[
+"Republic of Macedonia",
+2,
+140
+],
+[
+"Botswana",
+2,
+23
+],
+[
+"Gambia",
+2,
+63
+],
+[
+"Qatar",
+2,
+139
+],
+[
+"Guinea-Bissau",
+2,
+70
+],
+[
+"Gabon",
+2,
+62
+],
+[
+"Trinidad and Tobago",
+1,
+176
+],
+[
+"Estonia",
+1,
+56
+],
+[
+"Mauritius",
+1,
+109
+],
+[
+"Swaziland",
+1,
+167
+],
+[
+"East Timor",
+1,
+50
+],
+[
+"Djibouti",
+1,
+47
+],
+[
+"Fiji",
+1,
+59
+],
+[
+"Bahrain",
+1,
+13
+],
+[
+"Cyprus",
+1,
+43
+],
+[
+"Guyana",
+1,
+72
+],
+[
+"Bhutan",
+1,
+20
+],
+[
+"Equatorial Guinea",
+1,
+54
+],
+[
+"Comoros",
+1,
+38
+],
+[
+"Montenegro",
+1,
+114
+],
+[
+"Solomon Islands",
+1,
+159
+],
+[
+"Western Sahara",
+1,
+192
+],
+[
+"Suriname",
+1,
+166
+],
+[
+"Cape Verde",
+1,
+32
+],
+[
+"Luxembourg",
+1,
+100
+],
+[
+"Malta",
+0,
+106
+],
+[
+"Brunei",
+0,
+25
+],
+[
+"Bahamas",
+0,
+12
+],
+[
+"Belize",
+0,
+18
+],
+[
+"Iceland",
+0,
+76
+],
+[
+"Maldives",
+0,
+104
+],
+[
+"Barbados",
+0,
+15
+],
+[
+"Vanuatu",
+0,
+188
+],
+[
+"Samoa",
+0,
+148
+],
+[
+"Saint Lucia",
+0,
+146
+],
+[
+"Sao Tome and Principe",
+0,
+150
+],
+[
+"Federated States of Micronesia",
+0,
+58
+],
+[
+"Saint Vincent and the Grenadines",
+0,
+147
+],
+[
+"Grenada",
+0,
+68
+],
+[
+"Tonga",
+0,
+175
+],
+[
+"Kiribati",
+0,
+89
+],
+[
+"Antigua and Barbuda",
+0,
+6
+],
+[
+"Seychelles",
+0,
+154
+],
+[
+"Andorra",
+0,
+4
+],
+[
+"Dominica",
+0,
+48
+],
+[
+"Marshall Islands",
+0,
+107
+],
+[
+"Saint Kitts and Nevis",
+0,
+145
+],
+[
+"Liechtenstein",
+0,
+98
+],
+[
+"Monaco",
+0,
+112
+],
+[
+"San Marino",
+0,
+149
+],
+[
+"Palau",
+0,
+130
+],
+[
+"Tuvalu",
+0,
+180
+],
+[
+"Nauru",
+0,
+119
+],
+[
+"Vatican City",
+0,
+189
+] 
+];
+data.addColumn('string','Country');
+data.addColumn('number','Population.in.millions');
+data.addColumn('number','Rank');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartGeoChartID57a4223318c3() {
+var data = gvisDataGeoChartID57a4223318c3();
+var options = {};
+options["width"] = 600;
+options["height"] = 300;
+options["region"] = "150";
+
+
+    var chart = new google.visualization.GeoChart(
+    document.getElementById('GeoChartID57a4223318c3')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "geochart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartGeoChartID57a4223318c3);
+})();
+function displayChartGeoChartID57a4223318c3() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID57a4223318c3"></script>
+<!-- divChart -->
+<div id="GeoChartID57a4223318c3" style="width: 650; height: 300;">
+
+</div>
+<p>Using ‘googleVis’ with ‘WDI’ package that allows us to easily download World Bank development indicators, we can plot GDP per capita (constant 2000 US$) on the interactive World Map. Note that data for a few countries did not load correctly (for example, Russia and Somalia). One would need to make sure the names of countries in ‘data’ are named correctly.</p>
+<pre class="r"><code>#install.packages(&#39;WDI&#39;)
+library(WDI)
+
+data = WDI(indicator=&#39;NY.GDP.PCAP.KD&#39;, start=2016, end=2016)
+
+Geo=gvisGeoChart(data, locationvar=&quot;country&quot;, 
+                 colorvar=&quot;NY.GDP.PCAP.KD&quot;,
+                 options=list(projection=&quot;kavrayskiy-vii&quot;))
+plot(Geo)</code></pre>
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataGeoChartID57a46492301f () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Arab World",
+6515.610951
+],
+[
+"Caribbean small states",
+8974.280475
+],
+[
+"Central Europe and the Baltics",
+14819.93862
+],
+[
+"Early-demographic dividend",
+3474.912502
+],
+[
+"East Asia & Pacific",
+9538.32225
+],
+[
+"East Asia & Pacific (excluding high income)",
+5795.441559
+],
+[
+"East Asia & Pacific (IDA & IBRD countries)",
+5856.612335
+],
+[
+"Euro area",
+39327.1292
+],
+[
+"Europe & Central Asia",
+25234.57435
+],
+[
+"Europe & Central Asia (excluding high income)",
+9023.104921
+],
+[
+"Europe & Central Asia (IDA & IBRD countries)",
+9581.869069
+],
+[
+"European Union",
+35942.39791
+],
+[
+"Fragile and conflict affected situations",
+1591.972292
+],
+[
+"Heavily indebted poor countries (HIPC)",
+874.4170347
+],
+[
+"High income",
+42061.93942
+],
+[
+"IBRD only",
+5599.649139
+],
+[
+"IDA & IBRD total",
+4505.319101
+],
+[
+"IDA blend",
+1752.429845
+],
+[
+"IDA only",
+968.8459714
+],
+[
+"IDA total",
+1238.330986
+],
+[
+"Late-demographic dividend",
+7961.520539
+],
+[
+"Latin America & Caribbean",
+9291.491035
+],
+[
+"Latin America & Caribbean (excluding high income)",
+8927.556451
+],
+[
+"Latin America & the Caribbean (IDA & IBRD countries)",
+9205.042563
+],
+[
+"Least developed countries: UN classification",
+918.3678963
+],
+[
+"Low & middle income",
+4378.859423
+],
+[
+"Low income",
+707.4634659
+],
+[
+"Lower middle income",
+2088.564558
+],
+[
+"Middle East & North Africa",
+7814.758937
+],
+[
+"Middle East & North Africa (excluding high income)",
+4297.161451
+],
+[
+"Middle East & North Africa (IDA & IBRD countries)",
+4316.149546
+],
+[
+"Middle income",
+4820.754572
+],
+[
+"North America",
+52312.02146
+],
+[
+"Not classified",
+null
+],
+[
+"OECD members",
+38588.80236
+],
+[
+"Other small states",
+13705.93904
+],
+[
+"Pacific island small states",
+3251.220447
+],
+[
+"Post-demographic dividend",
+42422.83084
+],
+[
+"Pre-demographic dividend",
+1523.554348
+],
+[
+"Small states",
+12190.34612
+],
+[
+"South Asia",
+1695.854951
+],
+[
+"South Asia (IDA & IBRD)",
+1695.854951
+],
+[
+"Sub-Saharan Africa",
+1667.475933
+],
+[
+"Sub-Saharan Africa (excluding high income)",
+1666.370977
+],
+[
+"Sub-Saharan Africa (IDA & IBRD countries)",
+1667.475933
+],
+[
+"Upper middle income",
+7889.075117
+],
+[
+"World",
+10457.98551
+],
+[
+"Afghanistan",
+571.0737745
+],
+[
+"Albania",
+4681.840039
+],
+[
+"Algeria",
+4830.116707
+],
+[
+"American Samoa",
+9589.979837
+],
+[
+"Andorra",
+42949.66624
+],
+[
+"Angola",
+3530.309423
+],
+[
+"Antigua and Barbuda",
+13917.95112
+],
+[
+"Argentina",
+10239.48135
+],
+[
+"Armenia",
+3917.379676
+],
+[
+"Aruba",
+24277.40679
+],
+[
+"Australia",
+55728.68446
+],
+[
+"Austria",
+48259.9376
+],
+[
+"Azerbaijan",
+5812.584374
+],
+[
+"Bahamas, The",
+27370.20254
+],
+[
+"Bahrain",
+22336.77993
+],
+[
+"Bangladesh",
+1062.040158
+],
+[
+"Barbados",
+16173.8682
+],
+[
+"Belarus",
+6372.401795
+],
+[
+"Belgium",
+45957.68211
+],
+[
+"Belize",
+4227.291321
+],
+[
+"Benin",
+838.0335784
+],
+[
+"Bermuda",
+null
+],
+[
+"Bhutan",
+3035.658708
+],
+[
+"Bolivia",
+2425.56159
+],
+[
+"Bosnia and Herzegovina",
+5595.09967
+],
+[
+"Botswana",
+7797.144122
+],
+[
+"Brazil",
+10962.62678
+],
+[
+"British Virgin Islands",
+null
+],
+[
+"Brunei Darussalam",
+31685.22545
+],
+[
+"Bulgaria",
+7966.882009
+],
+[
+"Burkina Faso",
+663.8474288
+],
+[
+"Burundi",
+219.9614978
+],
+[
+"Cabo Verde",
+3532.140211
+],
+[
+"Cambodia",
+1079.630539
+],
+[
+"Cameroon",
+1467.760752
+],
+[
+"Canada",
+50263.83433
+],
+[
+"Cayman Islands",
+74997.18378
+],
+[
+"Central African Republic",
+359.2495719
+],
+[
+"Chad",
+868.2116954
+],
+[
+"Channel Islands",
+null
+],
+[
+"Chile",
+14771.25765
+],
+[
+"China",
+6883.895425
+],
+[
+"Colombia",
+7626.002946
+],
+[
+"Comoros",
+1365.34274
+],
+[
+"Congo, Dem. Rep.",
+407.2896431
+],
+[
+"Congo, Rep.",
+2851.975419
+],
+[
+"Costa Rica",
+9509.738189
+],
+[
+"Cote d'Ivoire",
+1539.315802
+],
+[
+"Croatia",
+14705.59203
+],
+[
+"Cuba",
+6550.274373
+],
+[
+"Curacao",
+null
+],
+[
+"Cyprus",
+29081.8161
+],
+[
+"Czech Republic",
+21863.64165
+],
+[
+"Denmark",
+61877.97648
+],
+[
+"Djibouti",
+null
+],
+[
+"Dominica",
+7054.997651
+],
+[
+"Dominican Republic",
+7026.179709
+],
+[
+"Ecuador",
+5176.058803
+],
+[
+"Egypt, Arab Rep.",
+2761.386198
+],
+[
+"El Salvador",
+3381.320343
+],
+[
+"Equatorial Guinea",
+12346.25956
+],
+[
+"Eritrea",
+null
+],
+[
+"Estonia",
+18081.52887
+],
+[
+"Eswatini",
+4662.820673
+],
+[
+"Ethiopia",
+514.0573068
+],
+[
+"Faroe Islands",
+null
+],
+[
+"Fiji",
+4449.306188
+],
+[
+"Finland",
+46720.56375
+],
+[
+"France",
+42054.53126
+],
+[
+"French Polynesia",
+null
+],
+[
+"Gabon",
+9419.856712
+],
+[
+"Gambia, The",
+747.0027351
+],
+[
+"Georgia",
+4302.751967
+],
+[
+"Germany",
+45959.57461
+],
+[
+"Ghana",
+1643.448744
+],
+[
+"Gibraltar",
+null
+],
+[
+"Greece",
+22666.28623
+],
+[
+"Greenland",
+47413.62248
+],
+[
+"Grenada",
+8449.307769
+],
+[
+"Guam",
+32027.5816
+],
+[
+"Guatemala",
+3100.829958
+],
+[
+"Guinea",
+809.9709354
+],
+[
+"Guinea-Bissau",
+594.9783587
+],
+[
+"Guyana",
+3793.305755
+],
+[
+"Haiti",
+729.8559997
+],
+[
+"Honduras",
+2111.193164
+],
+[
+"Hong Kong SAR, China",
+36820.99148
+],
+[
+"Hungary",
+15114.42909
+],
+[
+"Iceland",
+50188.49842
+],
+[
+"India",
+1874.228561
+],
+[
+"Indonesia",
+3968.055911
+],
+[
+"Iran, Islamic Rep.",
+6794.293215
+],
+[
+"Iraq",
+5930.948815
+],
+[
+"Ireland",
+67077.74361
+],
+[
+"Isle of Man",
+87381.78686
+],
+[
+"Israel",
+33720.7645
+],
+[
+"Italy",
+34454.51392
+],
+[
+"Jamaica",
+4761.940167
+],
+[
+"Japan",
+47444.14356
+],
+[
+"Jordan",
+3271.0882
+],
+[
+"Kazakhstan",
+10582.70087
+],
+[
+"Kenya",
+1129.713196
+],
+[
+"Kiribati",
+1772.932796
+],
+[
+"Korea, Dem. People's Rep.",
+null
+],
+[
+"Korea, Rep.",
+25484.03759
+],
+[
+"Kosovo",
+3907.557147
+],
+[
+"Kuwait",
+35887.1002
+],
+[
+"Kyrgyz Republic",
+1042.280328
+],
+[
+"Lao PDR",
+1621.738558
+],
+[
+"Latvia",
+14730.66697
+],
+[
+"Lebanon",
+6330.423607
+],
+[
+"Lesotho",
+1451.178913
+],
+[
+"Liberia",
+548.2681436
+],
+[
+"Libya",
+5669.733946
+],
+[
+"Liechtenstein",
+null
+],
+[
+"Lithuania",
+15939.93467
+],
+[
+"Luxembourg",
+110162.1208
+],
+[
+"Macao SAR, China",
+52163.18805
+],
+[
+"Madagascar",
+475.7454692
+],
+[
+"Malawi",
+506.2496613
+],
+[
+"Malaysia",
+11243.99591
+],
+[
+"Maldives",
+7631.471877
+],
+[
+"Mali",
+747.0916565
+],
+[
+"Malta",
+26645.85741
+],
+[
+"Marshall Islands",
+2877.717171
+],
+[
+"Mauritania",
+1322.238137
+],
+[
+"Mauritius",
+9833.613132
+],
+[
+"Mexico",
+10205.79575
+],
+[
+"Micronesia, Fed. Sts.",
+2710.082069
+],
+[
+"Moldova",
+2461.052676
+],
+[
+"Monaco",
+194188.1949
+],
+[
+"Mongolia",
+3866.243973
+],
+[
+"Montenegro",
+7492.863436
+],
+[
+"Morocco",
+3214.917464
+],
+[
+"Mozambique",
+584.2111079
+],
+[
+"Myanmar",
+1403.767118
+],
+[
+"Namibia",
+6365.499832
+],
+[
+"Nauru",
+9648.018316
+],
+[
+"Nepal",
+729.66143
+],
+[
+"Netherlands",
+52727.10248
+],
+[
+"New Caledonia",
+null
+],
+[
+"New Zealand",
+37319.28612
+],
+[
+"Nicaragua",
+1895.200159
+],
+[
+"Niger",
+389.9855591
+],
+[
+"Nigeria",
+2456.306188
+],
+[
+"North Macedonia",
+5247.250784
+],
+[
+"Northern Mariana Islands",
+18630.8248
+],
+[
+"Norway",
+90195.96368
+],
+[
+"Oman",
+16692.256
+],
+[
+"Pakistan",
+1117.517555
+],
+[
+"Palau",
+12622.45457
+],
+[
+"Panama",
+11108.5907
+],
+[
+"Papua New Guinea",
+2448.861248
+],
+[
+"Paraguay",
+5089.61202
+],
+[
+"Peru",
+6262.368905
+],
+[
+"Philippines",
+2743.198363
+],
+[
+"Poland",
+15101.56195
+],
+[
+"Portugal",
+22533.63229
+],
+[
+"Puerto Rico",
+27703.5236
+],
+[
+"Qatar",
+64303.18636
+],
+[
+"Romania",
+10236.86217
+],
+[
+"Russian Federation",
+11298.48374
+],
+[
+"Rwanda",
+754.2357159
+],
+[
+"Samoa",
+3824.501891
+],
+[
+"San Marino",
+52811.2788
+],
+[
+"Sao Tome and Principe",
+1263.374506
+],
+[
+"Saudi Arabia",
+21270.46772
+],
+[
+"Senegal",
+1430.362395
+],
+[
+"Serbia",
+6394.460674
+],
+[
+"Seychelles",
+13598.33635
+],
+[
+"Sierra Leone",
+457.8330917
+],
+[
+"Singapore",
+54764.86476
+],
+[
+"Sint Maarten (Dutch part)",
+null
+],
+[
+"Slovak Republic",
+19273.51203
+],
+[
+"Slovenia",
+24551.93404
+],
+[
+"Solomon Islands",
+1451.006365
+],
+[
+"Somalia",
+null
+],
+[
+"South Africa",
+7476.621012
+],
+[
+"South Sudan",
+null
+],
+[
+"Spain",
+31449.61772
+],
+[
+"Sri Lanka",
+3769.159089
+],
+[
+"St. Kitts and Nevis",
+17058.85144
+],
+[
+"St. Lucia",
+8288.947946
+],
+[
+"St. Martin (French part)",
+null
+],
+[
+"St. Vincent and the Grenadines",
+6686.644409
+],
+[
+"Sudan",
+1911.025651
+],
+[
+"Suriname",
+7912.618008
+],
+[
+"Sweden",
+56776.29391
+],
+[
+"Switzerland",
+77026.30219
+],
+[
+"Syrian Arab Republic",
+null
+],
+[
+"Tajikistan",
+976.1351753
+],
+[
+"Tanzania",
+904.3818923
+],
+[
+"Thailand",
+5911.951214
+],
+[
+"Timor-Leste",
+3072.41505
+],
+[
+"Togo",
+648.7946319
+],
+[
+"Tonga",
+4016.865962
+],
+[
+"Trinidad and Tobago",
+15696.90422
+],
+[
+"Tunisia",
+4314.953355
+],
+[
+"Turkey",
+14062.73379
+],
+[
+"Turkmenistan",
+6987.068177
+],
+[
+"Turks and Caicos Islands",
+null
+],
+[
+"Tuvalu",
+3493.770001
+],
+[
+"Uganda",
+694.009088
+],
+[
+"Ukraine",
+2909.646215
+],
+[
+"United Arab Emirates",
+41045.11112
+],
+[
+"United Kingdom",
+42510.16106
+],
+[
+"United States",
+52534.36528
+],
+[
+"Uruguay",
+14124.14386
+],
+[
+"Uzbekistan",
+2229.781706
+],
+[
+"Vanuatu",
+2806.439547
+],
+[
+"Venezuela, RB",
+10984.2452
+],
+[
+"Vietnam",
+1752.531946
+],
+[
+"Virgin Islands (U.S.)",
+29729.22179
+],
+[
+"West Bank and Gaza",
+2694.522526
+],
+[
+"Yemen, Rep.",
+765.6041721
+],
+[
+"Zambia",
+1652.284458
+],
+[
+"Zimbabwe",
+1224.309922
+] 
+];
+data.addColumn('string','country');
+data.addColumn('number','NY.GDP.PCAP.KD');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartGeoChartID57a46492301f() {
+var data = gvisDataGeoChartID57a46492301f();
+var options = {};
+options["width"] = 556;
+options["height"] = 347;
+options["projection"] = "kavrayskiy-vii";
+
+
+    var chart = new google.visualization.GeoChart(
+    document.getElementById('GeoChartID57a46492301f')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "geochart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartGeoChartID57a46492301f);
+})();
+function displayChartGeoChartID57a46492301f() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+<!-- jsChart -->
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartGeoChartID57a46492301f"></script>
+<!-- divChart -->
+<div id="GeoChartID57a46492301f" style="width: 650; height: 350;">
+
+</div>
+<hr />
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
