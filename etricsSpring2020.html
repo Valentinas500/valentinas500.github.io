@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics, Spring 2020</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics, Spring 2020</h1>
+
+</div>
+
+
+<div id="econ-3885-fall-2019-fordham-university" class="section level4">
+<h4>ECON 3885, Fall 2019, Fordham University</h4>
+<p>Based on Wooldridge, J. (2019). Introductory Econometrics: A Modern Approach. Boston, MA: Cengage.</p>
+<ul>
+<li><a href="https://drive.google.com/open?id=1ss6lxt9BJOwo0lLZ_tS_qqG8mPQrUB_V">Syllabus</a></li>
+</ul>
+<p>If you have any questions, please email me at <a href="mailto:vrudys@fordham.edu">vrudys@fordham.edu</a></p>
+<p>For immediate questions on homework or assignments, you can message me or call me on Skype (ID: valentinas500)</p>
+</div>
+<div id="weeks-prior-to-3082020" class="section level4">
+<h4>Weeks Prior To 3/08/2020</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh1.html">Chapter 1: The Nature of Econometrics and Economic Data</a>
+<ul>
+<li>Answer Key to Problem Set: <a href="https://drive.google.com/open?id=1PtnJhwpTmHfSz1GU7ZgjmsLb0x7kEdV5">PDF</a>, <a href="https://drive.google.com/open?id=1L2dskQAmru8qBMwSe_obsAkmeOV-WV-r">RMD</a></li>
+</ul></li>
+<li><a href="etricsCh2.html">Chapter 2: The Simple Regression Model</a>
+<ul>
+<li>Answer Key to Problem Set: <a href="https://drive.google.com/open?id=1rfnMkBUjbHa8eUujC01mxdltZPCvnozQ">PDF</a>, <a href="https://drive.google.com/open?id=1sFP998C9IS1ncaudsKogL8_0nFj9t-4r">RMD</a></li>
+<li><a href="beta1.html">Interpreting <span class="math inline">\(\beta_1\)</span> Coefficient</a></li>
+</ul></li>
+<li><a href="etricsCh2.html">Chapter 2: The Simple Regression Model</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1rfnMkBUjbHa8eUujC01mxdltZPCvnozQ">PDF</a>, <a href="https://drive.google.com/open?id=1sFP998C9IS1ncaudsKogL8_0nFj9t-4r">RMD</a></li>
+<li><a href="beta1.html">Interpreting <span class="math inline">\(\beta_1\)</span> Coefficient</a></li>
+</ul></li>
+<li><a href="etricsCh3.html">Chapter 3: The Multiple Regression Analysis: Estimation</a>
+<ul>
+<li>Answer Key to Problem Set: <a href="https://drive.google.com/open?id=1UcOmGtiZGg6ZT9ws6mzEFnXpzESCPCvE">PDF</a>, <a href="https://drive.google.com/open?id=13jH3BUUp231WQ3T3X7vhG-MXy-Ao6ekr">RMD</a></li>
+</ul></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=18Y4xfoJyh9hbWRfSKcLeDmrFa8nAV6YS">Practice Midterm Exam</a></li>
+</ul>
+</div>
+<div id="week-of-3082020-and-spring-break" class="section level4">
+<h4>Week of 3/08/2020 and Spring Break</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh4.html">Chapter 4: The Multiple Regression Analysis: Inference</a></li>
+<li><a href="etricsCh6.html">Chapter 6: Multiple Regression Analysis: Further Issues</a></li>
+</ul></li>
+<li>Assignments
+<ul>
+<li><a href="https://drive.google.com/open?id=1kN4yNj5uDr3ziC0fcArjaLNiG5ccMAC5">Homework Assignment CH4-1</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1ouq1q6noOv-beKNkVL6p2MQDOUwyCBjC">PDF</a>, <a href="https://drive.google.com/open?id=1fbVqVklOdvCNUniZ-LddM0zUX8ciojNe">RMD</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1LSEZRmeHNllzwjuJp7uYZC5htukFaEkh">Homework Assignment CH4-2</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1vm29cW31zIIdpMw2A7LdRHt0HGMZF7N_">PDF</a>, <a href="https://drive.google.com/open?id=1Y5n9y7CWlnVxVQvPA4Uob7brCsqJ5C18">RMD</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1HtBSfBVSvc-sZHA648bhgqNIc2F7k3c2">Homework Assignment CH6</a> [due 3/22/2020]
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1lggeb-rOSRp9c-AFIYyfOnkiPX81YdpH">PDF</a>, <a href="https://drive.google.com/open?id=1BIy00MHuF30M6aDokio3p_Pu5CIICbqt">RMD</a></li>
+</ul></li>
+</ul></li>
+<li>Video Lectures
+<ul>
+<li><a href="https://fordham-student.webex.com/webappng/sites/fordham-student/recording/play/c55394279ccd47bf9ba2ac37591c4cce">Live WebEx Class (Thursday, 3/12/20, 1:40pm to 3:30pm)</a>
+<ul>
+<li>Reviewed Homework Assignment CH4-2</li>
+</ul></li>
+<li><a href="https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/a3279073aff34deda7f7affe03a25f67">Live WebEx Class (Thursday, 3/19/2020, 4pm)</a>
+<ul>
+<li>Reviewed HW Assignment CH6 problems C1, C2 and C9 (<a href="https://drive.google.com/open?id=1Plgfvavba28vMNX4wRuUX2jEc28YS1tb">R file from the session</a>)</li>
+</ul></li>
+</ul></li>
+<li>Extra Material
+<ul>
+<li>Podcast 1: <a href="https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/10/20181017_pmoney_pmpod453-6760e94c-5c32-43c5-bc4f-85f77c517389.mp3?orgId=1&amp;d=1164&amp;p=510289&amp;story=658312757&amp;t=podcast&amp;e=658312757&amp;siteplayer=true&amp;awCollectionId=510289&amp;awEpisodeId=658312757&amp;dl=1">What Causes What?</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/2019/08/09/749938354/episode-932-deep-learning-with-the-elephants">Deep Learning With the Elephants</a></li>
+<li>Podcast 3: <a href="https://www.npr.org/transcripts/714289051">How Much Does This Cow Weigh?</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/transcripts/721733303">What’s Not On The Test: The Overlooked Factors That Determine Success</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-3222020" class="section level4">
+<h4>Week of 3/22/2020</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh6.html">Chapter 6: Multiple Regression Analysis: Further Issues</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=181wdUtAi9lmazwXm82doA5Re6TZpOHUQ">Chapter 6 Slides</a></li>
+<li><a href="https://drive.google.com/open?id=10Vnmj9B6s3Mre2cYbKOoxD-PXY79UdM4">Chapter 6 R Code</a></li>
+</ul></li>
+<li><a href="etricsCh7.html">Chapter 7: Multiple Regression Analysis with Dummy Variables</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=11TYv-QR0abPj_ND9KU8eoBBaRk_qTwWV">Chapter 7 Slides</a></li>
+</ul></li>
+<li><a href="etricsCh19.html">Chapter 19: Carrying Out an Empirical Project</a></li>
+</ul></li>
+<li>Assignments
+<ul>
+<li><a href="https://drive.google.com/open?id=1G55zarYD7hqtcrkYJPMQOel3a4NmfQwX">Homework Assignment Ch7</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1ENiYoMcV8_nX9GPfvNOH1RN5jABp0n97">PDF</a>, <a href="https://drive.google.com/open?id=1Zr2jNBuM-uexgsqJ1AYf-PEWzBnlxY1X">RMD</a></li>
+</ul></li>
+<li>Research Project Proposal</li>
+</ul></li>
+<li>Video Lectures
+<ul>
+<li><a href="https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/1e0ade1ceb4c4855a39704d8b49eb2cd">Live WebEx Class (Monday, 3/23/2020, 4pm (GMT-4))</a></li>
+<li><a href="https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/3915109b606c424b922fc1aedb7bba53">Live WebEx Class (Thursday, 3/26/2020, 4pm (GMT-4))</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-3292020" class="section level4">
+<h4>Week of 3/29/2020</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh7.html">Chapter 7: Multiple Regression Analysis with Dummy Variables</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=11TYv-QR0abPj_ND9KU8eoBBaRk_qTwWV">Chapter 7 Slides</a></li>
+</ul></li>
+<li><a href="etricsCh8.html">Chapter 8: Heteroskedasticity</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=1ZjOvXr8fv5DgntYpZT-h8jxJe02GSCO3">Chapter 8 Slides</a></li>
+</ul></li>
+<li>Reporting and Comparing Regression Results with <strong>stargazer</strong>
+<ul>
+<li><a href="https://drive.google.com/open?id=1QUAy_n8I0e4IByFMRaxtN_twpj1nDh63">PDF</a></li>
+<li><a href="https://drive.google.com/open?id=1kZiSEh3QbFYZhOMEqNKR5x-C82vgIQ4t">RMD</a></li>
+<li><a href="https://drive.google.com/open?id=173DDpsUVrtY6I7LtypjFwW_dif-eWCd5">R Code</a></li>
+</ul></li>
+<li>Detecting and Resolving Heteroskedasticity in R
+<ul>
+<li><a href="https://drive.google.com/open?id=15oNsc26HSkfRPslRiCsO46coXxtlmbCn">R Code</a></li>
+</ul></li>
+</ul></li>
+<li>Assignments
+<ul>
+<li><a href="https://drive.google.com/open?id=1g5zN37QAA_WBjj36V68fHiArP90GNpm9">Homework Assignment Ch8</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1Bg6ksRcByYP-bVsbcgY9rH_npe9PKXCQ">PDF</a>, <a href="https://drive.google.com/open?id=1ZJV-cIlw31ZNfi2rOzM-zeUutfyT8Pu2">RMD</a></li>
+</ul></li>
+</ul></li>
+<li>Video Lectures
+<ul>
+<li><a href="https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/da5d4e8d29c14e8784d4056040b20e08">Live WebEx Class (Monday, 3/30/2020, 4pm (GMT-4))</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-4052020" class="section level4">
+<h4>Week of 4/05/2020</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh8.html">Chapter 8: Heteroskedasticity</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=1ZjOvXr8fv5DgntYpZT-h8jxJe02GSCO3">Chapter 8 Slides</a></li>
+</ul></li>
+<li>Creating Functions in R
+<ul>
+<li><a href="https://drive.google.com/open?id=1KebFurqocEXS6vcJb37OsZepchSNE5zq">R Code 1</a></li>
+<li><a href="https://drive.google.com/open?id=1fphbFnD3XW6ognqY-B25CYzdxVvbgb7f">R Code 2</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-4122020" class="section level4">
+<h4>Week of 4/12/2020</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh9.html">Chapter 9: Specification and Data Issues</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=1Ne3_tMENXVcKcUW13DXgpIQFlT5NlzJ0">Chapter 9 Slides</a></li>
+</ul></li>
+<li>Basic Plots in R
+<ul>
+<li><a href="https://drive.google.com/open?id=1ImjxdVt9g1DrPqmx-GjKX1MGOtko0Ie3">R Code</a></li>
+<li><a href="https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/plot">Documentation of <strong>plot()</strong> Command in R</a></li>
+</ul></li>
+<li>Using <strong>ggplot2</strong> for Pretty Figures
+<ul>
+<li><a href="https://drive.google.com/open?id=1_uRuf2VAIjB9dh6FfWyaDMuBPIHRGKNK">R Code</a></li>
+<li><a href="https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">Cheat Sheet</a></li>
+</ul></li>
+<li>Loading Excel Data and Plotting Geographical Data Using <strong>googleVis</strong>
+<ul>
+<li><a href="https://drive.google.com/open?id=1-ay4pgMX8FWERDaSMXVB2dGWYcVml5oH">Excel file</a></li>
+<li><a href="https://drive.google.com/open?id=1OKHHelV2jJ6qa7587CmO_hQZrIpeCdXz">R code</a></li>
+<li><a href="googleVis.html">Output</a></li>
+</ul></li>
+</ul></li>
+<li>Assignments
+<ul>
+<li><a href="https://drive.google.com/open?id=1J9A6SyREz67XtS2qyXMrDQqHTk3HQxKF">Homework Assignment Ch9</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1ws2dBn0HwAJH7HtoeNmF7V9Fehmi1kKb">PDF</a>, <a href="https://drive.google.com/open?id=1ALsMXIZuQYLAbUgiNqftwmSb5LCoUiDL">RMD</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-4192020" class="section level4">
+<h4>Week of 4/19/2020</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh10.html">Chapter 10: Basic Regression Analysis with Time Series Data</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=1LHg5Ee2PBoyEBi9A4p8j-oVyBZtFXEUG">Chapter 10 Slides</a></li>
+</ul></li>
+<li><a href="etricsCh17.html">Chapter 17: Limited Dependent Variable Models: Logit and Probit</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=1SLQgDZ_qD_6tsEyKB9ereR477Ih1Ufh2">Chapter 17 Slides</a></li>
+</ul></li>
+<li>Creating Interactive Applications in R Using <strong>shiny</strong>
+<ul>
+<li><a href="https://drive.google.com/open?id=10EaSE3ljdQykGIWUlyzOck3hutmq-lLI">R Code</a><br />
+</li>
+</ul></li>
+</ul></li>
+<li>Assignments
+<ul>
+<li><a href="https://drive.google.com/open?id=1s0cIMjgWODFRSemTSH0t1LwelanXDs-3">Homework Assignment Ch10</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1svSidSTKe9GYIsnOzPHSoxGmSAlUovWd">PDF</a>, <a href="https://drive.google.com/open?id=1hXN__TrBQVtlKhNO6mFImx6qd1FwTFNj">RMD</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1Trxg-Bx1_TxEFC6BN6CZqm24M7p9-RgJ">Homework Assignment Ch17</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1M7RIuX-McrHsuA1N9iMM5fXd_JcTCOAH">PDF</a>, <a href="https://drive.google.com/open?id=1nZtC3pKD6xnzoSbb7Ohsg_FNleNjUom4">RMD</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-4262020" class="section level4">
+<h4>Week of 4/26/2020</h4>
+<ul>
+<li>Notes
+<ul>
+<li><a href="etricsCh15.html">Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares</a>
+<ul>
+<li><a href="https://drive.google.com/open?id=1ImUVwGi8F4wBXBNjRHFPS9iBEFVh2RgA">Chapter 15 Slides</a></li>
+</ul></li>
+</ul></li>
+<li>Assignments
+<ul>
+<li><a href="https://drive.google.com/open?id=1mVVOWSxW2piVPhymdMWI72l3mBQm8BXV">Homework Assignment Ch15</a>
+<ul>
+<li>Answer Key: <a href="https://drive.google.com/open?id=1u9M7EyaZmCr7c_XdnNxMelj4i1ioYgqs">PDF</a>, <a href="https://drive.google.com/open?id=1Zv1bUFW7btqxpaM2MOutLEip2wqkWt78">RMD</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1JKetTn8lZEYt-PJM4W31bIxvYdBWez4Z">Practice Final Exam</a></li>
+<li>Final Project Due</li>
+<li>Final Exam</li>
+</ul></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
