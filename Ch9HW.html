@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>Teaching</title>
+<title>Chapter 9 Homework Problems</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -233,7 +234,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -277,25 +277,19 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
   <a href="research.html">Research</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Teaching
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="teaching.html">Overview</a>
-    </li>
-    <li>
-      <a href="etrics.html">Econometrics</a>
-    </li>
-    <li>
-      <a href="macro.html">Macroeconomics</a>
-    </li>
-  </ul>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
+</li>
+<li>
+  <a href="other.html">Other</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -315,44 +309,32 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Teaching</h1>
+<h1 class="title toc-ignore">Chapter 9 Homework Problems</h1>
 
 </div>
 
 
-<p><br />
-</p>
-<div id="fordham-university-rose-hill-campus" class="section level4">
-<h4>Fordham University, Rose Hill Campus</h4>
-<ul>
-<li>Introductory Econometrics (ECON 3885) - Fall 2019, Spring 2020</li>
-<li>Basic Macroeconomics (ECON 1100) - Fall 2018, Spring 2019, Spring 2020</li>
-</ul>
-<p>Student Evaluations: <a href="https://drive.google.com/file/d/1UufyBUoSP_9vV41__W819ikI0WbdXCbC/view?usp=sharing">#1</a>, <a href="https://drive.google.com/file/d/14mQp2XjilkYcJp6PlwFESx1Y8CJHqlb7/view?usp=sharing">#1</a>, <a href="https://drive.google.com/open?id=1FEooZsSFGt3PveZq5-Plw8a1qdeMm4E4">#2</a>, <a href="https://drive.google.com/file/d/1sxdP5QTp3BsBpMi0DCb1z7A4yq9UwpEm/view?usp=sharing">#3</a></p>
-<p>Video Lecture Clips: <a href="">#1</a>, <a href="">#2</a>,</p>
-<p><br />
-</p>
+<div id="computer-exercise-c3" class="section level4">
+<h4>Computer Exercise C3</h4>
+<p>Use the data from <strong>jtrain</strong> for this exercise.<br />
+1. Consider the simple regression model <span class="math display">\[log(scrap) = b0 + b1*grant + u\]</span> where scrap is the firm scrap rate and grant is a dummy variable indicating whether a firm received a job training grant. Can you think of some reasons why the unobserved factors in u might be correlated with grant?<br />
+2. Estimate the simple regression model using the data for 1988. (You should have 54 observations.) Does receiving a job training grant significantly lower a firm’s scrap rate?<br />
+3. Now, add as an explanatory variable <span class="math inline">\(log(scrap87)\)</span>. How does this change the estimated effect of grant? Interpret the coefficient on grant. Is it statistically significant at the 5% level against the one-sided alternative <span class="math inline">\(H_1: b_1 &lt; 0\)</span>?<br />
+4. Test the null hypothesis that the parameter on <span class="math inline">\(log(scrap87)\)</span> is one against the two-sided alternative. Report the p-value for the test.<br />
+5. Repeat parts 3 and 4, using heteroskedasticity-robust standard errors, and briefly discuss any notable differences.</p>
 </div>
-<div id="monroe-college-bronx-campus" class="section level4">
-<h4>Monroe College, Bronx Campus</h4>
-<ul>
-<li>Macroeconomics (EC 201)- Fall 2019, Spring 2020</li>
-</ul>
-<p>Student Evaluations: <a href="https://drive.google.com/open?id=1mIfzngJguTl2DC5OH3lQVSfhY0w8LzTz">#1</a>, <a href="https://drive.google.com/open?id=1VrYoXT4Zy77Ltdf2Nw9NlBlTarGmGr4w">#2</a></p>
-<p><br />
-</p>
+<div id="computer-exercise-c4" class="section level4">
+<h4>Computer Exercise C4</h4>
+<p>Use the data for the year 1990 in <strong>infmrt</strong> for this exercise.<br />
+<span class="math display">\[infmort = b0 + b1*log(pcinc) + b2*log(physic) + b3*log(popul) + u\]</span> 1. Reestimate the equation above (equation 9.43), but now include a dummy variable for the observation on the District of Columbia (called <span class="math inline">\(DC\)</span>). Interpret the coefficient on DC and comment on its size and significance.<br />
+2. Compare the estimates and standard errors from part 1 with those from equation (9.44). What do you conclude about including a dummy variable for a single observation?</p>
 </div>
-<div id="university-of-the-people-online" class="section level4">
-<h4>University of the People, Online</h4>
-<ul>
-<li>Macroeconomics - Spring 2018</li>
-</ul>
-<p>Student Evaluations: <a href="https://drive.google.com/file/d/1eyMQEsbo1_hUvwQe1-qeVoUclqhJeH3A/view">#1</a></p>
-<p><br />
-</p>
-<blockquote>
-<p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdAtAn3hsF1Cfy84sgsYFyeOwRvReJGHzFDDucIKL3EYQyfZA/viewform?usp=pp_url">Provide Annonymous Feedback</a></p>
-</blockquote>
+<div id="computer-exercise-c13" class="section level4">
+<h4>Computer Exercise C13</h4>
+<p>Use the data in <strong>ceosal2</strong> to answer this question.<br />
+1. Estimate the model <span class="math display">\[lsalary = b0 + b1*lsales + b2*lmktval + b3*ceoten + b4*ceoten^2 + u\]</span> by OLS using all of the observations, where <span class="math inline">\(lsalary\)</span>, <span class="math inline">\(lsales\)</span>, and <span class="math inline">\(lmktval\)</span> are all natural logarithms. Report the results in the usual form with the usual OLS standard errors. (You may verify that the heteroskedasticity-robust standard errors are similar.)<br />
+2. In the regression from part 1 obtain the studentized residuals; call these <span class="math inline">\(stri\)</span>. How many studentized residuals are above 1.96 in absolute value? If the studentized residuals were independent draws from a standard normal distribution, about how many would you expect to be above two in absolute value with 177 draws?<br />
+3. Reestimate the equation in part 1 by OLS using only the observations with <span class="math inline">\(|stri| \leq 1\)</span>. 96. How do the coefficients compare with those in part 1?</p>
 </div>
 
 

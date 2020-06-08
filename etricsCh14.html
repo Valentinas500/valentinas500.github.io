@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 14</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 14</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-14-advanced-panel-data-methods" class="section level5">
+<h5>Chapter 14: Advanced Panel Data Methods</h5>
+<p>In Chapter 13, we learned how we can remove unobserved heterogeneities using first differencing. In Chapter 14, we learn new models that are perfectly suited for panel data analysis.</p>
+<p>While first differencing is indeed very popular, there are multiple ways of eliminating fixed effects, <span class="math inline">\(a_i\)</span>. One of these ways is called <strong>fixed effects transformation</strong> (sometimes also called <strong>within transformation</strong>). Assume a following model: <span class="math display">\[
+y_{it} = \beta_1 x_{it} + a_i + u_{it}
+\]</span> Take the average in terms of time, <span class="math inline">\(t\)</span>, for each unit <span class="math inline">\(i\)</span>. <span class="math display">\[
+\bar{y}_i=\frac{\sum_{t=1}^T y_{it}}{T} \quad \text{and} \quad \bar{x}_i=\frac{\sum_{t=1}^T x_{it}}{T} \quad \text{and} \quad \bar{u}_i=\frac{\sum_{t=1}^T u_{it}}{T} 
+\]</span> Fixed effect, <span class="math inline">\(a_i\)</span>, however, does not change over time, thus <span class="math inline">\(a_i=\bar{a}_i\)</span>. Averaged equation for each unit <span class="math inline">\(i\)</span> can be written as follows. <span class="math display">\[
+\bar y_i = \beta_1 \bar x_i + a_i +\bar u_i
+\]</span> Subtracting the original equation from the averaged equation, we get the following. <span class="math display">\[
+(y_{it}-\bar y_i) = \beta_1 (x_{it}-\bar x_i) + (a_i-a_i) + (u_{it}-\bar u_i)
+\]</span> Or <span class="math display">\[
+\ddot y_{it} = \beta_1 \ddot x_{it} + \ddot u_{it} \quad \quad \quad \text{where} \quad \ddot y_{it}=(y_{it}-\bar y_i)
+\]</span> We call <span class="math inline">\(\ddot y_{it}\)</span> the time-demeaned (mean-subtracted) data on y. Similarly, <span class="math inline">\(\ddot x_{it}\)</span> is the time-demeaned data on x. We note that in the time-demeaned equation, the unobserved effect, <span class="math inline">\(a_i\)</span>, disappears.</p>
+<p>Estimating the above model using OLS with pooled panel data will give you a <strong>fixed effects estimator</strong>.</p>
+<p>The model is the same with more explanatory variables present. <span class="math display">\[
+y_{it} = \beta_1 x_{it1} + \beta_2 x_{it2} +... + \beta_k x_{itk} + a_i + u_{it}
+\]</span> Following the steps explained above, the fixed effects transformation yields the following. <span class="math display">\[
+\ddot y_{it} = \beta_1 \ddot x_{it1} + \beta_2 \ddot x_{it2} +... + \beta_k \ddot x_{itk} + \ddot u_{it}
+\]</span></p>
+<p>Any explanatory variable that is constant over time for all <span class="math inline">\(i\)</span> (as <span class="math inline">\(a_i\)</span>) gets swept away by the fixed effects transformation. Thus, we cannot include variables such as gender, city’s distance to a particular object and similar that do not change over time. Take note that an adjustment to degrees of freedom is needed when computing standard errors and test statistics.</p>
+<p>Let’s look at job training and scrap rate example. There is 54 firms observed on 1987, 1988 and 1989. 19 firms received grants in 1988 and 10 different firms received grants in 1989.</p>
+<pre class="r"><code>library(plm)
+data(jtrain, package=&quot;wooldridge&quot;)
+jtrain_p = pdata.frame(jtrain, index=c(&quot;fcode&quot;,&quot;year&quot;) )
+reg1=plm(lscrap~d88+d89+grant+grant_1, data=jtrain_p, model=&quot;within&quot;)
+summary(reg1)</code></pre>
+<pre><code>## Oneway (individual) effect Within Model
+## 
+## Call:
+## plm(formula = lscrap ~ d88 + d89 + grant + grant_1, data = jtrain_p, 
+##     model = &quot;within&quot;)
+## 
+## Balanced Panel: n = 54, T = 3, N = 162
+## 
+## Residuals:
+##      Min.   1st Qu.    Median   3rd Qu.      Max. 
+## -2.286936 -0.112387 -0.017841  0.144272  1.426674 
+## 
+## Coefficients:
+##          Estimate Std. Error t-value Pr(&gt;|t|)  
+## d88     -0.080216   0.109475 -0.7327  0.46537  
+## d89     -0.247203   0.133218 -1.8556  0.06634 .
+## grant   -0.252315   0.150629 -1.6751  0.09692 .
+## grant_1 -0.421590   0.210200 -2.0057  0.04749 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Total Sum of Squares:    32.25
+## Residual Sum of Squares: 25.766
+## R-Squared:      0.20105
+## Adj. R-Squared: -0.23684
+## F-statistic: 6.54259 on 4 and 104 DF, p-value: 9.7741e-05</code></pre>
+<p>Looking at the coefficients <span class="math inline">\(d88\)</span> and, especially, <span class="math inline">\(d89\)</span>, we see that the scrap rates were decreasing over the three years. The estimated coefficients for scrap rates indicate that the grant had a larger lagged effect (compared to contemporaneous effect). Obtaining a grant in 1988 is predicted to lower the firm scrap rate in the following year (1989) by 34.4% [<span class="math inline">\(\exp(-0.422)-1 \approx -0.344\)</span>].</p>
+<p>Dataset <strong>wagepan</strong> consists of observations on 545 men who worked every year from 1980 through 1987. Suppose you are interested in finding out if the return to education changed over time. To do that, you can include cross-products (interaction terms) between years and education. See the R code below.</p>
+<pre class="r"><code>library(plm)
+data(wagepan, package=&#39;wooldridge&#39;)
+wagepan.p = pdata.frame(wagepan, index=c(&quot;nr&quot;,&quot;year&quot;) )
+pdim(wagepan.p)</code></pre>
+<pre><code>## Balanced Panel: n = 545, T = 8, N = 4360</code></pre>
+<pre class="r"><code>reg2=plm(lwage~married+union+factor(year)*educ, data=wagepan.p, model=&quot;within&quot;)
+summary(reg2)</code></pre>
+<pre><code>## Oneway (individual) effect Within Model
+## 
+## Call:
+## plm(formula = lwage ~ married + union + factor(year) * educ, 
+##     data = wagepan.p, model = &quot;within&quot;)
+## 
+## Balanced Panel: n = 545, T = 8, N = 4360
+## 
+## Residuals:
+##      Min.   1st Qu.    Median   3rd Qu.      Max. 
+## -4.152111 -0.125630  0.010897  0.160800  1.483401 
+## 
+## Coefficients:
+##                         Estimate Std. Error t-value  Pr(&gt;|t|)    
+## married                0.0548205  0.0184126  2.9773  0.002926 ** 
+## union                  0.0829785  0.0194461  4.2671 2.029e-05 ***
+## factor(year)1981      -0.0224158  0.1458885 -0.1537  0.877893    
+## factor(year)1982      -0.0057611  0.1458558 -0.0395  0.968495    
+## factor(year)1983       0.0104297  0.1458579  0.0715  0.942999    
+## factor(year)1984       0.0843743  0.1458518  0.5785  0.562965    
+## factor(year)1985       0.0497253  0.1458602  0.3409  0.733190    
+## factor(year)1986       0.0656064  0.1458917  0.4497  0.652958    
+## factor(year)1987       0.0904448  0.1458505  0.6201  0.535216    
+## factor(year)1981:educ  0.0115854  0.0122625  0.9448  0.344827    
+## factor(year)1982:educ  0.0147905  0.0122635  1.2061  0.227872    
+## factor(year)1983:educ  0.0171182  0.0122633  1.3959  0.162830    
+## factor(year)1984:educ  0.0165839  0.0122657  1.3521  0.176437    
+## factor(year)1985:educ  0.0237085  0.0122738  1.9316  0.053479 .  
+## factor(year)1986:educ  0.0274123  0.0122740  2.2334  0.025583 *  
+## factor(year)1987:educ  0.0304332  0.0122723  2.4798  0.013188 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Total Sum of Squares:    572.05
+## Residual Sum of Squares: 474.35
+## R-Squared:      0.1708
+## Adj. R-Squared: 0.048567
+## F-statistic: 48.9069 on 16 and 3799 DF, p-value: &lt; 2.22e-16</code></pre>
+<p>All interaction terms are positive and mostly increasing over time. If we look at the last year in the sample, 1987, the return to education is around 3% higher in that year compared to the base year, 1980.</p>
+<p>A <strong>dummy variable regression</strong> is a type of regression in which we estimate an intercept for each unit <span class="math inline">\(i\)</span> along with other explanatory variables. While this method may have too many variables to estimate making it often not practical. However, the resulting estimates are exactly the same as in the fixed effects model described above. See the above examples estimated using dummy variable regression method.</p>
+<pre class="r"><code>reg1_b=lm(lscrap~grant+grant_1+factor(year)+factor(fcode), data=jtrain)
+reg2_b=lm(lwage~married+union+factor(year)*educ+factor(nr), data=wagepan)</code></pre>
+<p>When dataset contains only two time periods, fixed effects (FE) model and first-differencing (FD) model (from Chapter 13) will yield identical estimates and statistics, thus it does not matter which one of them researcher chooses to use. With more than two time periods, FE and FD estimators are not the same. When <span class="math inline">\(u_{it}\)</span> are serially uncorrelated, FE model is more efficient than FD. If <span class="math inline">\(u_{it}\)</span> is serially correlated, for example, as in random walk, then difference <span class="math inline">\(\Delta u_{it}\)</span> is not correlated and thus FD model is better than FE. If number of periods, <span class="math inline">\(T\)</span>, is larger than explanatory variables, <span class="math inline">\(N\)</span>, FD model is more appropriate. In case the results using FE and FD models are significantly different, it is useful to report both models’ results and try to identify why they may be different.</p>
+<p>If panel data is missing years for some cross-sectional units in the sample, we call such data set <strong>unbalanced panel</strong>. While the estimation is almost the same as with a balanced panel, it is important to know why some observations are missing. If we have missing data for some unit <span class="math inline">\(i\)</span> that is not correlated with <span class="math inline">\(u_{it}\)</span>, unbalanced panel causes no problems. If data is missing not randomly, that is if some units leave the sample (attrition), and this attrition is correlated with idiosyncratic error, <span class="math inline">\(u_{it}\)</span>, then our estimators will be biased.</p>
+<p>Let’s look back at the job training and scrap rate example with 54 firms observed in 1987, 1988 and 1989. If we add <span class="math inline">\(\log(sales_{it})\)</span> (firm’s annual sales) and <span class="math inline">\(\log(employ_{it})\)</span> (number of employees in a firm), we lose 54 firms from the analysis because they havoc no data on sale and employment. Some additional firms have a few observations missing for one or both of these variables but the overall results do not change. See the R code below.</p>
+<pre class="r"><code>reg3=plm(lscrap~d88+d89+grant+grant_1+log(sales)+log(employ), data=jtrain_p, model=&quot;within&quot;)
+summary(reg3)</code></pre>
+<pre><code>## Oneway (individual) effect Within Model
+## 
+## Call:
+## plm(formula = lscrap ~ d88 + d89 + grant + grant_1 + log(sales) + 
+##     log(employ), data = jtrain_p, model = &quot;within&quot;)
+## 
+## Unbalanced Panel: n = 51, T = 1-3, N = 148
+## 
+## Residuals:
+##      Min.   1st Qu.    Median   3rd Qu.      Max. 
+## -1.858663 -0.133752 -0.021483  0.148632  1.580473 
+## 
+## Coefficients:
+##               Estimate Std. Error t-value Pr(&gt;|t|)  
+## d88         -0.0039609  0.1195487 -0.0331  0.97364  
+## d89         -0.1321930  0.1536863 -0.8601  0.39197  
+## grant       -0.2967542  0.1570861 -1.8891  0.06206 .
+## grant_1     -0.5355783  0.2242060 -2.3888  0.01897 *
+## log(sales)  -0.0868574  0.2596986 -0.3345  0.73881  
+## log(employ) -0.0763681  0.3502903 -0.2180  0.82791  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Total Sum of Squares:    27.934
+## Residual Sum of Squares: 21.982
+## R-Squared:      0.21306
+## Adj. R-Squared: -0.27121
+## F-statistic: 4.10625 on 6 and 91 DF, p-value: 0.0010818</code></pre>
+<p>Another popular model for panel data is called <strong>random effects model</strong>. Assume we have the following model: <span class="math display">\[
+y_{it} = \beta_0 + \beta_1 x_{it1} + ... + \beta_k x_{itk} + a_i + u_{it} 
+\]</span> Suppose we think <span class="math inline">\(a_i\)</span> is uncorrelated with each explanatory variable in all time periods. Then, using a transformation to eliminate <span class="math inline">\(a_i\)</span> results in inefficient estimators. The equation above becomes a random effect model when we assume that unobserved effect <span class="math inline">\(a_i\)</span> is uncorrelated with each explanatory variable: <span class="math display">\[
+\text{Cov}(x_{itj},a_i)=0 \quad \text{for} \quad t=1,2,...,T; \quad j=1,2,...,k.
+\]</span> If we think that unobserved effect <span class="math inline">\(a_i\)</span> is correlated with any explanatory variables, we should use first differencing or fixed effects model. The question is how we should estimate <span class="math inline">\(\beta_j\)</span>? Using the panel data as simple cross-section would not violate any assumptions but disregard a lot of important information. On the other hand, running OLS of <span class="math inline">\(y_{it}\)</span> on all explanatory variables and time dummies leads to serial correlation of the composite error term. Assume you use the following model: <span class="math display">\[
+y_{it}=\beta_0+\beta_1 x_{it1}+...+\beta_k x_{itk} + v_{it} \quad \text{where} \quad v_{it}=a_i + u_{it}
+\]</span> Since <span class="math inline">\(a_{it}\)</span> is in each time period, serial correlation of composite error terms is: <span class="math display">\[
+\text{Corr}(v_{it},v_{is})=\sigma^2_a/(\sigma_a^2+\sigma_u^2), \quad \text{when} \quad t\neq s
+\]</span></p>
+<p>To avoid this postie serial correlation, we can use generalized least squares (GLS) transformation. We should have a relatively large number of units <span class="math inline">\(N\)</span> and a relatively small number of time periods <span class="math inline">\(T\)</span>. GLS transformation, that eliminates serial correlation, basics are as follows. Define <span class="math inline">\(theta\)</span> as: <span class="math display">\[
+\theta=1-[\sigma^2_u/(\sigma_u^2+T\sigma^2_a)]^{1/2}
+\]</span> This theta is between 0 and 1. The transformed equation then becomes: <span class="math display">\[
+y_{it}-\theta \bar y_i = \beta_0(1-\theta)+\beta_1(x_{it1}-\theta \bar x_{i1})+...+
+\beta_k (x_{itk}-\theta \bar x_{ik}) + (v_{it}-\theta \bar v_i)
+\]</span> The bars above variables denote the variable averages over time for unit <span class="math inline">\(i\)</span>. While we previously learned that fixed effects (FE) estimator subtracts the time averages from the corresponding variable, random effects transformation only subtracts fraction <span class="math inline">\(\theta\)</span> of that time average. The GLS estimator is simply the pooled OLS estimator of the above equation. Resulting errors are not serially correlated. While the parameter <span class="math inline">\(\theta\)</span> is not known, we can estimate it. It typically is estimated as follows: <span class="math display">\[
+\hat \theta = 1 - [1/(1+T[\hat \sigma^2_a/\hat\sigma^2_u])]^{1/2}
+\]</span> Consistent estimators <span class="math inline">\(\hat \sigma^2_a\)</span> and <span class="math inline">\(\hat \sigma^2_u\)</span> can be based on pooled OLS or fixed effects residuals. <span class="math display">\[
+\hat \sigma^2_a = [NT(T-1)/2-(k+1)]^{-1}\sum^N_{i=1} \sum^{T-1}_{t=1} \sum^T_{s=t+1} \hat v_{it} \hat v_{is}
+\]</span> <span class="math display">\[
+\hat \sigma^2_u = \hat \sigma^2_v - \hat \sigma^2_a
+\]</span></p>
+<p>The feasible GLD estimator that uses <span class="math inline">\(\hat \theta\)</span> is called the <strong>random effects estimator</strong> (RE).</p>
+<p>Let’s look at the transformed equation again. <span class="math display">\[
+y_{it}-\theta \bar y_i = \beta_0(1-\theta)+\beta_1(x_{it1}-\theta \bar x_{i1})+...+
+\beta_k (x_{itk}-\theta \bar x_{ik}) + (v_{it}-\theta \bar v_i)
+\]</span></p>
+<p>We can easily compare pooled OLS with RE (random effects) and FE (fixed effects) models. When we set <span class="math inline">\(\theta=0\)</span>, we obtain pooled OLS estimators; when <span class="math inline">\(\theta=1\)</span>, we obtain fixed effects estimators; and when <span class="math inline">\(\theta\)</span> is between 0 and 1, we obtain random effects estimators. Comparing the three sets of estimates can help us determine the nature of the biases caused by leaving the unobserved effect, <span class="math inline">\(a_i\)</span>, entirely in the error term (as does pooled OLS) or partially in the error term (as does the RE transformation).</p>
+<p>Let’s look at the wage equation for men using <strong>wagepan</strong> dataset from package <strong>wooldridge</strong>. We can compare three methods: pooled OLS, random effects and fixed effects. Note that in fixed effects model, dummy variables for education and race drop out since they do not vary within the same individual over time. See the R-code below.</p>
+<pre class="r"><code>wagepan.p$yr&lt;-factor(wagepan.p$year)
+reg.ols&lt;- (plm(lwage~educ+black+hisp+exper+I(exper^2)+married+union+yr, 
+                                      data=wagepan.p, model=&quot;pooling&quot;) )
+reg.re &lt;- (plm(lwage~educ+black+hisp+exper+I(exper^2)+married+union+yr, 
+                                      data=wagepan.p, model=&quot;random&quot;) )
+reg.fe &lt;- (plm(lwage~                      I(exper^2)+married+union+yr, 
+                                      data=wagepan.p, model=&quot;within&quot;) )
+summary(reg.re)[7]</code></pre>
+<pre><code>## $ercomp
+##                  var std.dev share
+## idiosyncratic 0.1232  0.3510 0.539
+## individual    0.1054  0.3246 0.461
+## theta: 0.6429</code></pre>
+<pre class="r"><code># Pretty table of selected results (not reporting year dummies)
+stargazer(reg.ols,reg.re,reg.fe, type=&quot;text&quot;, 
+          column.labels=c(&quot;OLS&quot;,&quot;RE&quot;,&quot;FE&quot;),keep.stat=c(&quot;n&quot;,&quot;rsq&quot;),
+          keep=c(&quot;ed&quot;,&quot;bl&quot;,&quot;hi&quot;,&quot;exp&quot;,&quot;mar&quot;,&quot;un&quot;))</code></pre>
+<pre><code>## 
+## ==========================================
+##                   Dependent variable:     
+##              -----------------------------
+##                          lwage            
+##                 OLS       RE        FE    
+##                 (1)       (2)       (3)   
+## ------------------------------------------
+## educ         0.091***  0.092***           
+##               (0.005)   (0.011)           
+##                                           
+## black        -0.139*** -0.139***          
+##               (0.024)   (0.048)           
+##                                           
+## hisp           0.016     0.022            
+##               (0.021)   (0.043)           
+##                                           
+## exper        0.067***  0.106***           
+##               (0.014)   (0.015)           
+##                                           
+## I(exper2)    -0.002*** -0.005*** -0.005***
+##               (0.001)   (0.001)   (0.001) 
+##                                           
+## married      0.108***  0.064***   0.047** 
+##               (0.016)   (0.017)   (0.018) 
+##                                           
+## union        0.182***  0.106***  0.080*** 
+##               (0.017)   (0.018)   (0.019) 
+##                                           
+## ------------------------------------------
+## Observations   4,360     4,360     4,360  
+## R2             0.189     0.181     0.181  
+## ==========================================
+## Note:          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Standard errors in the pooled OLS regression ignore positive serial correlation and thus are incorrect. While the results are, in general, in line across all models, the magnitude is significantly smaller in FE than RE and even more so than pooled OLS. Having <span class="math inline">\(\theta=0.6429\)</span>, we see that RE estimates are closer to FE than pooled OLS.</p>
+<p>A researcher may want to know how to decide which model is more appropriate in certain situations. Since FE allows arbitrary correlation between <span class="math inline">\(a_i\)</span> and <span class="math inline">\(x_{itj}\)</span> while RE doesn’t, FE is considered more convincing. However, FE model is not able to estimate the effects of explanatory variables that are constant over time. If one of the key variables is constant over time, researcher would want to use RE model which is preferred to pooled OLS. Remember that in RE, one must include as many time-constant controls as in pooled OLS, but this is not necessary in FE.</p>
+<p>It is fairly common to use both RE and FE and then test for statistically significant differences in coefficients using Hausman test. One should use RE unless the Hausman test rejects <span class="math inline">\(\text{Cov}(x_{itj},a_i)=0 \text{ for all } t,j\)</span>. Failure to reject means that estimates from RE and FE are close enough so that it does not matter which one you use. A rejection using the Hausman test is taken to mean that the key RE assumption, <span class="math inline">\(\text{Cov}(x_{itj},a_i)=0\)</span>, is false, and then the FE estimates are used.</p>
+<p>The key issue that determines whether we use FE or RE is whether we can plausibly assume that <span class="math inline">\(a_i\)</span> is uncorrelated with all <span class="math inline">\(x_{itj}\)</span>. FE is almost always much more convincing than RE for policy analysis using aggregated data.</p>
+<p>There is another approach called <strong>correlated random effects</strong> or CRE. It is appropriate to use when it makes sense to view <span class="math inline">\(a_i\)</span> as being random variables along with the observed variables. In this approach, we model correlation between <span class="math inline">\(a_i\)</span> and <span class="math inline">\(\{x_{it}: t=1,2,...,T\}\)</span>. Assume a linear relationship between <span class="math inline">\(a_i\)</span> and time average <span class="math inline">\(\bar x_i = (\sum_{t=1}^T x_{it})/T\)</span>. <span class="math display">\[
+a_i=\alpha+\gamma\bar x_i + r_i \quad \text{where } \text{Cov}(\bar x_i,r_i)=0
+\]</span></p>
+<p>Assume a model with single explanatory variable: <span class="math display">\[
+y_{it}=\beta_1 x_{it} + a_i+u_{it}
+\]</span> Substitute <span class="math inline">\(a_i=\alpha+\gamma\bar x_i + r_i\)</span> into the equation. <span class="math display">\[
+y_{it}=\alpha + \beta_1 x_{it} + \gamma\bar x_i + r_i + u_{it}
+\]</span> While this is similar to RE, it has <span class="math inline">\(\gamma \bar x_i\)</span> which controls the correlation between <span class="math inline">\(a_i\)</span> and <span class="math inline">\(x_it\)</span>. The remaining part <span class="math inline">\(r_i\)</span> is uncorrelated with <span class="math inline">\(x_it\)</span>.</p>
+<p>There are two good reasons to use correlated random effects (CRE) approach. 1. CRE approach gives a simple formal way of choosing between FE and RE. In RE, <span class="math inline">\(\gamma=0\)</span>, while in FE, <span class="math inline">\(\gamma=1\)</span>. Using CRE, we estimate <span class="math inline">\(\hat \gamma_{CRE}\)</span> and can test (simple t-test) whether <span class="math inline">\(\gamma\)</span> is significantly different from zero. If we reject <span class="math inline">\(H_0:\gamma=0\)</span> at a sufficiently small significance level, we reject RE in favor of FE. 2. CRE also allows to include time-constant explanatory variables in what is effectively a fixed effects analysis.</p>
+<p>Interestingly, we can apply panel data methods to data structures that do not involve time. Geronimus and Koreman (1992) used pairs of sisters to study the effects of teen childbearing on future economic outcomes (measured as income relative to needs). <span class="math display">\[
+log(inc\_needs_{fs}) = \beta_0 + \delta_0 (sister2_s) + \beta_1(teenbrth_{fs}) + \beta_2(age_{fs}) + other\_factors + a_f + u_{fs}
+\]</span> where <span class="math inline">\(_f\)</span> index denotes the family, and <span class="math inline">\(_s\)</span> indexes the sister within a family. Differencing removes the family effect <span class="math inline">\(a_f\)</span>. <span class="math display">\[
+\Delta \log(inc\_needs)=\delta_0+ \beta_1 \Delta(teenbrth)+\beta_2\Delta(age)+...+u
+\]</span> The samples used by Geronimus and Korenman (1992) and Ashenfelter and Krueger (1994) are examples of <strong>matched pairs samples</strong>. More generally, fixed and random effects methods can be applied to a <strong>cluster sample</strong>. A cluster sample has the same appearance as a cross-sectional data set, but there is an important difference: clusters of units are sampled from a population of clusters rather than sampling individuals from the population of individuals. In the previous examples, each family is sampled from the population of families, and then we obtain data on at least two family members. Therefore, each family is a cluster.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C1.<br />
+Use the data in <strong>rental</strong> for this exercise. The data on rental prices and other variables for college towns are for the years 1980 and 1990. The idea is to see whether a stronger presence of students affects rental rates. The unobserved effects model is <span class="math display">\[log(rent_{it}) = \beta_0 + \delta_0 y90_{t} + \beta_1\log(pop{it}) + \beta_2log(avginc{it})
++ \beta_3 pctstu_{it} + a_i + u_{it},\]</span> where <span class="math inline">\(pop\)</span> is city population, <span class="math inline">\(avginc\)</span> is average income, and <span class="math inline">\(pctstu\)</span> is student population as a percentage of city population (during the school year). 1. Estimate the equation by pooled OLS and report the results in standard form. What do you make of the estimate on the 1990 dummy variable? What do you get for <span class="math inline">\(\beta^{pctstu}\)</span>?<br />
+2. Are the standard errors you report in part 1 valid? Explain.<br />
+3. Now, difference the equation and estimate by OLS. Compare your estimate of <span class="math inline">\(\beta_{pctstu}\)</span> with that from part 1. Does the relative size of the student population appear to affect rental prices?<br />
+4. Estimate the model by fixed effects to verify that you get identical estimates and standard errors to those in part 3.
+</p>
+<p class="comment">
+Computer Exercise C3.<br />
+For this exercise, we use <strong>jtrain</strong> to determine the effect of the job training grant on hours of job training per employee. The basic model for the three years is <span class="math display">\[hrsemp_{it} = \beta_0 + \delta_1d88_t + \delta_2 d89_t + \beta_1 grant_{it} + \beta_2 grant_{i,t-1} + \beta_3\log(employ_{it})  + a_i + u_{it}.\]</span> 1. Estimate the equation using fixed effects. How many firms are used in the FE estimation? How many total observations would be used if each firm had data on all variables (in particular, hrsemp) for all three years?<br />
+2. Interpret the coefficient on <span class="math inline">\(grant\)</span> and comment on its significance.<br />
+3. Is it surprising that <span class="math inline">\(grant_{-1}\)</span> is insignificant? Explain.<br />
+4. Do larger firms provide their employees with more or less training, on average? How big are the differences? (For example, if a firm has 10% more employees, what is the change in average hours of training?)
+</p>
+<p class="comment">
+Computer Exercise C15.<br />
+1. In the wage equation in Example 14.4, explain why dummy variables for occupation might be important omitted variables for estimating the union wage premium.<br />
+2. If every man in the sample stayed in the same occupation from 1981 through 1987, would you need to include the occupation dummies in a fixed effects estimation? Explain.<br />
+3. Using the data in <strong>wagepan</strong> include eight of the occupation dummy variables in the equation and estimate the equation using fixed effects. Does the coefficient on union change by much? What about its statistical significance?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

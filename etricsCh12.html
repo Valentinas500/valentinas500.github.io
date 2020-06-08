@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 12</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 12</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-12-serial-correlation-and-heteroskedasticity-in-time-series-regressions" class="section level5">
+<h5>Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions</h5>
+<p>When the dynamics of a time-series model are completely specified, the errors are not serially correlated. Testing for serial correlation, thus, can detect misspecification. On the other hand, static and finite distributed lag models often have serially correlated errors even when the model is specified correctly. In this chapter, we go over the consequencies and remedies for serial correlation. In addition, we discuss heteroskedasticity issues in time series regressions.</p>
+<p>As long as the explanatory variables are strictly exogenous, the estimators, <span class="math inline">\(\hat \beta_j\)</span> are unbiased and when at least the data is weakly dependent, <span class="math inline">\(\hat\beta_j\)</span> are consistent. Unbiasedness and consistency does not depend on serial correlation in errors.</p>
+<p>However, with serially correlated errors, OLS is no longer best linear unbiased estimator. More importantly, test statistics are not valid. Since errors and indepdenent variables in the regression are often positively correlated, the usual OLS variance is typically understates the true variance. We will think that the OLS slope estimator is more precise than it actually is. Usual statistics and hypothesis testing is invalid with serial correlation. R-squared and adjusted R-squared are still valid as long as the data is stationary and weakly dependent.</p>
+<p>There are methods developed to test for serial correlation in the errors terms.</p>
+<p>The most popular and simplest model is AR(1) serial correlation with strictly exogenous regressors. The test is summarized as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Run the OLS regression of <span class="math inline">\(y_t\)</span> on <span class="math inline">\(x_{t1},...,x_{tk}\)</span> and obtain the OLS residuals, <span class="math inline">\(\hat u_t\)</span>, for all <span class="math inline">\(t=1,2,3,...n\)</span>.</li>
+<li>Run the regression of <span class="math inline">\(\hat u_t\)</span> on <span class="math inline">\(\hat u_{t-1}\)</span>, for all <span class="math inline">\(t=1,2,3,...,n\)</span>, obtaining the slope coefficient on <span class="math inline">\(\hat u_{t-1}\)</span>, <span class="math inline">\(\hat \rho\)</span> and its t-statistic, <span class="math inline">\(t_{\hat \rho}\)</span>.</li>
+<li>Use <span class="math inline">\(t_{\hat \rho}\)</span> to test <span class="math inline">\(H_0: \rho=0\)</span> against <span class="math inline">\(H_1:\rho\neq 0\)</span> in hte usual way. (Since typically it is expected that <span class="math inline">\(\rho&gt;0\)</span>, alternative can be <span class="math inline">\(H_1:\rho&gt; 0\)</span>).Usually, we conclude that we have a serial correlation problem if <span class="math inline">\(H_0\)</span> is rejected at 5% level.</li>
+</ol>
+<p>In deciding whether serial correlation needs to be addressed, we should remember the difference between practical and statistical significance. Even if we find serial correlation, we should check if the magnitude is large enough. If <span class="math inline">\(\hat \rho\)</span> is close to zero, OLS inference procedures will not be far off.</p>
+<p>In previous chapters, we studied a static and augmented (assuming adaptive expectations) Philips curve showing the relationship between inflation and unemployment.</p>
+<pre class="r"><code>library(dynlm); library(lmtest)
+data(phillips, package=&quot;wooldridge&quot;)
+tsdata = ts(phillips, start=1948)
+
+# Static Phillips curve:
+reg_static = dynlm( inf ~ unem, data=tsdata, end=1996)
+resid_static=resid(reg_static)
+coeftest( dynlm(resid_static ~ L(resid_static)) )</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                 Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)     -0.11340    0.35940 -0.3155    0.7538    
+## L(resid_static)  0.57297    0.11613  4.9337 1.098e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Expectations-augmented Phillips curve:
+reg_exp.augm &lt;- dynlm( d(inf) ~ unem, data=tsdata, end=1996)
+resid_exp.augm &lt;- resid(reg_exp.augm)
+coeftest( dynlm(resid_exp.augm ~ L(resid_exp.augm)) )</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                    Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)        0.194166   0.300384  0.6464   0.5213
+## L(resid_exp.augm) -0.035593   0.123891 -0.2873   0.7752</code></pre>
+<p>While for the static model, we find strong evidence of positive first order serial correlation, while in the expectations augmented model, there is no evidence of AR(1) serial correlation of errors.</p>
+<p>Although this test can detect other kinds of serial correlation that causes adjacent errors to be correlated, it does not detect serial correlation where adjacent errors are uncorrelated (as when <span class="math inline">\(\text{Corr}(u_t,u_{t-1})=0\)</span> but <span class="math inline">\(\text{Corr}(u_{t-1},u_{t-2})\neq 0\)</span>).</p>
+<p>Another very popular test for AR(1) serial correlation is called Durbin-Watson test also based on OLS residuals. Durbin-Watson statistic (<span class="math inline">\(DW\)</span>) is computed as follows. <span class="math display">\[
+DW=\frac{\sum_{t=2}^n(\hat u_t-u_{t-1})^2}{\sum_{t=1}^n \hat u_t^2}
+\]</span> If one compares DW test to the previous serial correlation test based on <span class="math inline">\(\hat \rho\)</span>, we notice that they are closely related. <span class="math display">\[
+DW\approx2(1-\hat\rho)
+\]</span> No serial correlation (<span class="math inline">\(\hat\rho\approx 0\)</span>) implies <span class="math inline">\(DW\approx 0\)</span>, and <span class="math inline">\(\hat\rho=0\)</span> implies <span class="math inline">\(DW&lt;2\)</span>. Since the null and the alternative hypotheses are <span class="math inline">\(H_0:\rho=0\)</span> <span class="math inline">\(H_1:\rho&gt;0\)</span>, we are looking for DW value that is significantly lower than 2. Due to computation reasons, we typically compare the the DW statistic with the upper <span class="math inline">\(d_U\)</span> and lower <span class="math inline">\(d_L\)</span> critical values. If <span class="math inline">\(DW&lt;d_L\)</span>, we reject <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_1\)</span>, if <span class="math inline">\(DW&gt;d_U\)</span>, we fail to reject <span class="math inline">\(H_0\)</span>, and if <span class="math inline">\(d_L&lt;DW&lt;d_U\)</span>, the test is incoclusive.</p>
+<p>See Durbin-Watson test applied to Phillips curve example.</p>
+<pre class="r"><code>dwtest(reg_static)</code></pre>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  reg_static
+## DW = 0.8027, p-value = 7.552e-07
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+<pre class="r"><code>dwtest(reg_exp.augm)</code></pre>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  reg_exp.augm
+## DW = 1.7696, p-value = 0.1783
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+<p>Due to necessary assumptions and possibly wide range of inconclusive region, DW test is often less practicall than the simple t-test for <span class="math inline">\(\hat\rho\)</span>.</p>
+<p>When the explanatory variables are not strictly exogenous (that is one or more of <span class="math inline">\(x_tj\)</span> is correlated with <span class="math inline">\(u_{t-1}\)</span>), neither t-test nor DW tests are valid. Durbin suggested an alternative statistic when explanatory variables are not strictly exogenous. The steps are as follows.</p>
+<ol style="list-style-type: decimal">
+<li>Run the OLS regression of <span class="math inline">\(y_t\)</span> on <span class="math inline">\(x_{t1}, ... , x_{tk}\)</span> and obtain the OLS residuals, <span class="math inline">\(\hat u_t\)</span>, for all <span class="math inline">\(t = 1, 2, 3,... , n\)</span>.</li>
+<li>Run the regression of <span class="math inline">\(\hat u_t\)</span> on <span class="math inline">\(x_{t1}, x_{t2}, ... , x_{tk}, \hat u_{t-1}\)</span>, for all <span class="math inline">\(t = 2, , 3, ..., n\)</span> to obtain the coefficient <span class="math inline">\(\hat\rho\)</span> on <span class="math inline">\(\hat u_{t-1}\)</span> and its t statistic, <span class="math inline">\(t_{\hat\rho}\)</span>.</li>
+<li>Use <span class="math inline">\(t_{\hat\rho}\)</span> to test <span class="math inline">\(H_0: \rho = 0\)</span> against <span class="math inline">\(H_1: \rho \neq 0\)</span> in the usual way (or use a one-sided alternative).</li>
+</ol>
+<p>Let’s look at an example in which we study the minimum wage effect on employment in Puerto Rico (See examples 10.3 and and 10.9 in Chapter 10 in the textbook).</p>
+<pre class="r"><code>data(prminwge, package=&#39;wooldridge&#39;)
+step1a=lm(log(prepop)~log(mincov)+log(prgnp)+log(usgnp)+t,data=prminwge)
+step1_resid=resid(step1a)
+len=length(step1_resid)
+step1_resid_1=step1_resid[1:len-1]
+step1_resid=step1_resid[2:len]
+mincovX=prminwge$mincov[2:len]
+prgnpX=prminwge$prgnp[2:len]
+usgnpX=prminwge$usgnp[2:len]
+tX=prminwge$t[2:len]
+step2=lm(step1_resid~step1_resid_1+log(mincovX)+log(prgnpX)+log(usgnpX)+tX)
+summary(step2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = step1_resid ~ step1_resid_1 + log(mincovX) + log(prgnpX) + 
+##     log(usgnpX) + tX)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.041317 -0.018004 -0.004598  0.012378  0.067226 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)   -0.850778   1.092688  -0.779  0.44211   
+## step1_resid_1  0.480510   0.166444   2.887  0.00703 **
+## log(mincovX)   0.037500   0.035212   1.065  0.29511   
+## log(prgnpX)   -0.078466   0.070524  -1.113  0.27443   
+## log(usgnpX)    0.203934   0.195158   1.045  0.30412   
+## tX            -0.003466   0.004074  -0.851  0.40134   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.02755 on 31 degrees of freedom
+## Multiple R-squared:  0.2424, Adjusted R-squared:  0.1202 
+## F-statistic: 1.983 on 5 and 31 DF,  p-value: 0.1089</code></pre>
+<p>The estimated coefficient on <span class="math inline">\(\hat u_{t-1}\)</span> is 0.4805 and is statistically different from zero at 1% level which indicates evidence of AR(1) serial correlation in errors.</p>
+<p>This test can be easily extended to test for higher order serial correlation. Follow these steps. 1. Run the OLS regression of <span class="math inline">\(y_t\)</span> on <span class="math inline">\(x_{t1}, ... , x_{tk}\)</span> and obtain the OLS residuals, <span class="math inline">\(\hat u_t\)</span>, for all <span class="math inline">\(t = 1, 2, 3,... , n\)</span>. 2. Run the regression of <span class="math inline">\(\hat u_t\)</span> on <span class="math inline">\(x_{t1}, x_{t2}, ... , x_{tk}, \hat u_{t-1},\hat u_{t-2},...,\hat u_{t-q}\)</span>, for all <span class="math inline">\(t = (q+1), ..., n\)</span> to obtain coefficients <span class="math inline">\(\hat\rho_1,...,\hat\rho_{q}\)</span> on <span class="math inline">\(\hat u_{t-1},...,\hat u_{t-q}\)</span>. 3. Compute the F test for joint significance that all lagged errors jointly are not different from zero: <span class="math inline">\(H_0: \rho_{1}=0,..., \rho_{q}=0\)</span></p>
+<p>Below example is a study of barium chloride antidumping filings and imports. Using monthly data, authors of the study among other tried to answer the following questions: were imports unusually high in the period immediately preceding the initial filing; did imports change noticeably after an antidumping filing; what was the reduction in imports after a decision in favor of the U.S. industry? While we studied this example in more detail in Chapter 10, here we discuss serial correlation. Since the data is monthly, one would expect a higher order of serial correlation. Below is an example test of AR(3) serial correlation in errors.</p>
+<pre class="r"><code>library(dynlm);library(car);library(lmtest)
+data(barium, package=&#39;wooldridge&#39;)
+tsdata = ts(barium, start=c(1978,2), frequency=12)
+reg = dynlm(log(chnimp)~log(chempi)+log(gas)+log(rtwex)+
+                                  befile6+affile6+afdec6, data=tsdata )
+
+# Manual test: 
+residual = resid(reg)
+resreg = dynlm(residual ~ L(residual)+L(residual,2)+L(residual,3)+
+                           log(chempi)+log(gas)+log(rtwex)+befile6+
+                                          affile6+afdec6, data=tsdata )
+linearHypothesis(resreg, 
+                 c(&quot;L(residual)&quot;,&quot;L(residual, 2)&quot;,&quot;L(residual, 3)&quot;))</code></pre>
+<pre><code>## Linear hypothesis test
+## 
+## Hypothesis:
+## L(residual) = 0
+## L(residual, 2) = 0
+## L(residual, 3) = 0
+## 
+## Model 1: restricted model
+## Model 2: residual ~ L(residual) + L(residual, 2) + L(residual, 3) + log(chempi) + 
+##     log(gas) + log(rtwex) + befile6 + affile6 + afdec6
+## 
+##   Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)   
+## 1    121 43.394                               
+## 2    118 38.394  3    5.0005 5.1229 0.00229 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Automatic test:
+bgtest(reg, order=3, type=&quot;F&quot;)</code></pre>
+<pre><code>## 
+##  Breusch-Godfrey test for serial correlation of order up to 3
+## 
+## data:  reg
+## LM test = 5.1247, df1 = 3, df2 = 121, p-value = 0.002264</code></pre>
+<p>Since the p-value of the F-test is 0.0023, we find strong evidence of AR(3) serial correlation.</p>
+<p>If we detect serial correlation, we either have to respecify the model in order to be able to estimate the model with complete dynamics, or simply correct for serial correlation for inference. One way to correct for serial correlation is called feasible generalized least squares (feasible GLS or FGLS). FGLS methods requires to run an OLS regression, and then using the residuals from that regression, run a regression of <span class="math inline">\(\hat u_t = \hat u_{t-1}\)</span> to obtain <span class="math inline">\(\hat \rho\)</span> which is then used to obtain a quasi-differenced data: <span class="math inline">\(\tilde y_t=y_t-\hat\rho y_{t-1}\)</span>, <span class="math inline">\(\tilde x_t=x_t-\hat\rho x_{t-1}\)</span>. A final regression is then run using transformed data. <span class="math display">\[\tilde y_t = \beta_0 \tilde x_{t0} + \beta_1 \tilde x_{t1} + ... + \beta_k \tilde x_{tk} + error_t \]</span> with <span class="math inline">\(\tilde x_{t0}=(1-\hat\rho) \text{ for } t\geq2 \quad \text{and} \quad \tilde x_{t0}=(1-\hat\rho^2)^{1/2} \text{ for } t = 1\)</span>. This method is called Prais-Winsten estimation. Very similar method named Cochrane-Orcutt simply omits the first (when t=1) observation.</p>
+<p>Feasible GLS estimation steps for serial correlation following AR(1) are as follows.</p>
+<ol style="list-style-type: decimal">
+<li>Run the OLS regression of <span class="math inline">\(y_t\)</span> on <span class="math inline">\(x_{t1}, ... , x_{tk}\)</span> and obtain the OLS residuals, <span class="math inline">\(\hat u_t, t = 1, 2, ... , n\)</span>.</li>
+<li>Run the regression <span class="math inline">\(\hat u_t = \hat u_{t-1}\)</span> to obtain <span class="math inline">\(\hat \rho\)</span>.</li>
+<li>Apply OLS to equation using quasi-differenced data to estimate <span class="math inline">\(\beta_0, \beta_1, ... , \beta_k\)</span>. The usual standard errors, t statistics, and F statistics are asymptotically valid.</li>
+</ol>
+<p>Below see the code that implements Cochrane-Orcutt estimation for the barium chloride discussed above.</p>
+<pre class="r"><code>library(dynlm);library(car);library(orcutt)
+data(barium, package=&#39;wooldridge&#39;)
+
+tsdata = ts(barium, start=c(1978,2), frequency=12)
+
+# OLS estimation
+olsres = dynlm(log(chnimp)~log(chempi)+log(gas)+log(rtwex)+
+      befile6+affile6+afdec6, data=tsdata)
+
+# Cochrane-Orcutt estimation
+cochrane.orcutt(olsres)</code></pre>
+<pre><code>## Cochrane-orcutt estimation for first order autocorrelation 
+##  
+## Call:
+## dynlm(formula = log(chnimp) ~ log(chempi) + log(gas) + log(rtwex) + 
+##     befile6 + affile6 + afdec6, data = tsdata)
+## 
+##  number of interaction: 8
+##  rho 0.293362
+## 
+## Durbin-Watson statistic 
+## (original):    1.45841 , p-value: 1.688e-04
+## (transformed): 2.06330 , p-value: 4.91e-01
+##  
+##  coefficients: 
+## (Intercept) log(chempi)    log(gas)  log(rtwex)     befile6     affile6 
+##  -37.322241    2.947434    1.054858    1.136918   -0.016372   -0.033082 
+##      afdec6 
+##   -0.577158</code></pre>
+<p>Statistical software packages can also easily estimtae models with higher order serially correalted errors (AR(q)).</p>
+<p>Because OLS and FGLS are different estimation procedures, we never expect them to give the same estimates. If they provide similar estimates of the bj, then FGLS is preferred if there is evidence of serial correlation because the estimator is more efficient and the FGLS test statistics are at least asymptotically valid. A more difficult problem arises when there are practical differences in the OLS and FGLS estimates: it is hard to determine whether such differences are statistically significant. A researcher has a big problem when OLS and FGLS estimates are different in practically important ways.</p>
+<p>Differencing data discussed in previous chapters also works to eliminate serial correlation.</p>
+<p>In recent years, it has become more popular to estimate models by OLS but to correct the standard errors for fairly arbitrary forms of serial correlation (and heteroskedasticity). Serial correlation-robust standard error computation may look somewhat complicated, but in practice it is easy to obtain. See the steps to obtain serial correlation robust (SC-robust) standard errors in the textbook. Empirically, the serial correlation-robust standard errors are typically larger than the usual OLS standard errors when there is serial correlation. These are also called Newey-West standard errors.</p>
+<p>The SC-robust standard errors after OLS estimation are most useful when we have doubts about some of the explanatory variables being strictly exogenous, so that methods such as Prais-Winsten and Cochrane-Orcutt are not even consistent. It is also valid to use the SC-robust standard errors in models with lagged dependent variables, assuming, of course, that there is good reason for allowing serial correlation in such models.</p>
+<p>Let’s look back at the example of Puerto Rican minimum wage effect on employment. Previously, we found pretty strong evidence of AR(1) serial correlation. Thus, we should compute SC-robust standard errors. The robust standard error is only slightly greater than the usual OLS standard error. The robust t statistic is about ???4.98, and so the estimated elasticity is still very statistically significant. See the code below.</p>
+<pre class="r"><code>library(dynlm);library(lmtest);library(sandwich)
+data(prminwge, package=&#39;wooldridge&#39;)
+
+tsdata &lt;- ts(prminwge, start=1950)
+
+# OLS regression
+reg&lt;-dynlm(log(prepop)~log(mincov)+log(prgnp)+log(usgnp)+trend(tsdata), 
+                                                          data=tsdata )
+# results with usual SE
+coeftest(reg)</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                 Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)   -6.6634416  1.2578286 -5.2976 7.667e-06 ***
+## log(mincov)   -0.2122612  0.0401523 -5.2864 7.924e-06 ***
+## log(prgnp)     0.2852380  0.0804921  3.5437  0.001203 ** 
+## log(usgnp)     0.4860483  0.2219825  2.1896  0.035731 *  
+## trend(tsdata) -0.0266633  0.0046267 -5.7629 1.940e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># results with HAC SE
+coeftest(reg, vcovHAC)</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                 Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)   -6.6634416  1.6856885 -3.9529 0.0003845 ***
+## log(mincov)   -0.2122612  0.0460684 -4.6075 5.835e-05 ***
+## log(prgnp)     0.2852380  0.1034901  2.7562 0.0094497 ** 
+## log(usgnp)     0.4860483  0.3108940  1.5634 0.1275013    
+## trend(tsdata) -0.0266633  0.0054301 -4.9103 2.402e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Heteroskedasticity may also occur in time series regression models. With heteroskedasticity present, the usual standard errors, t and F statistics are invalid. To test for heteroskedasticity, one needs to make test and treat serial correlation first as the test for heteroskedasticity will not be valid with serial correlation present. Then we can test for heteroskedasticity using Breusch-Pagan test as with cross-section models: <span class="math inline">\(u_t^2=\delta_0+\delta_1 x_{t1}+...+\delta_k x_{tk}+v_t\)</span> if <span class="math inline">\(v_t\)</span> is serially uncorrelated. If <span class="math inline">\(v_t\)</span> has serially correlated, we can use weighted least squares as with cross-section models.</p>
+<p>Consider a simple example describing stock returns based on previous stock returns. <span class="math display">\[
+return_t=\beta_0+\beta_1 return_{t-1}+u_t
+\]</span> Efficient market hypothesis (EMH) suggests that old information is not useful in predicting future returns or <span class="math inline">\(\beta_1=0\)</span>. However, EMH does not say anything about the conditional variance. Breusch-Pagan test for heteroskedasticity allows us to check how the conditional variance behaves.</p>
+<pre class="r"><code>library(dynlm);library(lmtest)
+data(nyse, package=&#39;wooldridge&#39;)
+tsdata = ts(nyse)
+# Linear regression of model:
+reg_returnsA = dynlm(return ~ L(return), data=tsdata)
+#Either bptest() command
+bptest(reg_returnsA)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  reg_returnsA
+## BP = 28.879, df = 1, p-value = 7.705e-08</code></pre>
+<pre class="r"><code>#Or manually regress residuals on explanatory variables
+reg_returnsB = dynlm(I(reg_returnsA$residuals^2) ~ L(return), data=tsdata)
+summary(reg_returnsB)</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 3, End = 691
+## 
+## Call:
+## dynlm(formula = I(reg_returnsA$residuals^2) ~ L(return), data = tsdata)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+##  -9.689  -3.929  -2.021   0.960 223.730 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   4.6565     0.4277  10.888  &lt; 2e-16 ***
+## L(return)    -1.1041     0.2014  -5.482  5.9e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 11.18 on 687 degrees of freedom
+## Multiple R-squared:  0.04191,    Adjusted R-squared:  0.04052 
+## F-statistic: 30.05 on 1 and 687 DF,  p-value: 5.905e-08</code></pre>
+<p>The t statistic on <span class="math inline">\(return_{t-1}\)</span> is about ???5.5, indicating strong evidence of heteroskedasticity. We find that volatility in stock returns is lower when the previous return was high, and vice versa. Therefore, we have found what is common in many financial studies: the expected value of stock returns does not depend on past returns, but the variance of returns does.</p>
+<p>Relatively recently, economists became more interested in dynamic forms of heteroskedasticity. An extremely popular model, introduced by Engle in 1982, called autoregressive conditional heteroskedasticity (ARCH) model looks at the conditional variance of <span class="math inline">\(u_t\)</span> given past errors <span class="math inline">\(u_{t-1},u_{t-2},...\)</span>. ARCH model is: <span class="math display">\[
+E(u_t^2|u_{t-1},u_{t-2},...)=E(u_t^2|u_{t-1})=\alpha_0+\alpha_1 u_{t-1}^2
+\]</span> This model only makes sense if <span class="math inline">\(\alpha_0&gt;0\)</span> and <span class="math inline">\(\alpha_1&gt;0\)</span>.</p>
+<p>There are two reasons why one should be concerned with ARCH forms of heteroskedasticity.</p>
+<ol style="list-style-type: decimal">
+<li>It is possible to get consistent (but not unbiased) estimators of the bj that are asymptotically more efficient than the OLS estimators. A weighted least squares procedure, based on estimating <span class="math inline">\(u_t^2=\alpha_0+\alpha_1 u_{t-1}^2+v_t\)</span>, will do the trick.</li>
+<li>Also, the dynamics of conditional variance may be of interest itself. Since variance is often used to measure volatility, and volatility is a key element in asset pricing theories, ARCH models have become important in empirical finance.</li>
+</ol>
+<p>Let’s look back at the stock returns example. We can test for heteroskedasticity characterized by ARCH model. Run OLS, and regress the squared residuals on lagged squared residuals. See the following commands.</p>
+<pre class="r"><code>library(dynlm);library(lmtest)
+data(nyse, package=&#39;wooldridge&#39;)
+tsdata = ts(nyse)
+# Linear regression of model:
+reg_ret_A = dynlm(return ~ L(return), data=tsdata) 
+# squared residual
+residual.sq = resid(reg_ret_A)^2
+# Model for squared residual:
+ARCHreg &lt;- dynlm(residual.sq ~ L(residual.sq)) 
+coeftest(ARCHreg)</code></pre>
+<pre><code>## 
+## t test of coefficients:
+## 
+##                Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)    2.947433   0.440234  6.6951 4.485e-11 ***
+## L(residual.sq) 0.337062   0.035947  9.3767 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The t statistic on <span class="math inline">\(u^2_{t-1}\)</span> is over nine, indicating strong ARCH. As we discussed earlier, a larger error at time <span class="math inline">\(_{t???1}\)</span> implies a larger variance in stock returns today.</p>
+<p>It is likely to have both heteroskedasticity and serial correlation in a regression model. Serial correlation is typically viewed as a bigger problem than heteroskedasticity as it has a larger impact on standard errors and efficiency of estimators. If we detect serial correlation using such a test, we can employ the Cochrane-Orcutt (or Prais-Winsten) transformation and, in the transformed equation, use heteroskedasticity-robust standard errors and test statistics. Or, we can even test for heteroskedasticity using the Breusch-Pagan or White tests. Alternatively, we can model heteroskedasticity and serial correlation and correct for both through a combined weighted least squares AR(1) procedure.</p>
+<p>Feasible GLS with Heteroskedasticity and AR(1) Serial Correlation</p>
+<ol style="list-style-type: decimal">
+<li>Estimate <span class="math inline">\(y_t=\beta_0+\beta_1x_{t1}+...+\beta_kx_{tk}+u_t\)</span> by OLS and save the residuals, <span class="math inline">\(\hat u_t\)</span></li>
+<li>Regress <span class="math inline">\(\log(\hat u_t^2)\)</span> on <span class="math inline">\(x_{t1},...,x_{tk}\)</span>, or on <span class="math inline">\(\hat y_t,\hat y_{t}^2\)</span> and obtain fitted values, say <span class="math inline">\(\hat g_t\)</span></li>
+<li>Estimate <span class="math inline">\(h_t\)</span> using <span class="math inline">\(\hat h_t=\exp{(\hat g_t)}\)</span></li>
+<li>Estimate the transformed equation <span class="math inline">\(\hat h^{1/2}y_t = \hat h^{1/2} \beta_0 + \hat h^{1/2} \beta_1 x_{t1} + ... + \hat h^{1/2} \beta_k x_{tk} + error_t\)</span> by standard Cochrane-Orcutt or Prais-Winsten methods.</li>
+</ol>
+<p>If we allow the variance function to be misspecified, or allow the possibility that any serial correlation does not follow an AR(1) model, then we can apply quasi-differencing to <span class="math inline">\(\hat h^{1/2}y_t = \hat h^{1/2} \beta_0 + \hat h^{1/2} \beta_1 x_{t1} + ... + \hat h^{1/2} \beta_k x_{tk} + error_t\)</span>, estimating the resulting equation by OLS, and then obtain the Newey-West standard errors.</p>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C1.<br />
+In Example 11.6, we estimated a finite DL model in first differences (changes): <span class="math display">\[cgfr_t = \gamma_0 + \delta_0 cpe_t + \delta_1 cpe_{t-1} + \delta_2 cpe_{t-2} + u_t\]</span> Use the data in <strong>fertil3</strong> to test whether there is AR(1) serial correlation in the errors.
+</p>
+<p class="comment">
+Computer Exercise C5.<br />
+Consider the version of Fair’s model in Example 10.6. Now, rather than predicting the proportion of the two-party vote received by the Democrat, estimate a linear probability model for whether or not the Democrat wins.<br />
+1. Use the binary variable <span class="math inline">\(demwins\)</span> in place of <span class="math inline">\(demvote\)</span> in (10.23) and report the results in standard form. Which factors affect the probability of winning? Use the data only through 1992.<br />
+2. How many fitted values are less than zero? How many are greater than one?<br />
+3. Use the following prediction rule: if <span class="math inline">\(\widehat{demwins}&gt;5\)</span>, you predict the Democrat wins; otherwise, the Republican wins. Using this rule, determine how many of the 20 elections are correctly predicted by the model.<br />
+4. Plug in the values of the explanatory variables for 1996. What is the predicted probability that Clinton would win the election? Clinton did win; did you get the correct prediction?<br />
+5. Use a heteroskedasticity-robust t test for AR(1) serial correlation in the errors. What do you find?<br />
+6. Obtain the heteroskedasticity-robust standard errors for the estimates in part 1. Are therenotable changes in any t statistics?
+</p>
+<p class="comment">
+Computer Exercise C9.<br />
+The dataset <strong>fish</strong> contains 97 daily price and quantity observations on fish prices at the Fulton Fish Market in New York City. Use the variable <span class="math inline">\(\log(avgprc)\)</span> as the dependent variable.<br />
+1. Regress <span class="math inline">\(\log(avgprc)\)</span> on four daily dummy variables, with Friday as the base. Include a linear time trend. Is there evidence that price varies systematically within a week?<br />
+2. Now, add the variables <span class="math inline">\(wave2\)</span> and <span class="math inline">\(wave3\)</span>, which are measures of wave heights over the past several days. Are these variables individually significant? Describe a mechanism by which stormy seas would increase the price of fish.<br />
+3. What happened to the time trend when <span class="math inline">\(wave2\)</span> and <span class="math inline">\(wave3\)</span> were added to the regression? What must be going on?<br />
+4. Explain why all explanatory variables in the regression are safely assumed to be strictly exogenous.<br />
+5. Test the errors for AR(1) serial correlation.<br />
+6. Obtain the Newey-West standard errors using four lags. What happens to the t statistics on <span class="math inline">\(wave2\)</span> and <span class="math inline">\(wave3\)</span>? Did you expect a bigger or smaller change compared with the usual OLS t statistics?<br />
+7. Now, obtain the Prais-Winsten estimates for the model estimated in part 2. Are <span class="math inline">\(wave2\)</span> and <span class="math inline">\(wave3\)</span> jointly statistically significant?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

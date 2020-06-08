@@ -277,16 +277,25 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="teaching.html">Teaching</a>
-</li>
-<li>
   <a href="research.html">Research</a>
 </li>
-<li>
-  <a href="etrics.html">Econometrics</a>
-</li>
-<li>
-  <a href="macro.html">Macroeconomics</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -333,13 +342,13 @@ $(document).ready(function () {
 <li><a href="etricsCh9.html">Chapter 9: Specification and Data Issues</a></li>
 <li><a href="etricsCh10.html">Chapter 10: Basic Regression Analysis with Time Series Data</a></li>
 <li><a href="etricsCh11.html">Chapter 11: Issues in Using OLS with Time Series Data</a></li>
-<li>Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions</li>
+<li><a href="etricsCh12.html">Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions</a></li>
 <li><a href="etricsCh13.html">Chapter 13: Pooling Cross Sections across Time: Simple Panel Data Methods</a></li>
-<li>Chapter 14: Advanced Panel Data Methods</li>
+<li><a href="etricsCh14.html">Chapter 14: Advanced Panel Data Methods</a></li>
 <li><a href="etricsCh15.html">Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares</a></li>
 <li><a href="etricsCh16.html">Chapter 16: Simultaneous Equation Models</a></li>
 <li><a href="etricsCh17.html">Chapter 17: Limited Dependent Variable Models: Logit and Probit</a></li>
-<li>Chapter 18: Advanced Time Series Topics</li>
+<li><a href="etricsCh18.html">Chapter 18: Advanced Time Series Topics</a></li>
 <li><a href="etricsCh19.html">Chapter 19: Carrying Out an Empirical Project</a></li>
 </ul>
 </div>
@@ -368,6 +377,12 @@ $(document).ready(function () {
 <li>Quantile Regressions in R</li>
 <li>Simple Machine Learning Algorithms in R</li>
 <li><a href="etrics_algoknearest.html">K-Nearest Neighbors Algorithm in R</a></li>
+</ul>
+</div>
+<div id="fun-example-projects" class="section level4">
+<h4>Fun Example Projects</h4>
+<ul>
+<li>NBA Player Pay and Performance</li>
 </ul>
 </div>
 

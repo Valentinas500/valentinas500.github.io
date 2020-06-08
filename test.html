@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>Teaching</title>
+<title>About me</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -233,7 +234,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -277,25 +277,16 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
+  <a href="teaching.html">Teaching</a>
+</li>
+<li>
   <a href="research.html">Research</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Teaching
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="teaching.html">Overview</a>
-    </li>
-    <li>
-      <a href="etrics.html">Econometrics</a>
-    </li>
-    <li>
-      <a href="macro.html">Macroeconomics</a>
-    </li>
-  </ul>
+<li>
+  <a href="etrics.html">Econometrics</a>
+</li>
+<li>
+  <a href="macro.html">Macroeconomics</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -315,44 +306,36 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Teaching</h1>
+<h1 class="title toc-ignore">About me</h1>
 
 </div>
 
 
-<p><br />
-</p>
-<div id="fordham-university-rose-hill-campus" class="section level4">
-<h4>Fordham University, Rose Hill Campus</h4>
-<ul>
-<li>Introductory Econometrics (ECON 3885) - Fall 2019, Spring 2020</li>
-<li>Basic Macroeconomics (ECON 1100) - Fall 2018, Spring 2019, Spring 2020</li>
-</ul>
-<p>Student Evaluations: <a href="https://drive.google.com/file/d/1UufyBUoSP_9vV41__W819ikI0WbdXCbC/view?usp=sharing">#1</a>, <a href="https://drive.google.com/file/d/14mQp2XjilkYcJp6PlwFESx1Y8CJHqlb7/view?usp=sharing">#1</a>, <a href="https://drive.google.com/open?id=1FEooZsSFGt3PveZq5-Plw8a1qdeMm4E4">#2</a>, <a href="https://drive.google.com/file/d/1sxdP5QTp3BsBpMi0DCb1z7A4yq9UwpEm/view?usp=sharing">#3</a></p>
-<p>Video Lecture Clips: <a href="">#1</a>, <a href="">#2</a>,</p>
-<p><br />
-</p>
+<div id="interpreting-beta_1-coefficient" class="section level1">
+<h1>Interpreting <span class="math inline">\(\beta_1\)</span> Coefficient</h1>
+<iframe src = "https://valentinas500.shinyapps.io/test/" width = "555" height = "200">
+<pre><code>     Sorry your browser does not support inline frames.
+  &lt;/iframe&gt;</code></pre>
+<div id="level-level" class="section level2">
+<h2>Level-level</h2>
+<p><span class="math display">\[ \Delta y=\beta_1\Delta x\]</span> Rearranging the above equation yields <span class="math display">\[ \beta_1 = \Delta y / \Delta x\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> represents the change in y due to one unit increase in x. For example, if <span class="math inline">\(y=wage\)</span> and <span class="math inline">\(x=YearsInEducation\)</span>, then <span class="math inline">\(\beta_1\)</span> represents the change in the wage due to one additional year of schooling.</p>
 </div>
-<div id="monroe-college-bronx-campus" class="section level4">
-<h4>Monroe College, Bronx Campus</h4>
-<ul>
-<li>Macroeconomics (EC 201)- Fall 2019, Spring 2020</li>
-</ul>
-<p>Student Evaluations: <a href="https://drive.google.com/open?id=1mIfzngJguTl2DC5OH3lQVSfhY0w8LzTz">#1</a>, <a href="https://drive.google.com/open?id=1VrYoXT4Zy77Ltdf2Nw9NlBlTarGmGr4w">#2</a></p>
-<p><br />
-</p>
+<div id="log-level" class="section level2">
+<h2>Log-level</h2>
+<p><span class="math display">\[ \Delta log(y)=\beta_1\Delta x\]</span> Since <span class="math inline">\(100*\Delta log(y) \approx \% \Delta y\)</span> for small changes in <span class="math inline">\(y\)</span>, <span class="math display">\[ (\% \Delta y) / 100=\beta_1\Delta x\]</span> <span class="math display">\[ \beta_1 = (\% \Delta y / 100)/(\Delta x) \quad \quad or \quad \quad 100 \beta_1=(\% \Delta y)/(\Delta x) \]</span> <span class="math inline">\(100*\beta_1\)</span> represents the percentage change in y due to one unit increase in x. For example, if <span class="math inline">\(y=wage\)</span> and <span class="math inline">\(x=YearsInEducation\)</span>, then <span class="math inline">\(100*beta_1\)</span> represents the percentage change in the wage due to one additional year of schooling. If one does not multiply <span class="math inline">\(beta_1\)</span> by 100, one gets the change in the wage measured as a fraction.</p>
 </div>
-<div id="university-of-the-people-online" class="section level4">
-<h4>University of the People, Online</h4>
-<ul>
-<li>Macroeconomics - Spring 2018</li>
-</ul>
-<p>Student Evaluations: <a href="https://drive.google.com/file/d/1eyMQEsbo1_hUvwQe1-qeVoUclqhJeH3A/view">#1</a></p>
-<p><br />
-</p>
-<blockquote>
-<p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdAtAn3hsF1Cfy84sgsYFyeOwRvReJGHzFDDucIKL3EYQyfZA/viewform?usp=pp_url">Provide Annonymous Feedback</a></p>
-</blockquote>
+<div id="level-log" class="section level2">
+<h2>Level-log</h2>
+<p><span class="math display">\[ \Delta y=\beta_1\Delta log(x) = (\beta_1/100) [100*\Delta log(x)] \approx (\beta_1/100)(\%\Delta x) \]</span> where we use the fact that <span class="math inline">\(100*\Delta log(x) \approx \% \Delta x\)</span> for small changes in <span class="math inline">\(x\)</span>. So <span class="math inline">\(\beta_1/100\)</span> is the (ceteris paribus) change in <span class="math inline">\(y\)</span> when <span class="math inline">\(x\)</span> increases by one percent.</p>
+<p><span class="math display">\[ \beta_1/100 = (\Delta y)/(\%\Delta x) \]</span> <span class="math inline">\(\beta_1/100\)</span> represents the change in y due to one percent increase in x. For example, if <span class="math inline">\(y=NumberOfKidsInFamily\)</span> and <span class="math inline">\(x=HouseholdIncome\)</span>, then <span class="math inline">\(beta_1/100\)</span> represents the change in the number of kids a family is predicted to have due to one percent increase in houeshold income.</p>
+</div>
+<div id="log-log" class="section level2">
+<h2>Log-log</h2>
+<p><span class="math display">\[ \Delta log(y) = \beta_1 \Delta log(x) \]</span> Since <span class="math inline">\(100*\Delta log(y) \approx \% \Delta y\)</span> for small changes in <span class="math inline">\(y\)</span>, and <span class="math inline">\(100*\Delta log(x) \approx \% \Delta x\)</span> for small changes in <span class="math inline">\(x\)</span>, <span class="math display">\[ \Delta \% y / 100 = \beta_1 \Delta \% x / 100 \]</span></p>
+<p>Simplification yields the following <span class="math display">\[ \Delta \% y = \beta_1 \Delta \% x \quad \quad or \quad \quad \beta_1 = \Delta \% y / \Delta \% x\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> represents the percent change in y due to one percent change in x. For example, if <span class="math inline">\(y=CEOSalary\)</span> and <span class="math inline">\(x=FirmSales\)</span>, then <span class="math inline">\(\beta_1\)</span> represents the percent change in the salary of the CEO due to percent change in the firm’s sales.</p>
+</div>
 </div>
 
 

@@ -416,7 +416,7 @@ lm( salary ~ roe, data=ceosal1 ) #Run the regression using lm command</code></pr
 reg1=lm(wage ~ educ, data=wage1)
 plot(wage1$educ,wage1$wage)
 abline(lm(wage1$wage~wage1$educ))</code></pre>
-<p><img src="etricsCh2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="dataCh4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>summary(reg1)</code></pre>
 <pre><code>## 
 ## Call:
@@ -469,12 +469,12 @@ summary(reg1)</code></pre>
 <pre class="r"><code>#Plot 1
 plot(log(wage)~educ, data=wage1)
 abline(reg1)</code></pre>
-<p><img src="etricsCh2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="dataCh4_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>#Plot 2
 plot(wage~educ, data=wage1)
 a0=1/length(fitted(reg1)) * sum(exp(reg1$residuals))
 points(exp(reg1$fitted.values)*a0~wage1$educ,col=&quot;green&quot;,lwd=5)</code></pre>
-<p><img src="etricsCh2_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p><img src="dataCh4_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
 <p>We find that the wage increases by 8.3% with an additional year of education, else held constant.</p>
 <p>It is always useful to create plots. It helps you better understand the data and they help communicate the results. If we take log wages and education and plot them, we can directly plot the fitted values of the OLS regression (see the first figure (Plot 1)). However, we are not used to thinking in terms of log wages so it is better to convert back to the usual units - dollars. In Plot 2, we can visually observe the non-linear relationship between wage and education. This seems to be a much better fit than the simple linear model done earlier.</p>
 <p>Log-log model is another popular model in which both the left hand side (LHS) and right hand side (RHS) variables are converted to their natural logarithms. It is called a constant elasticity model. In this model, beta_1 is called the elasticity of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span>.</p>
@@ -507,14 +507,14 @@ summary(reg1)</code></pre>
 ## F-statistic:  55.3 on 1 and 207 DF,  p-value: 2.703e-12</code></pre>
 <pre class="r"><code>plot(log(salary) ~ log(sales), data=ceosal1) #plot 1
 abline(reg1)</code></pre>
-<p><img src="etricsCh2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="dataCh4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>plot(salary~log(sales), data=ceosal1) #plot 2
 points(exp(reg1$fitted.values)~log(ceosal1$sales),col=&quot;green&quot;,lwd=4)</code></pre>
-<p><img src="etricsCh2_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><img src="dataCh4_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <pre class="r"><code>plot(salary~sales, data=ceosal1) #plot 3
 a0=1/length(fitted(reg1)) * sum(exp(reg1$residuals))
 points(exp(reg1$fitted.values)*a0~ceosal1$sales,col=&quot;green&quot;,lwd=4)</code></pre>
-<p><img src="etricsCh2_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p><img src="dataCh4_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
 <p>Regression results are as follows. Estimated <span class="math inline">\(\beta_0\)</span> coefficient is 4.822 and estimated <span class="math inline">\(\beta_1\)</span> coefficient is 0.257. This can be interpreted as follows: for 10% increase in sales, CEO salary is expected to be higher by 2.57%.</p>
 <p>If a new random sample is taken, we would get different values for the estimated coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. The question is what the estimators will estimate on average and how large will their variability be in repeated samples. OLS regression estimates “well” (we will discuss what that means below), we need to make a few assumptions. We call them Gauss-Markov assumptions for simple regression.</p>
 <ul>

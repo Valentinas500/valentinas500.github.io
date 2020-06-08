@@ -277,16 +277,25 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="teaching.html">Teaching</a>
-</li>
-<li>
   <a href="research.html">Research</a>
 </li>
-<li>
-  <a href="etrics.html">Econometrics</a>
-</li>
-<li>
-  <a href="macro.html">Macroeconomics</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -511,7 +520,8 @@ Use the data for the year 1990 in <strong>infmrt</strong> for this exercise.<br 
 2. Compare the estimates and standard errors from part 1 with those from equation (9.44). What do you conclude about including a dummy variable for a single observation?
 </p>
 <p class="comment">
-Computer Exercise C13\ Use the data in <strong>ceosal2</strong> to answer this question.<br />
+Computer Exercise C13.<br />
+Use the data in <strong>ceosal2</strong> to answer this question.<br />
 1. Estimate the model <span class="math display">\[lsalary = b0 + b1*lsales + b2*lmktval + b3*ceoten + b4*ceoten^2 + u\]</span> by OLS using all of the observations, where <span class="math inline">\(lsalary\)</span>, <span class="math inline">\(lsales\)</span>, and <span class="math inline">\(lmktval\)</span> are all natural logarithms. Report the results in the usual form with the usual OLS standard errors. (You may verify that the heteroskedasticity-robust standard errors are similar.)<br />
 2. In the regression from part 1 obtain the studentized residuals; call these <span class="math inline">\(stri\)</span>. How many studentized residuals are above 1.96 in absolute value? If the studentized residuals were independent draws from a standard normal distribution, about how many would you expect to be above two in absolute value with 177 draws?<br />
 3. Reestimate the equation in part 1 by OLS using only the observations with <span class="math inline">\(|stri| \leq 1\)</span>. 96. How do the coefficients compare with those in part 1?

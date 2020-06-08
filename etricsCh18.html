@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introductory Econometrics. Chapter 18</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introductory Econometrics. Chapter 18</h1>
+
+</div>
+
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+<div id="chapter-18-advanced-time-series-topics" class="section level5">
+<h5>Chapter 18: Advanced Time Series Topics</h5>
+<p>Previously, we discussed a finite distributed lag (FDL) model. Now, we will introduce an infinite distributed lag (IDL) model. Compared with a finite distributed lag model, an IDL model does not require that we truncate the lag at a particular value. <span class="math display">\[
+y_t=\alpha + \delta_1 z_{t-1} + \delta_2 z_{t-2} + \delta_3 z_{t-3} + ... + u_t
+\]</span> For the model to make sense, <span class="math inline">\(\delta_j \rightarrow 0\)</span> as <span class="math inline">\(j \rightarrow \infty\)</span>. This makes economic sense: the distant past of <span class="math inline">\(z\)</span> should be less important for explaining <span class="math inline">\(y\)</span> than the recent past of <span class="math inline">\(z\)</span>.</p>
+<p>The long-run propensity in IDL model is the sum of all of the lag coefficients: <span class="math display">\[
+LRP=\delta_0+\delta_1+\delta_2+...
+\]</span> LRP measures the long-run change in the expected value of y given a one-unit, permanent increase in z.</p>
+<p>Suppose that after <span class="math inline">\(z\)</span> time periods, the process is steady: <span class="math inline">\(\delta_z=0, \delta_{z+1}=0, ...\)</span> <span class="math display">\[
+E(y_h) = \alpha + \delta_1 + \delta_2 + \delta_3 + ... + \delta_h
+\]</span> As <span class="math inline">\(h\rightarrow\infty\)</span>, <span class="math inline">\(E(y_h)\rightarrow (LRP+\alpha)\)</span>.</p>
+<p>The simplest version of IDL is the geometric (or Koyck) distributed lag model. <span class="math display">\[
+\delta_j= \gamma \rho^j, |\rho|&lt;1,j=1,2,3,...
+\]</span> The restriction on <span class="math inline">\(\rho\)</span> ensures convergence: <span class="math inline">\(\delta_j\rightarrow0\)</span> as <span class="math inline">\(j\rightarrow\infty\)</span>. Long run propensity in this model is: <span class="math inline">\(LRP=\gamma/(1-\rho)\)</span></p>
+<p>After a little bit of algebra, we have the following model: <span class="math display">\[
+y_t=\alpha_0+\gamma z_t + \rho y_{t-1}+v_t
+\]</span> If we assume that <span class="math inline">\(v_t\equiv u_t-\rho u_{t-1}\)</span> is unccorelated with y_t, then we can estimate <span class="math inline">\(\alpha_0\)</span> and <span class="math inline">\(\rho\)</span> by OLS. Otherise, we either need to find a suitable IV, or assume a specific kind of serial correlation that <span class="math inline">\(u_t\)</span> follows.</p>
+<p>Another model is called a rational distributed lag model (RDL). Consider the following model: <span class="math display">\[
+y_t=\alpha_0+\gamma_0 z_t + \rho y_{t-1} +\gamma_1 z_{t-1} +v_t
+\]</span> By repeated substitution of lagged y in the above equation, we can show that <span class="math inline">\(y_t\)</span> equals: <span class="math display">\[
+y_t = \alpha_0 + \gamma_0 (z_t + \rho z_{t-1}+ \rho^2 z_{t-2} +...) 
++\gamma_1 (z_{t-1} + \rho z_{t-2}+ \rho^2 z_{t-3} +...) + u_t
+\]</span> <span class="math display">\[
+y_t = \alpha_0 + \gamma_0 z_t + (\rho \gamma_0 + \gamma_1) z_{t-1}
++ \rho (\rho\gamma_0+\gamma_1) z_{t-2} + \rho^2 (\rho\gamma_0 +\gamma_1) z_{t-2} + u_t
+\]</span> LRP in this model: $LRP=(_0+_1)/(1-)</p>
+<p>Let’s look at an example in which we estimate how residential price inflation affects movements in houisng investment around its trend using data set <strong>hseinv</strong>. Both, geometric and rational distributed lag models are estimated. See the R-code code below. The two models give significantly different estimates of LRP. Because the geometric distributed lag model omits the relevant lag (<span class="math inline">\(gprice_{t-1}\)</span>), LRP is implausibly high (5 times higher than in RDL). The LRP estiamted from RDL model, however, is not statistically different from zero.</p>
+<pre class="r"><code>library(dynlm); library(stargazer)
+data(hseinv, package=&#39;wooldridge&#39;)
+# detrended variable: residual from a regression on the obs. index: 
+trendreg &lt;- dynlm( log(invpc) ~ trend(hseinv), data=hseinv )
+hseinv$linv.detr &lt;-  resid( trendreg )
+# ts data:
+hseinv.ts &lt;- ts(hseinv)
+# Koyck geometric d.l.:
+gDL&lt;-dynlm(linv.detr~gprice + L(linv.detr)            ,data=hseinv.ts)
+# rational d.l.:
+rDL&lt;-dynlm(linv.detr~gprice + L(linv.detr) + L(gprice),data=hseinv.ts)
+stargazer(gDL,rDL, type=&quot;text&quot;, keep.stat=c(&quot;n&quot;,&quot;adj.rsq&quot;))</code></pre>
+<pre><code>## 
+## =========================================
+##                  Dependent variable:     
+##              ----------------------------
+##                       linv.detr          
+##                   (1)            (2)     
+## -----------------------------------------
+## gprice          3.095***      3.256***   
+##                 (0.933)        (0.970)   
+##                                          
+## L(linv.detr)    0.340**       0.547***   
+##                 (0.132)        (0.152)   
+##                                          
+## L(gprice)                     -2.936***  
+##                                (0.973)   
+##                                          
+## Constant         -0.010         0.006    
+##                 (0.018)        (0.017)   
+##                                          
+## -----------------------------------------
+## Observations       41            40      
+## Adjusted R2      0.375          0.504    
+## =========================================
+## Note:         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<pre class="r"><code># LRP geometric DL:
+b &lt;- coef(gDL)
+ b[&quot;gprice&quot;]                 / (1-b[&quot;L(linv.detr)&quot;])</code></pre>
+<pre><code>##   gprice 
+## 4.688434</code></pre>
+<pre class="r"><code># LRP rationalDL:
+b &lt;- coef(rDL)
+(b[&quot;gprice&quot;]+b[&quot;L(gprice)&quot;]) / (1-b[&quot;L(linv.detr)&quot;])</code></pre>
+<pre><code>##    gprice 
+## 0.7066801</code></pre>
+<p>We now look at the problem of testing if a time serieis follows a unit roots. Consider an AR(1) model: <span class="math display">\[
+y_t=\alpha+\rho y_{t-1}+e_t, t=1,2,...
+\]</span> and assuming that <span class="math inline">\(e_t\)</span> follows a martingale difference sequence, that is <span class="math inline">\(E(e_t|y_{t-1},y_{t-2},...,y_0)=0\)</span>. If <span class="math inline">\(\rho=1\)</span>, <span class="math inline">\(\{y_t\}\)</span> has a unit root.</p>
+<ul>
+<li>If <span class="math inline">\(\alpha=0\)</span> and <span class="math inline">\(\rho=1\)</span>, <span class="math inline">\(\{y_t\}\)</span> follows a random walk without a drift.</li>
+<li>If <span class="math inline">\(\alpha\neq0\)</span> and <span class="math inline">\(\rho=1\)</span>, <span class="math inline">\(\{y_t\}\)</span> follows a random walk with a drift.</li>
+</ul>
+<p>When testing if a series has a unit root, we specify the null hypothesis as <span class="math inline">\(H_0:\rho=1\)</span>, and alternative as <span class="math inline">\(H_1:\rho&lt;1\)</span>. When <span class="math inline">\(\rho&lt;1\)</span>, <span class="math inline">\(\{y_t\}\)</span> is a stable AR(1) process.</p>
+<p>The most widely used test for unit root is called the Dickey-Fuller (DF) test for unit root. subtracting lagged y from the above equation, we obtain the following in which <span class="math inline">\(\theta=\rho-1\)</span> <span class="math display">\[
+\Delta y_t=\alpha + \theta y_{t-1}+e_t 
+\]</span> We reject the null <span class="math inline">\(H_0: \theta=0\)</span> against <span class="math inline">\(H_1: \theta&lt;0\)</span> if t-statistic from the DF test is less than the critical value for arbitrarily chosen critical value (see the table below).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Significance Level</th>
+<th align="center">1%</th>
+<th align="center">2.5%</th>
+<th align="center">5%</th>
+<th align="center">10%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Critical Value</td>
+<td align="center">-3.43</td>
+<td align="center">-3.12</td>
+<td align="center">-2.86</td>
+<td align="center">-2.57</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s look at how we would run a unit root test in R. Dataset <strong>intqrt</strong> contains quarterly interest rates on three-month T-bills. We can test if the time series have a unit root.</p>
+<pre class="r"><code>library(dynlm); library(stargazer)
+data(intqrt, package=&#39;wooldridge&#39;)
+intqrt.ts = ts(intqrt)
+regDF1= dynlm(cr3 ~ L(r3),data=intqrt.ts)</code></pre>
+<p>These standard errors cannot be used to construct usual confidence intervals or to carry out traditional t-tests because they do not behave in the usual ways when there is a unit root. The coefficient on <span class="math inline">\(r3_{t_1}\)</span> shows that the estimate of <span class="math inline">\(\rho\)</span> is <span class="math inline">\(\hat\rho = 1 + \hat \theta = 0.909\)</span>. While this is less than unity, we do not know whether it is statistically less than one. The t-statistic on <span class="math inline">\(r3_{t-1}\)</span> is <span class="math inline">\(2.091/0.037 = -2.46\)</span>. From the table above, we see that the 10% critical value is -2.57; therefore, we fail to reject <span class="math inline">\(H_0: \rho = 1\)</span> against <span class="math inline">\(H_1: \rho &lt; 1\)</span> at the 10% significance level.</p>
+<p>When we fail to reject a unit root, we should only conclude that the data does not provide strong evidence against <span class="math inline">\(H_0\)</span>. In this example, the test does provide some evidence against <span class="math inline">\(H_0\)</span> because the t statistic is close to the 10% critical value.</p>
+<p>What happens if we now want to use <span class="math inline">\(r3_t\)</span> as an explanatory variable in a regression analysis? The outcome of the unit root test implies that we should be extremely cautious: if <span class="math inline">\(r3_t\)</span> does have a unit root, the usual asymptotic approximations need not hold. One solution is to use the first difference of <span class="math inline">\(r3_t\)</span> in any analysis.</p>
+<p>An extended version of the Dickey-Fuller unit root test is called augmented Dickey-Fuller test which is augmented with the lagged changes in <span class="math inline">\(y\)</span>. The critical values and rejection rule are the same as before. The inclusion of the lagged changes in the test is intended to clean up any serial correlation in <span class="math inline">\(\Delta y_t\)</span> but reduces the number of observations and statistical power. For annual data, one or two lags may suffice. For monthly data, we may include 12 lags. But there are no hard rules to follow in any case.</p>
+<p>In R, let’s test for unit root in annual US inflation data using years from 1948 through 1996 using augmented Dickey-Fuller test. See the R-code below.</p>
+<pre class="r"><code>library(dynlm); library(stargazer)
+data(phillips, package=&#39;wooldridge&#39;)
+phillips.ts = ts(subset(phillips,year&lt;=1996))
+regADF2= dynlm(cinf ~ L(inf)+L(cinf),data=phillips.ts)</code></pre>
+<p>The t statistic for the unit root test is <span class="math inline">\(2.310/.103 = 23.01\)</span>. Because the 5% critical value is 22.86, we reject the unit root hypothesis at the 5% level. The estimate of <span class="math inline">\(\rho\)</span> is about 0.690. Together, this is reasonably strong evidence against a unit root in inflation.</p>
+<p>For series that have clear time trends, we need to modify the test for unit roots. A trend-stationary process-which has a linear trend in its mean but is I(0) about its trend-can be mistaken for a unit root process if we do not control for a time trend in the Dickey-Fuller regression. In other words, if we carry out the usual DF or augmented DF test on a trending but I(0) series, we will probably have little power for rejecting a unit root. We change the basic test equation to: <span class="math display">\[
+\Delta y_t=\alpha +\delta t+ \theta y_{t-1}+e_t 
+\]</span> The null hypothesis is <span class="math inline">\(H_0:\theta=0\)</span> and the alternative is <span class="math inline">\(H_1:\theta&lt;0\)</span>. When we include a time trend in the regression, the critical values of the test change. We use the following critical values.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Significance Level</th>
+<th align="center">1%</th>
+<th align="center">2.5%</th>
+<th align="center">5%</th>
+<th align="center">10%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Critical Value</td>
+<td align="center">-3.96</td>
+<td align="center">-3.66</td>
+<td align="center">-3.41</td>
+<td align="center">-3.12</td>
+</tr>
+</tbody>
+</table>
+<p>We can apply the unit root test with a time trend to the U.S. GDP data in <strong>inven</strong> which contains annual data from 1959 through 1995 and seem to exhibit a clear linear trend. Let’s test if <span class="math inline">\(\log(GDP_t)\)</span> has a unit root. See the R-code below.</p>
+<pre class="r"><code>library(dynlm); library(tseries)
+data(inven, package=&#39;wooldridge&#39;)
+# variable to test: y=log(gdp)
+inven$y &lt;- log(inven$gdp)
+inven.ts&lt;- ts(inven)
+# summary output of ADF regression:
+summary(dynlm( d(y) ~ L(y) + L(d(y)) + trend(inven.ts), data=inven.ts))</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 3, End = 37
+## 
+## Call:
+## dynlm(formula = d(y) ~ L(y) + L(d(y)) + trend(inven.ts), data = inven.ts)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.046332 -0.012563  0.004026  0.013572  0.030789 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)      1.650922   0.666399   2.477   0.0189 *
+## L(y)            -0.209621   0.086594  -2.421   0.0215 *
+## L(d(y))          0.263751   0.164739   1.601   0.1195  
+## trend(inven.ts)  0.005870   0.002696   2.177   0.0372 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.02011 on 31 degrees of freedom
+## Multiple R-squared:  0.268,  Adjusted R-squared:  0.1972 
+## F-statistic: 3.783 on 3 and 31 DF,  p-value: 0.02015</code></pre>
+<pre class="r"><code># automated ADF test using tseries:
+adf.test(inven$y, k=1)</code></pre>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  inven$y
+## Dickey-Fuller = -2.4207, Lag order = 1, p-value = 0.4092
+## alternative hypothesis: stationary</code></pre>
+<p>The t statistic on <span class="math inline">\(\log(GDP_{t-1})\)</span> is <span class="math inline">\(2.210/0.087 = 22.41\)</span>, which is well above the 10% critical value of 23.12, thus we fail to reject <span class="math inline">\(H_0\)</span>. Again, we cannot reject a unit root, but the point estimate of r is not especially close to one. When we have a small sample size it is very difficult to reject the null hypothesis of a unit root if the process has something close to a unit root.</p>
+<p>Spurious correaltion is a situation in which we find a statistically significant relationship between two variables that actually does not exist. This typically happens because they are both related to a third variable and once we include that third varaibles, the relationship previously found between the first two is no longer there. This can happen both with cross-section and time-series data. A spurious regression problem is when there is no sense in which <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are related, but an OLS regression using the usual t statistics will often indicate a relationship. The possibility of spurious regression with I(1) variables is quite important and has led economists to reexamine many aggregate time series regressions whose t statistics were very significant and whose R-squareds were extremely high. See an example</p>
+<pre class="r"><code># Initialize Random Number Generator
+set.seed(29846)
+
+# PART1
+# i.i.d. N(0,1) innovations
+n &lt;- 50
+e &lt;- rnorm(n)
+a &lt;- rnorm(n)
+# independent random walks
+x &lt;- cumsum(a)
+y &lt;- cumsum(e)
+# plot
+plot(x,type=&quot;l&quot;,lty=1,lwd=1)
+lines(y        ,lty=2,lwd=2)
+legend(&quot;topright&quot;,c(&quot;x&quot;,&quot;y&quot;), lty=c(1,2), lwd=c(1,2))</code></pre>
+<p><img src="etricsCh18_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code># Regression of y on x
+summary( lm(y~x) )</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.5342 -1.4938 -0.2549  1.4803  4.6198 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -3.15050    0.56498  -5.576 1.11e-06 ***
+## x            0.29588    0.06253   4.732 2.00e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.01 on 48 degrees of freedom
+## Multiple R-squared:  0.3181, Adjusted R-squared:  0.3039 
+## F-statistic: 22.39 on 1 and 48 DF,  p-value: 1.997e-05</code></pre>
+<pre class="r"><code>#Found a statistically significant relationship between two random variables
+
+# PART2: generate 10,000 independent random walks
+# and store the p val of the t test 
+pvals &lt;- numeric(10000)
+for (r in 1:10000) {
+  # i.i.d. N(0,1) innovations
+  n &lt;- 50
+  a &lt;- rnorm(n)
+  e &lt;- rnorm(n)
+  # independent random walks
+  x &lt;- cumsum(a)
+  y &lt;- cumsum(e)
+  # regression summary
+  regsum &lt;- summary(lm(y~x))
+  # p value: 2nd row, 4th column of regression table
+  pvals[r] &lt;- regsum$coef[2,4]
+}
+# How often is p&lt;5% ?
+table(pvals&lt;=0.05)</code></pre>
+<pre><code>## 
+## FALSE  TRUE 
+##  3374  6626</code></pre>
+<pre class="r"><code>#Instead of rejecting H0 5% of the time, we reject it 66% of the time.</code></pre>
+<p>One way to get around spurious regression problem is to use first differences I(1) variables. However, differencing limits the questions we can answer. An alternative option lies in the notion of cointegration.</p>
+<p>If <span class="math inline">\(\{y_t: t = 0, 1, ...\}\)</span> and <span class="math inline">\(\{x_t: t = 0, 1, ...\}\)</span> are two I(1) processes, then, in general, <span class="math inline">\(y_t - \beta x_t\)</span> is an I(1) process for any number <span class="math inline">\(\beta\)</span>. Nevertheless, it is possible that for some <span class="math inline">\(\beta \neq 0, y_t - \beta x_t\)</span> is an I(0) process, which means it has constant mean, constant variance, and autocorrelations that depend only on the time distance between any two variables in the series, and it is asymptotically uncorrelated. If such a <span class="math inline">\(\beta\)</span> exists, we say that <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are <strong>cointegrated</strong>, and we call <span class="math inline">\(\beta\)</span> the cointegration parameter.</p>
+<p>A test of cointegration is called Engle-Granger test. The null hypothesis states that that the two series are not cointegrated which menas we are running a spurious regression. In the basic test, we run the regression of <span class="math inline">\(\Delta\hat u_t\)</span> on <span class="math inline">\(\hat u_{t-1}\)</span> and compare the t statistic on <span class="math inline">\(\hat u_{t-1}\)</span> to the desired critical value in table below. As with the usual Dickey-Fuller test, we can augment the Engle-Granger test by including lags of <span class="math inline">\(\Delta \hat u_t\)</span> as additional regressors. The critical values are given below.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Significance Level</th>
+<th align="center">1%</th>
+<th align="center">2.5%</th>
+<th align="center">5%</th>
+<th align="center">10%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Critical Value without a time trend</td>
+<td align="center">-3.90</td>
+<td align="center">-3.59</td>
+<td align="center">-3.34</td>
+<td align="center">-3.04</td>
+</tr>
+<tr class="even">
+<td>Critical Value with a linear time trend</td>
+<td align="center">-4.32</td>
+<td align="center">-4.03</td>
+<td align="center">-3.78</td>
+<td align="center">-3.50</td>
+</tr>
+</tbody>
+</table>
+<p>If <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are not cointegrated, a regression of <span class="math inline">\(y_t\)</span> on <span class="math inline">\(x_t\)</span> is spurious and tells us nothing meaningful: there is no long-run relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>. We can still run a regression involving the first differences, <span class="math inline">\(\Delta y_t\)</span> and <span class="math inline">\(\Delta x_t\)</span>, including lags. But we should interpret these regressions for what they are: they explain the difference in <span class="math inline">\(y\)</span> in terms of the difference in <span class="math inline">\(x\)</span> and have nothing necessarily to do with a relationship in levels. If <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> are cointegrated, we can use this to specify more general dynamic models.</p>
+<p>Let’s look at cointegration between fertility and personal tax exemption in the United States using data set <strong>fertil3</strong>. Running a regression of fertility on personal tax exemption in levels and differences, we find significantly different results.</p>
+<pre class="r"><code>library(dynlm); library(tseries)
+data(fertil3, package=&quot;wooldridge&quot;)
+fertil3.ts=ts(fertil3)
+reg_levels=lm(gfr~pe+t, data=fertil3.ts)
+summary(reg_levels)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = gfr ~ pe + t, data = fertil3.ts)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -38.659  -9.934   1.841  11.027  22.882 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 109.93016    3.47526  31.632  &lt; 2e-16 ***
+## pe            0.18666    0.03463   5.391 9.23e-07 ***
+## t            -0.90519    0.10899  -8.305 5.53e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 14.2 on 69 degrees of freedom
+## Multiple R-squared:  0.5002, Adjusted R-squared:  0.4857 
+## F-statistic: 34.53 on 2 and 69 DF,  p-value: 4.064e-11</code></pre>
+<pre class="r"><code>reg_diff=lm(cgfr~cpe, data=fertil3.ts)
+summary(reg_diff)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = cgfr ~ cpe, data = fertil3.ts)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -7.980 -2.552 -0.377  1.866 14.854 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -0.78478    0.50204  -1.563    0.123
+## cpe         -0.04268    0.02837  -1.504    0.137
+## 
+## Residual standard error: 4.221 on 69 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.03176,    Adjusted R-squared:  0.01773 
+## F-statistic: 2.263 on 1 and 69 DF,  p-value: 0.137</code></pre>
+<p>Having such different results, we would want to test for cointegration. First, we check if boht series are I(1) processes using augmented DF test. This appears to be the case. Running an augmented Engle-Granger test, we obtain a t statistic for <span class="math inline">\(u_{t-1}\)</span> is -2.425 which is not close to the critical value even at 10% signficance level. Thus, we can state that there is little evidence of cointegration between <span class="math inline">\(gfr\)</span> and <span class="math inline">\(pe\)</span>, even allowing for separate trends. It is very likely that the first regression results we obtained in levels suffer from the spurious regression problem.</p>
+<pre class="r"><code>regADF1= dynlm(cgfr ~ L(gfr)+L(cgfr)+t,data=fertil3.ts)
+summary(regADF1)</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 3, End = 72
+## 
+## Call:
+## dynlm(formula = cgfr ~ L(gfr) + L(cgfr) + t, data = fertil3.ts)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.1650 -1.7384  0.1811  1.6733 16.8945 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  4.27967    3.55285   1.205    0.233  
+## L(gfr)      -0.04389    0.02978  -1.474    0.145  
+## L(cgfr)      0.30930    0.11668   2.651    0.010 *
+## t           -0.01854    0.02825  -0.656    0.514  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.121 on 66 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.112,  Adjusted R-squared:  0.07159 
+## F-statistic: 2.773 on 3 and 66 DF,  p-value: 0.04824</code></pre>
+<pre class="r"><code>regADF2= dynlm(cpe ~ L(pe)+L(cpe)+t,data=fertil3.ts)
+summary(regADF2)</code></pre>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 3, End = 72
+## 
+## Call:
+## dynlm(formula = cpe ~ L(pe) + L(cpe) + t, data = fertil3.ts)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -35.579  -8.172  -2.187   5.504 103.634 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  6.42145    4.49034   1.430   0.1574  
+## L(pe)       -0.06613    0.04495  -1.471   0.1460  
+## L(cpe)       0.25670    0.12209   2.103   0.0393 *
+## t            0.03167    0.14639   0.216   0.8294  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 17.36 on 66 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.1019, Adjusted R-squared:  0.06103 
+## F-statistic: 2.495 on 3 and 66 DF,  p-value: 0.06748</code></pre>
+<pre class="r"><code>#Run an augmented Engle-Granger test.
+#Regression of change in obtained residuals on lagged residuals and lagged change in residuals.
+u_hat=resid(reg_levels)
+change_u_hat=c(NA, u_hat[2:72]-u_hat[1:71])
+lagged_change_u_hat=c(NA, change_u_hat[1:71])
+lagged_u_hat=c(NA,u_hat[1:71])
+summary(lm(change_u_hat~lagged_u_hat+lagged_change_u_hat))</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = change_u_hat ~ lagged_u_hat + lagged_change_u_hat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -26.3691  -2.0676   0.5353   2.1575  21.0876 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)         -0.18304    0.67143  -0.273    0.786  
+## lagged_u_hat        -0.11867    0.04894  -2.425    0.018 *
+## lagged_change_u_hat  0.24498    0.11696   2.095    0.040 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.614 on 67 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.1145, Adjusted R-squared:  0.08807 
+## F-statistic: 4.332 on 2 and 67 DF,  p-value: 0.01701</code></pre>
+<p>Forecasting economic time series is very important in some branches of economics, and it is an area that continues to be actively studied. There are many different regression models that we can use to forecast future values of a time series.</p>
+<p>The textbook provides a good introduction to forecasting in economics. Here, we only wrok through two examples in R.</p>
+<p>In the first example, we will attempt to forecast unemployment rate for 1997 using the data from the years 1948 through 1996. The two models are: <span class="math display">\[
+unemp_t = \beta_0 + \beta_1 unemp_{t-1} + u_t
+\]</span> <span class="math display">\[
+unemp_t = \beta_0 + \beta_1 unemp_{t-1} + \beta_2 inf_{t-1} + u_t
+\]</span> See the R code for the regressions and prediction below.</p>
+<pre class="r"><code>library(dynlm); library(stargazer)
+data(phillips, package=&#39;wooldridge&#39;)
+tsdat=ts(phillips, start=1948)
+# Estimate models and display results
+res1 &lt;- dynlm(unem ~ unem_1      , data=tsdat, end=1996)
+res2 &lt;- dynlm(unem ~ unem_1+inf_1, data=tsdat, end=1996)
+stargazer(res1, res2 ,type=&quot;text&quot;, keep.stat=c(&quot;n&quot;,&quot;adj.rsq&quot;,&quot;ser&quot;))</code></pre>
+<pre><code>## 
+## ===================================================
+##                           Dependent variable:      
+##                     -------------------------------
+##                                  unem              
+##                           (1)             (2)      
+## ---------------------------------------------------
+## unem_1                 0.732***        0.647***    
+##                         (0.097)         (0.084)    
+##                                                    
+## inf_1                                  0.184***    
+##                                         (0.041)    
+##                                                    
+## Constant               1.572***         1.304**    
+##                         (0.577)         (0.490)    
+##                                                    
+## ---------------------------------------------------
+## Observations              48              48       
+## Adjusted R2              0.544           0.677     
+## Residual Std. Error 1.049 (df = 46) 0.883 (df = 45)
+## ===================================================
+## Note:                   *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<pre class="r"><code># Predictions for 1997-2003 including 95% forecast intervals:
+predict(res1, newdata=window(tsdat,start=1997), interval=&quot;prediction&quot;)</code></pre>
+<pre><code>##        fit      lwr      upr
+## 1 5.526452 3.392840 7.660064
+## 2 5.160275 3.021340 7.299210
+## 3 4.867333 2.720958 7.013709
+## 4 4.647627 2.493832 6.801422
+## 5 4.501157 2.341549 6.660764
+## 6 5.087040 2.946509 7.227571
+## 7 5.819394 3.686837 7.951950</code></pre>
+<pre class="r"><code>predict(res2, newdata=window(tsdat,start=1997), interval=&quot;prediction&quot;)</code></pre>
+<pre><code>##        fit      lwr      upr
+## 1 5.348468 3.548908 7.148027
+## 2 4.896451 3.090266 6.702636
+## 3 4.509137 2.693393 6.324881
+## 4 4.425175 2.607626 6.242724
+## 5 4.516062 2.696384 6.335740
+## 6 4.923537 3.118433 6.728641
+## 7 5.350271 3.540939 7.159603</code></pre>
+<p>Since the actual unemployment rate in 1997 was 4.9, both model overpredicted inflation with second equation being slightly closer. We see that 4.9 is well within forcast interval range in both models. Looking at further out-of-sample forecasts, we find that the second model outperforms the first. How do we know? This is because root mean square error and mean absolute errors are lower for the second model.</p>
+<pre class="r"><code># Actual unemployment and forecasts:
+y  &lt;- window(tsdat,start=1997)[,&quot;unem&quot;]
+f1 &lt;- predict( res1, newdata=window(tsdat,start=1997) )
+f2 &lt;- predict( res2, newdata=window(tsdat,start=1997) )
+# Plot unemployment and forecasts:
+matplot(time(y), cbind(y,f1,f2), type=&quot;l&quot;,  col=&quot;black&quot;,lwd=2,lty=1:3)
+legend(&quot;topleft&quot;,c(&quot;Unempl.&quot;,&quot;Forecast 1&quot;,&quot;Forecast 2&quot;),lwd=2,lty=1:3)</code></pre>
+<p><img src="etricsCh18_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code># Forecast errors:
+e1&lt;- y - f1
+e2&lt;- y - f2
+# RMSE:
+sqrt(mean(e1^2))</code></pre>
+<pre><code>## [1] 0.5761199</code></pre>
+<pre class="r"><code>sqrt(mean(e2^2))</code></pre>
+<pre><code>## [1] 0.5217543</code></pre>
+<pre class="r"><code># MAE:
+mean(abs(e1))</code></pre>
+<pre><code>## [1] 0.542014</code></pre>
+<pre class="r"><code>mean(abs(e2))</code></pre>
+<pre><code>## [1] 0.4841945</code></pre>
+<p><strong>Homework Problems</strong></p>
+<p class="comment">
+Computer Exercise C1.<br />
+Use the data in <strong>wageprc</strong> for this exercise. Problem 5 in Chapter 11 gave estimates of a finite distributed lag model of gprice on gwage, where 12 lags of gwage are used.<br />
+1. Estimate a simple geometric DL model of gprice on gwage. In particular, estimate equation (18.11) by OLS. What are the estimated impact propensity and LRP? Sketch the estimated lag distribution.<br />
+2. Compare the estimated IP and LRP to those obtained in Problem 5 in Chapter 11. How do the estimated lag distributions compare?<br />
+3. Now, estimate the rational distributed lag model from (18.16). Sketch the lag distribution and compare the estimated IP and LRP to those obtained in part 2.
+</p>
+<p class="comment">
+Computer Exercise C5.<br />
+Use <strong>intqrt</strong> for this exercise.<br />
+1. In Example 18.7 in the textbook, we estimated an error correction model for the holding yield on six-month T-bills, where one lag of the holding yield on three-month T-bills is the explanatory variable. We assumed that the cointegration parameter was one in the equation <span class="math inline">\(hy6_t = \alpha + \beta hy3_{t-1} + u_t\)</span>. Now, add the lead change, <span class="math inline">\(\Delta hy3_t\)</span>, the contemporaneous change, <span class="math inline">\(\Delta hy3_{t-1}\)</span>, and the lagged change, <span class="math inline">\(\Delta hy3_{t-2}\)</span>, of <span class="math inline">\(hy3_{t-1}\)</span>. That is, estimate the equation <span class="math display">\[hy6_t = \alpha + \beta hy3_{t-1} + \phi_0 \Delta hy3_t + \phi_1 \Delta hy3_{t-1} + \rho_1\Delta hy3_{t-2} + e_t\]</span> and report the results in equation form. Test <span class="math inline">\(H_0: \beta = 1\)</span> against a two-sided alternative. Assume that the lead and lag are sufficient so that <span class="math inline">\(\{hy3_{t-1}\}\)</span> is strictly exogenous in this equation and do not worry about serial correlation.<br />
+2. To the error correction model in (18.39), add <span class="math inline">\(\Delta hy3_{t-2}\)</span> and <span class="math inline">\((hy6_{t-2} - hy3_{t-3} )\)</span>. Are these terms jointly significant? What do you conclude about the appropriate error correction model?
+</p>
+<p><strong>References</strong></p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<p>Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.</p>
+<hr />
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
