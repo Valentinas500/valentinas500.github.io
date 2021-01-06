@@ -1,0 +1,628 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>portfolio_lifecycle_spline</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-08"><meta name="DC.source" content="portfolio_lifecycle_spline.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">clearvars
+<span class="keyword">global</span> beta eta gamma eps rf Z2 w Zprob22
+
+<span class="comment">%Exogenous parameters</span>
+AGE=40; eta=10; gamma=0.5; eps=0.00001; beta=0.94;
+rf=1.01; er=0.02;
+w = spline([1,20,30],[0.5,2,1.5],1:AGE)/10;
+<span class="comment">%Discretized grids</span>
+kgrid=0:0.05:3;
+rgrid=0:0.05:1;
+stock_shock_states=3;
+a1opt=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+k1opt=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+copt=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+kspline=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+aspline=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+cspline=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+V=zeros(length(kgrid),length(rgrid));
+
+<span class="comment">%Aproximated density function for returns</span>
+[Z2,Zprob2] = tauchen(stock_shock_states,rf+er,0,0.1,1);
+<span class="keyword">for</span> i=1:stock_shock_states
+    Z22(1,1,i)=Z2(i); Zprob22(1,1,i)=Zprob2(1,i);
+<span class="keyword">end</span>
+
+V1=zeros(length(kgrid),length(rgrid),stock_shock_states);
+
+<span class="keyword">for</span> age=AGE:-1:1
+    <span class="keyword">for</span> k0=1:length(kgrid)
+        <span class="keyword">for</span> a0=1:length(rgrid)
+            <span class="keyword">for</span> z0=1:length(Z2)
+                [kspline(k0,a0,z0,age),aspline(k0,a0,z0,age)]=gss_bivariate(min(kgrid),max(kgrid),min(rgrid),max(rgrid),@(kx,ax)interpolate(k0,a0,z0,V1,kx,ax, kgrid, rgrid, age),eps);
+                cspline(k0,a0,z0,age)=kgrid(k0)*(rgrid(a0)*rf+(1-rgrid(a0))*Z2(z0)) + w(age) - kspline(k0,a0,z0,age);
+                Vmaxspline(k0,a0,z0) = interpolate(k0,a0,z0,V1,kspline(k0,a0,z0,age),aspline(k0,a0,z0,age),kgrid,rgrid,age);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    V1=Vmaxspline;
+    age
+<span class="keyword">end</span>
+
+PF_cap_age05=kspline(:,5,2,5); PF_cap_age20=kspline(:,5,2,20); PF_cap_age35=kspline(:,5,2,35);
+PF_a_age05=aspline(:,5,2,5); PF_a_age20=aspline(:,5,2,20); PF_a_age35=aspline(:,5,2,35);
+figure;
+subplot(1,2,1); plot(kgrid,PF_cap_age05); hold <span class="string">on</span>; plot(kgrid,PF_cap_age20); plot(kgrid,PF_cap_age35);
+ hline=refline(1,0); hline.Color=<span class="string">'black'</span>; xlim([0 1]); ylim([0 1]);
+legend(<span class="string">'Agent, Age 5'</span>,<span class="string">'Agent, Age 20'</span>,<span class="string">'Agent, Age 35'</span>,<span class="string">'Reference line'</span>,<span class="string">'location'</span>,<span class="string">'southeast'</span>);
+xlabel(<span class="string">'Current Assets'</span>); ylabel(<span class="string">'Next Period Assets'</span>);
+subplot(1,2,2); plot(kgrid,PF_a_age05); hold <span class="string">on</span>; plot(kgrid,PF_a_age20); plot(kgrid,PF_a_age35);
+legend(<span class="string">'Agent, Age 5'</span>,<span class="string">'Agent, Age 20'</span>,<span class="string">'Agent, Age 35'</span>,<span class="string">'location'</span>,<span class="string">'southeast'</span>);
+xlabel(<span class="string">'Current Assets'</span>); ylabel(<span class="string">'Share in Risky Assets to be Invested'</span>);
+
+<span class="comment">%Simulate saving and investment decisions</span>
+<span class="comment">%for agent who always receives mid-shock</span>
+cap1(1)=1;sha1(1)=1;shock1=1;
+cap2(1)=1;sha2(1)=1;shock2=2;
+cap3(1)=1;sha3(1)=1;shock3=3;
+<span class="keyword">for</span> age=1:1:AGE
+cap1(age+1)=kspline(cap1(age),sha1(age),shock1,age);
+sha1(age+1)=aspline(cap1(age),sha1(age),shock1,age);
+con1(age)  =cspline(cap1(age),sha1(age),shock1,age);
+cap2(age+1)=kspline(cap2(age),sha2(age),shock2,age);
+sha2(age+1)=aspline(cap2(age),sha2(age),shock2,age);
+con2(age)  =cspline(cap2(age),sha2(age),shock2,age);
+cap3(age+1)=kspline(cap3(age),sha3(age),shock3,age);
+sha3(age+1)=aspline(cap3(age),sha3(age),shock3,age);
+con3(age)  =cspline(cap3(age),sha3(age),shock3,age);
+<span class="keyword">end</span>
+
+figure;
+subplot(3,3,1); plot(kgrid(cap1));
+subplot(3,3,2); plot(rgrid(sha1));
+subplot(3,3,3); plot((con1));
+subplot(3,3,4); plot(kgrid(cap2));
+subplot(3,3,5); plot(rgrid(sha2));
+subplot(3,3,6); plot((con2));
+subplot(3,3,7); plot(kgrid(cap3));
+subplot(3,3,8); plot(rgrid(sha3));
+subplot(3,3,9); plot((con3));
+
+<span class="keyword">function</span>[u]=UtilityFunction(c,p)
+<span class="keyword">global</span> eta eps
+u=((c+eps).^(1-eta))./(1-eta)-0.00001*(p&gt;0);
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> [Z,Zprob] = tauchen(N,mu,rho,sigma,m)
+Z     = zeros(N,1);
+Zprob = zeros(N,N);
+a     = (1-rho)*mu;
+Z(N)  = m * sqrt(sigma^2 / (1 - rho^2));
+Z(1)  = -Z(N);
+zstep = (Z(N) - Z(1)) / (N - 1);
+
+<span class="keyword">for</span> i=2:(N-1)
+    Z(i) = Z(1) + zstep * (i - 1);
+<span class="keyword">end</span>
+
+Z = Z + a / (1-rho);
+
+<span class="keyword">for</span> j = 1:N
+    <span class="keyword">for</span> k = 1:N
+        <span class="keyword">if</span> k == 1
+            Zprob(j,k) = cdf_normal((Z(1) - a - rho * Z(j) + zstep / 2) / sigma);
+        <span class="keyword">elseif</span> k == N
+            Zprob(j,k) = 1 - cdf_normal((Z(N) - a - rho * Z(j) - zstep / 2) / sigma);
+        <span class="keyword">else</span>
+            Zprob(j,k) = cdf_normal((Z(k) - a - rho * Z(j) + zstep / 2) / sigma) - <span class="keyword">...</span>
+                         cdf_normal((Z(k) - a - rho * Z(j) - zstep / 2) / sigma);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> c = cdf_normal(x)
+    c = 0.5 * erfc(-x/sqrt(2));
+<span class="keyword">end</span>
+
+<span class="keyword">function</span>[fxhat]=interpolate(k0,a0,z0,V1,kx,ax, kgrid, rgrid, age)
+<span class="keyword">global</span> beta rf Z2 w Zprob22
+ck = kgrid(k0)*((1-rgrid(a0))*rf+(rgrid(a0))*Z2(z0)) + w(age) - kx; ck=ck.*(ck&gt;0);
+uk = UtilityFunction(ck,0);
+fx = interpn(kgrid,rgrid,sum(repmat(Zprob22,length(kgrid),length(rgrid)) .* V1(:,:,:),3),kx,ax,<span class="string">'linear'</span>);
+fxhat = uk+beta*fx;
+<span class="keyword">end</span>
+
+<span class="keyword">function</span>[Afinal,Bfinal]=gss_bivariate(A1,A4,B1,B4,fun,eps)
+<span class="comment">%This function performs a bivariate golden section search method.</span>
+<span class="comment">%Inputs are two points for each variable and a bivariate function.</span>
+<span class="comment">%For example: [xstar,ystar]=gss_bivariate(-25,40,-100,111,@(x,y)-x^2-y^2,0.00001)</span>
+p=(sqrt(5)-1)/2;
+A2=p*A1+(1-p)*A4;
+B2=p*B1+(1-p)*B4;
+A3=(1-p)*A1+p*A4;
+B3=(1-p)*B1+p*B4;
+f22=fun(A2,B2);
+f23=fun(A2,B3);
+f32=fun(A3,B2);
+f33=fun(A3,B3);
+all_fun=[f22,f23,f32,f33];
+area=10;
+<span class="keyword">while</span> area&gt;eps
+    <span class="keyword">if</span> max(all_fun)==f22
+        A1=A1; B1=B1;
+        A4=A3; B4=B3;
+        A3=A2; B3=B2;
+        A2=p*A1+(1-p)*A4;
+        B2=p*B1+(1-p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f33
+        A1=A2; B1=B2;
+        A4=A4; B4=B4;
+        A2=A3; B2=B3;
+        A3=(1-p)*A1+(p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f23
+        A1=A1; B1=B2;
+        A4=A3; B4=B4;
+        A3=A2; B2=B3;
+        A2=p*A1+(1-p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f32
+        A1=A2; B1=B1;
+        A4=A4; B4=B3;
+        A2=A3; B3=B2;
+        A3=(1-p)*A1+(p)*A4;
+        B2=p*B1+(1-p)*B4;
+    <span class="keyword">end</span>
+    f22=fun(A2,B2);
+    f23=fun(A2,B3);
+    f32=fun(A3,B2);
+    f33=fun(A3,B3);
+    all_fun=[f22,f23,f32,f33];
+    area=abs((A4-A1)*(B4-B1));
+<span class="keyword">end</span>
+Afinal=A2;
+Bfinal=B2;
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+age =
+
+    40
+
+
+age =
+
+    39
+
+
+age =
+
+    38
+
+
+age =
+
+    37
+
+
+age =
+
+    36
+
+
+age =
+
+    35
+
+
+age =
+
+    34
+
+
+age =
+
+    33
+
+
+age =
+
+    32
+
+
+age =
+
+    31
+
+
+age =
+
+    30
+
+
+age =
+
+    29
+
+
+age =
+
+    28
+
+
+age =
+
+    27
+
+
+age =
+
+    26
+
+
+age =
+
+    25
+
+
+age =
+
+    24
+
+
+age =
+
+    23
+
+
+age =
+
+    22
+
+
+age =
+
+    21
+
+
+age =
+
+    20
+
+
+age =
+
+    19
+
+
+age =
+
+    18
+
+
+age =
+
+    17
+
+
+age =
+
+    16
+
+
+age =
+
+    15
+
+
+age =
+
+    14
+
+
+age =
+
+    13
+
+
+age =
+
+    12
+
+
+age =
+
+    11
+
+
+age =
+
+    10
+
+
+age =
+
+     9
+
+
+age =
+
+     8
+
+
+age =
+
+     7
+
+
+age =
+
+     6
+
+
+age =
+
+     5
+
+
+age =
+
+     4
+
+
+age =
+
+     3
+
+
+age =
+
+     2
+
+
+age =
+
+     1
+
+</pre><pre class="codeoutput error">Subscript indices must either be real positive integers or logicals.
+
+Error in portfolio_lifecycle_spline (line 59)
+cap1(age+1)=kspline(cap1(age),sha1(age),shock1,age);
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clearvars
+global beta eta gamma eps rf Z2 w Zprob22
+
+%Exogenous parameters
+AGE=40; eta=10; gamma=0.5; eps=0.00001; beta=0.94;
+rf=1.01; er=0.02;
+w = spline([1,20,30],[0.5,2,1.5],1:AGE)/10;
+%Discretized grids
+kgrid=0:0.05:3;
+rgrid=0:0.05:1;
+stock_shock_states=3;
+a1opt=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+k1opt=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+copt=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+kspline=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+aspline=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+cspline=zeros(length(kgrid),length(rgrid),stock_shock_states,AGE);
+V=zeros(length(kgrid),length(rgrid));
+
+%Aproximated density function for returns
+[Z2,Zprob2] = tauchen(stock_shock_states,rf+er,0,0.1,1);
+for i=1:stock_shock_states
+    Z22(1,1,i)=Z2(i); Zprob22(1,1,i)=Zprob2(1,i);
+end
+
+V1=zeros(length(kgrid),length(rgrid),stock_shock_states);
+
+for age=AGE:-1:1
+    for k0=1:length(kgrid)
+        for a0=1:length(rgrid)
+            for z0=1:length(Z2)
+                [kspline(k0,a0,z0,age),aspline(k0,a0,z0,age)]=gss_bivariate(min(kgrid),max(kgrid),min(rgrid),max(rgrid),@(kx,ax)interpolate(k0,a0,z0,V1,kx,ax, kgrid, rgrid, age),eps);
+                cspline(k0,a0,z0,age)=kgrid(k0)*(rgrid(a0)*rf+(1-rgrid(a0))*Z2(z0)) + w(age) - kspline(k0,a0,z0,age);
+                Vmaxspline(k0,a0,z0) = interpolate(k0,a0,z0,V1,kspline(k0,a0,z0,age),aspline(k0,a0,z0,age),kgrid,rgrid,age);
+            end
+        end
+    end
+    V1=Vmaxspline;
+    age
+end
+
+PF_cap_age05=kspline(:,5,2,5); PF_cap_age20=kspline(:,5,2,20); PF_cap_age35=kspline(:,5,2,35);
+PF_a_age05=aspline(:,5,2,5); PF_a_age20=aspline(:,5,2,20); PF_a_age35=aspline(:,5,2,35);
+figure;
+subplot(1,2,1); plot(kgrid,PF_cap_age05); hold on; plot(kgrid,PF_cap_age20); plot(kgrid,PF_cap_age35);
+ hline=refline(1,0); hline.Color='black'; xlim([0 1]); ylim([0 1]);
+legend('Agent, Age 5','Agent, Age 20','Agent, Age 35','Reference line','location','southeast');
+xlabel('Current Assets'); ylabel('Next Period Assets');
+subplot(1,2,2); plot(kgrid,PF_a_age05); hold on; plot(kgrid,PF_a_age20); plot(kgrid,PF_a_age35);
+legend('Agent, Age 5','Agent, Age 20','Agent, Age 35','location','southeast');
+xlabel('Current Assets'); ylabel('Share in Risky Assets to be Invested');
+
+%Simulate saving and investment decisions
+%for agent who always receives mid-shock
+cap1(1)=1;sha1(1)=1;shock1=1;
+cap2(1)=1;sha2(1)=1;shock2=2;
+cap3(1)=1;sha3(1)=1;shock3=3;
+for age=1:1:AGE
+cap1(age+1)=kspline(cap1(age),sha1(age),shock1,age);
+sha1(age+1)=aspline(cap1(age),sha1(age),shock1,age);
+con1(age)  =cspline(cap1(age),sha1(age),shock1,age);
+cap2(age+1)=kspline(cap2(age),sha2(age),shock2,age);
+sha2(age+1)=aspline(cap2(age),sha2(age),shock2,age);
+con2(age)  =cspline(cap2(age),sha2(age),shock2,age);
+cap3(age+1)=kspline(cap3(age),sha3(age),shock3,age);
+sha3(age+1)=aspline(cap3(age),sha3(age),shock3,age);
+con3(age)  =cspline(cap3(age),sha3(age),shock3,age);
+end
+
+figure;
+subplot(3,3,1); plot(kgrid(cap1));
+subplot(3,3,2); plot(rgrid(sha1));
+subplot(3,3,3); plot((con1));
+subplot(3,3,4); plot(kgrid(cap2));
+subplot(3,3,5); plot(rgrid(sha2));
+subplot(3,3,6); plot((con2));
+subplot(3,3,7); plot(kgrid(cap3));
+subplot(3,3,8); plot(rgrid(sha3));
+subplot(3,3,9); plot((con3));
+
+function[u]=UtilityFunction(c,p)
+global eta eps
+u=((c+eps).^(1-eta))./(1-eta)-0.00001*(p>0);
+end
+
+function [Z,Zprob] = tauchen(N,mu,rho,sigma,m)
+Z     = zeros(N,1);
+Zprob = zeros(N,N);
+a     = (1-rho)*mu;
+Z(N)  = m * sqrt(sigma^2 / (1 - rho^2));
+Z(1)  = -Z(N);
+zstep = (Z(N) - Z(1)) / (N - 1);
+
+for i=2:(N-1)
+    Z(i) = Z(1) + zstep * (i - 1);
+end 
+
+Z = Z + a / (1-rho);
+
+for j = 1:N
+    for k = 1:N
+        if k == 1
+            Zprob(j,k) = cdf_normal((Z(1) - a - rho * Z(j) + zstep / 2) / sigma);
+        elseif k == N
+            Zprob(j,k) = 1 - cdf_normal((Z(N) - a - rho * Z(j) - zstep / 2) / sigma);
+        else
+            Zprob(j,k) = cdf_normal((Z(k) - a - rho * Z(j) + zstep / 2) / sigma) - ...
+                         cdf_normal((Z(k) - a - rho * Z(j) - zstep / 2) / sigma);
+        end
+    end
+end
+end
+
+function c = cdf_normal(x)
+    c = 0.5 * erfc(-x/sqrt(2));
+end    
+
+function[fxhat]=interpolate(k0,a0,z0,V1,kx,ax, kgrid, rgrid, age)
+global beta rf Z2 w Zprob22
+ck = kgrid(k0)*((1-rgrid(a0))*rf+(rgrid(a0))*Z2(z0)) + w(age) - kx; ck=ck.*(ck>0);
+uk = UtilityFunction(ck,0);
+fx = interpn(kgrid,rgrid,sum(repmat(Zprob22,length(kgrid),length(rgrid)) .* V1(:,:,:),3),kx,ax,'linear');
+fxhat = uk+beta*fx;
+end
+
+function[Afinal,Bfinal]=gss_bivariate(A1,A4,B1,B4,fun,eps)
+%This function performs a bivariate golden section search method.
+%Inputs are two points for each variable and a bivariate function.
+%For example: [xstar,ystar]=gss_bivariate(-25,40,-100,111,@(x,y)-x^2-y^2,0.00001)
+p=(sqrt(5)-1)/2;
+A2=p*A1+(1-p)*A4;
+B2=p*B1+(1-p)*B4;
+A3=(1-p)*A1+p*A4;
+B3=(1-p)*B1+p*B4;
+f22=fun(A2,B2);
+f23=fun(A2,B3);
+f32=fun(A3,B2);
+f33=fun(A3,B3);
+all_fun=[f22,f23,f32,f33];
+area=10;
+while area>eps
+    if max(all_fun)==f22
+        A1=A1; B1=B1;
+        A4=A3; B4=B3;
+        A3=A2; B3=B2;
+        A2=p*A1+(1-p)*A4;
+        B2=p*B1+(1-p)*B4;
+    elseif max(all_fun)==f33
+        A1=A2; B1=B2;
+        A4=A4; B4=B4;
+        A2=A3; B2=B3;
+        A3=(1-p)*A1+(p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    elseif max(all_fun)==f23
+        A1=A1; B1=B2;
+        A4=A3; B4=B4;
+        A3=A2; B2=B3;
+        A2=p*A1+(1-p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    elseif max(all_fun)==f32
+        A1=A2; B1=B1;
+        A4=A4; B4=B3;
+        A2=A3; B3=B2;
+        A3=(1-p)*A1+(p)*A4;
+        B2=p*B1+(1-p)*B4;
+    end
+    f22=fun(A2,B2);
+    f23=fun(A2,B3);
+    f32=fun(A3,B2);
+    f33=fun(A3,B3);
+    all_fun=[f22,f23,f32,f33];
+    area=abs((A4-A1)*(B4-B1));
+end
+Afinal=A2;
+Bfinal=B2;
+end
+##### SOURCE END #####
+--></body></html>

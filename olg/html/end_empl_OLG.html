@@ -1,0 +1,751 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>end_empl_OLG</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-12"><meta name="DC.source" content="end_empl_OLG.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">clearvars
+
+<span class="keyword">global</span> beta gamma1 eta phi UB SSben <span class="keyword">...</span>
+    A_M A_P alpha Chi vc zeta1 getta SSben_early d_e d_n <span class="keyword">...</span>
+    delta A_U A_US gamma2 phiphi
+
+<span class="comment">%%%%% ENVIRONMENT</span>
+T=18; <span class="comment">%Total years possible to live</span>
+smoothing=0.80;
+mort(1:T)=[0.998562276 0.998023418 0.99808485 0.997567474 0.996324643 0.994532501 0.992382903 <span class="keyword">...</span>
+    0.989433908 0.983140995 0.972649591 0.952530049 0.926026991 0.887291451 0.819213623 <span class="keyword">...</span>
+    0.677722672 0.515940907 0.357811933 0.243725901 ]; <span class="comment">%Mortality/Survivability</span>
+
+<span class="comment">%%%%% PARAMETERS EXOGENOUSLY DETERMINED</span>
+<span class="comment">% Firm production technology and wages paid</span>
+alpha               =0.40; <span class="comment">%Production parameter, constant returns to scale</span>
+zeta1               =0.50; <span class="comment">%Fraction of output paid to workers as wages</span>
+<span class="comment">% Matching Technology</span>
+phi                 =0.50; <span class="comment">%Matchning parameter, constant returns to scale</span>
+<span class="comment">% Agents</span>
+beta                =0.96; <span class="comment">%Discount factor for agents</span>
+eta                 =2.00; <span class="comment">%Utility parameter</span>
+phiphi              =0.000001;
+
+<span class="comment">%%%%% Delta is such that capital-to-output is around 2.5.</span>
+delta               =0.45; <span class="comment">%Depreciation rate equivalent to 2.085% per year 0.97915^5</span>
+
+<span class="comment">%%%%% Gamma1 is such that agents on average spend a third of their time of</span>
+<span class="comment">%%%%% or market-related activities.</span>
+gamma1              =0.36; <span class="comment">%Utility parameter</span>
+
+<span class="comment">%%%%% SSben is such that the SS benefits are 40% of average wage</span>
+SSben       =0.145;  <span class="comment">%SS benefit parameter for retirees.</span>
+SSben_early =SSben*0.80; <span class="comment">% last: 0.75 (too low),0.80 (too low), 0.85 (too high)</span>
+
+<span class="comment">% Retirement disutility</span>
+d_e=-0.00;
+d_n=-0.00;
+
+<span class="comment">%%%%% PARAMETERS such that employment to LF makes sense</span>
+<span class="comment">% Production technology</span>
+A_P                 =1.00; <span class="comment">%Production technology</span>
+<span class="comment">% Matching Technology</span>
+A_M                 =1.00; <span class="comment">%Job matching technology</span>
+<span class="comment">% Firm</span>
+Chi                 =0.045;  <span class="comment">%Separation Rate %Fraction of jobs destroyed each period</span>
+vc                  =0.074656; <span class="comment">%Cost of posting a vacancy (vc = vacancy cost)</span>
+getta               =1.00;  <span class="comment">%the increasing cost of vacancy posting</span>
+<span class="comment">% Agents</span>
+gamma2              =2.00; <span class="comment">%Utility parameter</span>
+A_U                 =1.00; <span class="comment">%Utility parameter: increases disutility from work and search if &gt;1</span>
+A_US                =1.00; <span class="comment">%Utility parameter: increases disutility from search only if &gt;1</span>
+UB                  =0.05;
+eps2                =5;
+
+<span class="comment">%%%%% MAKE INITIAL GUESSES</span>
+K=1.4406;
+N=2.9518;
+S=0.9804;
+NExit=0.0457;
+n_bar=0.4888;
+
+kgrid              =0:0.01:0.28;
+ngrid              =0:0.1:0.60;
+sgrid              =0:0.1:0.62;
+
+maxVE    =zeros(length(kgrid),length(1:T));k1pointE =zeros(length(kgrid),length(1:T));
+npointE  =zeros(length(kgrid),length(1:T));spointE  =zeros(length(kgrid),length(1:T));
+retpointE=zeros(length(kgrid),length(1:T));cpointE  =zeros(length(kgrid),length(1:T));
+IndE     =zeros(length(kgrid),length(1:T));kkEa=zeros((2^T)-1,T); kkUa=zeros((2^T)-1,T);
+maxVU    =zeros(length(kgrid),length(1:T));k1pointU =zeros(length(kgrid),length(1:T));
+npointU  =zeros(length(kgrid),length(1:T));spointU  =zeros(length(kgrid),length(1:T));
+retpointU=zeros(length(kgrid),length(1:T));cpointU  =zeros(length(kgrid),length(1:T));
+IndU     =zeros(length(kgrid),length(1:T));
+L_ind=[1,2^1,2^2,2^3,2^4,2^5,2^6,2^7,2^8,2^9,2^10,2^11,2^12,2^13,2^14,2^15,2^16,2^17];
+L_max=2^17;
+LE1=zeros(2^(T-1),T); kkE1=zeros(2^(T-1),T);LU1=zeros(2^(T-1),T); kkU1=zeros(2^(T-1),T);
+LE=zeros(2^(T-1),T);   kkE=zeros(2^(T-1),T);LE_new=zeros(2^(T-1),T);
+kk1E=zeros(2^(T-1),T); nnE =zeros(2^(T-1),T);ssE =zeros(2^(T-1),T); rrE =zeros(2^(T-1),T);
+ccE =zeros(2^(T-1),T); UtilE=zeros(2^(T-1),T);LU =zeros(2^(T-1),T);  kkU=zeros(2^(T-1),T);
+kk1U=zeros(2^(T-1),T); nnU= zeros(2^(T-1),T);ssU= zeros(2^(T-1),T); rrU= zeros(2^(T-1),T);
+ccU= zeros(2^(T-1),T); UtilU=zeros(2^(T-1),T);
+
+bigloop            =0; diff_K             =1;
+diff_N             =1; diff_S             =1;
+diff_NExit         =1; diff_max_DistUnemp =1;
+diff_tau_c         =1;
+
+<span class="keyword">while</span> abs(diff_K)&gt;eps2 || abs(diff_N)&gt;eps2 || abs(diff_S)&gt;eps2 || abs(diff_NExit)&gt;eps2
+    bigloop=bigloop+1;
+
+<span class="comment">%%%%% INITIALIZE MATRICES FOR HH PROBLEM FOR COMPUTATIONAL SPEED</span>
+VE=zeros(length(kgrid),length(ngrid),       1     );
+VU=zeros(length(kgrid),     1       ,length(sgrid));
+VE1=zeros(length(kgrid),1);
+VU1=zeros(length(kgrid),1);
+
+<span class="comment">%%%%% SOLVE FOR INTEREST RATE AND WAGE RATE</span>
+F=A_P*(K^alpha)*(N^(1-alpha)); <span class="comment">%Production</span>
+w=zeta1*(1-alpha)*A_P*(K^alpha)*(N^(-alpha)); <span class="comment">%Wage</span>
+r=alpha*A_P*(K^(alpha-1))*(N^(1-alpha))-delta; <span class="comment">%Rental rate of capital</span>
+
+<span class="comment">%%%%% SOLVE FIRMS PROBLEM FOR NUMBER OF VACANCIES, V</span>
+V=FirmProblemSunday_V2( K, N, S, NExit, n_bar);
+Profit=F-w*N-r*K-vc*V;
+
+<span class="comment">%%%%% SOLVE HHs' PROBLEM TO GET OPTIMAL POLICIES</span>
+<span class="keyword">for</span> age=T:-1:1
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+                        <span class="keyword">for</span> n=1:length(ngrid) <span class="comment">%n=labor supply; choice</span>
+                            <span class="keyword">for</span> s=1:length(sgrid) <span class="comment">%s=job-search intensity; choice</span>
+cE= ( kgrid(k0)*r+ kgrid(k0) <span class="keyword">...</span>
+    + ngrid(n)*w* <span class="keyword">...</span>
+    - kgrid ) ;
+cE= (cE).*(cE&gt;0);
+VE(:,n,1)= Utility(cE,ngrid(n),sgrid(1))' <span class="keyword">...</span>
+    + (mort(age)) .* beta.* ( (1-Chi).* (VE1(:,1)) <span class="keyword">...</span>
+    + (Chi).*(VU1(:,1)));
+
+cU= ( kgrid(k0)*r + kgrid(k0) <span class="keyword">...</span>
+    + w*UB <span class="keyword">...</span>
+    - kgrid ) ;
+cU= (cU).*(cU&gt;0);
+VU(:,1,s)= Utility(cU,ngrid(1),sgrid(s))' <span class="keyword">...</span>
+    + (mort(age)).* beta.* <span class="keyword">...</span>
+    ((Matching_Function(sgrid(s), 1, S, V, 1, 2) .*  VE1(:,1)) <span class="keyword">...</span>
+    + ((1 - Matching_Function(sgrid(s), 1, S, V, 1, 2)).*VU1(:,1))) ;
+                            <span class="keyword">end</span>
+                        <span class="keyword">end</span>
+
+[maxVE(k0,age),IndE(k0,age)] = max(VE(:));
+[k1pointE(k0,age),npointE(k0,age),spointE(k0,age)]=ind2sub(size(VE),IndE(k0,age));
+
+[maxVU(k0,age),IndU(k0,age)] = max(VU(:));
+[k1pointU(k0,age),npointU(k0,age),spointU(k0,age)]=ind2sub(size(VU),IndU(k0,age));
+
+
+    <span class="keyword">end</span>
+    VE1=maxVE(:,age);
+    VU1=maxVU(:,age);
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> age=1:T
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+
+cpointE(k0,age)= ( kgrid(k0)*r + kgrid(k0) <span class="keyword">...</span><span class="comment"> %SIMPLIFIED CAPITAL TAX</span>
+    + ngrid(npointE(k0,age))*w <span class="keyword">...</span>
+    - kgrid(k1pointE(k0,age)) ) ;
+
+cpointU(k0,age)= ( kgrid(k0)*r + kgrid(k0) <span class="keyword">...</span>
+    + w*UB <span class="keyword">...</span>
+    - kgrid(k1pointU(k0,age)) ) ;
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+
+<span class="comment">%%%%% POPULATION TRANSITION SIMULATION</span>
+<span class="comment">%%%%% AND</span>
+<span class="comment">%%%%% AGENTS' LIVES SIMULATION</span>
+
+
+<span class="comment">%%%%% STARTING CONDITIONS FOR NEWLY BORN</span>
+kkE(1,1)=1;
+kkU(1,1)=1;
+LE(1,1)=0;
+LU(1,1)=1;
+
+<span class="comment">%%%%% POPULATION TRANSITION SIMULATION FOR YEARS 1 THROUGH T-1</span>
+<span class="keyword">for</span> age=1:T-1
+    <span class="keyword">for</span> i=1:1:L_ind(age)
+    <span class="comment">%= unemployed</span>
+            kk1U(i,age)=k1pointU(kkU(i,age),age);
+            ssU(i,age) =spointU(kkU(i,age),age);
+            nnU(i,age) =npointU(kkU(i,age),age);
+            ccU(i,age) =cpointU(kkU(i,age),age);
+            UtilU(i,age)=Utility(ccU(i,age),ngrid(nnU(i,age)),sgrid(ssU(i,age)));
+    <span class="comment">%= employed</span>
+            kk1E(i,age)=k1pointE(kkE(i,age),age);
+            ssE(i,age) =spointE(kkE(i,age),age);
+            nnE(i,age) =npointE(kkE(i,age),age);
+            ccE(i,age) =cpointE(kkE(i,age),age);
+            UtilE(i,age)=Utility(ccE(i,age),ngrid(nnE(i,age)),sgrid(ssE(i,age)));
+    <span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1:1:L_ind(age)
+        LE(i,age+1) = mort(age) * LE(i,age) * (1-Chi) ;
+        LU(i,age+1) = mort(age) * LU(i,age) * (1-Matching_Function(sgrid(ssU(i,age)), 1, S, V, 1, 2));
+        kkE(i,age+1)=kk1E(i,age);
+        kkU(i,age+1)=kk1U(i,age);
+        LE1(i,age+1) = mort(age) * LU(i,age) * (Matching_Function(sgrid(ssU(i,age)), 1, S, V, 1, 2)) ;
+        LU1(i,age+1) = mort(age) * LE(i,age) * (Chi ) ;
+        kkEa(i,age+1)=kk1U(i,age);
+        kkUa(i,age+1)=kk1E(i,age);
+    <span class="keyword">end</span>
+
+    LE(L_ind(age)+1:L_ind(age+1),age+1) = LE1(1:L_ind(age),age+1);
+    LE_new(L_ind(age)+1:L_ind(age+1),age+1) = (LE1(1:L_ind(age),age+1)&gt;0);
+    LU(L_ind(age)+1:L_ind(age+1),age+1) = LU1(1:L_ind(age),age+1);
+    kkE(L_ind(age)+1:L_ind(age+1),age+1) = kkEa(1:L_ind(age),age+1);
+    kkU(L_ind(age)+1:L_ind(age+1),age+1) = kkUa(1:L_ind(age),age+1);
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> age=T
+    <span class="keyword">for</span> i=1:1:L_ind(age)
+    <span class="comment">%= unemployed</span>
+            kk1U(i,age)=k1pointU(kkU(i,age),age);
+            ssU(i,age) =spointU(kkU(i,age),age);
+            nnU(i,age) =npointU(kkU(i,age),age);
+            ccU(i,age) =cpointU(kkU(i,age),age);
+            UtilU(i,age)=Utility(ccU(i,age),ngrid(nnU(i,age)),sgrid(ssU(i,age)));
+    <span class="comment">%= employed</span>
+            kk1E(i,age)=k1pointE(kkE(i,age),age);
+            ssE(i,age) =spointE(kkE(i,age),age);
+            nnE(i,age) =npointE(kkE(i,age),age);
+            ccE(i,age) =cpointE(kkE(i,age),age);
+            UtilE(i,age)=Utility(ccE(i,age),ngrid(nnE(i,age)),sgrid(ssE(i,age)));
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+kkE(kkE==0)=1; kkU(kkU==0)=1;
+nnE(nnE==0)=1; ssU(ssU==0)=1;
+
+<span class="comment">%%%%%% COMPUTE NEW AGGREGATE VALUES</span>
+<span class="comment">%AGGREGATE LABOR</span>
+N_pop=sum(LE.*ngrid(nnE));
+N1=sum(sum(LE.*ngrid(nnE)));
+Empl_age=sum(LE);
+Unempl_age=sum(LU);
+n_bar1=sum(sum(LE_new.*LE.*ngrid(nnE)))./sum(sum(LE_new.*LE));
+<span class="comment">%AGGREGATE CAPITAL</span>
+K_pop=sum(LE.*kgrid(kkE))+sum(LU.*kgrid(kkU));
+K1=sum(sum(LE.*kgrid(kkE)))+sum(sum(LU.*kgrid(kkU)));
+<span class="comment">%AGGREGATE JOB SEARCH EFFORT</span>
+S_pop=sum(LU.*sgrid(ssU));
+S1=sum(sum(LU.*sgrid(ssU)));
+<span class="comment">%LABOR EXIT DUE TO DEATH</span>
+NExit1=sum(sum(LE.*(rrE==2).*(ngrid(nnE))))/N;
+<span class="comment">%NUMBER OF UNEMPLOYED</span>
+Omega_pop=(sum(LU.*(ssU&gt;1)));
+Omega=sum(sum(LU.*(ssU&gt;1)));
+<span class="comment">%AGGREGATE CONSUMPTION</span>
+CE_pop=sum(LE.*ccE);
+CU_pop=sum(LU.*ccU);
+C_pop=CE_pop+CU_pop;
+C=sum(C_pop);
+<span class="comment">%POPULATION</span>
+P_pop=sum(LE)+sum(LU);
+P=sum(P_pop);
+K_pop_mean=K_pop./P_pop;
+<span class="comment">%WELFARE</span>
+UT_LE= sum(sum(LE.*UtilE));
+UT_LU= sum(sum(LU.*UtilU));
+UT= sum(sum(LE.*UtilE))+sum(sum(LU.*UtilU));
+UT_LE_pop=(sum(LE.*UtilE));
+UT_LU_pop=(sum(LU.*UtilU));
+UT_pop=(sum(LE.*UtilE))+   (sum(LU.*UtilU));
+
+<span class="comment">%%%%%% COMPUTE DIFFERENCES BETWEEN GUESSES AND COMPUTED AGGREGATE VALUES</span>
+diff_K             = (K1/K-1)*100;
+diff_N             = (N1/N-1)*100;
+diff_S             = (S1/S-1)*100;
+diff_n_bar         = (n_bar1/n_bar-1)*100;
+diff_NExit         = (NExit1/NExit-1)*100;
+
+<span class="comment">%%%%%% STORE AGGREGATE VALUES</span>
+store_diff_K(bigloop)             = diff_K;
+store_diff_N(bigloop)             = diff_N;
+store_diff_S(bigloop)             = diff_S;
+store_diff_n_bar(bigloop)         = diff_n_bar;
+store_diff_NExit(bigloop)         = diff_NExit;
+
+<span class="comment">%%%%%% UPDATE THE INITIAL GUESSES BEFORE REITERATION</span>
+K=K*(smoothing)+K1*(1-smoothing);
+N=N*(smoothing)+N1*(1-smoothing);
+S=S*(smoothing)+S1*(1-smoothing);
+n_bar=n_bar*(smoothing)+n_bar1*(1-smoothing);
+NExit=NExit*(smoothing)+NExit1*(1-smoothing);
+
+store_K(bigloop)    = K;     store_K1(bigloop)    = K1;
+store_N(bigloop)    = N;     store_N1(bigloop)    = N1;
+store_S(bigloop)    = S;     store_S1(bigloop)    = S1;
+store_n_bar(bigloop)= n_bar; store_n_bar1(bigloop)= n_bar1;
+store_NExit(bigloop)= NExit; store_NExit1(bigloop)= NExit1;
+store_V(bigloop)    = V;     store_UT(bigloop)=UT/100;
+
+[store_K;store_N;store_S;store_NExit;store_V]
+
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> [U]=Utility(c,n,s)
+<span class="keyword">global</span> gamma1 eta A_U A_US gamma2 phiphi
+U=((((c+phiphi).^(gamma1)).*(1-A_U.*(n+A_US.*s.^gamma2)).^(1-gamma1)).^(1-eta)-1)./(1-eta); <span class="comment">%Last good one</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span>[RESULT]=Matching_Function(job_search, ~, total_search_effort, V, ~, type)
+<span class="comment">% Matching function describes the relationship between the unemployed,</span>
+<span class="comment">% vacancies and job search effort of a particular group of unemployed.</span>
+<span class="keyword">global</span> phi A_M
+<span class="keyword">if</span> type==1
+    M= A_M * V^phi * total_search_effort^(1-phi) ;
+    q=M/V;
+    <span class="keyword">if</span> q&gt;1
+        q=1;<span class="comment">%('Prob warning: q&gt;1')</span>
+    <span class="keyword">elseif</span> q&lt;0
+        q=0;<span class="comment">%('Prob warning: q&lt;1')</span>
+    <span class="keyword">end</span>
+    RESULT=q;
+<span class="keyword">elseif</span> type==2
+    rel_search_intensity= (job_search) / (total_search_effort);
+    M1= rel_search_intensity * A_M * V^phi * total_search_effort^(1-phi) ;
+    p=M1/1;
+    <span class="keyword">if</span> p&gt;1
+        p=1;<span class="comment">%('Prob warning: p&gt;1')</span>
+    <span class="keyword">elseif</span> p&lt;0
+        p=0;<span class="comment">%('Prob warning: p&lt;1')</span>
+    <span class="keyword">elseif</span> isnan(p)
+        p=0;
+    <span class="keyword">end</span>
+    RESULT=p;
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> [ V_final ] = FirmProblemSunday_V2( K, N, S, NExit, n_bar)
+<span class="keyword">global</span> phi A_M A_P alpha Chi vc zeta1 delta getta
+w=zeta1*(1-alpha)*A_P*(K^alpha)*(N^(-alpha)); <span class="comment">%Wage</span>
+r=alpha*A_P*(K^(alpha-1))*(N^(1-alpha))-delta; <span class="comment">%Rental rate of capital</span>
+Vgrid=0.0001:0.0001:15;
+FOC=zeros(1,length(Vgrid));
+<span class="keyword">for</span> V=1:length(Vgrid)
+    q(V)= A_M * (Vgrid(V)^(phi-1)) * (S^(1-phi));
+    N1(V)= (1-Chi-NExit)*N + q(V)*Vgrid(V)*n_bar;
+    redpart(V)= (1-alpha) * (A_P*(K^alpha)*(N1(V)^(-alpha))) * q(V) * n_bar ;
+    bluepart(V)= q(V)*w*n_bar;
+    redblue(V)= (redpart(V)-bluepart(V));
+    FOC(V)= ((1+r)^(-1)) * (redpart(V)-bluepart(V)) - getta*vc*V^(getta-1);
+<span class="keyword">end</span>
+V_final= Vgrid(abs(FOC)==min(abs(FOC)));
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+
+clearvars
+
+global beta gamma1 eta phi UB SSben ...
+    A_M A_P alpha Chi vc zeta1 getta SSben_early d_e d_n ...
+    delta A_U A_US gamma2 phiphi
+
+%%%%% ENVIRONMENT
+T=18; %Total years possible to live
+smoothing=0.80;
+mort(1:T)=[0.998562276 0.998023418 0.99808485 0.997567474 0.996324643 0.994532501 0.992382903 ...
+    0.989433908 0.983140995 0.972649591 0.952530049 0.926026991 0.887291451 0.819213623 ...
+    0.677722672 0.515940907 0.357811933 0.243725901 ]; %Mortality/Survivability
+
+%%%%% PARAMETERS EXOGENOUSLY DETERMINED
+% Firm production technology and wages paid
+alpha               =0.40; %Production parameter, constant returns to scale
+zeta1               =0.50; %Fraction of output paid to workers as wages
+% Matching Technology
+phi                 =0.50; %Matchning parameter, constant returns to scale
+% Agents
+beta                =0.96; %Discount factor for agents
+eta                 =2.00; %Utility parameter
+phiphi              =0.000001;
+
+%%%%% Delta is such that capital-to-output is around 2.5.
+delta               =0.45; %Depreciation rate equivalent to 2.085% per year 0.97915^5
+
+%%%%% Gamma1 is such that agents on average spend a third of their time of  
+%%%%% or market-related activities.
+gamma1              =0.36; %Utility parameter
+
+%%%%% SSben is such that the SS benefits are 40% of average wage
+SSben       =0.145;  %SS benefit parameter for retirees.
+SSben_early =SSben*0.80; % last: 0.75 (too low),0.80 (too low), 0.85 (too high)
+
+% Retirement disutility
+d_e=-0.00;
+d_n=-0.00;
+
+%%%%% PARAMETERS such that employment to LF makes sense
+% Production technology
+A_P                 =1.00; %Production technology
+% Matching Technology
+A_M                 =1.00; %Job matching technology
+% Firm
+Chi                 =0.045;  %Separation Rate %Fraction of jobs destroyed each period
+vc                  =0.074656; %Cost of posting a vacancy (vc = vacancy cost)
+getta               =1.00;  %the increasing cost of vacancy posting
+% Agents
+gamma2              =2.00; %Utility parameter
+A_U                 =1.00; %Utility parameter: increases disutility from work and search if >1
+A_US                =1.00; %Utility parameter: increases disutility from search only if >1
+UB                  =0.05;
+eps2                =5;
+
+%%%%% MAKE INITIAL GUESSES
+K=1.4406;
+N=2.9518;
+S=0.9804;
+NExit=0.0457;
+n_bar=0.4888;
+
+kgrid              =0:0.01:0.28; 
+ngrid              =0:0.1:0.60;       
+sgrid              =0:0.1:0.62;
+
+maxVE    =zeros(length(kgrid),length(1:T));k1pointE =zeros(length(kgrid),length(1:T));
+npointE  =zeros(length(kgrid),length(1:T));spointE  =zeros(length(kgrid),length(1:T));
+retpointE=zeros(length(kgrid),length(1:T));cpointE  =zeros(length(kgrid),length(1:T));
+IndE     =zeros(length(kgrid),length(1:T));kkEa=zeros((2^T)-1,T); kkUa=zeros((2^T)-1,T);
+maxVU    =zeros(length(kgrid),length(1:T));k1pointU =zeros(length(kgrid),length(1:T));
+npointU  =zeros(length(kgrid),length(1:T));spointU  =zeros(length(kgrid),length(1:T));
+retpointU=zeros(length(kgrid),length(1:T));cpointU  =zeros(length(kgrid),length(1:T));
+IndU     =zeros(length(kgrid),length(1:T));
+L_ind=[1,2^1,2^2,2^3,2^4,2^5,2^6,2^7,2^8,2^9,2^10,2^11,2^12,2^13,2^14,2^15,2^16,2^17];
+L_max=2^17;
+LE1=zeros(2^(T-1),T); kkE1=zeros(2^(T-1),T);LU1=zeros(2^(T-1),T); kkU1=zeros(2^(T-1),T);
+LE=zeros(2^(T-1),T);   kkE=zeros(2^(T-1),T);LE_new=zeros(2^(T-1),T);
+kk1E=zeros(2^(T-1),T); nnE =zeros(2^(T-1),T);ssE =zeros(2^(T-1),T); rrE =zeros(2^(T-1),T);
+ccE =zeros(2^(T-1),T); UtilE=zeros(2^(T-1),T);LU =zeros(2^(T-1),T);  kkU=zeros(2^(T-1),T);
+kk1U=zeros(2^(T-1),T); nnU= zeros(2^(T-1),T);ssU= zeros(2^(T-1),T); rrU= zeros(2^(T-1),T);
+ccU= zeros(2^(T-1),T); UtilU=zeros(2^(T-1),T);
+
+bigloop            =0; diff_K             =1;
+diff_N             =1; diff_S             =1;
+diff_NExit         =1; diff_max_DistUnemp =1;
+diff_tau_c         =1;
+
+while abs(diff_K)>eps2 || abs(diff_N)>eps2 || abs(diff_S)>eps2 || abs(diff_NExit)>eps2
+    bigloop=bigloop+1;
+
+%%%%% INITIALIZE MATRICES FOR HH PROBLEM FOR COMPUTATIONAL SPEED
+VE=zeros(length(kgrid),length(ngrid),       1     );
+VU=zeros(length(kgrid),     1       ,length(sgrid));
+VE1=zeros(length(kgrid),1);
+VU1=zeros(length(kgrid),1);
+
+%%%%% SOLVE FOR INTEREST RATE AND WAGE RATE
+F=A_P*(K^alpha)*(N^(1-alpha)); %Production
+w=zeta1*(1-alpha)*A_P*(K^alpha)*(N^(-alpha)); %Wage
+r=alpha*A_P*(K^(alpha-1))*(N^(1-alpha))-delta; %Rental rate of capital
+
+%%%%% SOLVE FIRMS PROBLEM FOR NUMBER OF VACANCIES, V
+V=FirmProblemSunday_V2( K, N, S, NExit, n_bar);
+Profit=F-w*N-r*K-vc*V;
+
+%%%%% SOLVE HHs' PROBLEM TO GET OPTIMAL POLICIES
+for age=T:-1:1
+    for k0=1:length(kgrid) %k0=total assets rolled over from the previous period; state
+                        for n=1:length(ngrid) %n=labor supply; choice
+                            for s=1:length(sgrid) %s=job-search intensity; choice
+cE= ( kgrid(k0)*r+ kgrid(k0) ...
+    + ngrid(n)*w* ...
+    - kgrid ) ;
+cE= (cE).*(cE>0);
+VE(:,n,1)= Utility(cE,ngrid(n),sgrid(1))' ... 
+    + (mort(age)) .* beta.* ( (1-Chi).* (VE1(:,1)) ...
+    + (Chi).*(VU1(:,1)));
+
+cU= ( kgrid(k0)*r + kgrid(k0) ...
+    + w*UB ...
+    - kgrid ) ;
+cU= (cU).*(cU>0);
+VU(:,1,s)= Utility(cU,ngrid(1),sgrid(s))' ...
+    + (mort(age)).* beta.* ...
+    ((Matching_Function(sgrid(s), 1, S, V, 1, 2) .*  VE1(:,1)) ...
+    + ((1 - Matching_Function(sgrid(s), 1, S, V, 1, 2)).*VU1(:,1))) ;   
+                            end
+                        end
+                        
+[maxVE(k0,age),IndE(k0,age)] = max(VE(:));
+[k1pointE(k0,age),npointE(k0,age),spointE(k0,age)]=ind2sub(size(VE),IndE(k0,age));
+                        
+[maxVU(k0,age),IndU(k0,age)] = max(VU(:));
+[k1pointU(k0,age),npointU(k0,age),spointU(k0,age)]=ind2sub(size(VU),IndU(k0,age));
+
+
+    end
+    VE1=maxVE(:,age);
+    VU1=maxVU(:,age);
+end
+
+for age=1:T
+    for k0=1:length(kgrid) %k0=total assets rolled over from the previous period; state
+
+cpointE(k0,age)= ( kgrid(k0)*r + kgrid(k0) ... %SIMPLIFIED CAPITAL TAX
+    + ngrid(npointE(k0,age))*w ...
+    - kgrid(k1pointE(k0,age)) ) ;
+
+cpointU(k0,age)= ( kgrid(k0)*r + kgrid(k0) ...
+    + w*UB ...
+    - kgrid(k1pointU(k0,age)) ) ;
+    end
+
+end
+
+
+%%%%% POPULATION TRANSITION SIMULATION
+%%%%% AND
+%%%%% AGENTS' LIVES SIMULATION
+
+
+%%%%% STARTING CONDITIONS FOR NEWLY BORN
+kkE(1,1)=1;
+kkU(1,1)=1;
+LE(1,1)=0;
+LU(1,1)=1;
+
+%%%%% POPULATION TRANSITION SIMULATION FOR YEARS 1 THROUGH T-1
+for age=1:T-1
+    for i=1:1:L_ind(age)
+    %= unemployed
+            kk1U(i,age)=k1pointU(kkU(i,age),age);
+            ssU(i,age) =spointU(kkU(i,age),age);
+            nnU(i,age) =npointU(kkU(i,age),age);
+            ccU(i,age) =cpointU(kkU(i,age),age);
+            UtilU(i,age)=Utility(ccU(i,age),ngrid(nnU(i,age)),sgrid(ssU(i,age)));
+    %= employed
+            kk1E(i,age)=k1pointE(kkE(i,age),age);
+            ssE(i,age) =spointE(kkE(i,age),age);
+            nnE(i,age) =npointE(kkE(i,age),age);
+            ccE(i,age) =cpointE(kkE(i,age),age);
+            UtilE(i,age)=Utility(ccE(i,age),ngrid(nnE(i,age)),sgrid(ssE(i,age)));
+    end
+
+    for i=1:1:L_ind(age)
+        LE(i,age+1) = mort(age) * LE(i,age) * (1-Chi) ;
+        LU(i,age+1) = mort(age) * LU(i,age) * (1-Matching_Function(sgrid(ssU(i,age)), 1, S, V, 1, 2));
+        kkE(i,age+1)=kk1E(i,age);
+        kkU(i,age+1)=kk1U(i,age);
+        LE1(i,age+1) = mort(age) * LU(i,age) * (Matching_Function(sgrid(ssU(i,age)), 1, S, V, 1, 2)) ;
+        LU1(i,age+1) = mort(age) * LE(i,age) * (Chi ) ; 
+        kkEa(i,age+1)=kk1U(i,age);
+        kkUa(i,age+1)=kk1E(i,age);
+    end
+
+    LE(L_ind(age)+1:L_ind(age+1),age+1) = LE1(1:L_ind(age),age+1);
+    LE_new(L_ind(age)+1:L_ind(age+1),age+1) = (LE1(1:L_ind(age),age+1)>0);
+    LU(L_ind(age)+1:L_ind(age+1),age+1) = LU1(1:L_ind(age),age+1);
+    kkE(L_ind(age)+1:L_ind(age+1),age+1) = kkEa(1:L_ind(age),age+1);
+    kkU(L_ind(age)+1:L_ind(age+1),age+1) = kkUa(1:L_ind(age),age+1);
+end
+
+for age=T
+    for i=1:1:L_ind(age)
+    %= unemployed
+            kk1U(i,age)=k1pointU(kkU(i,age),age);
+            ssU(i,age) =spointU(kkU(i,age),age);
+            nnU(i,age) =npointU(kkU(i,age),age);
+            ccU(i,age) =cpointU(kkU(i,age),age);
+            UtilU(i,age)=Utility(ccU(i,age),ngrid(nnU(i,age)),sgrid(ssU(i,age)));
+    %= employed
+            kk1E(i,age)=k1pointE(kkE(i,age),age);
+            ssE(i,age) =spointE(kkE(i,age),age);
+            nnE(i,age) =npointE(kkE(i,age),age);
+            ccE(i,age) =cpointE(kkE(i,age),age);
+            UtilE(i,age)=Utility(ccE(i,age),ngrid(nnE(i,age)),sgrid(ssE(i,age)));
+    end
+end
+
+kkE(kkE==0)=1; kkU(kkU==0)=1;
+nnE(nnE==0)=1; ssU(ssU==0)=1;
+
+%%%%%% COMPUTE NEW AGGREGATE VALUES
+%AGGREGATE LABOR
+N_pop=sum(LE.*ngrid(nnE));
+N1=sum(sum(LE.*ngrid(nnE)));
+Empl_age=sum(LE);
+Unempl_age=sum(LU);
+n_bar1=sum(sum(LE_new.*LE.*ngrid(nnE)))./sum(sum(LE_new.*LE));
+%AGGREGATE CAPITAL
+K_pop=sum(LE.*kgrid(kkE))+sum(LU.*kgrid(kkU));
+K1=sum(sum(LE.*kgrid(kkE)))+sum(sum(LU.*kgrid(kkU)));
+%AGGREGATE JOB SEARCH EFFORT
+S_pop=sum(LU.*sgrid(ssU));
+S1=sum(sum(LU.*sgrid(ssU)));
+%LABOR EXIT DUE TO DEATH
+NExit1=sum(sum(LE.*(rrE==2).*(ngrid(nnE))))/N;
+%NUMBER OF UNEMPLOYED
+Omega_pop=(sum(LU.*(ssU>1)));
+Omega=sum(sum(LU.*(ssU>1)));
+%AGGREGATE CONSUMPTION
+CE_pop=sum(LE.*ccE);
+CU_pop=sum(LU.*ccU);
+C_pop=CE_pop+CU_pop;
+C=sum(C_pop);
+%POPULATION
+P_pop=sum(LE)+sum(LU);
+P=sum(P_pop);
+K_pop_mean=K_pop./P_pop;
+%WELFARE
+UT_LE= sum(sum(LE.*UtilE));
+UT_LU= sum(sum(LU.*UtilU));
+UT= sum(sum(LE.*UtilE))+sum(sum(LU.*UtilU));
+UT_LE_pop=(sum(LE.*UtilE));
+UT_LU_pop=(sum(LU.*UtilU));
+UT_pop=(sum(LE.*UtilE))+   (sum(LU.*UtilU));
+
+%%%%%% COMPUTE DIFFERENCES BETWEEN GUESSES AND COMPUTED AGGREGATE VALUES
+diff_K             = (K1/K-1)*100;
+diff_N             = (N1/N-1)*100;
+diff_S             = (S1/S-1)*100;
+diff_n_bar         = (n_bar1/n_bar-1)*100;
+diff_NExit         = (NExit1/NExit-1)*100;
+
+%%%%%% STORE AGGREGATE VALUES
+store_diff_K(bigloop)             = diff_K;
+store_diff_N(bigloop)             = diff_N;
+store_diff_S(bigloop)             = diff_S;
+store_diff_n_bar(bigloop)         = diff_n_bar;
+store_diff_NExit(bigloop)         = diff_NExit;
+
+%%%%%% UPDATE THE INITIAL GUESSES BEFORE REITERATION
+K=K*(smoothing)+K1*(1-smoothing);
+N=N*(smoothing)+N1*(1-smoothing);
+S=S*(smoothing)+S1*(1-smoothing);
+n_bar=n_bar*(smoothing)+n_bar1*(1-smoothing);
+NExit=NExit*(smoothing)+NExit1*(1-smoothing);
+
+store_K(bigloop)    = K;     store_K1(bigloop)    = K1; 
+store_N(bigloop)    = N;     store_N1(bigloop)    = N1;
+store_S(bigloop)    = S;     store_S1(bigloop)    = S1;
+store_n_bar(bigloop)= n_bar; store_n_bar1(bigloop)= n_bar1;
+store_NExit(bigloop)= NExit; store_NExit1(bigloop)= NExit1;
+store_V(bigloop)    = V;     store_UT(bigloop)=UT/100;
+
+[store_K;store_N;store_S;store_NExit;store_V]
+
+end
+
+function [U]=Utility(c,n,s)
+global gamma1 eta A_U A_US gamma2 phiphi
+U=((((c+phiphi).^(gamma1)).*(1-A_U.*(n+A_US.*s.^gamma2)).^(1-gamma1)).^(1-eta)-1)./(1-eta); %Last good one
+end
+
+function[RESULT]=Matching_Function(job_search, ~, total_search_effort, V, ~, type)
+% Matching function describes the relationship between the unemployed,
+% vacancies and job search effort of a particular group of unemployed.
+global phi A_M
+if type==1
+    M= A_M * V^phi * total_search_effort^(1-phi) ;
+    q=M/V;
+    if q>1
+        q=1;%('Prob warning: q>1')
+    elseif q<0
+        q=0;%('Prob warning: q<1')
+    end
+    RESULT=q;
+elseif type==2
+    rel_search_intensity= (job_search) / (total_search_effort);
+    M1= rel_search_intensity * A_M * V^phi * total_search_effort^(1-phi) ;
+    p=M1/1;
+    if p>1
+        p=1;%('Prob warning: p>1')
+    elseif p<0
+        p=0;%('Prob warning: p<1')
+    elseif isnan(p)
+        p=0;
+    end
+    RESULT=p;
+end
+end
+
+function [ V_final ] = FirmProblemSunday_V2( K, N, S, NExit, n_bar)
+global phi A_M A_P alpha Chi vc zeta1 delta getta
+w=zeta1*(1-alpha)*A_P*(K^alpha)*(N^(-alpha)); %Wage
+r=alpha*A_P*(K^(alpha-1))*(N^(1-alpha))-delta; %Rental rate of capital
+Vgrid=0.0001:0.0001:15;
+FOC=zeros(1,length(Vgrid));
+for V=1:length(Vgrid)
+    q(V)= A_M * (Vgrid(V)^(phi-1)) * (S^(1-phi));
+    N1(V)= (1-Chi-NExit)*N + q(V)*Vgrid(V)*n_bar;
+    redpart(V)= (1-alpha) * (A_P*(K^alpha)*(N1(V)^(-alpha))) * q(V) * n_bar ;
+    bluepart(V)= q(V)*w*n_bar;
+    redblue(V)= (redpart(V)-bluepart(V));
+    FOC(V)= ((1+r)^(-1)) * (redpart(V)-bluepart(V)) - getta*vc*V^(getta-1);
+end
+V_final= Vgrid(abs(FOC)==min(abs(FOC)));
+end
+##### SOURCE END #####
+--></body></html>
