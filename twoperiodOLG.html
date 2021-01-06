@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Bivariate Golden Section Search</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Bivariate Golden Section Search</h1>
+
+</div>
+
+
+<p>Golden section search is a technique locating the maximum of a function. This method efficiently reduces the area in which the maximum of the function exists. If there are multiple maximums in the given area, the function will converge to one of them.</p>
+<p>This GSS bivariate function requires the user to input the two interval endpoints, the function, and the level of accuracy (smaller level = more accuracy).</p>
+<p>To illustrate how GSS works in a bivariate case, let’s examine an example. For example, you are interested to find the max of <span class="math inline">\(f(x,y)=-x^2-y^2\)</span> over a large interval of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. We already know that the max is <span class="math inline">\((0,0)\)</span> so we will be able to compare the answer provided by the code with the true max.</p>
+<p>Say, we are interested in the max of this function over the interval <span class="math inline">\(x=(-25,40)\)</span> and <span class="math inline">\(y=(-100,111)\)</span>. First, the algorithm creates a rectangle with corner coordinates user provides. Then, four more points are created in the middle of the given rectangle according to the GSS method. The user given function is evaluated at those four coordinates. The algorithm finds the max of the four inner points, and reduces the outer rectangle around the new max. In the next step, four new inner points are found which are then again evaluated. The procedure continues until area of the rectangle is sufficiently small (depends on user input).</p>
+<p><img src="gss/Rplot1.png" /> <img src="gss/Rplot2.png" /> <img src="gss/Rplot3.png" /> <img src="gss/Rplot4.png" /></p>
+<p>Matlab function [<a href="gss_bivariate.m">download</a>]</p>
+<div class="content">
+<pre class="codeinput"><span class="keyword">function</span>[Afinal,Bfinal]=gss_bivariate(A1,A4,B1,B4,fun,eps)
+<span class="comment">%This function performs a bivariate golden section search method.</span>
+<span class="comment">%Inputs are two points for each variable and a bivariate function.</span>
+<span class="comment">%For example: [xstar,ystar]=gss_bivariate(-25,40,-100,111,@(x,y)-x^2-y^2,0.00001)</span>
+
+p=(sqrt(5)-1)/2;
+
+A2=p*A1+(1-p)*A4;
+B2=p*B1+(1-p)*B4;
+A3=(1-p)*A1+p*A4;
+B3=(1-p)*B1+p*B4;
+
+f22=fun(A2,B2);
+f23=fun(A2,B3);
+f32=fun(A3,B2);
+f33=fun(A3,B3);
+all_fun=[f22,f23,f32,f33];
+
+area=10;
+
+<span class="keyword">while</span> area&gt;eps
+    <span class="keyword">if</span> max(all_fun)==f22
+        A1=A1; B1=B1;
+        A4=A3; B4=B3;
+        A3=A2; B3=B2;
+        A2=p*A1+(1-p)*A4;
+        B2=p*B1+(1-p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f33
+        A1=A2; B1=B2;
+        A4=A4; B4=B4;
+        A2=A3; B2=B3;
+        A3=(1-p)*A1+(p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f23
+        A1=A1; B1=B2;
+        A4=A3; B4=B4;
+        A3=A2; B2=B3;
+        A2=p*A1+(1-p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f32
+        A1=A2; B1=B1;
+        A4=A4; B4=B3;
+        A2=A3; B3=B2;
+        A3=(1-p)*A1+(p)*A4;
+        B2=p*B1+(1-p)*B4;
+    <span class="keyword">end</span>
+    f22=fun(A2,B2);
+    f23=fun(A2,B3);
+    f32=fun(A3,B2);
+    f33=fun(A3,B3);
+    all_fun=[f22,f23,f32,f33];
+    area=abs((A4-A1)*(B4-B1));
+
+<span class="keyword">end</span>
+Afinal=A2;
+Bfinal=B2;
+
+<span class="keyword">end</span>
+</pre>
+<p>R function [<a href="gss_bivariate.R">download</a>]</p>
+<pre class="r"><code>gss_bivariate &lt;- function(fx, A1, A4, B1, B4, eps) {
+  #The function uses golden-section search to find the max 
+  #of a given function over a given area.
+  #Inputs are the function, min and max values for the x and y ranges.
+  #Enter the function in quotes using x and y as indep variables,
+  #for example as this: &quot;-(x^2)-(y^2)&quot;
+  #Full entry, for example: gss_bivariate(&quot;-(x^2)-(y^2)&quot;,-10,10,-10,10,0.00001)
+  
+  fun=parse(text=fx) #Read the given expression (function)
+  
+  p=(5^(1/2)-1)/2;
+  
+  A2=p*A1+(1-p)*A4;
+  B2=p*B1+(1-p)*B4;
+  A3=(1-p)*A1+p*A4;
+  B3=(1-p)*B1+p*B4;
+  
+  x=A2; y=B2; f22=eval(fun);
+  x=A2; y=B3; f23=eval(fun);
+  x=A3; y=B2; f32=eval(fun);
+  x=A3; y=B3; f33=eval(fun);
+  all_fun=c(f22,f23,f32,f33);
+  
+  area=10;
+  
+  while (area&gt;eps){
+    if (max(all_fun)==f22){
+      A1=A1; B1=B1;
+      A4=A3; B4=B3;
+      A3=A2; B3=B2;
+      A2=p*A1+(1-p)*A4;
+      B2=p*B1+(1-p)*B4;
+    } else if (max(all_fun)==f33) {
+      A1=A2; B1=B2;
+      A4=A4; B4=B4;
+      A2=A3; B2=B3;
+      A3=(1-p)*A1+(p)*A4;
+      B3=(1-p)*B1+(p)*B4;
+    } else if (max(all_fun)==f23) {
+      A1=A1; B1=B2;
+      A4=A3; B4=B4;
+      A3=A2; B2=B3;
+      A2=p*A1+(1-p)*A4;
+      B3=(1-p)*B1+(p)*B4;
+    } else {
+      A1=A2; B1=B1;
+      A4=A4; B4=B3;
+      A2=A3; B3=B2;
+      A3=(1-p)*A1+(p)*A4;
+      B2=p*B1+(1-p)*B4;
+    }
+    x=A2; y=B2; f22=eval(fun);
+    x=A2; y=B3; f23=eval(fun);
+    x=A3; y=B2; f32=eval(fun);
+    x=A3; y=B3; f33=eval(fun);
+    all_fun=c(f22,f23,f32,f33);
+    area=abs((A4-A1)*(B4-B1));
+  }
+  return(c(A2,B2)) 
+}</code></pre>
+<p>Python function [<a href="gss_bivariate.Py">download</a>]</p>
+<pre class="python"><code>def gss_bivariate(fun, A1, A4, B1, B4, eps):
+  #The function uses golden-section search to find the max 
+  #of a given function over a given area.
+  #Inputs are the function, min and max values for the x and y ranges.
+  #Enter the function in quotes using x and y as indep variables,
+  #for example as this: &quot;-(x**2)-(y**2)&quot;
+  #Full entry, for example: gss_bivariate(&quot;-(x**2)-(y**2)&quot;,-10,10,-10,10,0.00001)
+  
+  p=(5**(1/2)-1)/2;
+  A2=p*A1+(1-p)*A4;
+  B2=p*B1+(1-p)*B4;
+  A3=(1-p)*A1+p*A4;
+  B3=(1-p)*B1+p*B4;
+  x=A2; y=B2; f22=eval(fun);
+  x=A2; y=B3; f23=eval(fun);
+  x=A3; y=B2; f32=eval(fun);
+  x=A3; y=B3; f33=eval(fun);
+  all_fun=[f22,f23,f32,f33];
+  
+  area=10; #Initialize area
+  
+  while area&gt;eps:
+    if max(all_fun)==f22:
+        A1=A1; B1=B1;
+        A4=A3; B4=B3;
+        A3=A2; B3=B2;
+        A2=p*A1+(1-p)*A4;
+        B2=p*B1+(1-p)*B4;
+    elif max(all_fun)==f33:
+        A1=A2; B1=B2;
+        A4=A4; B4=B4;
+        A2=A3; B2=B3;
+        A3=(1-p)*A1+(p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    elif max(all_fun)==f23:
+        A1=A1; B1=B2;
+        A4=A3; B4=B4;
+        A3=A2; B2=B3;
+        A2=p*A1+(1-p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    else:
+        A1=A2; B1=B1;
+        A4=A4; B4=B3;
+        A2=A3; B3=B2;
+        A3=(1-p)*A1+(p)*A4;
+        B2=p*B1+(1-p)*B4;  
+    x=A2; y=B2; f22=eval(fun);
+    x=A2; y=B3; f23=eval(fun);
+    x=A3; y=B2; f32=eval(fun);
+    x=A3; y=B3; f33=eval(fun);
+    all_fun=[f22,f23,f32,f33];
+    area=abs((A4-A1)*(B4-B1));
+  return [A2,B2] </code></pre>
+<style type="text/css">
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+</style>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

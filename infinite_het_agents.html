@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Infinitely-Lived Heterogeneous Agent Model</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Infinitely-Lived Heterogeneous Agent Model</h1>
+
+</div>
+
+
+<p>Matlab function [<a href="models/infitite_het_agents.m">download</a>]</p>
+<pre class="codeinput">clearvars
+tic <span class="comment">%start timer</span>
+<span class="comment">%Set parameters for Markov approximation of labor shocks</span>
+rho=.3;<span class="comment">%persistence parameter for labor shocks</span>
+sigma=.2; <span class="comment">%standard deviation of labor shocks</span>
+m=3; <span class="comment">%number of standard deviations from mean</span>
+mul=1; <span class="comment">%mean for labor shocks</span>
+states=7; <span class="comment">%number of possible states for labor shocks</span>
+[Z,Zprob] = tauchen(states,mul,rho,sigma,m);
+P=Zprob;<span class="comment">%transition matrix</span>
+z=Z';<span class="comment">%possible values for labor shocks</span>
+alpha=.36;<span class="comment">%production parameter</span>
+MU=3;<span class="comment">%degree of risk aversion</span>
+step=.2; <span class="comment">%step size between capital grid</span>
+beta=.96;<span class="comment">%discount factor</span>
+delta=.08;<span class="comment">%depreciation</span>
+lambda=(1-beta)/beta;<span class="comment">%time discount rate</span>
+it=1;<span class="comment">%initialize counter</span>
+warning <span class="string">off</span> <span class="string">all</span>
+Zinv=Zprob^100;
+<span class="comment">%%%%%%%%%%% Step One %%%%%%%%%%</span>
+N0=sum(z.*Zinv(1,:));<span class="comment">%stationary employment</span>
+<span class="comment">%%%%%%%%%%% Step Two %%%%%%%%%%</span>
+K0=5.6; <span class="comment">%guess at initial capital stock</span>
+
+DifK=1;
+ik=0;
+<span class="keyword">while</span> DifK&gt;1.01 <span class="comment">%stopping criteria for aggregate capital stock</span>
+    <span class="comment">%%%%%%%%%%% Step Three %%%%%%%%%%</span>
+    w1=(1-alpha)*(K0/N0)^alpha;<span class="comment">%wage rate based on capital stock</span>
+    r=(alpha)*(K0/N0)^(alpha-1)-delta<span class="comment">%interest rate based on capital stock</span>
+    gridi=[-2:step:40]'; <span class="comment">% column i asset holdings grid</span>
+    gridj=[-2:step:40]';<span class="comment">% column j asset holdings grid</span>
+    v0=zeros(length(gridj),length(z));<span class="comment">%initialize value function</span>
+    g0=zeros(length(gridj),length(z));<span class="comment">%initialize policy function</span>
+    jgrid=length(gridj);
+    dif=1;<span class="comment">%initialize differences</span>
+    dif2=1;
+    ik=ik+1;
+    epsilon=.001;
+    <span class="comment">%%%%%%%%%%% Step Four %%%%%%%%%%</span>
+    display(<span class="string">'Performing Value Function Iteration'</span>)
+    <span class="keyword">while</span> dif&gt;epsilon*(1-beta);<span class="comment">%stopping criteria for value function iteration</span>
+        <span class="keyword">for</span> j=1:length(z);<span class="comment">%loop over possible labor shocks</span>
+            <span class="keyword">parfor</span> i=1:length(gridi);<span class="comment">%loop over current asset states</span>
+                c=(1+r).*gridi(i)+w1*z(j)-gridj;<span class="comment">%consumption</span>
+                <span class="keyword">if</span> c(1)&lt;0;
+                     c(1)=inf;
+                     c=(c+.1).*(c&gt;=0);<span class="comment">%ensuring nonnegative consumption</span>
+                <span class="keyword">else</span>
+                     c=(c+.1).*(c&gt;=0);<span class="comment">%ensuring nonnegative consumption</span>
+                <span class="keyword">end</span>
+                w=(c.^(1-MU)-1)./(1-MU)+beta.*sum(repmat(P(j,:),length(v0),1).*v0,2);<span class="comment">%value function</span>
+                wstar(i,j)=max(w);<span class="comment">%finding maximum of value function over grid choice for each state</span>
+                jhold(i,j)=find(max(w)==w);<span class="comment">%pointer indicating position of maximum aprime</span>
+                gprime(i,j)=gridj(jhold(i,j));<span class="comment">%optimal policy</span>
+            <span class="keyword">end</span>;
+        <span class="keyword">end</span>
+        dif=max(max(abs(wstar-v0)));<span class="comment">%difference between value functions</span>
+        dif1(it)=dif;<span class="comment">%storing difference between value functions</span>
+        dif2=max(max(abs(g0-gprime)));<span class="comment">%difference between policy functions</span>
+        policydif(it)=dif2;<span class="comment">%storing difference between policy functions</span>
+        g0=gprime;<span class="comment">%update policy function</span>
+        v0=wstar;<span class="comment">%update value function</span>
+        it=it+1;<span class="comment">%update iteration counter</span>
+    <span class="keyword">end</span>
+    its=100;<span class="comment">%increase number of iterations over density function iteration each iteration over K</span>
+    <span class="comment">%%%%%%%%%%% Step Five and Step Six %%%%%%%%%%</span>
+    display(<span class="string">'Iterating on the distribution function'</span>)
+    [f,K1,gridj2]=invarfpar(P,gridj,gprime,step,its);<span class="comment">%function that calculates invariant distribution</span>
+    Kstore(ik)=K0<span class="comment">%storing aggregate capital over capital iterations</span>
+    DifK=max(abs(K1-K0));<span class="comment">%calculating difference in aggregate capital</span>
+    phi=.1;<span class="comment">%relaxation parameter for updating aggregate capital stock</span>
+    <span class="comment">%%%%%%%%%%% Step Seven %%%%%%%%%%</span>
+    K0=phi*K1+(1-phi)*K0;<span class="comment">%update aggregate capital stock</span>
+    display(<span class="string">'Dif between r and lambda'</span>)
+    r-lambda
+    <span class="keyword">if</span> r-lambda&gt;0
+        K0=unifrnd(5,9);
+    <span class="keyword">else</span>
+        K0=K0;
+    <span class="keyword">end</span>
+    DifKstore(ik)=DifK<span class="comment">%storing difference between aggregate capital iterations</span>
+<span class="keyword">end</span>
+K0=K1;
+w1=(1-alpha)*(K0/N0)^alpha;<span class="comment">%wage based on final value of capital stock</span>
+r=(alpha)*(K0/N0)^(alpha-1)-delta;<span class="comment">%interest rate based on final value of capital stock</span>
+copt=(1+r).*repmat(gridj,1,length(z))+w1.*repmat(z,length(gridj),1)-gprime;<span class="comment">%policy function for consumption</span>
+figure;plot(gridj,copt)
+title(<span class="string">'Policy function for consumption'</span>); xlabel(<span class="string">'Current asset level'</span>)
+ylabel(<span class="string">'Optimal Consumption'</span>); legend(<span class="string">'Low labor shock'</span>,<span class="string">'High labor shock'</span>)
+
+figure;plot(gridj,gprime)
+title(<span class="string">'Policy function for next periods asset'</span>); xlabel(<span class="string">'Current asset level'</span>)
+ylabel(<span class="string">'Optimal next period asset'</span>); legend(<span class="string">'Low labor shock'</span>,<span class="string">'High labor shock'</span>)
+
+display(<span class="string">'Savings Rate Without Full Insurance'</span>)
+100*delta*alpha/(r+delta)
+display(<span class="string">'Savings Rate With Full Insurance'</span>)
+100*delta*alpha/(lambda+delta)
+
+toc
+
+<span class="keyword">function</span>[fx]=lininterp(fx1,fx2,x1,x2,x)
+fx=fx1+((fx2-fx1)./(x2-x1)).*(x-x1);
+<span class="keyword">end</span>
+
+<span class="keyword">function</span>[f,muk,gridj2]=invarfpar(P,gridj,gprime,step,its);
+n=size(P,1);
+k=size(P,1);
+step1=step/3;
+gridj2=min(gridj):step1:max(gridj);
+m=length(gridj2);
+f1=zeros(m,n);
+f2=f1;
+f2(1,1)=1;
+f0=(1/(m*n))*ones(m,n);
+diff=1;
+it=0;
+nopt=length(gprime);
+nk=length(gridj2);
+<span class="keyword">while</span> it&lt;its
+    it=it+1;
+    <span class="keyword">for</span> k=1:n
+        <span class="keyword">for</span> l=1:m
+            k0=gridj2(l);
+            <span class="keyword">if</span> k0&lt;=min(gridj2)
+                aprime=gprime(1,:);
+            <span class="keyword">elseif</span> k0&gt;=max(gridj2)
+                aprime=gprime(nopt,:);
+            <span class="keyword">else</span>
+                ind=sum(gridj&lt;k0);
+                x1=gridj(ind);
+                x2=gridj(ind+1);
+                fx1=gprime(ind,:);
+                fx2=gprime(ind+1,:);
+                aprime=lininterp(fx1,fx2,x1,x2,gridj2(l));
+            <span class="keyword">end</span>
+            kmin=sum(aprime&lt;=min(gridj2));
+            kmax=sum(aprime&gt;=max(gridj2));
+            <span class="keyword">if</span> kmin~=0
+                krep=n-kmin;
+                indc=find((aprime&lt;=min(gridj2))==1);
+                ku=length(indc)+1;
+                f1(1,[indc])=f1(1,[indc])+P(k,[indc]).*f0(l,k);
+                i=sum((repmat(gridj2',1,n)&lt;=repmat(aprime,m,1)))+1;
+                i=i(ku:n);
+                n0=(aprime(ku:n)-gridj2(i-1))./(gridj2(i)-gridj2(i-1));
+                kuind=ku:n;
+                <span class="keyword">for</span> jk=1:length(i);
+                    f1(i(jk),kuind(jk))=f1(i(jk),kuind(jk))+P(k,kuind(jk)).*n0(jk).*f0(l,k);
+                    f1(i(jk)-1,kuind(jk))=f1(i(jk)-1,kuind(jk))+P(k,kuind(jk)).*(1-n0(jk)).*f0(l,k);
+                <span class="keyword">end</span>
+            <span class="keyword">elseif</span> kmax~=0
+                ku=(n-kmax);
+                indc=find((aprime&gt;=max(gridj2))==1);
+                f1(nk,[indc])=f1(nk,[indc])+P(k,[indc]).*f0(l,k);
+                i=sum((repmat(gridj2',1,n)&lt;=repmat(aprime,m,1)))+1;
+                i=i(1:ku);
+                n0=(aprime(1:ku)-gridj2(i-1))./(gridj2(i)-gridj2(i-1));
+                kuind=1:ku;
+                <span class="keyword">for</span> jk=1:length(i);
+                    f1(i(jk),kuind(jk))=f1(i(jk),kuind(jk))+P(k,kuind(jk)).*n0(jk).*f0(l,k);
+                    f1(i(jk)-1,kuind(jk))=f1(i(jk)-1,kuind(jk))+P(k,kuind(jk)).*(1-n0(jk)).*f0(l,k);
+                <span class="keyword">end</span>
+            <span class="keyword">else</span>
+                i=sum((repmat(gridj2',1,n)&lt;=repmat(aprime,m,1)))+1;
+                n0=(aprime-gridj2(i-1))./(gridj2(i)-gridj2(i-1));
+                kuind=1:n;
+                <span class="keyword">for</span> jk=1:n;
+                    f1(i(jk),kuind(jk))=f1(i(jk),kuind(jk))+P(k,kuind(jk)).*n0(jk).*f0(l,k);
+                    f1(i(jk)-1,kuind(jk))=f1(i(jk)-1,kuind(jk))+P(k,kuind(jk)).*(1-n0(jk)).*f0(l,k);
+                <span class="keyword">end</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    f1=f1./sum(sum(f1));
+
+    diff=sum(sum(abs(f1-f0)));
+    difstore(it)=diff;
+    f0=f1;
+    diff;
+<span class="keyword">end</span>
+f=f1;
+muk=sum(sum(repmat(gridj2',1,n).*f1));
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> [Z,Zprob] = tauchen(N,mu,rho,sigma,m)
+Z     = zeros(N,1);
+Zprob = zeros(N,N);
+a     = (1-rho)*mu;
+Z(N)  = m * sqrt(sigma^2 / (1 - rho^2));
+Z(1)  = -Z(N);
+zstep = (Z(N) - Z(1)) / (N - 1);
+<span class="keyword">for</span> i=2:(N-1)
+    Z(i) = Z(1) + zstep * (i - 1);
+<span class="keyword">end</span>
+Z = Z + a / (1-rho);
+<span class="keyword">for</span> j = 1:N
+    <span class="keyword">for</span> k = 1:N
+        <span class="keyword">if</span> k == 1
+            Zprob(j,k) = cdf_normal((Z(1) - a - rho * Z(j) + zstep / 2) / sigma);
+        <span class="keyword">elseif</span> k == N
+            Zprob(j,k) = 1 - cdf_normal((Z(N) - a - rho * Z(j) - zstep / 2) / sigma);
+        <span class="keyword">else</span>
+            Zprob(j,k) = cdf_normal((Z(k) - a - rho * Z(j) + zstep / 2) / sigma) - <span class="keyword">...</span>
+                         cdf_normal((Z(k) - a - rho * Z(j) - zstep / 2) / sigma);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">function</span> c = cdf_normal(x)
+    c = 0.5 * erfc(-x/sqrt(2));
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+<!-- R function [[download]()]
+
+
+Python function [[download](gss_bivariate.Py)]
+
+-->
+<style type="text/css">
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+</style>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

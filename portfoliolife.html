@@ -378,21 +378,18 @@ b3=0.0019704/100;
 Ret_income= ret_fac.*avg;
 
 <span class="comment">%!!!!!!!!!!!!!!!!!!!</span>
-<span class="comment">%! TERMINAL PERIOD: Age 101</span>
+<span class="comment">%! TERMINAL PERIOD: Age 100</span>
 <span class="comment">%!!!!!!!!!!!!!!!!!!!</span>
 
 VR1(:,1)=Utility(LW_grid,0,1,eta);
-opt_cons_VR(:,81)=LW_grid;
-opt_risky_VR(:,81)=0;
+opt_cons_VR(:,100)=LW_grid;
+opt_risky_VR(:,100)=0;
 
 <span class="comment">%!!!!!!!!!!!!!!!!!!!!!!</span>
 <span class="comment">%! RETIREMENT PERIODS !</span>
 <span class="comment">%!!!!!!!!!!!!!!!!!!!!!!</span>
 
 <span class="keyword">for</span> age=99:-1:65
-    <span class="comment">%for ind1=2:length(RS_grid)</span>
-    <span class="comment">%    RS_grid(ind1)=RS_grid(ind1)-rand(1)/1e+4;</span>
-    <span class="comment">%end</span>
     <span class="keyword">for</span> LW0=1:length(LW_grid)
             CurrentWealth=LW_grid(LW0);
             C_grid_new=C_grid;

@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Search Frictions in a Multi-Period OLG Model</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Search Frictions in a Multi-Period OLG Model</h1>
+
+</div>
+
+
+<p>Assume an economy in which same number agents are born every period and live exactly 18 periods. In every period, agents make consumption/saving and labor supply, and job search decisions that maximize their utility. Agents The solution is found using value function iterations over discretized grids. Labor market flows are determined by search-matching frictions.</p>
+<p>Matlab function [<a href="olg/end_empl_OLG.m">download</a>]</p>
+<pre class="codeinput">clearvars
+
+<span class="keyword">global</span> beta gamma1 eta phi UB age_ret SSben age_ret_early <span class="keyword">...</span>
+    A_M A_P alpha Chi vc zeta1 getta SSben_early <span class="keyword">...</span>
+    delta A_U A_US gamma2 tau_fed tau_a phiphi
+
+<span class="comment">%%%%% ENVIRONMENT</span>
+T=18; <span class="comment">%Total years possible to live</span>
+smoothing=0.50;
+mort(1:T)=[0.99669707 0.995429486 0.995449224 0.994502853 0.992060921 0.988141207 <span class="keyword">...</span>
+    0.982564818 0.975022021 0.961110564 0.939684294 0.906817011 0.857919296 0.78660651 <span class="keyword">...</span>
+    0.674984645 0.517178625 0.336303527 0.185469581 0.09144677 ];
+
+<span class="comment">%%%%% PARAMETERS EXOGENOUSLY DETERMINED</span>
+<span class="comment">% Firm production technology and wages paid</span>
+alpha               =0.40; <span class="comment">%Production parameter, constant returns to scale</span>
+zeta1               =0.50; <span class="comment">%Fraction of output paid to workers as wages</span>
+<span class="comment">% Matching Technology</span>
+phi                 =0.50; <span class="comment">%Matchning parameter, constant returns to scale</span>
+<span class="comment">% Agents</span>
+beta                =0.96; <span class="comment">%Discount factor for agents</span>
+eta                 =2.00; <span class="comment">%Utility parameter</span>
+phiphi              =0;
+<span class="comment">%%%%% Delta is such that capital-to-output is around 2.5.</span>
+delta               =0.45; <span class="comment">%Depreciation rate equivalent to 2.085% per year 0.97915^5</span>
+<span class="comment">%%%%% Gamma1 is such that agents on average spend a third of their time of</span>
+<span class="comment">%%%%% or market-related activities.</span>
+gamma1              =0.36; <span class="comment">%Utility parameter</span>
+<span class="comment">%%%%% SSben is such that the SS benefits are 40% of average wage</span>
+SSben       =0.145;  <span class="comment">%SS benefit parameter for retirees.</span>
+SSben_early =SSben*0.80; <span class="comment">% last: 0.75 (too low),0.80 (too low), 0.85 (too high)</span>
+<span class="comment">%%%%% PARAMETERS such that employment to LF makes sense</span>
+<span class="comment">% Production technology</span>
+A_P                 =1.00; <span class="comment">%Production technology</span>
+<span class="comment">% Matching Technology</span>
+A_M                 =1.00; <span class="comment">%Job matching technology</span>
+<span class="comment">% Firm</span>
+Chi                 =0.045;  <span class="comment">%Separation Rate %Fraction of jobs destroyed each period</span>
+vc                  =0.10; <span class="comment">%Cost of posting a vacancy (vc = vacancy cost)</span>
+getta               =1.00;  <span class="comment">%the increasing cost of vacancy posting</span>
+<span class="comment">% Agents</span>
+gamma2              =2.00; <span class="comment">%Utility parameter</span>
+A_U                 =1.00; <span class="comment">%Utility parameter: increases disutility from work and search if &gt;1</span>
+A_US                =1.00; <span class="comment">%Utility parameter: increases disutility from search only if &gt;1</span>
+<span class="comment">%%%%% POLICIES</span>
+<span class="comment">%UNEMPLOYMENT INSURANCE POLICY</span>
+UB               =0.04; <span class="comment">%atio of average wage received as unemployment insurance.</span>
+<span class="comment">% SOCIAL SECURITY POLICY</span>
+age_ret_early     =11;  <span class="comment">%Age at which early retirement is allowed</span>
+age_ret           =12;  <span class="comment">%Age at which full retirement is allowed</span>
+<span class="comment">% GOVERNMENT CONSUMPTION</span>
+GOV_CONS_CONSTANT=0.00;
+<span class="comment">% CAPITAL GAINS TAX RATE</span>
+tau_a       =0.00; <span class="comment">%SS tax on capital gains</span>
+<span class="comment">% LABOR INCOME TAX BRACKETS AND RATES</span>
+tau_fed            =0.12;
+<span class="comment">% SETUP GRIDS</span>
+kgrid              =0:0.005:0.28;
+ngrid              =0.00:0.05:0.60;
+sgrid              =0:0.01:0.62;
+ret_options        =1:2;
+
+<span class="comment">%%%%% MAKE INITIAL GUESSES</span>
+K=1.26367001701066;
+N=2.73830282741794;
+S=0.978776084288882;
+NExit=0.0492945424735956;
+tau_c=0.0333069852177538;
+n_bar=0.486272587167654;
+
+<span class="comment">%%%%% INITIALIZE DIFFERENCES</span>
+bigloop            =0;
+diff_K             =0.1;
+diff_N             =0.1;
+diff_S             =0.1;
+diff_NExit         =0.1;
+diff_max_DistUnemp =0.1;
+diff_tau_c         =0.1;
+
+<span class="keyword">while</span> abs(diff_K)&gt;0.91 || abs(diff_N)&gt;0.91 || abs(diff_S)&gt;0.91 || abs(diff_tau_c)&gt;0.91 || abs(diff_NExit)&gt;0.91
+    bigloop=bigloop+1;
+
+    <span class="comment">%%%%% SOLVE FOR INTEREST RATE AND WAGE RATE</span>
+    F=A_P*(K^alpha)*(N^(1-alpha)); <span class="comment">%Production</span>
+    w=zeta1*(1-alpha)*A_P*(K^alpha)*(N^(-alpha)); <span class="comment">%Wage</span>
+    r=alpha*A_P*(K^(alpha-1))*(N^(1-alpha))-delta; <span class="comment">%Rental rate of capital</span>
+
+    <span class="comment">%%%%% SOLVE FIRMS PROBLEM FOR NUMBER OF VACANCIES, V</span>
+    V=FirmProblem( K, N, S, NExit, n_bar);
+    Profit=F-w*N-r*K-vc*V;
+
+    [P_age,N_age,K_age,S_age,Omega_age,CE_age,CU_age,CR_age,C_age,UTE_age,<span class="keyword">...</span>
+    UTU_age,UTR_age,UT_age,Empl_age,Unempl_age,Ret_early_age,Ret_norm_age,<span class="keyword">...</span>
+    Ret_age,N_new1_age,N_new2_age,NExit1_age]=<span class="keyword">...</span>
+    policy_functions_value_iterations(w,r,V,S,tau_c,kgrid,ngrid,sgrid,ret_options,T,mort);
+
+    N_age_rel=N_age./P_age; K_age_rel=K_age./P_age;
+    S_age_rel=S_age./P_age; Omega_age_rel=Omega_age./P_age;
+    C_age_rel=C_age./P_age; UT_age_rel=UT_age./P_age;
+    Empl_age_rel=Empl_age./P_age; Unempl_age_rel=Unempl_age./P_age;
+    Ret_age_rel=Ret_age./P_age;
+
+    K1=sum(K_age);
+    N1=sum(N_age);
+    S1=sum(S_age);
+    n_bar1=sum(N_new1_age)/sum(N_new2_age);
+    NExit1=sum(NExit1_age)/sum(N_age);
+    C=sum(C_age);
+
+    <span class="comment">%%%%% GOVERNMENT</span>
+    <span class="comment">%%%% REVENUES</span>
+    GOV_REV1= K1*r*tau_a + N1*w*tau_fed;
+    GOV_REV2= C*tau_c ;
+    <span class="comment">%%%% EXPENSES</span>
+    GOV_EXP= sum(Unempl_age)*UB*w <span class="keyword">...</span>
+        + sum(Ret_early_age)*SSben_early*w <span class="keyword">...</span>
+        + sum(Ret_norm_age)*SSben*w;
+
+    <span class="comment">%%%% FINDING CONSUMPTION TAX THAT BALANCES THE BUDGET</span>
+    gov_grid=(-1:0.000001:1); GOV_BAL=zeros(1,length(gov_grid));
+    GovImbalance=GOV_REV1+GOV_REV2-GOV_EXP;
+    <span class="keyword">for</span> j=1:length(gov_grid)
+        GOV_BAL(j)=GOV_REV1+gov_grid(j)-GOV_EXP;
+    <span class="keyword">end</span>
+    <span class="comment">% NEW CONSUMPTION TAX THAT BALANCES THE BUDGET</span>
+    tau_c1_ind=(find(abs(GOV_BAL)==min(abs(GOV_BAL))));
+    tau_c1=gov_grid(tau_c1_ind)/C;
+
+    <span class="comment">%%%%%% COMPUTE DIFFERENCES BETWEEN GUESSES AND COMPUTED AGGREGATE VALUES</span>
+    diff_K             = (K1/K-1)*100;
+    diff_N             = (N1/N-1)*100;
+    diff_S             = (S1/S-1)*100;
+    diff_n_bar         = (n_bar1/n_bar-1)*100;
+    diff_NExit         = (NExit1/NExit-1)*100;
+    diff_tau_c         = (tau_c1/tau_c-1)*100;
+    <span class="comment">%%%%%% STORE AGGREGATE VALUES</span>
+    store_K(bigloop)    = K;     store_K1(bigloop)    = K1;     store_diff_K(bigloop)    = diff_K;
+    store_N(bigloop)    = N;     store_N1(bigloop)    = N1;     store_diff_N(bigloop)    = diff_N;
+    store_S(bigloop)    = S;     store_S1(bigloop)    = S1;     store_diff_S(bigloop)    = diff_S;
+    store_n_bar(bigloop)= n_bar; store_n_bar1(bigloop)= n_bar1; store_diff_n_bar(bigloop)= diff_n_bar;
+    store_NExit(bigloop)= NExit; store_NExit1(bigloop)= NExit1; store_diff_NExit(bigloop)= diff_NExit;
+    store_tau_c(bigloop)= tau_c; store_tau_c1(bigloop)= tau_c1; store_diff_tau_c(bigloop)= diff_tau_c;
+    <span class="comment">%%%%%% UPDATE THE INITIAL GUESSES BEFORE REITERATION</span>
+    K=K*(smoothing)+K1*(1-smoothing);
+    N=N*(smoothing)+N1*(1-smoothing);
+    S=S*(smoothing)+S1*(1-smoothing);
+    n_bar=n_bar*(smoothing)+n_bar1*(1-smoothing);
+    NExit=NExit*(smoothing)+NExit1*(1-smoothing);
+    tau_c=tau_c*(smoothing)+tau_c1*(1-smoothing);
+
+    [store_K;store_N;store_S;store_NExit;store_tau_c];
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span>[P_age,N_age,K_age,S_age,Omega_age,CE_age,CU_age,CR_age,C_age,UTE_age,<span class="keyword">...</span>
+    UTU_age,UTR_age,UT_age,Empl_age,Unempl_age,Ret_early_age,Ret_norm_age,<span class="keyword">...</span>
+    Ret_age,N_new1_age,N_new2_age,NExit1_age]=<span class="keyword">...</span>
+    policy_functions_value_iterations(w,r,V,S,tau_c,kgrid,ngrid,sgrid,ret_options,T,mort)
+
+<span class="keyword">global</span> beta UB age_ret SSben age_ret_early Chi  SSben_early tau_fed tau_a
+
+L_max=2^17;
+last_LF_age=14;
+LE_ind=[0,1,2^1,2^2,2^3,2^4,2^5,2^6,2^7,2^8,2^9,2^10,2^11,2^12, zeros(1,T-last_LF_age)];
+LU_ind=[1,1,2^1,2^2,2^3,2^4,2^5,2^6,2^7,2^8,2^9,2^10,2^11,2^12, zeros(1,T-last_LF_age)];
+LRearly_ind=[zeros(1,10) repmat(LE_ind(10)+LU_ind(10),1,8)];
+LR_ind=[zeros(1,11) LE_ind(11:14)*2+[0,LE_ind(11)*2,LE_ind(12)*3,+LE_ind(12)*3+LE_ind(14)] ];
+LR_ind(16:18)=repmat(LR_ind(15),1,3);
+
+maxVE    =zeros(length(kgrid),1);
+k1pointE =zeros(length(kgrid),find(LE_ind~=0, 1, <span class="string">'last'</span> ));
+npointE  =zeros(length(kgrid),find(LE_ind~=0, 1, <span class="string">'last'</span> ));
+retpointE=zeros(length(kgrid),find(LE_ind~=0, 1, <span class="string">'last'</span> ));
+cpointE  =zeros(length(kgrid),find(LE_ind~=0, 1, <span class="string">'last'</span> ));
+maxVU    =zeros(length(kgrid),1);
+k1pointU =zeros(length(kgrid),find(LU_ind~=0, 1, <span class="string">'last'</span> ));
+spointU  =zeros(length(kgrid),find(LU_ind~=0, 1, <span class="string">'last'</span> ));
+retpointU=zeros(length(kgrid),find(LU_ind~=0, 1, <span class="string">'last'</span> ));
+cpointU  =zeros(length(kgrid),find(LU_ind~=0, 1, <span class="string">'last'</span> ));
+maxVR_early    =zeros(length(kgrid),1);
+k1pointR_early =zeros(length(kgrid),find(LRearly_ind~=0, 1, <span class="string">'last'</span> )-find(LRearly_ind~=0, 1, <span class="string">'first'</span> )+1);
+cpointR_early  =zeros(length(kgrid),find(LRearly_ind~=0, 1, <span class="string">'last'</span> )-find(LRearly_ind~=0, 1, <span class="string">'first'</span> )+1);
+maxVR    =zeros(length(kgrid),1);
+k1pointR =zeros(length(kgrid),find(LR_ind~=0, 1, <span class="string">'last'</span> )-find(LR_ind~=0, 1, <span class="string">'first'</span> )+1);
+cpointR  =zeros(length(kgrid),find(LR_ind~=0, 1, <span class="string">'last'</span> )-find(LR_ind~=0, 1, <span class="string">'first'</span> )+1);
+
+<span class="keyword">for</span> i=1:T
+    LE.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    LE_new.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    LU.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+    LR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    LR.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+
+    kkE.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    kk1E.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    nnE.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    ssE.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    rrE.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    ccE.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+    UtilE.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LE_ind(i),1);
+
+    kkU.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+    kk1U.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+    nnU.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+    ssU.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+    rrU.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+    ccU.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+    UtilU.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LU_ind(i),1);
+
+    LR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    kkR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    kk1R_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    nnR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    ssR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    rrR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    ccR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+    UtilR_early.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LRearly_ind(i),1);
+
+    kkR.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+    kk1R.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+    nnR.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+    ssR.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+    rrR.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+    ccR.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+    UtilR.(sprintf(<span class="string">'age_%d'</span>,i))=zeros(LR_ind(i),1);
+<span class="keyword">end</span>
+
+<span class="comment">%%%%% INITIALIZE MATRICES FOR HH PROBLEM FOR COMPUTATIONAL SPEED</span>
+VR1_early=zeros(length(kgrid),1);
+VR1=zeros(length(kgrid),1);
+VE1=zeros(length(kgrid),1);
+VU1=zeros(length(kgrid),1);
+
+<span class="comment">%ONLY RETIREMENT STATES POSSIBLE AT AGES 15 THROUGH 18</span>
+VR_early=zeros(length(kgrid),1);
+VR=zeros(length(kgrid),1);
+VE=zeros(length(kgrid),length(ngrid),       1     ,length(ret_options));
+VU=zeros(length(kgrid),     1       ,length(sgrid),length(ret_options));
+<span class="keyword">for</span> age=T:-1:15
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+        cR_early= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + (w*SSben_early) <span class="keyword">...</span>
+            - kgrid ) ./ (1+tau_c);
+        cR_early= (cR_early).*(cR_early&gt;0);
+        VR_early(:,1)= Utility(cR_early,0,0)' + (mort(age)) .* beta .* (VR1_early(:,1)) ;
+
+        cR= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + (w*SSben) <span class="keyword">...</span>
+            - kgrid ) ./ (1+tau_c);
+        cR= (cR).*(cR&gt;0);
+        VR(:,1)= Utility(cR,0,0)' + (mort(age)) .* beta .* (VR1(:,1)) ;
+
+        maxVR_early(k0,1)=max(VR_early);
+        k1pointR_early(k0,age-10)=find(maxVR_early(k0,1)==VR_early);
+        cpointR_early(k0,age-10)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*SSben_early - kgrid(k1pointR_early(k0,age-10)) ) ./ (1+tau_c);
+        maxVR(k0,1)=max(VR);
+        k1pointR(k0,age-11)=find(maxVR(k0,1)==VR);
+        cpointR(k0,age-11)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            +  w*SSben - kgrid(k1pointR(k0,age-11)) ) ./ (1+tau_c);
+    <span class="keyword">end</span>
+    VR1_early=maxVR_early;
+    VR1=maxVR;
+<span class="keyword">end</span>
+VR_early=zeros(length(kgrid),1);
+VR=zeros(length(kgrid),1);
+VE=zeros(length(kgrid),length(ngrid),       1     );
+VU=zeros(length(kgrid),     1       ,length(sgrid));
+<span class="comment">%LABOR FORCE AND RETIREMENT STATES POSSIBLE AT AGE 14</span>
+<span class="keyword">for</span> age=14
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+        <span class="keyword">for</span> n=1:length(ngrid) <span class="comment">%n=labor supply; choice</span>
+            cE= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                + ngrid(n)*w*(1-tau_fed) <span class="keyword">...</span>
+                - kgrid ) ./ (1+tau_c);
+            cE= (cE).*(cE&gt;0);
+            VE(:,n,1,1)= Utility(cE,ngrid(n),sgrid(1))' <span class="keyword">...</span>
+                + (mort(age)) .* beta.* (VR1(:,1)) ;
+        <span class="keyword">end</span>
+        <span class="keyword">for</span> s=1:length(sgrid) <span class="comment">%s=job-search intensity; choice</span>
+            cU= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                + UB*w <span class="keyword">...</span>
+                - kgrid ) ./ (1+tau_c);
+            cU= (cU).*(cU&gt;0);
+            VU(:,1,s,1)= Utility(cU,ngrid(1),sgrid(s))' <span class="keyword">...</span>
+                + (mort(age)).* beta.*  (VR1(:,1)) ;
+        <span class="keyword">end</span>
+        cR_early= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + (w*SSben_early) <span class="keyword">...</span>
+            - kgrid ) ./ (1+tau_c);
+        cR_early= (cR_early).*(cR_early&gt;0);
+        VR_early(:,1)= Utility(cR_early,ngrid(1),sgrid(1))' + (mort(age)) .* beta .* (VR1_early(:,1)) ;
+
+        cR= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + (w*SSben*(age&gt;=age_ret)) <span class="keyword">...</span>
+            - kgrid ) ./ (1+tau_c);
+        cR= (cR).*(cR&gt;0);
+        VR(:,1)= Utility(cR,ngrid(1),sgrid(1))' + (mort(age)) .* beta .* (VR1(:,1)) ;
+
+        [maxVE(k0,1),IndE] = max(VE(:));
+        [k1pointE(k0,age),npointE(k0,age),~]=ind2sub(size(VE),IndE);
+        cpointE(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + ngrid(npointE(k0,age))*w*(1-tau_fed) <span class="keyword">...</span>
+            - kgrid(k1pointE(k0,age)) ) ./ (1+tau_c);
+        retpointE(k0,age)=2;
+        [maxVU(k0,1),IndU] = max(VU(:));
+        [k1pointU(k0,age),~,spointU(k0,age)]=ind2sub(size(VU),IndU);
+        cpointU(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*UB - kgrid(k1pointU(k0,age)) ) ./ (1+tau_c);
+        retpointU(k0,age)=2;
+        maxVR_early(k0,1)=max(VR_early);
+        k1pointR_early(k0,age-10)=find(maxVR_early(k0,1)==VR_early);
+        cpointR_early(k0,age-10)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*SSben_early - kgrid(k1pointR_early(k0,age-10)) ) ./ (1+tau_c);
+        maxVR(k0,1)=max(VR);
+        k1pointR(k0,age-11)=find(maxVR(k0,1)==VR);
+        cpointR(k0,age-11)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            +  w*SSben - kgrid(k1pointR(k0,age-11)) ) ./ (1+tau_c);
+    <span class="keyword">end</span>
+    VE1=maxVE;
+    VU1=maxVU;
+    VR1_early=maxVR_early;
+    VR1=maxVR;
+<span class="keyword">end</span>
+VR_early=zeros(length(kgrid),1);
+VR=zeros(length(kgrid),1);
+VE=zeros(length(kgrid),length(ngrid),       1     ,length(ret_options));
+VU=zeros(length(kgrid),     1       ,length(sgrid),length(ret_options));
+<span class="comment">%LABOR FORCE AND RETIREMENT STATES POSSIBLE AT AGES 12 THROUGH 13</span>
+<span class="keyword">for</span> age=13:-1:12
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+        <span class="keyword">for</span> ret=1:2 <span class="comment">%ret=indicates whether agent starts claiming SS benefits or not; choice</span>
+            <span class="keyword">for</span> n=1:length(ngrid) <span class="comment">%n=labor supply; choice</span>
+                cE= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                    + ngrid(n)*w*(1-tau_fed) <span class="keyword">...</span>
+                    - kgrid ) ./ (1+tau_c);
+                cE= (cE).*(cE&gt;0);
+                VE(:,n,1,ret)= Utility(cE,ngrid(n),sgrid(1))' <span class="keyword">...</span>
+                    + (mort(age)) .* beta.* (  ((1-Chi).* (VE1(:,1)) <span class="keyword">...</span>
+                    + (Chi).*(VU1(:,1))).*(ret==1) <span class="keyword">...</span>
+                    + (VR1(:,1)).*(ret==2) ) ;
+            <span class="keyword">end</span>
+            <span class="keyword">for</span> s=1:length(sgrid) <span class="comment">%s=job-search intensity; choice</span>
+                cU= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                    + UB*w <span class="keyword">...</span>
+                    - kgrid ) ./ (1+tau_c);
+                cU= (cU).*(cU&gt;0);
+                VU(:,1,s,ret)= Utility(cU,ngrid(1),sgrid(s))' <span class="keyword">...</span>
+                    + (mort(age)).* beta.* ( <span class="keyword">...</span>
+                    ((Matching_Function(sgrid(s), 1, S, V, 1, 2) .*  VE1(:,1)) <span class="keyword">...</span>
+                    + ((1 - Matching_Function(sgrid(s), 1, S, V, 1, 2)).*VU1(:,1))).*(ret==1)  <span class="keyword">...</span><span class="comment"> ...</span>
+                    + (VR1(:,1)).*(ret==2) ) ;
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+        cR_early= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + (w*SSben_early) <span class="keyword">...</span>
+            - kgrid ) ./ (1+tau_c);
+        cR_early= (cR_early).*(cR_early&gt;0);
+        VR_early(:,1)= Utility(cR_early,ngrid(1),sgrid(1))' + (mort(age)) .* beta .* (VR1_early(:,1)) ;
+
+        cR= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + (w*SSben*(age&gt;=age_ret)) <span class="keyword">...</span>
+            - kgrid ) ./ (1+tau_c);
+        cR= (cR).*(cR&gt;0);
+        VR(:,1)= Utility(cR,ngrid(1),sgrid(1))' + (mort(age)) .* beta .* (VR1(:,1)) ;
+
+        [maxVE(k0,1),IndE] = max(VE(:));
+        [k1pointE(k0,age),npointE(k0,age),~,retpointE(k0,age)]=ind2sub(size(VE),IndE);
+        cpointE(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + ngrid(npointE(k0,age))*w*(1-tau_fed) <span class="keyword">...</span>
+            - kgrid(k1pointE(k0,age)) ) ./ (1+tau_c);
+        [maxVU(k0,1),IndU] = max(VU(:));
+        [k1pointU(k0,age),~,spointU(k0,age),retpointU(k0,age)]=ind2sub(size(VU),IndU);
+        cpointU(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*UB - kgrid(k1pointU(k0,age)) ) ./ (1+tau_c);
+        maxVR_early(k0,1)=max(VR_early);
+        k1pointR_early(k0,age-10)=find(maxVR_early(k0,1)==VR_early);
+        cpointR_early(k0,age-10)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*SSben_early - kgrid(k1pointR_early(k0,age-10)) ) ./ (1+tau_c);
+        maxVR(k0,1)=max(VR);
+        k1pointR(k0,age-11)=find(maxVR(k0,1)==VR);
+        cpointR(k0,age-11)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            +  w*SSben - kgrid(k1pointR(k0,age-11)) ) ./ (1+tau_c);
+    <span class="keyword">end</span>
+    VE1=maxVE;
+    VU1=maxVU;
+    VR1_early=maxVR_early;
+    VR1=maxVR;
+<span class="keyword">end</span>
+VR_early=zeros(length(kgrid),1);
+VR=zeros(length(kgrid),1);
+VE=zeros(length(kgrid),length(ngrid),       1     ,length(ret_options));
+VU=zeros(length(kgrid),     1       ,length(sgrid),length(ret_options));
+<span class="comment">%LABOR FORCE AND RETIREMENT STATES POSSIBLE AT AGE 11</span>
+<span class="keyword">for</span> age=11
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+        <span class="keyword">for</span> ret=1:2 <span class="comment">%ret=indicates whether agent starts claiming SS benefits or not; choice</span>
+            <span class="keyword">for</span> n=1:length(ngrid) <span class="comment">%n=labor supply; choice</span>
+                cE= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                    + ngrid(n)*w*(1-tau_fed) <span class="keyword">...</span>
+                    - kgrid ) ./ (1+tau_c);
+                cE= (cE).*(cE&gt;0);
+                VE(:,n,1,ret)= Utility(cE,ngrid(n),sgrid(1))' <span class="keyword">...</span>
+                    + (mort(age)) .* beta.* (  ((1-Chi).* (VE1(:,1)) <span class="keyword">...</span>
+                    + (Chi).*(VU1(:,1))).*(ret==1) <span class="keyword">...</span>
+                    + (VR1(:,1)).*(ret==2) ) ;
+            <span class="keyword">end</span>
+            <span class="keyword">for</span> s=1:length(sgrid) <span class="comment">%s=job-search intensity; choice</span>
+                cU= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                    + UB*w <span class="keyword">...</span>
+                    - kgrid ) ./ (1+tau_c);
+                cU= (cU).*(cU&gt;0);
+                VU(:,1,s,ret)= Utility(cU,ngrid(1),sgrid(s))' <span class="keyword">...</span>
+                    + (mort(age)).* beta.* ( <span class="keyword">...</span>
+                    ((Matching_Function(sgrid(s), 1, S, V, 1, 2) .*  VE1(:,1)) <span class="keyword">...</span>
+                    + ((1 - Matching_Function(sgrid(s), 1, S, V, 1, 2)).*VU1(:,1))).*(ret==1)  <span class="keyword">...</span><span class="comment"> ...</span>
+                    + (VR1(:,1)).*(ret==2) ) ;
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+        cR_early= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + (w*SSben_early*(age&gt;=age_ret_early)) <span class="keyword">...</span>
+            - kgrid ) ./ (1+tau_c);
+        cR_early= (cR_early).*(cR_early&gt;0);
+        VR_early(:,1)= Utility(cR_early,ngrid(1),sgrid(1))' + (mort(age)) .* beta .* (VR1_early(:,1)) ;
+
+        [maxVE(k0,1),IndE] = max(VE(:));
+        [k1pointE(k0,age),npointE(k0,age),~,retpointE(k0,age)]=ind2sub(size(VE),IndE);
+        cpointE(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + ngrid(npointE(k0,age))*w*(1-tau_fed) <span class="keyword">...</span>
+            - kgrid(k1pointE(k0,age)) ) ./ (1+tau_c);
+        [maxVU(k0,1),IndU] = max(VU(:));
+        [k1pointU(k0,age),~,spointU(k0,age),retpointU(k0,age)]=ind2sub(size(VU),IndU);
+        cpointU(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*UB - kgrid(k1pointU(k0,age)) ) ./ (1+tau_c);
+        maxVR_early(k0,1)=max(VR_early);
+        k1pointR_early(k0,age-10)=find(maxVR_early(k0,1)==VR_early);
+        cpointR_early(k0,age-10)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*SSben_early - kgrid(k1pointR_early(k0,age-10)) ) ./ (1+tau_c);
+    <span class="keyword">end</span>
+    VE1=maxVE;
+    VU1=maxVU;
+    VR1_early=maxVR_early;
+<span class="keyword">end</span>
+VR_early=zeros(length(kgrid),1);
+VR=zeros(length(kgrid),1);
+VE=zeros(length(kgrid),length(ngrid),       1     ,length(ret_options));
+VU=zeros(length(kgrid),     1       ,length(sgrid),length(ret_options));
+<span class="comment">%LABOR FORCE AND RETIREMENT STATES POSSIBLE AT AGE 10</span>
+<span class="keyword">for</span> age=10
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+        <span class="keyword">for</span> ret=1:2 <span class="comment">%ret=indicates whether agent starts claiming SS benefits or not; choice</span>
+            <span class="keyword">for</span> n=1:length(ngrid) <span class="comment">%n=labor supply; choice</span>
+                cE= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                    + ngrid(n)*w*(1-tau_fed) <span class="keyword">...</span>
+                    - kgrid ) ./ (1+tau_c);
+                cE= (cE).*(cE&gt;0);
+                VE(:,n,1,ret)= Utility(cE,ngrid(n),sgrid(1))' <span class="keyword">...</span>
+                    + (mort(age)) .* beta.* ( (((1-Chi).* (VE1(:,1)) <span class="keyword">...</span>
+                    + (Chi).*(VU1(:,1))).*(ret==1)) <span class="keyword">...</span>
+                    + ((VR1_early(:,1)).*(ret==2))  ) ;
+            <span class="keyword">end</span>
+            <span class="keyword">for</span> s=1:length(sgrid) <span class="comment">%s=job-search intensity; choice</span>
+                cU= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                    + UB*w <span class="keyword">...</span>
+                    - kgrid ) ./ (1+tau_c);
+                cU= (cU).*(cU&gt;0);
+                VU(:,1,s,ret)= Utility(cU,ngrid(1),sgrid(s))' <span class="keyword">...</span>
+                    + (mort(age)).* beta.* ( <span class="keyword">...</span>
+                    ( ((Matching_Function(sgrid(s), 1, S, V, 1, 2) .*  VE1(:,1)) <span class="keyword">...</span>
+                    + ((1 - Matching_Function(sgrid(s), 1, S, V, 1, 2)).*VU1(:,1))).*(ret==1) ) <span class="keyword">...</span>
+                    + ((VR1_early(:,1)).*(ret==2))  ) ;
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+        [maxVE(k0,1),IndE] = max(VE(:));
+        [k1pointE(k0,age),npointE(k0,age),~,retpointE(k0,age)]=ind2sub(size(VE),IndE);
+        cpointE(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + ngrid(npointE(k0,age))*w*(1-tau_fed) <span class="keyword">...</span>
+            - kgrid(k1pointE(k0,age)) ) ./ (1+tau_c);
+        [maxVU(k0,1),IndU] = max(VU(:));
+        [k1pointU(k0,age),~,spointU(k0,age),retpointU(k0,age)]=ind2sub(size(VU),IndU);
+        cpointU(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*UB - kgrid(k1pointU(k0,age)) ) ./ (1+tau_c);
+    <span class="keyword">end</span>
+    VE1=maxVE;
+    VU1=maxVU;
+<span class="keyword">end</span>
+VR_early=zeros(length(kgrid),1);
+VR=zeros(length(kgrid),1);
+VE=zeros(length(kgrid),length(ngrid),       1     ,1);
+VU=zeros(length(kgrid),     1       ,length(sgrid),1);
+<span class="comment">%LABOR FORCE AND RETIREMENT STATES POSSIBLE AT AGES 1 THROUGH 9</span>
+<span class="keyword">for</span> age=9:-1:1
+    <span class="keyword">for</span> k0=1:length(kgrid) <span class="comment">%k0=total assets rolled over from the previous period; state</span>
+        <span class="keyword">for</span> n=1:length(ngrid) <span class="comment">%n=labor supply; choice</span>
+            cE= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                + ngrid(n)*w*(1-tau_fed) <span class="keyword">...</span>
+                - kgrid ) ./ (1+tau_c);
+            cE= (cE).*(cE&gt;0);
+            VE(:,n,1,1)= Utility(cE,ngrid(n),sgrid(1))' <span class="keyword">...</span>
+                + (mort(age)) .* beta.* ( (1-Chi).* (VE1(:,1)) <span class="keyword">...</span>
+                + (Chi).*(VU1(:,1)) ) ;
+        <span class="keyword">end</span>
+        <span class="keyword">for</span> s=1:length(sgrid) <span class="comment">%s=job-search intensity; choice</span>
+            cU= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+                + UB*w <span class="keyword">...</span>
+                - kgrid ) ./ (1+tau_c);
+            cU= (cU).*(cU&gt;0);
+            VU(:,1,s,1)= Utility(cU,ngrid(1),sgrid(s))' <span class="keyword">...</span>
+                + (mort(age)).* beta.* ( <span class="keyword">...</span>
+                (Matching_Function(sgrid(s), 1, S, V, 1, 2) .*  VE1(:,1)) <span class="keyword">...</span>
+                + ((1 - Matching_Function(sgrid(s), 1, S, V, 1, 2)).*VU1(:,1)) ) ;
+        <span class="keyword">end</span>
+        [maxVE(k0,1),IndE] = max(VE(:));
+        [k1pointE(k0,age),npointE(k0,age),~,~]=ind2sub(size(VE),IndE);
+        cpointE(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + ngrid(npointE(k0,age))*w*(1-tau_fed) <span class="keyword">...</span>
+            - kgrid(k1pointE(k0,age)) ) ./ (1+tau_c);
+        [maxVU(k0,1),IndU] = max(VU(:));
+        [k1pointU(k0,age),~,spointU(k0,age),~]=ind2sub(size(VU),IndU);
+        cpointU(k0,age)= ( kgrid(k0)*r*(1-tau_a) + kgrid(k0) <span class="keyword">...</span>
+            + w*UB - kgrid(k1pointU(k0,age)) ) ./ (1+tau_c);
+    <span class="keyword">end</span>
+    VE1=maxVE;
+    VU1=maxVU;
+<span class="keyword">end</span>
+<span class="comment">%%%%% POPULATION TRANSITION SIMULATION</span>
+<span class="comment">%%%%% AND</span>
+<span class="comment">%%%%% AGENTS' LIVES SIMULATION</span>
+<span class="comment">%%%%% STARTING CONDITIONS FOR NEWLY BORN</span>
+kkU.age_1(1)=1;LU.age_1(1)=1;
+<span class="keyword">for</span> age=1
+    <span class="keyword">for</span> i=1:1:LU_ind(age)
+        kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=spointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)));
+
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2));
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2);
+        LE_new.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = 1;
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">for</span> age=2:9
+    <span class="keyword">for</span> i=1:1:LU_ind(age)
+        kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=spointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)));
+
+        kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=npointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i),ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)),0);
+
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2));
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * Chi;
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (1-Chi);
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2);
+        LE_new.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = 1;
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">for</span> age=10
+    <span class="keyword">for</span> i=1:1:LU_ind(age)
+        kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=spointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)));
+
+        kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=npointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i),ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)),0);
+
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2)) * <span class="keyword">...</span>
+            (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1) ;
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Chi * <span class="keyword">...</span>
+            (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1);
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Chi) * <span class="keyword">...</span>
+            (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1);
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2) * <span class="keyword">...</span>
+            (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1) ;
+        LE_new.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = 1;
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))(+i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">for</span> age=11
+    <span class="keyword">for</span> i=1:1:LU_ind(age)
+        kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=spointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)));
+
+        kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=npointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i),ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)),0);
+
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2)) * <span class="keyword">...</span>
+            (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1) ;
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Chi * <span class="keyword">...</span>
+            (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1);
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Chi) * <span class="keyword">...</span>
+            (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1);
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2) * <span class="keyword">...</span>
+            (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1) ;
+        LE_new.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = 1;
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i=1:1:LRearly_ind(age)
+        kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        UtilR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,0);
+
+        LR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i) ;
+        kkR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">for</span> age=12:13
+    <span class="keyword">for</span> i=1:1:LU_ind(age)
+        kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=spointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)));
+
+        kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=npointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i),ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)),0);
+
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2)) * <span class="keyword">...</span>
+            (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1) ;
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Chi * <span class="keyword">...</span>
+            (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1);
+        kkU.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i) = mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            (1-Chi) * <span class="keyword">...</span>
+            (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1);
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * <span class="keyword">...</span>
+            Matching_Function(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)), 1, S, V, 1, 2) * <span class="keyword">...</span>
+            (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==1) ;
+        LE_new.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i) = 1;
+        kkE.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+
+        LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i=1:1:LRearly_ind(age)
+        kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        UtilR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,0);
+    <span class="keyword">end</span>
+    LR_early.(sprintf(<span class="string">'age_%d'</span>,age+1)) = mort(age) .* LR_early.(sprintf(<span class="string">'age_%d'</span>,age)) ;
+    kkR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))= kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age));
+    <span class="keyword">for</span> i=1:1:LR_ind(age)
+        kk1R.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointR(kkR.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-11);
+        ccR.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointR(kkR.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-11);
+        UtilR.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccR.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,0);
+    <span class="keyword">end</span>
+    LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(2*LU_ind(age)+1:LR_ind(age+1)) = mort(age) .* LR.(sprintf(<span class="string">'age_%d'</span>,age));
+    kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(2*LU_ind(age)+1:LR_ind(age+1))= kk1R.(sprintf(<span class="string">'age_%d'</span>,age));
+<span class="keyword">end</span>
+<span class="keyword">for</span> age=14
+    <span class="keyword">for</span> i=1:1:LU_ind(age)
+        kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=spointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointU(kkU.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilU.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccU.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,age))(i)));
+
+        kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=npointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=retpointE(kkE.(sprintf(<span class="string">'age_%d'</span>,age))(i),age);
+        UtilE.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccE.(sprintf(<span class="string">'age_%d'</span>,age))(i),ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,age))(i)),0);
+
+        LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= mort(age) * LU.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrU.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(i)= kk1U.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+        LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= mort(age) * LE.(sprintf(<span class="string">'age_%d'</span>,age))(i) * (rrE.(sprintf(<span class="string">'age_%d'</span>,age))(i)==2);
+        kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(LU_ind(age)+i)= kk1E.(sprintf(<span class="string">'age_%d'</span>,age))(i);
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i=1:1:LRearly_ind(age)
+        kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        UtilR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,0);
+    <span class="keyword">end</span>
+    LR_early.(sprintf(<span class="string">'age_%d'</span>,age+1)) = mort(age) .* LR_early.(sprintf(<span class="string">'age_%d'</span>,age)) ;
+    kkR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))= kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age));
+    <span class="keyword">for</span> i=1:1:LR_ind(age)
+        kk1R.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointR(kkR.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-11);
+        ccR.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointR(kkR.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-11);
+        UtilR.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccR.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,0);
+    <span class="keyword">end</span>
+    LR.(sprintf(<span class="string">'age_%d'</span>,age+1))(2*LU_ind(age)+1:LR_ind(age+1)) = mort(age) .* LR.(sprintf(<span class="string">'age_%d'</span>,age));
+    kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))(2*LU_ind(age)+1:LR_ind(age+1))= kk1R.(sprintf(<span class="string">'age_%d'</span>,age));
+<span class="keyword">end</span>
+<span class="keyword">for</span> age=15:T
+    <span class="keyword">for</span> i=1:1:LRearly_ind(age)
+        kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointR_early(kkR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-10);
+        UtilR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccR_early.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,0);
+    <span class="keyword">end</span>
+    LR_early.(sprintf(<span class="string">'age_%d'</span>,age+1)) = mort(age) .* LR_early.(sprintf(<span class="string">'age_%d'</span>,age)) ;
+    kkR_early.(sprintf(<span class="string">'age_%d'</span>,age+1))= kk1R_early.(sprintf(<span class="string">'age_%d'</span>,age));
+    <span class="keyword">for</span> i=1:1:LR_ind(age)
+        kk1R.(sprintf(<span class="string">'age_%d'</span>,age))(i)=k1pointR(kkR.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-11);
+        ccR.(sprintf(<span class="string">'age_%d'</span>,age))(i)=cpointR(kkR.(sprintf(<span class="string">'age_%d'</span>,age))(i),age-11);
+        UtilR.(sprintf(<span class="string">'age_%d'</span>,age))(i)=Utility(ccR.(sprintf(<span class="string">'age_%d'</span>,age))(i),0,0);
+    <span class="keyword">end</span>
+    LR.(sprintf(<span class="string">'age_%d'</span>,age+1)) = mort(age) .* LR.(sprintf(<span class="string">'age_%d'</span>,age));
+    kkR.(sprintf(<span class="string">'age_%d'</span>,age+1))= kk1R.(sprintf(<span class="string">'age_%d'</span>,age));
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> j=1:T
+    P_age(j)=sum(LE.(sprintf(<span class="string">'age_%d'</span>,j)))+sum(LU.(sprintf(<span class="string">'age_%d'</span>,j)))+sum(LR_early.(sprintf(<span class="string">'age_%d'</span>,j)))+sum(LR.(sprintf(<span class="string">'age_%d'</span>,j)));
+    N_age(j)=sum(LE.(sprintf(<span class="string">'age_%d'</span>,j)).*ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,j)))');
+    K_age(j)=sum(LE.(sprintf(<span class="string">'age_%d'</span>,j)).*kgrid(kkE.(sprintf(<span class="string">'age_%d'</span>,j)))')+sum(LU.(sprintf(<span class="string">'age_%d'</span>,j)).*kgrid(kkU.(sprintf(<span class="string">'age_%d'</span>,j)))')<span class="keyword">...</span>
+        +sum(LR_early.(sprintf(<span class="string">'age_%d'</span>,j)).*kgrid(kkR_early.(sprintf(<span class="string">'age_%d'</span>,j)))')+sum(LR.(sprintf(<span class="string">'age_%d'</span>,j)).*kgrid(kkR.(sprintf(<span class="string">'age_%d'</span>,j)))');
+    S_age(j)=sum(LU.(sprintf(<span class="string">'age_%d'</span>,j)).*sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,j)))');
+    Omega_age(j)=sum(LU.(sprintf(<span class="string">'age_%d'</span>,j)).*(sgrid(ssU.(sprintf(<span class="string">'age_%d'</span>,j)))'&gt;0));
+    CE_age(j)=sum(LE.(sprintf(<span class="string">'age_%d'</span>,j)).*(ccE.(sprintf(<span class="string">'age_%d'</span>,j))));
+    CU_age(j)=sum(LU.(sprintf(<span class="string">'age_%d'</span>,j)).*(ccU.(sprintf(<span class="string">'age_%d'</span>,j))));
+    CR_age(j)=sum(LR.(sprintf(<span class="string">'age_%d'</span>,j)).*(ccR.(sprintf(<span class="string">'age_%d'</span>,j))))+sum(LR_early.(sprintf(<span class="string">'age_%d'</span>,j)).*(ccR_early.(sprintf(<span class="string">'age_%d'</span>,j))));
+    C_age(j)=CE_age(j)+CU_age(j)+CR_age(j);
+    UTE_age(j)=sum(LE.(sprintf(<span class="string">'age_%d'</span>,j)).*(UtilE.(sprintf(<span class="string">'age_%d'</span>,j))));
+    UTU_age(j)=sum(LU.(sprintf(<span class="string">'age_%d'</span>,j)).*(UtilU.(sprintf(<span class="string">'age_%d'</span>,j))));
+    UTR_age(j)=sum(LR.(sprintf(<span class="string">'age_%d'</span>,j)).*(UtilR.(sprintf(<span class="string">'age_%d'</span>,j))))+sum(LR_early.(sprintf(<span class="string">'age_%d'</span>,j)).*(UtilR_early.(sprintf(<span class="string">'age_%d'</span>,j))));
+    UT_age(j)=UTE_age(j)+UTU_age(j)+UTR_age(j);
+    Empl_age(j)=sum(LE.(sprintf(<span class="string">'age_%d'</span>,j)));
+    Unempl_age(j)=sum(LU.(sprintf(<span class="string">'age_%d'</span>,j)));
+    Ret_early_age(j)=sum(LR_early.(sprintf(<span class="string">'age_%d'</span>,j)));
+    Ret_norm_age(j)=sum(LR.(sprintf(<span class="string">'age_%d'</span>,j)));
+    Ret_age(j)=Ret_early_age(j)+Ret_norm_age(j);
+
+    N_new1_age(j)=sum(LE_new.(sprintf(<span class="string">'age_%d'</span>,j)).*LE.(sprintf(<span class="string">'age_%d'</span>,j)).*ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,j)))');
+    N_new2_age(j)=sum(LE_new.(sprintf(<span class="string">'age_%d'</span>,j)).*LE.(sprintf(<span class="string">'age_%d'</span>,j)));
+    NExit1_age(j)=sum(LE.(sprintf(<span class="string">'age_%d'</span>,j)).*(rrE.(sprintf(<span class="string">'age_%d'</span>,j))==2).*ngrid(nnE.(sprintf(<span class="string">'age_%d'</span>,j)))');
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> [U]=Utility(c,n,s)
+<span class="comment">%Arguments:</span>
+<span class="comment">%c=consumption,</span>
+<span class="comment">%n=labor supply,</span>
+<span class="comment">%s=job-search intensity</span>
+<span class="comment">%</span>
+<span class="keyword">global</span> gamma1 eta A_U A_US gamma2 phiphi
+U=((((c+phiphi).^(gamma1)).*(1-A_U.*(n+A_US.*s.^gamma2)).^(1-gamma1)).^(1-eta)-1)./(1-eta); <span class="comment">%Last good one</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span>[RESULT]=Matching_Function(job_search, ~, total_search_effort, V, ~, type)
+<span class="comment">% Matching function describes the relationship between the unemployed,</span>
+<span class="comment">% vacancies and job search effort of a particular group of unemployed.</span>
+
+<span class="keyword">global</span> phi A_M
+
+<span class="keyword">if</span> type==1
+    M= A_M * V^phi * total_search_effort^(1-phi) ;
+    q=M/V;
+    <span class="keyword">if</span> q&gt;1
+        q=1;<span class="comment">%('Prob warning: q&gt;1')</span>
+    <span class="keyword">elseif</span> q&lt;0
+        q=0;<span class="comment">%('Prob warning: q&lt;1')</span>
+    <span class="keyword">end</span>
+    RESULT=q;
+<span class="keyword">elseif</span> type==2
+    rel_search_intensity= (job_search) / (total_search_effort);
+    M1= rel_search_intensity * A_M * V^phi * total_search_effort^(1-phi) ;
+    p=M1/1;
+    <span class="keyword">if</span> p&gt;1
+        p=1;<span class="comment">%('Prob warning: p&gt;1')</span>
+    <span class="keyword">elseif</span> p&lt;0
+        p=0;<span class="comment">%('Prob warning: p&lt;1')</span>
+    <span class="keyword">elseif</span> isnan(p)
+        p=0;
+    <span class="keyword">end</span>
+    RESULT=p;
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> [ V_final ] = FirmProblem( K, N, S, NExit, n_bar)
+
+<span class="keyword">global</span> phi A_M A_P alpha Chi vc zeta1 delta getta
+
+w=zeta1*(1-alpha)*A_P*(K^alpha)*(N^(-alpha)); <span class="comment">%Wage</span>
+r=alpha*A_P*(K^(alpha-1))*(N^(1-alpha))-delta; <span class="comment">%Rental rate of capital</span>
+
+Vgrid=0.0001:0.0001:15;
+FOC=zeros(1,length(Vgrid));
+
+<span class="keyword">for</span> V=1:length(Vgrid)
+    q(V)= A_M * (Vgrid(V)^(phi-1)) * (S^(1-phi));
+    N1(V)= (1-Chi-NExit)*N + q(V)*Vgrid(V)*n_bar;
+    redpart(V)= (1-alpha) * (A_P*(K^alpha)*(N1(V)^(-alpha))) * q(V) * n_bar ;
+    bluepart(V)= q(V)*w*n_bar;
+    redblue(V)= (redpart(V)-bluepart(V));
+    FOC(V)= ((1+r)^(-1)) * (redpart(V)-bluepart(V)) - getta*vc*V^(getta-1);
+<span class="keyword">end</span>
+V_final= Vgrid(abs(FOC)==min(abs(FOC)));
+<span class="keyword">end</span>
+</pre>
+<!-- R function [[download]()]
+
+
+Python function [[download](gss_bivariate.Py)]
+
+-->
+<style type="text/css">
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+</style>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Multi Period Stationary Overlapping Generations Model</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Multi Period Stationary Overlapping Generations Model</h1>
+
+</div>
+
+
+<p>Assume an economy in which same number agents are born every period and live exactly 60 periods. In every period, agents make consumption/saving and labor supply decisions that maximize their utility. The solution is found using value function iterations over discretized grids.</p>
+<p>Matlab function [<a href="olg/olg_kn_60.m">download</a>]</p>
+<pre class="codeinput">clearvars
+<span class="keyword">global</span> A alpha delta eta gamma
+<span class="comment">%Production parameters</span>
+A=1; alpha=0.5; delta=0.1;
+<span class="comment">%Agent and utility parameters</span>
+AGE=60; beta=0.95; eta=2; gamma=0.5;
+<span class="comment">%Discretized grids</span>
+kgrid=[0:0.01:7]'; ngrid=[0:0.1:0.9]';
+smooth=0.8; eps1=0.00001; eps2=0.00001;
+<span class="comment">%Initialization</span>
+k1max=zeros(length(kgrid),AGE);
+nmax=zeros(length(kgrid),AGE);
+V=zeros(length(kgrid),length(ngrid));
+dif=1; loop=1;
+<span class="comment">%Initial Guesses</span>
+K(loop)=1; N(loop)=1;
+
+<span class="keyword">while</span> dif&gt;eps1
+    <span class="comment">%Value function iterations</span>
+    [~,w,r]=ProductionFunction(K(loop),N(loop));
+    V1=zeros(length(kgrid),1);
+    <span class="keyword">for</span> age=AGE:-1:1
+        <span class="keyword">for</span> k=1:length(kgrid)
+            <span class="keyword">for</span> n=1:length(ngrid)
+                c= kgrid(k)*(1+r) + ngrid(n)*w - kgrid ;
+                c= (c).*(c&gt;0);
+                V(:,n)=UtilityFunction(c+eps2,ngrid(n))+beta*V1;
+            <span class="keyword">end</span>
+            [k1max(k,age),nmax(k,age)]=find(V==max(max(V)));
+            Vmax(k,1)=V(k1max(k,age),nmax(k,age));
+        <span class="keyword">end</span>
+        V1=Vmax;
+    <span class="keyword">end</span>
+    k0=1;
+    <span class="keyword">for</span> i=1:AGE
+        k_opt(i)=k0;
+        n_opt(i)=nmax(k0,i);
+        k1_opt(i)=k1max(k0,i);
+        k0=k1_opt(i);
+    <span class="keyword">end</span>
+    K1(loop)=sum(kgrid(k_opt))/AGE;
+    N1(loop)=sum(ngrid(n_opt))/AGE;
+    dif(loop)=abs(K1(loop)-K(loop));
+    loop=loop+1;
+    K(loop)=K(loop-1)*smooth+K1(loop-1)*(1-smooth);
+    N(loop)=N(loop-1)*smooth+N1(loop-1)*(1-smooth);
+<span class="keyword">end</span>
+
+figure; hold <span class="string">on</span>; plot(nmax(:,15)); plot(nmax(:,45)); plot(nmax(:,55));
+xlabel(<span class="string">'Asset Holdings'</span>);ylabel(<span class="string">'Labor Supply Choice'</span>);
+legend(<span class="string">'Age 15'</span>, <span class="string">'Age 45'</span>, <span class="string">'Age 55'</span>);
+
+figure; hold <span class="string">on</span>; plot(k1max(:,15)); plot(k1max(:,45)); plot(k1max(:,55));
+xlabel(<span class="string">'Asset Holdings'</span>);ylabel(<span class="string">'Savings Choice'</span>);
+legend(<span class="string">'Age 15'</span>, <span class="string">'Age 45'</span>, <span class="string">'Age 55'</span>);
+
+<span class="keyword">function</span>[u]=UtilityFunction(c,n)
+<span class="keyword">global</span> eta gamma
+u=(((c.^gamma).*(1-n)^(1-gamma)).^(1-eta)-1)./(1-eta);
+<span class="keyword">end</span>
+
+<span class="keyword">function</span>[Y,w,r]=ProductionFunction(K,N)
+<span class="keyword">global</span> A alpha delta
+Y=A*(K^alpha)*(N^(1-alpha));
+w=(1-alpha)*A*(K^alpha)*(N^(-alpha));
+r=alpha*A*(K^(alpha-1))*(N^(1-alpha))-delta;
+<span class="keyword">end</span>
+</pre>
+<p><img src="olg/html/olg_kn_60_01.png" style="width:33.0%" /> <img src="olg/html/olg_kn_60_02.png" style="width:33.0%" /> <img src="olg/html/converge1.png" style="width:33.0%" /></p>
+<!-- R function [[download]()]
+
+
+Python function [[download](gss_bivariate.Py)]
+
+-->
+<style type="text/css">
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+</style>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
