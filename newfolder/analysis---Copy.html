@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Analysis</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.16/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Micro Sim Game</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Welcome</a>
+</li>
+<li>
+  <a href="advisers.html">Advisers</a>
+</li>
+<li>
+  <a href="analysis.html">Analysis</a>
+</li>
+<li>
+  <a href="submit.html">Submit Decision</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Analysis</h1>
+
+</div>
+
+
+<script type="text/javascript">
+function TheLoginA() {
+var password1 = 'pepper1';
+if (this.document.loginA.pass.value == password1) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+</script>
+<script type="text/javascript">
+function TheLoginB() {
+var password2 = 'pepper2';
+if (this.document.loginB.pass.value == password2) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+</script>
+<script type="text/javascript">
+function TheLoginC() {
+var password3 = 'pepper3';
+if (this.document.loginC.pass.value == password3) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginD() {
+var password4 = 'pepper4';
+if (this.document.loginD.pass.value == password4) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginE() {
+var password5 = 'pepper5';
+if (this.document.loginE.pass.value == password5) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginF() {
+var password6 = 'pepper6';
+if (this.document.loginF.pass.value == password6) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginG() {
+var password7 = 'pepper7';
+if (this.document.loginG.pass.value == password7) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginH() {
+var password8 = 'pepper8';
+if (this.document.loginH.pass.value == password8) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginI() {
+var password9 = 'pepper9';
+if (this.document.loginI.pass.value == password9) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+</script>
+<style>
+  .col2 {
+    columns: 2 100px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 100px; /* chrome, safari */
+    -moz-columns: 2 100px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+<p><br></p>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-zv4m{border-color:#ffffff;text-align:left;vertical-align:top}
+</style>
+<center>
+<table class="tg">
+<thead>
+<tr>
+<th class="tg-zv4m">
+<center>
+<div id="team-a" class="section level5">
+<h5>Team A</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginA" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginA(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+</div>
+<div id="team-b" class="section level5">
+<h5>Team B</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginB" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginB(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+</div>
+<div id="team-c" class="section level5">
+<h5>Team C</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginC" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginC(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+</div>
+<div id="team-d" class="section level5">
+<h5>Team D</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginD" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginD(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+</div>
+<div id="team-e" class="section level5">
+<h5>Team E</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginE" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginE(this.form)">
+</form>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tg-zv4m">
+<center>
+</div>
+<div id="team-f" class="section level5">
+<h5>Team F</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginF" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginF(this.form)">
+</form>
+</div>
+</td>
+<td class="tg-zv4m">
+<center>
+</div>
+<div id="team-g" class="section level5">
+<h5>Team G</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginG" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginG(this.form)">
+</form>
+</div>
+</td>
+<td class="tg-zv4m">
+<center>
+</div>
+<div id="team-h" class="section level5">
+<h5>Team H</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginH" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginH(this.form)">
+</form>
+</div>
+</td>
+<td class="tg-zv4m">
+<center>
+</div>
+<div id="team-i" class="section level5">
+<h5>Team I</h5>
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginI" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br> <input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginI(this.form)">
+</form>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>Mr. President, below you can read about how the issues, you tried to solve in the previous week, panned out. Also, to help you make decisions, we compiled a short summary about Absurdistan. Don’t be mad at me if things go bad, I am just a messenger.</p>
+<p><br></p>
+</div>
+<div id="summary-of-the-last-period" class="section level3">
+<h3>Summary of the Last Period</h3>
+<div id="htmlwidget-81c135f4191bf29dfdc6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-81c135f4191bf29dfdc6">{"x":{"filter":"none","data":[["Production","Quality","Feature","Price","Advertising","Sales","Total.Revenue","Production.Fixed.Costs","Production.Variable.Costs","Advertising.Costs","Factory.Investments","Interst","Total.Costs","Profit","Change.In.Loans","Outstanding.Loans","Cash.On.Hand.Before","Cash.On.Hand.Now"],["1","1","Plain","1","1","1","1","1","1","1","1","1","1","1","0","1","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":18,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[10,18,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<div id="current-standing" class="section level3">
+<h3>Current Standing</h3>
+<div id="htmlwidget-8537635938eed8cf62fa" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8537635938eed8cf62fa">{"x":{"filter":"none","data":[["Cash.On.Hand","Loans.Outstanding","Factory.Size","Factory.Technology"],[1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<div id="individual-demand" class="section level3">
+<h3>Individual Demand</h3>
+<div class="col2">
+<p>Based on the previous period, and assuming no change in our and our competitors products, and general economic conditions, demand for our product is as shown in the table.</p>
+<p>However, since our competitors are most likely going to make some changes, take these numbers with caution. And remember that you can increase demand for your product by differentiating yourself from others and advertising wisely. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do.</p>
+<div id="htmlwidget-2db971c0e7151550b9c3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2db971c0e7151550b9c3">{"x":{"filter":"none","data":[["Price","Quantity.Demanded"],[1.5,100],[2.5,200],[3.5,300]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:99%; height:auto">
+<p><img src="Image2.svg" /></p>
+</div>
+</center>
+<p>However, since our competitors are most likely going to make some changes, take these numbers with caution. And remember that you can increase demand for your product by differentiating yourself from others and advertising wisely. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do.</p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:99%; height:auto">
+<p><img src="Image1.svg" /></p>
+</div>
+</center>
+<p>However, since our competitors are most likely going to make some changes, take these numbers with caution. And remember that you can increase demand for your product by differentiating yourself from others and advertising wisely. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do. To differentiate yourself from others, though,</p>
+<p>you do need to have a good idea of what other companies are planning to do. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do.</p>
+</div>
+<p><br></p>
+</div>
+<div id="production-costs" class="section level3">
+<h3>Production Costs</h3>
+<div class="col2">
+<p>The current factory capacity is 70. Due to the size of the factory, our fixed costs equal to 100. In the last period, variable costs were 2 per unit. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. They will likely be different. They will likely be different. They will likely be different.</p>
+<div id="htmlwidget-7611b77fe6f3d411fd6d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7611b77fe6f3d411fd6d">{"x":{"filter":"none","data":[["Capacity.In.Percent","Estimated.Total.Fixed.Costs","Estimated.Total.Variable.Costs"],[30,1,1],[60,2,2],[90,3,3]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<p><br></p>
+</div>
+<div id="product-differentiation" class="section level3">
+<h3>Product Differentiation</h3>
+<div class="col2">
+<p>The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like. Also, remember that making changes to your product inovelves costs. Adding features or changing the quality of ingredients requires additional research, planning, renenegotiating deals with suppliers which comes at a cost.</p>
+<p>The current factory capacity is 70. Due to the size of the factory, our fixed costs equal to 100. In the last period, variable costs were 2 per unit. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different.</p>
+<p>However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different.</p>
+<p><div id="htmlwidget-5d72077bd6d7dfcef7a4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5d72077bd6d7dfcef7a4">{"x":{"filter":"none","data":[["Feature","Quality","Advertising","Willingness.To.Pay","Differentiation.Score"],["Plain","2","2","2-2.5","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script><div id="htmlwidget-e2cc43d4416141b0c7b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e2cc43d4416141b0c7b8">{"x":{"filter":"none","data":[["Advertising.Level","Cost","Estimated.Effect"],["0","  0","0%"],["3","200","+10%"],["6","400","+20%"],["9","600","+30%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n      <th>V4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script></p>
+<div id="htmlwidget-c872926421b9895cd1f2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c872926421b9895cd1f2">{"x":{"filter":"none","data":[["Decision","Cost"],["Change Feature","25"],["Change Quality","10"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:99%; height:auto">
+<p><img src="Image3.svg" /></p>
+</div>
+</center>
+<p>The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like. Also, remember that making changes to your product inovelves costs. Adding features or changing the quality of ingredients requires additional research, planning, renenegotiating deals with suppliers which comes at a cost.</p>
+</div>
+<p><br></p>
+</div>
+<div id="factory" class="section level3">
+<h3>Factory</h3>
+<div class="col2">
+<p>The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like. Also, remember that making changes to your product inovelves costs. Adding features or changing the quality of ingredients requires additional research, planning, renenegotiating deals with suppliers which comes at a cost.</p>
+<p>The factory capacity is 70, and technology level is 0.</p>
+<div id="htmlwidget-a19151e9630ed17ad552" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a19151e9630ed17ad552">{"x":{"filter":"none","data":[["Increase.Factory.Capacity","Cost"],[-2,100],[-1,100],[0,0],[1,200],[2,400]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n      <th>V4<\/th>\n      <th>V5<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+<div id="htmlwidget-8d9747ef316bfca36ac3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8d9747ef316bfca36ac3">{"x":{"filter":"none","data":[["Increase.Factory.Technology","Cost"],[0,0],[1,200],[2,400]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:99%; height:auto">
+<p><img src="Image4.svg" /></p>
+</div>
+</center>
+<p>here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on.</p>
+</div>
+<p><br></p>
+</div>
+<div id="credit" class="section level3">
+<h3>Credit</h3>
+<div class="col2">
+<p>here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on.</p>
+<p>here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on.</p>
+<div id="htmlwidget-fa9f7b56bfec0374ce26" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fa9f7b56bfec0374ce26">{"x":{"filter":"none","data":[["Cash.On.Hand","Long.Term.Credit.Balance","Long.Term.Interest","Short.Term.Credit.Balance","Short.Term.Interest"],["12","100","5%","0","25%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","rowCallback":"function(row, data, index, rowId) {\nconsole.log(rowId)\nif(rowId <= 6) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 6 && rowId <= 12) {\nrow.style.backgroundColor = \"\t#D0D0D0\";\n}\nif(rowId > 12 && rowId <= 15) {\nrow.style.backgroundColor = \"#BEBEBE\";\n}\nif(rowId > 15 && rowId <= 18) {\nrow.style.backgroundColor = \"#D0D0D0\";\n}\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

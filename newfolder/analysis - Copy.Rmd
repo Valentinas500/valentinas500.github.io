@@ -1,0 +1,496 @@
+---
+title: "Analysis"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<script type="text/javascript">
+function TheLoginA() {
+var password1 = 'pepper1';
+if (this.document.loginA.pass.value == password1) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+</script>
+<script type="text/javascript">
+function TheLoginB() {
+var password2 = 'pepper2';
+if (this.document.loginB.pass.value == password2) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+</script>
+<script type="text/javascript">
+function TheLoginC() {
+var password3 = 'pepper3';
+if (this.document.loginC.pass.value == password3) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginD() {
+var password4 = 'pepper4';
+if (this.document.loginD.pass.value == password4) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginE() {
+var password5 = 'pepper5';
+if (this.document.loginE.pass.value == password5) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginF() {
+var password6 = 'pepper6';
+if (this.document.loginF.pass.value == password6) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginG() {
+var password7 = 'pepper7';
+if (this.document.loginG.pass.value == password7) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginH() {
+var password8 = 'pepper8';
+if (this.document.loginH.pass.value == password8) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+function TheLoginI() {
+var password9 = 'pepper9';
+if (this.document.loginI.pass.value == password9) {
+  top.location.href="correct.html";
+} else {  window.alert("Incorrect password, please try again.");  }}
+</script>
+
+<style>
+  .col2 {
+    columns: 2 100px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 100px; /* chrome, safari */
+    -moz-columns: 2 100px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+<br>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-zv4m{border-color:#ffffff;text-align:left;vertical-align:top}
+</style>
+
+<center>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-zv4m">
+<center>
+##### Team A
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginA" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginA(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+##### Team B
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginB" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginB(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+##### Team C
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginC" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginC(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+##### Team D
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginD" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginD(this.form)">
+</form>
+</div>
+</th>
+<th class="tg-zv4m">
+<center>
+##### Team E
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginE" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginE(this.form)">
+</form>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tg-zv4m">
+<center>
+##### Team F
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginF" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginF(this.form)">
+</form>
+</div>
+</td>
+<td class="tg-zv4m">
+<center>
+##### Team G
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginG" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginG(this.form)">
+</form>
+</div>
+</td>
+<td class="tg-zv4m">
+<center>
+##### Team H
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginH" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginH(this.form)">
+</form>
+</div>
+</td>
+<td class="tg-zv4m">
+<center>
+##### Team I
+</center>
+<div style="text-align: center; margin: 0 auto; color: #000000; font: normal 15px raleway, sans-serif;">
+<form name="loginI" style="margin: 5px 0px 0px 0px;">
+<input type="text" name="pass" size="17" onkeydown="if(event.keyCode==13) event.keyCode=9;" style="width: 130px;"><br>
+<input type="button" value="Login" style="width: 134px; margin: 4px auto 4px auto;" onclick="javascript:TheLoginI(this.form)">
+</form>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+
+
+Mr. President, below you can read about how the issues, you tried to solve in the previous week, panned out. Also, to help you make decisions, we compiled a short summary about Absurdistan. Don't be mad at me if things go bad, I am just a messenger.
+
+<br>
+
+### Summary of the Last Period
+
+```{r 1, echo=FALSE, warning=FALSE, cache=TRUE}
+library(DT)
+
+rowCallback <- c(
+  'function(row, data, index, rowId) {','console.log(rowId)',
+  'if(rowId <= 6) {','row.style.backgroundColor = "#BEBEBE";','}',
+  'if(rowId > 6 && rowId <= 12) {','row.style.backgroundColor = "	#D0D0D0";','}',
+  'if(rowId > 12 && rowId <= 15) {','row.style.backgroundColor = "#BEBEBE";','}',
+  'if(rowId > 15 && rowId <= 18) {','row.style.backgroundColor = "#D0D0D0";','}',
+  '}')
+
+summary_team_1_A=data.frame(
+  Production=1,
+  Quality=1,
+  Feature="Plain",
+  Price=1,
+  Advertising=1,
+  Sales=1,
+  Total.Revenue=1,
+  
+  Production.Fixed.Costs=1,
+  Production.Variable.Costs=1,
+  Advertising.Costs=1,
+  Factory.Investments=1,
+  Interst=1,
+  Total.Costs=1,
+  
+  Profit=1,
+  Change.In.Loans=0,
+  Outstanding.Loans=1,
+  
+  Cash.On.Hand.Before=1,
+  Cash.On.Hand.Now=1
+)
+
+summary_team_1_A=t(summary_team_1_A)
+
+datatable(summary_team_1_A,options = list(dom = 't', pageLength = 18,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback))
+)
+
+```
+
+### Current Standing
+
+```{r 2, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_B=data.frame(
+  Cash.On.Hand=1,
+  Loans.Outstanding=1,
+  Factory.Size=1,
+  Factory.Technology=1
+)
+
+summary_team_1_B=t(summary_team_1_B)
+
+datatable(summary_team_1_B,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback))
+)
+```
+
+### Individual Demand
+
+<div class="col2">
+
+Based on the previous period, and assuming no change in our and our competitors products, and general economic conditions, demand for our product is as shown in the table.
+
+However, since our competitors are most likely going to make some changes, take these numbers with caution. And remember that you can increase demand for your product by differentiating yourself from others and advertising wisely. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do.
+
+```{r 3, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_C=data.frame(
+  Price=c(1.5,2.5,3.5),
+  Quantity.Demanded=c(100,200,300)
+)
+
+summary_team_1_C=t(summary_team_1_C)
+
+datatable(summary_team_1_C,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback)),
+          rownames= TRUE
+)
+
+```
+
+</div>
+
+<br>
+
+<div class="col2">
+
+<center> <div style="width:99%; height:auto">
+![](Image2.svg)
+</div> </center>
+
+However, since our competitors are most likely going to make some changes, take these numbers with caution. And remember that you can increase demand for your product by differentiating yourself from others and advertising wisely. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do.
+
+</div>
+
+<br>
+
+<div class="col2">
+
+<center> <div style="width:99%; height:auto">
+![](Image1.svg)
+</div> </center>
+
+However, since our competitors are most likely going to make some changes, take these numbers with caution. And remember that you can increase demand for your product by differentiating yourself from others and advertising wisely. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do. To differentiate yourself from others, though, 
+
+you do need to have a good idea of what other companies are planning to do. To differentiate yourself from others, though, you do need to have a good idea of what other companies are planning to do.
+
+</div>
+
+<br>
+
+### Production Costs
+
+<div class="col2">
+
+The current factory capacity is 70. Due to the size of the factory, our fixed costs equal to 100. In the last period, variable costs were 2 per unit. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. They will likely be different. They will likely be different. They will likely be different.
+
+```{r 4, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_D=data.frame(
+  Capacity.In.Percent=c(30,60,90),
+  Estimated.Total.Fixed.Costs=c(1,2,3),
+  Estimated.Total.Variable.Costs=c(1,2,3)
+)
+
+summary_team_1_D=t(summary_team_1_D)
+
+datatable(summary_team_1_D,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback))
+)
+```
+
+</div>
+
+<br>
+
+### Product Differentiation
+
+<div class="col2">
+
+The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like. Also, remember that making changes to your product inovelves costs. Adding features or changing the quality of ingredients requires additional research, planning, renenegotiating deals with suppliers which comes at a cost.
+
+The current factory capacity is 70. Due to the size of the factory, our fixed costs equal to 100. In the last period, variable costs were 2 per unit. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. 
+
+However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. However, if your factory capacity, factory technology, production output, quality of ingredients all affect variable costs. They will likely be different. 
+
+```{r 5, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_E=data.frame(
+  Feature=c("Plain"),
+  Quality=c(2),
+  Advertising=c(2),
+  Willingness.To.Pay=c("2-2.5"),
+  Differentiation.Score=c(1)
+)
+
+summary_team_1_E=t(summary_team_1_E)
+
+datatable(summary_team_1_E,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback))
+)
+
+summary_team_1_H=data.frame(
+  Advertising.Level=c(0,3,6,9),
+  Cost=c(0,200,400,600),
+  Estimated.Effect=c("0%","+10%","+20%","+30%")
+)
+
+summary_team_1_H=t(summary_team_1_H)
+
+datatable(summary_team_1_H,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback))
+)
+```
+
+
+```{r 6, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_F=data.frame(
+  Decision=c("Change Feature","Change Quality"),
+  Cost=c(25,10)
+)
+
+summary_team_1_F=t(summary_team_1_F)
+
+datatable(summary_team_1_F,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback)),
+          rownames= TRUE
+)
+```
+
+</div>
+
+<br>
+
+<div class="col2">
+
+<center> <div style="width:99%; height:auto">
+![](Image3.svg)
+</div> </center>
+
+The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like. Also, remember that making changes to your product inovelves costs. Adding features or changing the quality of ingredients requires additional research, planning, renenegotiating deals with suppliers which comes at a cost.
+
+</div>
+
+<br>
+
+### Factory
+
+<div class="col2">
+
+The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like. Also, remember that making changes to your product inovelves costs. Adding features or changing the quality of ingredients requires additional research, planning, renenegotiating deals with suppliers which comes at a cost.
+
+The factory capacity is 70, and technology level is 0. 
+
+```{r 7, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_G=data.frame(
+  Increase.Factory.Capacity=c(-2,-1,0,1,2),
+  Cost=c(100,100,0,200,400)
+)
+
+summary_team_1_G=t(summary_team_1_G)
+
+datatable(summary_team_1_G,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback)),
+          rownames= TRUE
+)
+```
+
+```{r 8, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_E=data.frame(
+  Increase.Factory.Technology=c(0,1,2),
+  Cost=c(0,200,400)
+)
+
+summary_team_1_E=t(summary_team_1_E)
+
+datatable(summary_team_1_E,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback)),
+          rownames= TRUE
+)
+```
+
+</div>
+
+<br>
+
+<div class="col2">
+
+<center> <div style="width:99%; height:auto">
+![](Image4.svg)
+</div> </center>
+
+here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on.
+
+</div>
+
+<br>
+
+### Credit 
+
+<div class="col2">
+
+here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on.
+
+here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on. here some stuff about what is going on.
+
+```{r 9, echo=FALSE, warning=FALSE, cache=TRUE}
+summary_team_1_I=data.frame(
+  Cash.On.Hand=c(12),
+  Long.Term.Credit.Balance=c(100),
+  Long.Term.Interest=c("5%"),
+  Short.Term.Credit.Balance=c(0),
+  Short.Term.Interest=c("25%")
+)
+
+summary_team_1_I=t(summary_team_1_I)
+
+datatable(summary_team_1_I,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"),
+                                          rowCallback = JS(rowCallback)),
+          rownames= TRUE
+)
+```
+
+</div>
