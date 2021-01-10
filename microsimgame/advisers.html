@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Advisers</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Micro Sim Game</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Welcome</a>
+</li>
+<li>
+  <a href="advisers.html">Advisers</a>
+</li>
+<li>
+  <a href="teamportal.html">Team Portal</a>
+</li>
+<li>
+  <a href="submit.html">Submit Decision</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Advisers</h1>
+
+</div>
+
+
+<style>
+  .col2 {
+    columns: 2 100px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 100px; /* chrome, safari */
+    -moz-columns: 2 100px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+<p>Mr. President, below you can read about how the issues, you tried to solve in the previous week, panned out. Also, to help you make decisions, we compiled a short summary about Absurdistan. Don’t be mad at me if things go bad, I am just a messenger.</p>
+<p><br></p>
+<center>
+<div style="width:50; height:auto">
+<p><img src="supermarket.jpg" /></p>
+</div>
+</center>
+<p><br></p>
+<div id="what-do-your-advisers-have-to-say" class="section level2">
+<h2>What do your advisers have to say?</h2>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto; float: right">
+<p><img src="person1.jpg" /></p>
+</div>
+</center>
+<p>I believe in the markets. If Absurdistan’s clothing industry is declining, it is probably because we do not have a comparative advantage. Helping an industry in decline will probably only delay the inevitable. Also, if help them, does that mean we have to help other failing industries, or individual businesses? It is not the government’s job to get involved in failing businesses. Let the markets decide.</p>
+<p>Even if we did pour a lot of resources to help the clothing industry, it may be completely ineffective. It may also require increasing public debt and bureaucracy. I say, we let unprofitable businesses go bankrupt and people lose jobs. Over time, capital will flow to other areas and workers will find new jobs and all will go back to normal. The transition for some may be hard but so is life for all. If By doing nothing, at least we will not increase public debt.</p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto">
+<p><img src="person2.jpg" /></p>
+</div>
+</center>
+<p>This may seem unconventional but hear me out! If an industry is in decline, we may have a comparative disadvantage. Why can we not speed the transition away from industries that we do not have a comparative advantage in? I suggest we use export tariffs. An export tariff is a tax on domestic goods being shipped abroad. It would raise the price of domestic clothing abroad and most surely reduce our exports. By implementing export tariffs, we will definitely hurt our exports and the industry as a whole but since it is going to inevitably fail, this will only speed the process up. Moreover, it may further reduce clothing prices at home.</p>
+<p>The extra revenues from export tariffs can then be used either to fund education or reduce public debt. Anyway, I suggest we profit from this situation. If the industry is declining anyway, I don’t think it is unethical to do so. However, it is up to you to decide, not me.</p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto">
+<p><img src="person3.jpg" /></p>
+</div>
+</center>
+<p>An import tariff is a tax on goods and services imported into Absurdistan. It will increase the price of foreign clothing and thus give a price advantage to locally-produced goods over similar goods which are imported. Moreover, they raise revenues for governments. It is a pretty standard practice: most countries impose tariff on most imported products.</p>
+<p>An alternative option is to impose an import quota. A quota is a physical limitation on the quantity of a good that can be imported. A simple quota would not increase government’s revenues but this can easily be fixed by auctioning off import quotas.</p>
+<p>Also, sometimes other countries are subsidizing their domestic industries creating uneven playing field. How can our companies compete with foreigners if they are being helped by their governments!? Other times, some companies are dumping their proudcts here to bankrupt our local industry. Trade barriers will put a stop to all of it and make the playing field level again.</p>
+<p>You may have not heard of dumping. It is when an exporting firm sets a lower price in an export market than in their own. For example, neighboring country’s Vance Refrigeration sells Fridge 1000 for $500 in their local market but exports it to us for $300. See more here: <a href="https://www.investopedia.com/terms/d/dumping.asp" class="uri">https://www.investopedia.com/terms/d/dumping.asp</a>.</p>
+<p>Check our US tariff profile compiled by the World Trade Organization (WTO): <a href="https://www.wto.org/english/res_e/statis_e/daily_update_e/tariff_profiles/US_e.pdf" class="uri">https://www.wto.org/english/res_e/statis_e/daily_update_e/tariff_profiles/US_e.pdf</a>. As you can see, US, as most other countries, applies tariffs to imports from most trading partners.</p>
+<p>Here you can find the evolution of weighed average applied tariff rates in the US and other countries since 1988: <a href="https://data.worldbank.org/indicator/TM.TAX.MRCH.WM.AR.ZS" class="uri">https://data.worldbank.org/indicator/TM.TAX.MRCH.WM.AR.ZS</a>.</p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto; float: right">
+<p><img src="person4.jpg" /></p>
+</div>
+</center>
+<p>No tariffs or quotas! Imposing import tariffs or import quotas will lead other countries to retaliate with similar policies on products that we export to the them, and at the end it will come to hurt us back. Check out what happened to the US and China tariffs in the period 2018 to 2020: <a href="https://www.piie.com/research/piie-charts/us-china-trade-war-tariffs-date-chart" class="uri">https://www.piie.com/research/piie-charts/us-china-trade-war-tariffs-date-chart</a>. This tit-for-tat increases in tariff and other trade barriers will lead to less trade, less specialization and higher prices.</p>
+<p>Moreover, those tariffs are actually end up being paid by the importer and eventually passed on to the Absurdistani consumer. Those government revenues are coming from the consumers. Maybe instead of collecting the tariffs, we should let people buy more stuff.</p>
+<p>I think you should read this: <a href="https://www.jstor.org/stable/2117691" class="uri">https://www.jstor.org/stable/2117691</a></p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto">
+<p><img src="person5.jpg" /></p>
+</div>
+</center>
+<p>I think we should lend a hand to an industry that is struggling. We can do so by either providing subsidized loans to companies to make the necessary investments, or by relieving them from paying a variety of taxes. This will help them recover and these measures will not be needed anymore.</p>
+<p>If other countries are subsidizing their clothing manufacturers, we should do so too to level the competition. Otherwise, our producers have no chance.</p>
+<p>This help will ensure that there isn’t a large increase in unemployment, and the economy will keep running smoothly.</p>
+<p>Some worry about the public debt. However, when interest rates are so low, it is crazy not to use credit for a good use.</p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto">
+<p><img src="person6.jpg" /></p>
+</div>
+</center>
+<p>Such acceleration of imports may devastate the domestic clothing industry which can have awful consequences for tens of thousands of workers, and the economy as a whole. If the decline of one of our largest industries is fast, we may have an increase in national unemployment level. Lower incomes may lead to lower consumption, and further problems. I suggest we temporarily increase unemployment insurance benefits to prevent any chance of a larger recession.</p>
+<p>While this will increase public deficit, helping people in the time of need and preventing any larger effects transferring to other industries will be far worth it.</p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto">
+<p><img src="person7.jpg" /></p>
+</div>
+</center>
+<p>If the domestic clothing industry is declining, government programs can help facilitate employment through public training programs. They aim to ease workers’ transition from declining to growing industries and to help disadvantaged groups escape poverty. Advocates of these programs believe that they make the economy operate more efficiently by keeping the labor force more fully employed and that they reduce the inequities inherent in a constantly changing market economy.</p>
+<p>However, critics of these programs question whether the government should get involved with the process of training workers. They argue that it is better to let the private market match workers and jobs and that the government is no better—and most likely worse—at deciding what kinds of worker training would be most valuable.</p>
+<p>Look at the U.S. Department of Labor’s Employment and Training Administration (ETA) that provides information on training programs in the US: <a href="https://www.dol.gov/general/topic/training/adulttraining" class="uri">https://www.dol.gov/general/topic/training/adulttraining</a>.</p>
+<p>I would also ask if the costs of such adult education/training programs are high? Would the government not spend a lot of money for programs no one wants? It is up to you to decide.</p>
+</div>
+<p><br></p>
+<div class="col2">
+<center>
+<div style="width:450px; height:auto">
+<p><img src="person8.jpg" /></p>
+</div>
+</center>
+<p>Nationalization is a government take-over of a select company or selected companies. After nationalization, state appointed officials can make calls about all the business operations. However, government run companies typically lack the profit motive, and thus are run inefficient. On the other hand, there are some potential benefits of nationalization. Among them, for example, the government has access to cheap credit which could allow for necessary investment at low cost. Can the government run the nationalized clothing company in a way that is profitable in an increasingly competitive world clothing market? If not, taking this on the government may mean long lasting losses and a bleak future.</p>
+<p>There are somexample of governments nationalizing oil, rail, or mining industries. For example, German railway company <em>Deutsche Bahn</em> is owned by the government. Many of the Latin American oil companies are also owned by national governments.</p>
+<p>Take a look at a quick video explaining nationalization here: <a href="https://www.youtube.com/watch?v=_k2kOYBGoU0" class="uri">https://www.youtube.com/watch?v=_k2kOYBGoU0</a>.</p>
+<p>There is an ongoing discussion about nationalization of water industry in the UK. Take a look at the discussion here: <a href="https://www.youtube.com/watch?v=F9mouLsQQKE" class="uri">https://www.youtube.com/watch?v=F9mouLsQQKE</a>. Also, look at the technical report by Prof. David Hall about how beneficial nationalizing this industry would be in the UK: <a href="https://gala.gre.ac.uk/id/eprint/17277/" class="uri">https://gala.gre.ac.uk/id/eprint/17277/</a>.</p>
+</div>
+<p><br></p>
+<div id="market-trends-and-expectations" class="section level3">
+<h3>Market Trends and Expectations</h3>
+<p>As the leader of Absurdistan, you will solely be responsible for running the country’s fiscal, monetary, trade, and many other policies that will affect not only the well-being of your citizens in the short run but also the long-term economic prosperity.</p>
+<p>Since there are so many decisions to make, you will have a group of economists who will bring up the five biggest issues that Absurdistan is facing. They will also come up with multiple solutions with short explanations. After studying each problem and solution, you will need to choose the best path of action.</p>
+<center>
+<div style="width:75%; height:auto">
+<p><img src="Image6.svg" /></p>
+</div>
+</center>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

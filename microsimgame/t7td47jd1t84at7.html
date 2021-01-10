@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Team 7: Firm of Toots</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.16/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Micro Sim Game</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Welcome</a>
+</li>
+<li>
+  <a href="advisers.html">Advisers</a>
+</li>
+<li>
+  <a href="analysis.html">Analysis</a>
+</li>
+<li>
+  <a href="submit.html">Submit Decision</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Team 7: Firm of Toots</h1>
+
+</div>
+
+
+<style>
+  .col2 {
+    columns: 2 100px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 100px; /* chrome, safari */
+    -moz-columns: 2 100px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+  /* Create two unequal columns that floats next to each other */
+  .column {
+    float: left;
+    padding: 10px;
+  }
+  .left {
+    width: 25%;
+  }
+  .right {
+    width: 75%;
+  }
+</style>
+<p><br></p>
+<div id="analysis" class="section level1">
+<h1>Analysis</h1>
+<p><br></p>
+<div id="sales-costs-and-profits" class="section level3">
+<h3>Sales, Costs and Profits</h3>
+<div class="row">
+<div class="column left">
+<div style="width:150px; height:auto; float: left">
+<img src="person1.jpg" />
+</div>
+</div>
+<div class="column right">
+Mr. President, below you can read about how the issues, you tried to solve in the previous week, panned out. Also, to help you make decisions, we compiled a short summary about Absurdistan. Don’t be mad at me if things go bad, I am just a messenger.
+</div>
+</div>
+<div id="htmlwidget-9e52114ba0621a8391e7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9e52114ba0621a8391e7">{"x":{"filter":"none","data":[["Team.Name","Price","Sales","Total.Revenue","Production.Fixed.Costs","Production.Variable.Costs","Advertising.Costs","Interst.Expenses","Profit"],["Team G","2.6","1435","3731","500","3113.856","40","5","72.144"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>7<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":23,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[10,23,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script>
+<div id="htmlwidget-ea4434198e67dcb1ac55" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ea4434198e67dcb1ac55">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10"],["Team A","Team B","Team C","Team D","Team E","Team F","Team G","Team H","Team I","Team J"],[2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9],[1813,1800,1600,1400,1200,1400,1435,1577,1653,1800],[3626,3780,3520,3220,2880,3500,3731,4258,4628,5220],[3161,3191,3086,2856,2517,3089,3659,4253,4729,4537],[465,589,434,364,363,411,72,5,-101,683]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Team.Name<\/th>\n      <th>Price<\/th>\n      <th>Sales<\/th>\n      <th>Total.Revenue<\/th>\n      <th>Total.Costs<\/th>\n      <th>Profit<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":23,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,23,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p><br></p>
+</div>
+<div id="differentiation-and-the-demand-for-your-product" class="section level3">
+<h3>Differentiation and the Demand for Your Product</h3>
+<div class="row">
+<div class="column left">
+<div style="width:150px; height:auto; float: left">
+<img src="person2.jpg" />
+</div>
+</div>
+<div class="column right">
+Remember that the demand for your product depends on how unique your product is in terms of the main feature and its quality, and how well the product is priced relative to its quality. Moreover, increasing advertising also boosts demand. Since our competitors are most likely going to make some changes, take the numbers below with caution. Remember that to differentiate yourself from others, you do need to have a good idea of what others are planning to do.
+</div>
+</div>
+<div id="htmlwidget-72c38251df179f981e1a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-72c38251df179f981e1a">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10"],["Team A","Team B","Team C","Team D","Team E","Team F","Team G","Team H","Team I","Team J"],[1,2,3,4,5,6,7,8,9,9],[2,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9],[7,6,5,4,3,2,1,2,3,4],["Plain","Plain","Ch.Chip","Ch.Chip","Coconut","Coconut","Straberry","Straberry","Blueberry","Blueberry"],[1813,1800,1600,1400,1200,1400,1435,1577,1653,1800]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Firm<\/th>\n      <th>Quality<\/th>\n      <th>Price<\/th>\n      <th>Advertising<\/th>\n      <th>Features<\/th>\n      <th>Sales<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":23,"columnDefs":[{"className":"dt-right","targets":[2,3,4,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,23,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<center>
+<img src="t7td47jd1t84at7_files/figure-html/2b-1.png" width="672" />
+</center>
+<p><br></p>
+</div>
+</div>
+<div id="looking-ahead" class="section level1">
+<h1>Looking Ahead</h1>
+<p><br></p>
+<div id="market-research" class="section level3">
+<h3>Market Research</h3>
+<div class="row">
+<div class="column left">
+<div style="width:150px; height:auto; float: left">
+<img src="person3.jpg" />
+</div>
+</div>
+<div class="column right">
+<p>The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like.</p>
+Last period, our economists found some new information about consumers.
+</div>
+</div>
+<div id="htmlwidget-6a3af28056c2069c7353" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6a3af28056c2069c7353">{"x":{"filter":"none","data":[["Quality","Willingness.To.Pay"],["1","2.30-2.70"],["3","2.80-3.20"],["7","3.10-3.60"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script>
+<p><br></p>
+</div>
+<div id="understanding-production-costs" class="section level3">
+<h3>Understanding Production Costs</h3>
+<div class="col2">
+<div style="width:150px; height:auto; float: left">
+<img src="person4.jpg" />
+</div>
+<p>Production costs depend on a number of variables. Fixed costs depend on the size of the factory and the level of technology used in the factory. Variable costs depend on the level of technology, the level of factory utilization, quality of ingredients.</p>
+<p>It is important to run factory utilization high to have average variable costs relatively low. It is important to make coordinated production and marketing decisions to use get the most out of your resources.</p>
+<p>I expect that increasing quality by 1 level, increases variable production costs by 5 to 15 percent.</p>
+<p>Here are your fixed and variable costs, along the variables that determine them.</p>
+<div id="htmlwidget-328b64070cd8b66f1396" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-328b64070cd8b66f1396">{"x":{"filter":"none","data":[["Fixed.Costs","Variable.Costs","Factory.Capacity","Factory.Tech.Level","Utilization","Quality.Of.Ingredients"],[500,3113.856,3000,3,0.533333333333333,7]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":7,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[7,10,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script>
+</div>
+<p><br></p>
+</div>
+<div id="running-an-advertising-campaign" class="section level3">
+<h3>Running an Advertising Campaign</h3>
+<div class="row">
+<div class="column left">
+<div style="width:150px; height:auto; float: left">
+<img src="person5.jpg" />
+</div>
+</div>
+<div class="column right">
+<p>Besides differentiation, you can increase the demand for your product by increasing advertising. The effect on sales can be strong. Similarly, if others run strong advertising campaigns, your sales will be negatively affected.</p>
+See the table to the right for some ideas about the costs and benefits of advertising.
+</div>
+</div>
+<div id="htmlwidget-8b9c52231767373adb0b" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8b9c52231767373adb0b">{"x":{"filter":"none","data":[["Advertising.Level","Approximate.Cost","Estimated.Effect"],["0","  0","0%"],["3","115","+20%"],["6","295","+40%"],["9","370","+60%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n      <th>V4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script>
+<p><br></p>
+</div>
+<div id="improving-the-factory" class="section level3">
+<h3>Improving the Factory</h3>
+<div class="col2">
+<div style="width:150px; height:auto; float: left">
+<p><img src="person6.jpg" /></p>
+</div>
+<p>Your breakfast cereal is made in a factory. You have two decisions to make regarding the factory: you can increase its size or upgrade its technology, both or neither.</p>
+<p>Increasing the capacity allows you to produce more product. Hoewever, to maintain high factory utilization rates, you may need to adjust your product marketing decisions. If you feel that your factory is too big, you may decrease its size.</p>
+<p>Upgrading the technology lowers fixed and variable costs. It may not pay off in the short-term but it will likely pay off in the long-run.</p>
+<p><div id="htmlwidget-4f6149d8f62e0d83d5dc" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4f6149d8f62e0d83d5dc">{"x":{"filter":"none","data":[["Change.Factory.Capacity.Level","Change.Factory.Capacity","Approximate.Cost"],[-1,-500,100],[0,0,0],[1,500,250],[2,1000,500]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n      <th>V4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script><div id="htmlwidget-efbfc379c5543be29789" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-efbfc379c5543be29789">{"x":{"filter":"none","data":[["Upgrade.Factory.Technology","Approximate.Cost"],[0,0],[1,120],[2,240]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script></p>
+</div>
+<center>
+<img src="t7td47jd1t84at7_files/figure-html/7BB-1.png" width="672" />
+</center>
+</div>
+<div id="understanding-credit" class="section level3">
+<h3>Understanding Credit</h3>
+<div class="row">
+<div class="column left">
+<div style="width:150px; height:auto; float: left">
+<img src="person7.jpg" />
+</div>
+</div>
+<div class="column right">
+<p>Certain investments may require you to borrow. Keep in mind that borrowing comes at a cost: the interest rate you pay on your debt. Interest rate varies but is in the range between 4 and 8 percent.</p>
+<p>If you run out of cash during a period, you will use emergency credit lines that charge an interest rate up to 25 percent. While it does not show up separately, a negative cash-on-hand balance indicates you are using your emergency credit lines.</p>
+Make your spending decisions wisely to make sure you do not get stuck paying high interest rates.
+</div>
+</div>
+<div id="htmlwidget-611155de77e955980342" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-611155de77e955980342">{"x":{"filter":"none","data":[["Cash.On.Hand","Long.Term.Credit.Balance","Long.Term.Interest","Short.Term.Interest"],["-267.856","300","5%","25%"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script>
+<p>Your banks offers you the following options.</p>
+<div id="htmlwidget-5c73ecd9b787cfe0338c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5c73ecd9b787cfe0338c">{"x":{"filter":"none","data":[["Loan.Plan","Effect.On.Cash.Balance"],[-4,-100],[-3,-75],[-2,-50],[-1,-25],[0,0],[1,25],[2,50],[3,75],[4,100]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n      <th>V3<\/th>\n      <th>V4<\/th>\n      <th>V5<\/th>\n      <th>V6<\/th>\n      <th>V7<\/th>\n      <th>V8<\/th>\n      <th>V9<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":5,"headerCallback":"function(thead, data, start, end, display){\n  $(thead).remove();\n}","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.headerCallback"],"jsHooks":[]}</script>
+<p><br></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
