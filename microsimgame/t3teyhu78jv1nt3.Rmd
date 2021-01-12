@@ -1,0 +1,456 @@
+---
+title: "Team 3: Cool Company Name Here"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<style>
+  .col2 {
+    columns: 2 100px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 100px; /* chrome, safari */
+    -moz-columns: 2 100px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+  /* Create two unequal columns that floats next to each other */
+  .column {
+    float: left;
+    padding: 10px;
+  }
+  .left {
+    width: 25%;
+  }
+  .right {
+    width: 75%;
+  }
+  #example2 {
+  box-sizing: border-box;
+  width: 500px;
+  height: 300px;
+  padding: 10px;  
+  border: 00px solid blue;
+}
+</style>
+
+<br>
+
+# Analysis
+
+<br>
+
+### Sales, Costs and Profits
+
+```{r 0, echo=FALSE, warning=FALSE}
+library(DT)
+library(ggplot2)
+setwd("A:/Website/rmarkdown-website-template-master/rmarkdown-website-template-master/microsimgame")
+
+Team.ID=3;
+
+load("timedata.RData")
+
+ #Load data from previous period
+  if (timeperiod==1){
+    load("data1.RData")
+  } else if (timeperiod==2){
+    load("data2.RData")
+  } else if (timeperiod==3){
+    load("data3.RData")
+  } else if (timeperiod==4){
+    load("data4.RData")
+  } else if (timeperiod==5){
+    load("data5.RData")
+  } else if (timeperiod==6){
+    load("data6.RData")
+  } else if (timeperiod==7){
+    load("data7.RData")
+  } else if (timeperiod==8){
+    load("data8.RData")
+  } else if (timeperiod==9){
+    load("data9.RData")
+  } else if (timeperiod==10){
+    load("data10.RData")
+  }
+```
+
+<div style="width:150px; height:auto; float: left">
+![](person1.jpg)
+</div>
+    
+```{r text1, echo=FALSE, warning=FALSE, results='asis'}
+if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Profit"]>0){
+cat(sprintf("<p>I am excited to report that in the last period, we made a profit of $%.2f. We sold %.2f boxes of cereal at $%.2f price making a revenue of $%.2f. We sold %.2f percent of our produced output. Total costs, excluding factory investments, were equal to $%.2f. Take a look at the summary of our performance below.</p>", data_all_teams[data_all_teams$Team.ID==Team.ID,"Profit"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Sales"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Price"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Total.Revenue"] , 100*data_all_teams[data_all_teams$Team.ID==Team.ID,"Sales"]/old_data_all_teams[old_data_all_teams$Team.ID==Team.ID,"Current.Factory.Capacity"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Total.Costs"]))
+  } else {
+cat(sprintf("<p>I am sorry to report that in the last period, we made a loss of $%.2f. We sold %.2f boxes of cereal at $%.2f price making a revenue of $%.2f. We sold %.2f percent of our produced output. Total costs, excluding factory investments, were equal to $%.2f. Take a look at the summary of our performance below.</p>", data_all_teams[data_all_teams$Team.ID==Team.ID,"Profit"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Sales"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Price"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Total.Revenue"] , 100*data_all_teams[data_all_teams$Team.ID==Team.ID,"Sales"]/old_data_all_teams[old_data_all_teams$Team.ID==Team.ID,"Current.Factory.Capacity"], data_all_teams[data_all_teams$Team.ID==Team.ID,"Total.Costs"]))
+  }
+```
+
+```{r 1, echo=FALSE, warning=FALSE}
+summary_team_1_A=t(data_all_teams[data_all_teams$Team.ID==Team.ID,c("Team.Name","Price","Sales","Unsold","Total.Revenue","Production.Fixed.Costs","Production.Variable.Costs","Advertising.Costs","Interst.Expenses","Profit")])
+
+datatable(summary_team_1_A,options = list(dom = 't', pageLength = 23,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}") )
+)
+
+```
+
+```{r 1b, echo=FALSE, warning=FALSE}
+
+summary_team_1_A=data_all_teams[,c("Team.Name","Price","Sales","Unsold","Total.Revenue","Total.Costs","Profit")]
+summary_team_1_A[,2:7]=round(summary_team_1_A[,2:7],2)
+datatable(summary_team_1_A,options = list(dom = 't', pageLength = 23)
+)
+
+```
+
+<br>
+
+<br>
+
+### Differentiation and the Demand for Your Product
+
+<div style="width:150px; height:auto; float: left">
+![](person2.jpg)
+</div>
+
+<div style="width:217px; height:auto; float: left">
+```{r 11, echo=FALSE, warning=FALSE, message=FALSE}
+library(raster)  
+  if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==1){
+    myJPG <- stack("cereal_box_1.jpg")
+  } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==2){
+    myJPG <- stack("cereal_box_ch_chip.jpg")
+  } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==3){
+    myJPG <- stack("cereal_box_coconut.jpg")
+  } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==4){
+    myJPG <- stack("cereal_box_strawberry.jpg")
+  } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==5){
+    myJPG <- stack("cereal_box_blueberry.jpg")
+  }
+plotRGB(myJPG)
+```
+</div>
+
+```{r text2, echo=FALSE, warning=FALSE, results='asis'}
+cat(sprintf("<p>We are selling a %s breakfast cereal of quality %i. There are %i other firm(s) selling this type, and %i other firms selling this quality breakfast cereal. Remember that the demand for your product depends on how unique your product is in terms of the main feature and its quality, and how well the product is priced relative to its quality. Since our competitors are most likely going to make some changes, take the numbers below with caution. Remember that to differentiate yourself from others, you do need to have a good idea of what others are planning to do.</p>", 
+            if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==1) {"Honey"
+              } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==2) {"Chocolate Chip"
+              } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==3) {"Coconut"
+              } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==3) {"Strawberry"
+              } else if (data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==3) {"Blueberry"
+              }, data_all_teams[data_all_teams$Team.ID==Team.ID,"Quality"] ,
+            sum(data_all_teams[data_all_teams$Team.ID==Team.ID,"Feature"]==data_all_teams[,"Feature"])-1,
+            sum(data_all_teams[data_all_teams$Team.ID==Team.ID,"Quality"]==data_all_teams[,"Quality"])-1))
+```
+
+
+```{r 2a, echo=FALSE, warning=FALSE}
+
+###########################
+### Marketing Differentiation 
+###########################
+df2 = data.frame(
+  Firm=data_all_teams$Team.Name,
+  Quality=data_all_teams$Quality,
+  Price=data_all_teams$Price,
+  Advertising=data_all_teams$Advertising,
+  Features=data_all_teams$Feature,
+  Sales=data_all_teams$Sales )
+###########################
+### product Differentiation 
+###########################
+df2$Features[df2$Features==1]="Honey"
+df2$Features[df2$Features==2]="Ch.Chip"
+df2$Features[df2$Features==3]="Coconut"
+df2$Features[df2$Features==4]="Strawberry"
+df2$Features[df2$Features==5]="Blueberry"
+
+datatable(df2,options = list(dom = 't', pageLength = 23)
+)
+```
+
+<center> 
+```{r 2b, echo=FALSE, warning=FALSE}
+
+p1<-ggplot(data=df2, aes(x=Quality, y=Price, colour=Firm, shape=Features, size=Advertising)) +
+  geom_point(position = "jitter") +
+  theme(legend.position="bottom", legend.box = "vertical")
+
+p1
+
+```
+</center> 
+
+<br>
+
+<br>
+
+# Looking Ahead
+
+<br>
+
+### Market Research
+
+<div style="width:150px; height:auto; float: left">
+![](person3.jpg)
+</div>
+    
+The more differentiated product, the higher the demand is for your product. However, read market trends and expectations about what consumers like.
+  
+Last period, our economists found some new information about consumers.
+
+```{r 2c, echo=FALSE, warning=FALSE}
+
+if (timeperiod==1|timeperiod==4|timeperiod==7){
+  dffa=data.frame(
+    Quality=c(2,5,8),
+    Willingness.To.Pay=c("2.40-2.80","2.95-3.25","3.30-3.70")
+  )
+  } else if (timeperiod==2|timeperiod==5|timeperiod==8){
+      dffa=data.frame(
+        Quality=c(1,3,7),
+        Willingness.To.Pay=c("2.30-2.70","2.80-3.20","3.10-3.60")
+      )
+  } else if (timeperiod==3|timeperiod==6|timeperiod==9|timeperiod==10){
+      dffa=data.frame(
+        Quality=c(4,6,9),
+        Willingness.To.Pay=c("2.70-3.15","2.95-3.45","3.40-3.85")
+      )
+  }
+
+dffa=t(dffa)
+
+datatable(dffa,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"))
+)
+```
+
+<br>
+
+<br>
+
+### Understanding Production Costs
+
+<div style="width:150px; height:auto; float: left">
+  ![](person4.jpg)
+  </div>
+
+```{r text3, echo=FALSE, warning=FALSE, results='asis'}
+
+X1=sum((data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Fixed.Costs"]+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Variable.Costs"])/data_all_teams[data_all_teams$Team.ID==Team.ID,"Production"]>(data_all_teams[,"Production.Fixed.Costs"]+data_all_teams[,"Production.Variable.Costs"])/data_all_teams[,"Production"])
+
+cat(sprintf("<p>Production costs depend on a number of variables. Fixed costs depend on the size of the factory and the level of technology used in the factory. Variable costs depend on the level of technology, the level of factory utilization, quality of ingredients. It is important to run factory utilization high to have average total costs relatively low. Make coordinated production and marketing decisions to use get the most out of your resources.</p>
+
+<p>In the last period, our fixed, variable and total costs were $%.2f and $%.2f, respectively. Our average total costs were $%.2f which are ranked %s</p>
+
+<p>Here are your fixed and variable costs, along the variables that determine them.</p>", 
+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Fixed.Costs"],
+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Variable.Costs"],
+(data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Fixed.Costs"]+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Variable.Costs"])/data_all_teams[data_all_teams$Team.ID==Team.ID,"Production"],
+            if (X1==0) {"the lowest among all firms."
+              } else if (X1==1) {"the second-lowest among all firms."
+              } else if (X1==2) {"the third-lowest among all firms."
+              } else if (X1==3) {"the fourth-lowest among all firms."
+              } else if (X1==4) {"the fifth-lowest among all firms."
+              } else if (X1>4) {"among the highest. We may want to look at how we can reduce our costs."
+              }))
+```
+
+```{r C, echo=FALSE, warning=FALSE}
+
+dfff=data.frame(
+  Fixed.Costs=round(data_all_teams$Production.Fixed.Costs[Team.ID],2),
+  Variable.Costs=round(data_all_teams$Production.Variable.Costs[Team.ID],2),
+  Factory.Capacity=data_all_teams$Current.Factory.Capacity[Team.ID],
+  Factory.Tech.Level=data_all_teams$Current.Factory.Technology.Level[Team.ID],
+  Utilization.In.Percent=data_all_teams$Production[Team.ID]/
+    data_all_teams$Current.Factory.Capacity[Team.ID]*100,
+  Quality.Of.Ingredients=data_all_teams$Quality[Team.ID]
+)
+
+dfff=t(dfff)
+
+datatable(dfff,options = list(dom = 't', pageLength = 7,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"))
+)
+
+```
+
+```{r text3b, echo=FALSE, warning=FALSE, results='asis'}
+
+X1=sum((data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Fixed.Costs"]+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Variable.Costs"])/data_all_teams[data_all_teams$Team.ID==Team.ID,"Production"]>(data_all_teams[,"Production.Fixed.Costs"]+data_all_teams[,"Production.Variable.Costs"])/data_all_teams[,"Production"])
+
+cat(sprintf("<p>We estimated our competitors' average total, fixed and variable costs, and compared it to ours. Since we produce %i boxes of cereal and our total costs were $%.2f, our average total costs were $%.2f which were ranked %s</p>. The average fixed costs were $%.2f and average variable costs were $%.2f. We need to keep a close eyes on these to make sure we sell our products with a decent profit margin.
+
+<p>Here is a full list of our competitors average costs.</p>", 
+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production"],
+(data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Fixed.Costs"]+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Variable.Costs"]),
+(data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Fixed.Costs"]+data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Variable.Costs"])/data_all_teams[data_all_teams$Team.ID==Team.ID,"Production"],
+            if (X1==0) {"the lowest among all firms."
+              } else if (X1==1) {"the second-lowest among all firms."
+              } else if (X1==2) {"the third-lowest among all firms."
+              } else if (X1==3) {"the fourth-lowest among all firms."
+              } else if (X1==4) {"the fifth-lowest among all firms."
+              } else if (X1>4) {"among the highest. We may want to look at how we can reduce our costs."
+              },
+(data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Fixed.Costs"])/data_all_teams[data_all_teams$Team.ID==Team.ID,"Production"],
+(data_all_teams[data_all_teams$Team.ID==Team.ID,"Production.Variable.Costs"])/data_all_teams[data_all_teams$Team.ID==Team.ID,"Production"]
+))
+```
+
+```{r C2, echo=FALSE, warning=FALSE}
+
+ddff=data.frame(
+  Firm=data_all_teams$Team.Name,
+  Average.Fixed.Costs=round(data_all_teams[,"Production.Fixed.Costs"]/data_all_teams[,"Production"],2),
+  Average.Variable.Costs=round(data_all_teams[,"Production.Variable.Costs"]/data_all_teams[,"Production"],2),
+  Average.Total.Costs=round((data_all_teams[,"Production.Fixed.Costs"]+data_all_teams[,"Production.Variable.Costs"])/data_all_teams[,"Production"],2),
+  Product.Price=data_all_teams$Price
+)
+
+datatable(ddff,options = list(dom = 't', pageLength = 23))
+
+```
+
+<br>
+
+<br>
+
+### Running an Advertising Campaign
+
+<div style="width:150px; height:auto; float: left">
+  ![](person5.jpg)
+  </div>
+
+Besides differentiation, you can increase the demand for your product by increasing advertising. The effect on sales can be strong. Similarly, if others run strong advertising campaigns, your sales will be negatively affected.
+
+See the table to the right for some ideas about the costs and benefits of advertising.
+
+```{r 5, echo=FALSE, warning=FALSE}
+
+load("advertisingfile.RData")
+
+df33=t(df33)
+
+datatable(df33,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}"))
+)
+
+```
+
+<br>
+
+<br>
+
+### Improving the Factory
+
+<div style="width:150px; height:auto; float: left">
+  ![](person6.jpg)
+</div>
+  
+Your breakfast cereal is made in a factory. You have two decisions to make regarding the factory: you can increase its size or upgrade its technology, both or neither. 
+
+Increasing the capacity allows you to produce more product. Hoewever, to maintain high factory utilization rates, you may need to adjust your product marketing decisions. If you feel that your factory is too big, you may decrease its size.
+
+Upgrading the technology lowers fixed and variable costs. It may not pay off in the short-term but it will likely pay off in the long-run.
+
+```{r B, echo=FALSE, warning=FALSE}
+
+load("factoryfile.RData")
+
+datatable(t(df11),options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}")),
+          rownames= TRUE
+)
+datatable(t(df22),options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}")),
+          rownames= TRUE
+)
+
+```
+
+<center> 
+```{r 7BB, echo=FALSE, warning=FALSE}
+
+############
+### Capacity 
+############
+df3 = data.frame(
+  Firm=rep(data_all_teams$Team.Name,2),
+  Capacity=c(data_all_teams$Current.Factory.Capacity,
+             old_data_all_teams$Current.Factory.Capacity),
+  Technology=c(data_all_teams$Current.Factory.Technology.Level,
+             old_data_all_teams$Current.Factory.Technology.Level),
+  Time=c("Now","Now","Now","Now","Now","Now","Now","Now","Now","Now",
+         "Before","Before","Before","Before","Before","Before","Before","Before","Before","Before") )
+
+p1<-ggplot(data=df3, aes(x=Technology, y=Capacity, colour=Firm, shape=Time)) +
+  geom_point(position = "jitter", size=5) +
+  theme(legend.position="bottom", legend.box = "vertical")
+
+p1
+
+
+```
+</center> 
+
+<br>
+
+<br>
+
+### Understanding Credit 
+
+<div style="width:150px; height:auto; float: left">
+![](person7.jpg)
+</div>
+    
+Certain investments may require you to borrow. Keep in mind that borrowing comes at a cost: the interest rate you pay on your debt. Interest rate varies but is in the range between 4 and 8 percent.
+
+If you run out of cash during a period, you will use emergency credit lines that charge an interest rate up to 25 percent. While it does not show up separately, a negative cash-on-hand balance indicates you are using your emergency credit lines. And the interest is applied immediately on the negative cash balance further pushing you into the red.
+
+Make your spending decisions wisely to make sure you do not get stuck paying high interest rates. 
+
+```{r 9, echo=FALSE, warning=FALSE}
+
+dfaeq=data.frame(
+  Cash.On.Hand=data_all_teams$Cash.On.Hand.Now[Team.ID],
+  Long.Term.Credit.Balance=data_all_teams$Outstanding.Loans[Team.ID],
+  Long.Term.Interest=c("8%"),
+  Short.Term.Interest=c("25%")
+)
+
+dfaeq=t(dfaeq)
+
+datatable(dfaeq,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}")),
+          rownames= TRUE
+)
+
+```
+
+Your banks offers you the following options.
+
+```{r 10A, echo=FALSE, warning=FALSE}
+
+dfaeq2=data.frame(
+  Loan.Plan=-4:4,
+  Effect.On.Cash.Balance=seq(-400,400,100)
+)
+
+dfaeq2=t(dfaeq2)
+
+datatable(dfaeq2,options = list(dom = 't', pageLength = 5,
+                                          headerCallback = JS("function(thead, data, start, end, display){","  $(thead).remove();","}")),
+          rownames= TRUE
+)
+
+```
+
+<br>
+
+
