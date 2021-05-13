@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Practical Data Science With R. Chapter 5</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fas fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Practical Data Science With R. Chapter 5</h1>
+
+</div>
+
+
+<div id="chapter-5-data-engineering-and-data-shaping" class="section level2">
+<h2>Chapter 5: Data Engineering and Data Shaping</h2>
+<p>Before any analysis can be done, data must be organized in a way that is easy to work with. Data shaping is arranging your data into a format that is ready for visualization and analysis. In this chapter, we will go over some of the most common situations using base R commands as well as very popular packages data.table and dplyr.</p>
+<div id="data-selection" class="section level3">
+<h3>Data Selection</h3>
+<p>Data selection involves removing/choosing/reordering rows or columns, removing or assigning missing values and similar.</p>
+<div id="subsetting" class="section level4">
+<h4>Subsetting</h4>
+<p>Subsetting is choosing rows and/or collums we want to keep or drop. It is one of the daily tools. Using dataset iris which is already pre-installed in R. As you can see, iris dataset has data on length and width of sepals and petals. Say you do not need all the information: you want to drop sepal length and width but keep the remaining columns. In addition, say you want to keep only those irises that have a petal length greater than 2, and remove those that have petal length shorter than 2. This can be done as follows:</p>
+<pre class="r"><code>head(iris)</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<pre class="r"><code># METHOD 1: base R
+columns_we_want = c(&quot;Petal.Length&quot;, &quot;Petal.Width&quot;, &quot;Species&quot;)
+rows_we_want = iris$Petal.Length &gt; 2
+new_data1a=iris[rows_we_want, columns_we_want, drop = FALSE]
+new_data1b=iris[iris$Petal.Length&gt;2, -c(1,2), drop = FALSE]
+new_data1c=iris[iris$Petal.Length&gt;2, 3:5, drop = FALSE]
+head(new_data1a) # check new_data1b and new_data1c to see that they are identical to new_data1a</code></pre>
+<pre><code>##    Petal.Length Petal.Width    Species
+## 51          4.7         1.4 versicolor
+## 52          4.5         1.5 versicolor
+## 53          4.9         1.5 versicolor
+## 54          4.0         1.3 versicolor
+## 55          4.6         1.5 versicolor
+## 56          4.5         1.3 versicolor</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+iris_data.table = as.data.table(iris)
+columns_we_want = c(&quot;Petal.Length&quot;, &quot;Petal.Width&quot;, &quot;Species&quot;)
+rows_we_want = iris_data.table$Petal.Length &gt; 2
+iris_data.table = iris_data.table[rows_we_want , ..columns_we_want]
+head(iris_data.table)</code></pre>
+<pre><code>##    Petal.Length Petal.Width    Species
+## 1:          4.7         1.4 versicolor
+## 2:          4.5         1.5 versicolor
+## 3:          4.9         1.5 versicolor
+## 4:          4.0         1.3 versicolor
+## 5:          4.6         1.5 versicolor
+## 6:          4.5         1.3 versicolor</code></pre>
+<pre class="r"><code># METHOD 2: dplyr
+library(&quot;dplyr&quot;)
+iris_dplyr &lt;- iris %&gt;%
+  select(., Petal.Length, Petal.Width, Species) %&gt;%
+  filter(., Petal.Length &gt; 2)
+head(iris_dplyr)</code></pre>
+<pre><code>##   Petal.Length Petal.Width    Species
+## 1          4.7         1.4 versicolor
+## 2          4.5         1.5 versicolor
+## 3          4.9         1.5 versicolor
+## 4          4.0         1.3 versicolor
+## 5          4.6         1.5 versicolor
+## 6          4.5         1.3 versicolor</code></pre>
+</div>
+<div id="removing-rows-with-incomplete-data" class="section level4">
+<h4>Removing Rows with Incomplete Data</h4>
+<p>We often also want to remove rows for which key variables are missing. Let’s look at an example using dataset msleep from package ggplot2.</p>
+<pre class="r"><code>library(ggplot2)
+summary(msleep)</code></pre>
+<pre><code>##      name              genus               vore              order          
+##  Length:83          Length:83          Length:83          Length:83         
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##  conservation        sleep_total      sleep_rem      sleep_cycle    
+##  Length:83          Min.   : 1.90   Min.   :0.100   Min.   :0.1167  
+##  Class :character   1st Qu.: 7.85   1st Qu.:0.900   1st Qu.:0.1833  
+##  Mode  :character   Median :10.10   Median :1.500   Median :0.3333  
+##                     Mean   :10.43   Mean   :1.875   Mean   :0.4396  
+##                     3rd Qu.:13.75   3rd Qu.:2.400   3rd Qu.:0.5792  
+##                     Max.   :19.90   Max.   :6.600   Max.   :1.5000  
+##                                     NA&#39;s   :22      NA&#39;s   :51      
+##      awake          brainwt            bodywt        
+##  Min.   : 4.10   Min.   :0.00014   Min.   :   0.005  
+##  1st Qu.:10.25   1st Qu.:0.00290   1st Qu.:   0.174  
+##  Median :13.90   Median :0.01240   Median :   1.670  
+##  Mean   :13.57   Mean   :0.28158   Mean   : 166.136  
+##  3rd Qu.:16.15   3rd Qu.:0.12550   3rd Qu.:  41.750  
+##  Max.   :22.10   Max.   :5.71200   Max.   :6654.000  
+##                  NA&#39;s   :27</code></pre>
+<pre class="r"><code># METHOD 1: base R
+clean_base_1a=msleep[complete.cases(msleep), , drop = FALSE]
+nrow(clean_base_1a)</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code>clean_base_1b = na.omit(msleep)
+nrow(clean_base_1a)</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+msleep_data.table &lt;- as.data.table(msleep)
+clean_data.table = msleep_data.table[complete.cases(msleep_data.table), ]
+nrow(clean_data.table)</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code># METHOD 2: dplyr
+library(&quot;dplyr&quot;)
+clean_dplyr &lt;- msleep %&gt;%
+  filter(., complete.cases(.))
+nrow(clean_dplyr)</code></pre>
+<pre><code>## [1] 20</code></pre>
+</div>
+<div id="ordering-rows" class="section level4">
+<h4>Ordering Rows</h4>
+<p>Sometimes we want to sort or control what order our data rows are in. While for some data it is not relevant, in other cases it may be essential (time series). Perhaps the data came to us unsorted, or sorted for a purpose other than ours. Sorting is relatively straightforward. Example below shows how we can sort data, count cumulative sum and craete a conditional cumulative sum.</p>
+<pre class="r"><code>purchases = wrapr::build_frame(
+&quot;day&quot;, &quot;hour&quot;, &quot;n_purchase&quot; |
+1 , 9 , 5 |
+2 , 9 , 3 |
+2 , 11 , 5 |
+1 , 13 , 1 |
+2 , 13 , 3 |
+1 , 14 , 1 )
+
+#Alternatively, you could type data using data.frame command
+purchases = data.frame(day=c(1,2,2,1,2,1),
+                       hour=c(9,9,11,13,13,14),
+                       n_purchase=c(5,3,5,1,3,1))
+
+# METHOD 1: base R
+
+## Cumulative sum
+order_index &lt;- with(purchases, order(day, hour))
+purchases_ordered &lt;- purchases[order_index, , drop = FALSE]
+purchases_ordered$running_total &lt;- cumsum(purchases_ordered$n_purchase)
+purchases_ordered</code></pre>
+<pre><code>##   day hour n_purchase running_total
+## 1   1    9          5             5
+## 4   1   13          1             6
+## 6   1   14          1             7
+## 2   2    9          3            10
+## 3   2   11          5            15
+## 5   2   13          3            18</code></pre>
+<pre class="r"><code>## Cumulative sum by day
+order_index2 &lt;- with(purchases, order(day, hour))
+purchases_ordered2 &lt;- purchases[order_index2, , drop = FALSE]
+data_list2 &lt;- split(purchases_ordered2, purchases_ordered2$day)
+data_list2 &lt;- lapply(
+  data_list2,
+  function(di) {
+  di$running_total_by_day &lt;- cumsum(di$n_purchase)
+  di
+  })
+purchases_ordered2 &lt;- do.call(base::rbind, data_list2)
+rownames(purchases_ordered2) &lt;- NULL
+purchases_ordered2</code></pre>
+<pre><code>##   day hour n_purchase running_total_by_day
+## 1   1    9          5                    5
+## 2   1   13          1                    6
+## 3   1   14          1                    7
+## 4   2    9          3                    3
+## 5   2   11          5                    8
+## 6   2   13          3                   11</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+
+## Cumulative sum
+library(&quot;data.table&quot;)
+DT_purchases &lt;- as.data.table(purchases)
+order_cols &lt;- c(&quot;day&quot;, &quot;hour&quot;)
+setorderv(DT_purchases, order_cols)
+DT_purchases[ , running_total := cumsum(n_purchase)]
+#print(DT_purchases)
+
+## Cumulative sum by day
+DT_purchases &lt;- as.data.table(purchases)[order(day, hour),
+.(hour = hour,
+n_purchase = n_purchase,
+running_total = cumsum(n_purchase)),
+by = &quot;day&quot;]
+#print(DT_purchases)
+
+# METHOD 3: dplyr
+
+## Cumulative sum
+library(&quot;dplyr&quot;)
+res &lt;- purchases %&gt;%
+  arrange(., day, hour) %&gt;%
+  mutate(., running_total = cumsum(n_purchase))
+#print(res)
+
+## Cumulative sum by day
+res &lt;- purchases %&gt;%
+arrange(., day, hour) %&gt;%
+group_by(., day) %&gt;%
+mutate(., running_total = cumsum(n_purchase)) %&gt;%
+ungroup(.)
+#print(res)</code></pre>
+</div>
+<div id="basic-data-transformations" class="section level4">
+<h4>Basic Data Transformations</h4>
+<p>Basic Data Transformations cover adding columns, renaming columns, and parametric programming.</p>
+<p>Adding a new column is simple. To make this example more interesting, let’s add another column that combines the day and month and represents it as a date in a new column. We could run the following commands.</p>
+<pre class="r"><code># METHOD 1: base R
+airquality_with_date = airquality
+airquality_with_date$date = with(airquality_with_date,as.Date(paste0(&quot;1973&quot;,&quot;-&quot;,Month,&quot;-&quot;,Day)))
+## alternatively
+# airquality_with_date$date=as.Date(paste0(&quot;1973&quot;,&quot;-&quot;,airquality_with_date$Month,&quot;-&quot;,airquality_with_date$Day))
+airquality_with_date =airquality_with_date[,c(&quot;Ozone&quot;, &quot;date&quot;),drop = FALSE]
+head(airquality_with_date)</code></pre>
+<pre><code>##   Ozone       date
+## 1    41 1973-05-01
+## 2    36 1973-05-02
+## 3    12 1973-05-03
+## 4    18 1973-05-04
+## 5    NA 1973-05-05
+## 6    28 1973-05-06</code></pre>
+<pre class="r"><code># METHOD 1b: using base R and package wrapr
+## Let&#39;s also remove rows with missing values
+library(&quot;wrapr&quot;)
+airquality %.&gt;%
+transform(., date = as.Date(paste0(&quot;1973&quot;,&quot;-&quot;,Month,&quot;-&quot;,Day))) %.&gt;%
+subset(., !is.na(Ozone), select = c(&quot;Ozone&quot;, &quot;date&quot;)) %.&gt;%
+head(.)</code></pre>
+<pre><code>##   Ozone       date
+## 1    41 1973-05-01
+## 2    36 1973-05-02
+## 3    12 1973-05-03
+## 4    18 1973-05-04
+## 6    28 1973-05-06
+## 7    23 1973-05-07</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+DT_airquality &lt;-
+as.data.table(airquality)[
+, date := as.Date(paste0(&quot;1973&quot;,&quot;-&quot;,Month,&quot;-&quot;,Day)) ][
+, c(&quot;Ozone&quot;, &quot;date&quot;)]
+head(DT_airquality)</code></pre>
+<pre><code>##    Ozone       date
+## 1:    41 1973-05-01
+## 2:    36 1973-05-02
+## 3:    12 1973-05-03
+## 4:    18 1973-05-04
+## 5:    NA 1973-05-05
+## 6:    28 1973-05-06</code></pre>
+<pre class="r"><code># METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+airquality_with_date2 &lt;- airquality %&gt;%
+mutate(., date = as.Date(paste0(&quot;1973&quot;,&quot;-&quot;,Month,&quot;-&quot;,Day))) %&gt;%
+select(., Ozone, date)
+head(airquality_with_date2)</code></pre>
+<pre><code>##   Ozone       date
+## 1    41 1973-05-01
+## 2    36 1973-05-02
+## 3    12 1973-05-03
+## 4    18 1973-05-04
+## 5    NA 1973-05-05
+## 6    28 1973-05-06</code></pre>
+<p>As you can see, there are some missing values. Say, you want to include the previous reading into the missing entry. That is if day 10 reading is missing, let it equal to the reading from day 9. This can be done multiple ways.</p>
+<pre class="r"><code># METHOD 1: base R
+airquality_corrected = airquality_with_date
+airquality_corrected$OzoneCorrected1=airquality_corrected$Ozone
+indeces_of_NAs = which(is.na(airquality_corrected$Ozone))
+for (i in 1:length(indeces_of_NAs)){
+  index=indeces_of_NAs[i]
+  airquality_corrected$OzoneCorrected1[index]=airquality_corrected$OzoneCorrected1[index-1]
+}
+
+# METHOD 1b: using base R and package zoo
+library(&quot;zoo&quot;)
+airquality_corrected$OzoneCorrected2 &lt;-
+na.locf(airquality_corrected$Ozone, na.rm = FALSE)
+airquality_corrected</code></pre>
+<pre><code>##     Ozone       date OzoneCorrected1 OzoneCorrected2
+## 1      41 1973-05-01              41              41
+## 2      36 1973-05-02              36              36
+## 3      12 1973-05-03              12              12
+## 4      18 1973-05-04              18              18
+## 5      NA 1973-05-05              18              18
+## 6      28 1973-05-06              28              28
+## 7      23 1973-05-07              23              23
+## 8      19 1973-05-08              19              19
+## 9       8 1973-05-09               8               8
+## 10     NA 1973-05-10               8               8
+## 11      7 1973-05-11               7               7
+## 12     16 1973-05-12              16              16
+## 13     11 1973-05-13              11              11
+## 14     14 1973-05-14              14              14
+## 15     18 1973-05-15              18              18
+## 16     14 1973-05-16              14              14
+## 17     34 1973-05-17              34              34
+## 18      6 1973-05-18               6               6
+## 19     30 1973-05-19              30              30
+## 20     11 1973-05-20              11              11
+## 21      1 1973-05-21               1               1
+## 22     11 1973-05-22              11              11
+## 23      4 1973-05-23               4               4
+## 24     32 1973-05-24              32              32
+## 25     NA 1973-05-25              32              32
+## 26     NA 1973-05-26              32              32
+## 27     NA 1973-05-27              32              32
+## 28     23 1973-05-28              23              23
+## 29     45 1973-05-29              45              45
+## 30    115 1973-05-30             115             115
+## 31     37 1973-05-31              37              37
+## 32     NA 1973-06-01              37              37
+## 33     NA 1973-06-02              37              37
+## 34     NA 1973-06-03              37              37
+## 35     NA 1973-06-04              37              37
+## 36     NA 1973-06-05              37              37
+## 37     NA 1973-06-06              37              37
+## 38     29 1973-06-07              29              29
+## 39     NA 1973-06-08              29              29
+## 40     71 1973-06-09              71              71
+## 41     39 1973-06-10              39              39
+## 42     NA 1973-06-11              39              39
+## 43     NA 1973-06-12              39              39
+## 44     23 1973-06-13              23              23
+## 45     NA 1973-06-14              23              23
+## 46     NA 1973-06-15              23              23
+## 47     21 1973-06-16              21              21
+## 48     37 1973-06-17              37              37
+## 49     20 1973-06-18              20              20
+## 50     12 1973-06-19              12              12
+## 51     13 1973-06-20              13              13
+## 52     NA 1973-06-21              13              13
+## 53     NA 1973-06-22              13              13
+## 54     NA 1973-06-23              13              13
+## 55     NA 1973-06-24              13              13
+## 56     NA 1973-06-25              13              13
+## 57     NA 1973-06-26              13              13
+## 58     NA 1973-06-27              13              13
+## 59     NA 1973-06-28              13              13
+## 60     NA 1973-06-29              13              13
+## 61     NA 1973-06-30              13              13
+## 62    135 1973-07-01             135             135
+## 63     49 1973-07-02              49              49
+## 64     32 1973-07-03              32              32
+## 65     NA 1973-07-04              32              32
+## 66     64 1973-07-05              64              64
+## 67     40 1973-07-06              40              40
+## 68     77 1973-07-07              77              77
+## 69     97 1973-07-08              97              97
+## 70     97 1973-07-09              97              97
+## 71     85 1973-07-10              85              85
+## 72     NA 1973-07-11              85              85
+## 73     10 1973-07-12              10              10
+## 74     27 1973-07-13              27              27
+## 75     NA 1973-07-14              27              27
+## 76      7 1973-07-15               7               7
+## 77     48 1973-07-16              48              48
+## 78     35 1973-07-17              35              35
+## 79     61 1973-07-18              61              61
+## 80     79 1973-07-19              79              79
+## 81     63 1973-07-20              63              63
+## 82     16 1973-07-21              16              16
+## 83     NA 1973-07-22              16              16
+## 84     NA 1973-07-23              16              16
+## 85     80 1973-07-24              80              80
+## 86    108 1973-07-25             108             108
+## 87     20 1973-07-26              20              20
+## 88     52 1973-07-27              52              52
+## 89     82 1973-07-28              82              82
+## 90     50 1973-07-29              50              50
+## 91     64 1973-07-30              64              64
+## 92     59 1973-07-31              59              59
+## 93     39 1973-08-01              39              39
+## 94      9 1973-08-02               9               9
+## 95     16 1973-08-03              16              16
+## 96     78 1973-08-04              78              78
+## 97     35 1973-08-05              35              35
+## 98     66 1973-08-06              66              66
+## 99    122 1973-08-07             122             122
+## 100    89 1973-08-08              89              89
+## 101   110 1973-08-09             110             110
+## 102    NA 1973-08-10             110             110
+## 103    NA 1973-08-11             110             110
+## 104    44 1973-08-12              44              44
+## 105    28 1973-08-13              28              28
+## 106    65 1973-08-14              65              65
+## 107    NA 1973-08-15              65              65
+## 108    22 1973-08-16              22              22
+## 109    59 1973-08-17              59              59
+## 110    23 1973-08-18              23              23
+## 111    31 1973-08-19              31              31
+## 112    44 1973-08-20              44              44
+## 113    21 1973-08-21              21              21
+## 114     9 1973-08-22               9               9
+## 115    NA 1973-08-23               9               9
+## 116    45 1973-08-24              45              45
+## 117   168 1973-08-25             168             168
+## 118    73 1973-08-26              73              73
+## 119    NA 1973-08-27              73              73
+## 120    76 1973-08-28              76              76
+## 121   118 1973-08-29             118             118
+## 122    84 1973-08-30              84              84
+## 123    85 1973-08-31              85              85
+## 124    96 1973-09-01              96              96
+## 125    78 1973-09-02              78              78
+## 126    73 1973-09-03              73              73
+## 127    91 1973-09-04              91              91
+## 128    47 1973-09-05              47              47
+## 129    32 1973-09-06              32              32
+## 130    20 1973-09-07              20              20
+## 131    23 1973-09-08              23              23
+## 132    21 1973-09-09              21              21
+## 133    24 1973-09-10              24              24
+## 134    44 1973-09-11              44              44
+## 135    21 1973-09-12              21              21
+## 136    28 1973-09-13              28              28
+## 137     9 1973-09-14               9               9
+## 138    13 1973-09-15              13              13
+## 139    46 1973-09-16              46              46
+## 140    18 1973-09-17              18              18
+## 141    13 1973-09-18              13              13
+## 142    24 1973-09-19              24              24
+## 143    16 1973-09-20              16              16
+## 144    13 1973-09-21              13              13
+## 145    23 1973-09-22              23              23
+## 146    36 1973-09-23              36              36
+## 147     7 1973-09-24               7               7
+## 148    14 1973-09-25              14              14
+## 149    30 1973-09-26              30              30
+## 150    NA 1973-09-27              30              30
+## 151    14 1973-09-28              14              14
+## 152    18 1973-09-29              18              18
+## 153    20 1973-09-30              20              20</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+library(&quot;zoo&quot;)
+DT_airquality[, OzoneCorrected := na.locf(Ozone, na.rm=FALSE)]
+
+# METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+library(&quot;zoo&quot;)
+airquality_with_date %&gt;%
+mutate(.,OzoneCorrected = na.locf(., na.rm = FALSE))</code></pre>
+<pre><code>##     Ozone       date OzoneCorrected.Ozone OzoneCorrected.date
+## 1      41 1973-05-01                   41          1973-05-01
+## 2      36 1973-05-02                   36          1973-05-02
+## 3      12 1973-05-03                   12          1973-05-03
+## 4      18 1973-05-04                   18          1973-05-04
+## 5      NA 1973-05-05                   18          1973-05-05
+## 6      28 1973-05-06                   28          1973-05-06
+## 7      23 1973-05-07                   23          1973-05-07
+## 8      19 1973-05-08                   19          1973-05-08
+## 9       8 1973-05-09                    8          1973-05-09
+## 10     NA 1973-05-10                    8          1973-05-10
+## 11      7 1973-05-11                    7          1973-05-11
+## 12     16 1973-05-12                   16          1973-05-12
+## 13     11 1973-05-13                   11          1973-05-13
+## 14     14 1973-05-14                   14          1973-05-14
+## 15     18 1973-05-15                   18          1973-05-15
+## 16     14 1973-05-16                   14          1973-05-16
+## 17     34 1973-05-17                   34          1973-05-17
+## 18      6 1973-05-18                    6          1973-05-18
+## 19     30 1973-05-19                   30          1973-05-19
+## 20     11 1973-05-20                   11          1973-05-20
+## 21      1 1973-05-21                    1          1973-05-21
+## 22     11 1973-05-22                   11          1973-05-22
+## 23      4 1973-05-23                    4          1973-05-23
+## 24     32 1973-05-24                   32          1973-05-24
+## 25     NA 1973-05-25                   32          1973-05-25
+## 26     NA 1973-05-26                   32          1973-05-26
+## 27     NA 1973-05-27                   32          1973-05-27
+## 28     23 1973-05-28                   23          1973-05-28
+## 29     45 1973-05-29                   45          1973-05-29
+## 30    115 1973-05-30                  115          1973-05-30
+## 31     37 1973-05-31                   37          1973-05-31
+## 32     NA 1973-06-01                   37          1973-06-01
+## 33     NA 1973-06-02                   37          1973-06-02
+## 34     NA 1973-06-03                   37          1973-06-03
+## 35     NA 1973-06-04                   37          1973-06-04
+## 36     NA 1973-06-05                   37          1973-06-05
+## 37     NA 1973-06-06                   37          1973-06-06
+## 38     29 1973-06-07                   29          1973-06-07
+## 39     NA 1973-06-08                   29          1973-06-08
+## 40     71 1973-06-09                   71          1973-06-09
+## 41     39 1973-06-10                   39          1973-06-10
+## 42     NA 1973-06-11                   39          1973-06-11
+## 43     NA 1973-06-12                   39          1973-06-12
+## 44     23 1973-06-13                   23          1973-06-13
+## 45     NA 1973-06-14                   23          1973-06-14
+## 46     NA 1973-06-15                   23          1973-06-15
+## 47     21 1973-06-16                   21          1973-06-16
+## 48     37 1973-06-17                   37          1973-06-17
+## 49     20 1973-06-18                   20          1973-06-18
+## 50     12 1973-06-19                   12          1973-06-19
+## 51     13 1973-06-20                   13          1973-06-20
+## 52     NA 1973-06-21                   13          1973-06-21
+## 53     NA 1973-06-22                   13          1973-06-22
+## 54     NA 1973-06-23                   13          1973-06-23
+## 55     NA 1973-06-24                   13          1973-06-24
+## 56     NA 1973-06-25                   13          1973-06-25
+## 57     NA 1973-06-26                   13          1973-06-26
+## 58     NA 1973-06-27                   13          1973-06-27
+## 59     NA 1973-06-28                   13          1973-06-28
+## 60     NA 1973-06-29                   13          1973-06-29
+## 61     NA 1973-06-30                   13          1973-06-30
+## 62    135 1973-07-01                  135          1973-07-01
+## 63     49 1973-07-02                   49          1973-07-02
+## 64     32 1973-07-03                   32          1973-07-03
+## 65     NA 1973-07-04                   32          1973-07-04
+## 66     64 1973-07-05                   64          1973-07-05
+## 67     40 1973-07-06                   40          1973-07-06
+## 68     77 1973-07-07                   77          1973-07-07
+## 69     97 1973-07-08                   97          1973-07-08
+## 70     97 1973-07-09                   97          1973-07-09
+## 71     85 1973-07-10                   85          1973-07-10
+## 72     NA 1973-07-11                   85          1973-07-11
+## 73     10 1973-07-12                   10          1973-07-12
+## 74     27 1973-07-13                   27          1973-07-13
+## 75     NA 1973-07-14                   27          1973-07-14
+## 76      7 1973-07-15                    7          1973-07-15
+## 77     48 1973-07-16                   48          1973-07-16
+## 78     35 1973-07-17                   35          1973-07-17
+## 79     61 1973-07-18                   61          1973-07-18
+## 80     79 1973-07-19                   79          1973-07-19
+## 81     63 1973-07-20                   63          1973-07-20
+## 82     16 1973-07-21                   16          1973-07-21
+## 83     NA 1973-07-22                   16          1973-07-22
+## 84     NA 1973-07-23                   16          1973-07-23
+## 85     80 1973-07-24                   80          1973-07-24
+## 86    108 1973-07-25                  108          1973-07-25
+## 87     20 1973-07-26                   20          1973-07-26
+## 88     52 1973-07-27                   52          1973-07-27
+## 89     82 1973-07-28                   82          1973-07-28
+## 90     50 1973-07-29                   50          1973-07-29
+## 91     64 1973-07-30                   64          1973-07-30
+## 92     59 1973-07-31                   59          1973-07-31
+## 93     39 1973-08-01                   39          1973-08-01
+## 94      9 1973-08-02                    9          1973-08-02
+## 95     16 1973-08-03                   16          1973-08-03
+## 96     78 1973-08-04                   78          1973-08-04
+## 97     35 1973-08-05                   35          1973-08-05
+## 98     66 1973-08-06                   66          1973-08-06
+## 99    122 1973-08-07                  122          1973-08-07
+## 100    89 1973-08-08                   89          1973-08-08
+## 101   110 1973-08-09                  110          1973-08-09
+## 102    NA 1973-08-10                  110          1973-08-10
+## 103    NA 1973-08-11                  110          1973-08-11
+## 104    44 1973-08-12                   44          1973-08-12
+## 105    28 1973-08-13                   28          1973-08-13
+## 106    65 1973-08-14                   65          1973-08-14
+## 107    NA 1973-08-15                   65          1973-08-15
+## 108    22 1973-08-16                   22          1973-08-16
+## 109    59 1973-08-17                   59          1973-08-17
+## 110    23 1973-08-18                   23          1973-08-18
+## 111    31 1973-08-19                   31          1973-08-19
+## 112    44 1973-08-20                   44          1973-08-20
+## 113    21 1973-08-21                   21          1973-08-21
+## 114     9 1973-08-22                    9          1973-08-22
+## 115    NA 1973-08-23                    9          1973-08-23
+## 116    45 1973-08-24                   45          1973-08-24
+## 117   168 1973-08-25                  168          1973-08-25
+## 118    73 1973-08-26                   73          1973-08-26
+## 119    NA 1973-08-27                   73          1973-08-27
+## 120    76 1973-08-28                   76          1973-08-28
+## 121   118 1973-08-29                  118          1973-08-29
+## 122    84 1973-08-30                   84          1973-08-30
+## 123    85 1973-08-31                   85          1973-08-31
+## 124    96 1973-09-01                   96          1973-09-01
+## 125    78 1973-09-02                   78          1973-09-02
+## 126    73 1973-09-03                   73          1973-09-03
+## 127    91 1973-09-04                   91          1973-09-04
+## 128    47 1973-09-05                   47          1973-09-05
+## 129    32 1973-09-06                   32          1973-09-06
+## 130    20 1973-09-07                   20          1973-09-07
+## 131    23 1973-09-08                   23          1973-09-08
+## 132    21 1973-09-09                   21          1973-09-09
+## 133    24 1973-09-10                   24          1973-09-10
+## 134    44 1973-09-11                   44          1973-09-11
+## 135    21 1973-09-12                   21          1973-09-12
+## 136    28 1973-09-13                   28          1973-09-13
+## 137     9 1973-09-14                    9          1973-09-14
+## 138    13 1973-09-15                   13          1973-09-15
+## 139    46 1973-09-16                   46          1973-09-16
+## 140    18 1973-09-17                   18          1973-09-17
+## 141    13 1973-09-18                   13          1973-09-18
+## 142    24 1973-09-19                   24          1973-09-19
+## 143    16 1973-09-20                   16          1973-09-20
+## 144    13 1973-09-21                   13          1973-09-21
+## 145    23 1973-09-22                   23          1973-09-22
+## 146    36 1973-09-23                   36          1973-09-23
+## 147     7 1973-09-24                    7          1973-09-24
+## 148    14 1973-09-25                   14          1973-09-25
+## 149    30 1973-09-26                   30          1973-09-26
+## 150    NA 1973-09-27                   30          1973-09-27
+## 151    14 1973-09-28                   14          1973-09-28
+## 152    18 1973-09-29                   18          1973-09-29
+## 153    20 1973-09-30                   20          1973-09-30</code></pre>
+<p>One other popular trick with data, especially when there are multiple readings of the same variable, is to coalesce them into one. For example, if there are multiple reading for the same variable, you may choose to keep the first reading of the variable. If the variable readings differ, you may want to consider averaging, or figuring out why the readings differ in the first place, and then choose the most appropriate method.</p>
+<pre class="r"><code>data &lt;- wrapr::build_frame(
+&quot;time&quot;, &quot;sensor1&quot;, &quot;sensor2&quot;, &quot;sensor3&quot; |
+1L , NA , -0.07528 , -0.07528 |
+2L , NA , -0.164 , NA |
+3L , NA , -0.8119 , -0.8119 |
+4L , NA , NA , -0.461 |
+5L , NA , NA , NA )
+
+# METHOD 1: base R - custom for this problem
+for (i in 1:nrow(data)){
+  if (sum(is.na(data[i,2:4]))==length(data[i,2:4])){
+    data$reading0[i]=NA
+  } else {
+    ind=min(which(!is.na(as.numeric(data[i,2:4]))))
+    data$reading0[i] = as.numeric(data[i,1+ind])
+  }
+}
+
+# METHOD 2: wrapr
+library(&quot;wrapr&quot;)
+data$reading = data$sensor1 %?% data$sensor2 %?% data$sensor3 %?% 0.0</code></pre>
+<p>Very often, we need to combine many rows in a summary row. A summary gives a succinct information about the data that we are working with. That can be done using a variety of ways. See below using dataset iris.</p>
+<pre class="r"><code>head(iris)</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<pre class="r"><code># METHOD 1: base R - custom for this problem
+# you can use tapply(), aggregate(), tabulate(), or table())
+m1=aggregate(Petal.Length ~ Species, data = iris, mean)
+m2=aggregate(Petal.Width ~ Species, data = iris, mean)
+m_final = merge(m1,m2,by=&quot;Species&quot;)
+
+# METHOD 2: data.table
+library(&quot;data.table&quot;)
+iris_data.table &lt;- as.data.table(iris)
+iris_data.table &lt;- iris_data.table[,
+  .(Petal.Length = mean(Petal.Length),
+  Petal.Width = mean(Petal.Width)),
+  by = .(Species)]
+
+# METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+iris %&gt;% group_by(., Species) %&gt;%
+summarize(.,
+  Petal.Length = mean(Petal.Length),
+  Petal.Width = mean(Petal.Width)) %&gt;%
+  ungroup(.) -&gt; iris.summary
+iris.summary</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   Species    Petal.Length Petal.Width
+##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+## 1 setosa             1.46       0.246
+## 2 versicolor         4.26       1.33 
+## 3 virginica          5.55       2.03</code></pre>
+</div>
+<div id="multi-table-data-transforms" class="section level4">
+<h4>Multi-Table Data Transforms</h4>
+<p>Most data scientists sooner or later run into combining multiple sources of data. Datasets can be combined by row or column, depending on the datasets. For example, you may have one dataset that contains prices for one day, and another dataset that contains prices for another day. In this case, you could combine by row.</p>
+<pre class="r"><code>productTable &lt;- wrapr::build_frame(
+&quot;productID&quot;, &quot;price&quot; |
+&quot;p1&quot; , 9.99 |
+&quot;p2&quot; , 16.29 |
+&quot;p3&quot; , 19.99 |
+&quot;p4&quot; , 5.49 |
+&quot;p5&quot; , 24.49 )
+salesTable &lt;- wrapr::build_frame(
+&quot;productID&quot;, &quot;sold_store&quot;, &quot;sold_online&quot; |
+&quot;p1&quot; , 6 , 64 |
+&quot;p2&quot; , 31 , 1 |
+&quot;p3&quot; , 30 , 23 |
+&quot;p4&quot; , 31 , 67 |
+&quot;p5&quot; , 43 , 51 )
+productTable2 &lt;- wrapr::build_frame(
+&quot;productID&quot;, &quot;price&quot; |
+&quot;n1&quot; , 25.49 |
+&quot;n2&quot; , 33.99 |
+&quot;n3&quot; , 17.99 )
+productTable$productID &lt;- factor(productTable$productID)
+productTable2$productID &lt;- factor(productTable2$productID)
+
+# METHOD 1: base R - custom for this problem
+rbind_base = rbind(productTable,productTable2)
+
+# METHOD 2: data.table
+library(&quot;data.table&quot;)
+rbindlist(list(productTable,productTable2))</code></pre>
+<pre><code>##    productID price
+## 1:        p1  9.99
+## 2:        p2 16.29
+## 3:        p3 19.99
+## 4:        p4  5.49
+## 5:        p5 24.49
+## 6:        n1 25.49
+## 7:        n2 33.99
+## 8:        n3 17.99</code></pre>
+<pre class="r"><code># METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+bind_rows(list(productTable,productTable2))</code></pre>
+<pre><code>##   productID price
+## 1        p1  9.99
+## 2        p2 16.29
+## 3        p3 19.99
+## 4        p4  5.49
+## 5        p5 24.49
+## 6        n1 25.49
+## 7        n2 33.99
+## 8        n3 17.99</code></pre>
+<p>Combining by columns is also relatively straightforward. This is typically done, when for the same variables in both datasets, we have different columns in each.</p>
+<pre class="r"><code># METHOD 1: base R - custom for this problem
+cbind(productTable, salesTable[, -1])</code></pre>
+<pre><code>##   productID price sold_store sold_online
+## 1        p1  9.99          6          64
+## 2        p2 16.29         31           1
+## 3        p3 19.99         30          23
+## 4        p4  5.49         31          67
+## 5        p5 24.49         43          51</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+cbind(as.data.table(productTable),
+as.data.table(salesTable[, -1]))</code></pre>
+<pre><code>##    productID price sold_store sold_online
+## 1:        p1  9.99          6          64
+## 2:        p2 16.29         31           1
+## 3:        p3 19.99         30          23
+## 4:        p4  5.49         31          67
+## 5:        p5 24.49         43          51</code></pre>
+<pre class="r"><code># METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+# list of data frames calling convention
+dplyr::bind_cols(list(productTable, salesTable[, -1]))</code></pre>
+<pre><code>##   productID price sold_store sold_online
+## 1        p1  9.99          6          64
+## 2        p2 16.29         31           1
+## 3        p3 19.99         30          23
+## 4        p4  5.49         31          67
+## 5        p5 24.49         43          51</code></pre>
+<p>Often, we have different data about the same units in different data sets. We can easily combine different data tables. The final data table will have all the columns from each dataset. The most important/common join for the data scientist is likely the left join. This join keeps every row from the left table and adds columns coming from matching rows in the right table. When there are no matching rows, NA values are substituted in.</p>
+<pre class="r"><code>productTable &lt;- wrapr::build_frame(
+&quot;productID&quot;, &quot;price&quot; |
+&quot;p1&quot; , 9.99 |
+&quot;p3&quot; , 19.99 |
+&quot;p4&quot; , 5.49 |
+&quot;p5&quot; , 24.49 )
+salesTable &lt;- wrapr::build_frame(
+&quot;productID&quot;, &quot;unitsSold&quot; |
+&quot;p1&quot; , 10 |
+&quot;p2&quot; , 43 |
+&quot;p3&quot; , 55 |
+&quot;p4&quot; , 8 )
+
+# METHOD 1: base R - custom for this problem
+merge(productTable, salesTable, by = &quot;productID&quot;, all.x = TRUE)</code></pre>
+<pre><code>##   productID price unitsSold
+## 1        p1  9.99        10
+## 2        p3 19.99        55
+## 3        p4  5.49         8
+## 4        p5 24.49        NA</code></pre>
+<pre class="r"><code># METHOD 2a: data.table
+library(&quot;data.table&quot;)
+productTable_data.table &lt;- as.data.table(productTable)
+salesTable_data.table &lt;- as.data.table(salesTable)
+# index notation for join idea is rows are produced for each row inside the []
+salesTable_data.table[productTable_data.table, on = &quot;productID&quot;]</code></pre>
+<pre><code>##    productID unitsSold price
+## 1:        p1        10  9.99
+## 2:        p3        55 19.99
+## 3:        p4         8  5.49
+## 4:        p5        NA 24.49</code></pre>
+<pre class="r"><code># METHOD 2b: data.table
+library(&quot;data.table&quot;)
+joined_table &lt;- productTable
+joined_table$unitsSold &lt;- salesTable$unitsSold[match(joined_table$productID,
+salesTable$productID)]
+
+# METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+left_join(productTable, salesTable, by = &quot;productID&quot;)</code></pre>
+<pre><code>##   productID price unitsSold
+## 1        p1  9.99        10
+## 2        p3 19.99        55
+## 3        p4  5.49         8
+## 4        p5 24.49        NA</code></pre>
+<p>There are many other types of merging one would run into. For example, we may want to merge two tables into a single table, keeping only the rows where the key exists in both tables.</p>
+<pre class="r"><code>productTable &lt;- wrapr::build_frame(
+&quot;productID&quot;, &quot;price&quot; |
+&quot;p1&quot; , 9.99 |
+&quot;p3&quot; , 19.99 |
+&quot;p4&quot; , 5.49 |
+&quot;p5&quot; , 24.49 )
+salesTable &lt;- wrapr::build_frame(
+&quot;productID&quot;, &quot;unitsSold&quot; |
+&quot;p1&quot; , 10 |
+&quot;p2&quot; , 43 |
+&quot;p3&quot; , 55 |
+&quot;p4&quot; , 8 )
+
+# METHOD 1: base R - custom for this problem
+merge(productTable, salesTable, by = &quot;productID&quot;)</code></pre>
+<pre><code>##   productID price unitsSold
+## 1        p1  9.99        10
+## 2        p3 19.99        55
+## 3        p4  5.49         8</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+productTable_data.table &lt;- as.data.table(productTable)
+salesTable_data.table &lt;- as.data.table(salesTable)
+merge(productTable, salesTable, by = &quot;productID&quot;)</code></pre>
+<pre><code>##   productID price unitsSold
+## 1        p1  9.99        10
+## 2        p3 19.99        55
+## 3        p4  5.49         8</code></pre>
+<pre class="r"><code># METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+inner_join(productTable, salesTable, by = &quot;productID&quot;)</code></pre>
+<pre><code>##   productID price unitsSold
+## 1        p1  9.99        10
+## 2        p3 19.99        55
+## 3        p4  5.49         8</code></pre>
+<p>Finally, we can merge two tables into a single table, keeping rows for all key values. Notice the two tables have equal importance here.</p>
+<pre class="r"><code># METHOD 1: base R - custom for this problem
+merge(productTable, salesTable, by = &quot;productID&quot;, all=TRUE)</code></pre>
+<pre><code>##   productID price unitsSold
+## 1        p1  9.99        10
+## 2        p2    NA        43
+## 3        p3 19.99        55
+## 4        p4  5.49         8
+## 5        p5 24.49        NA</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+productTable_data.table &lt;- as.data.table(productTable)
+salesTable_data.table &lt;- as.data.table(salesTable)
+merge(productTable_data.table, salesTable_data.table,
+by = &quot;productID&quot;, all = TRUE)</code></pre>
+<pre><code>##    productID price unitsSold
+## 1:        p1  9.99        10
+## 2:        p2    NA        43
+## 3:        p3 19.99        55
+## 4:        p4  5.49         8
+## 5:        p5 24.49        NA</code></pre>
+<pre class="r"><code># METHOD 3: dplyr
+library(&quot;dplyr&quot;)
+full_join(productTable, salesTable, by = &quot;productID&quot;)</code></pre>
+<pre><code>##   productID price unitsSold
+## 1        p1  9.99        10
+## 2        p3 19.99        55
+## 3        p4  5.49         8
+## 4        p5 24.49        NA
+## 5        p2    NA        43</code></pre>
+<p>Consider this more complicated example in which you have bid/ask quotes and trade prices. Find for which times the trade price were within the bid and ask ranges.</p>
+<pre class="r"><code>quotes &lt;- data.table(
+bid = c(5, 5, 7, 8),
+ask = c(6, 6, 8, 10),
+bid_quantity = c(100, 100, 100, 100),
+ask_quantity = c(100, 100, 100, 100),
+when = as.POSIXct(strptime(
+c(&quot;2018-10-18 1:03:17&quot;,
+&quot;2018-10-18 2:12:23&quot;,
+&quot;2018-10-18 2:15:00&quot;,
+&quot;2018-10-18 2:17:51&quot;),
+&quot;%Y-%m-%d %H:%M:%S&quot;)))
+
+trades &lt;- data.table(
+trade_id = c(32525, 32526),
+price = c(5.5, 9),
+quantity = c(100, 200),
+when = as.POSIXct(strptime(
+c(&quot;2018-10-18 2:13:42&quot;,
+&quot;2018-10-18 2:19:20&quot;),
+&quot;%Y-%m-%d %H:%M:%S&quot;)))
+
+# Range Join
+library(&quot;data.table&quot;)
+trades[, trade_price := price]
+quotes[, `:=`(bid_price = bid, ask_price = ask) ]
+quotes[trades, on = .(bid &lt;= price, ask &gt;= price) ][
+, .(when, bid, ask, bid_price, trade_price, ask_price, trade_id) ]</code></pre>
+<pre><code>##                   when bid ask bid_price trade_price ask_price trade_id
+## 1: 2018-10-18 01:03:17 5.5 5.5         5         5.5         6    32525
+## 2: 2018-10-18 02:12:23 5.5 5.5         5         5.5         6    32525
+## 3: 2018-10-18 02:17:51 9.0 9.0         8         9.0        10    32526</code></pre>
+<pre class="r"><code># Rolling Join
+quotes[ , quote_time := when ]
+trades[, trade_time := when]
+quotes[ trades, on = &quot;when&quot;, roll = TRUE ][
+, .(quote_time, bid_price, trade_price, ask_price, trade_id, trade_time) ]</code></pre>
+<pre><code>##             quote_time bid_price trade_price ask_price trade_id
+## 1: 2018-10-18 02:12:23         5         5.5         6    32525
+## 2: 2018-10-18 02:17:51         8         9.0        10    32526
+##             trade_time
+## 1: 2018-10-18 02:13:42
+## 2: 2018-10-18 02:19:20</code></pre>
+</div>
+<div id="reshaping-transforms" class="section level4">
+<h4>Reshaping Transforms</h4>
+<p>Let’s examine an example of how to convert the data from wide format to long format. Instead of having multiple readings (driverskilled, front, rear) for a specific date in one row, we may want to have each of these in separate rows. This is sometimes needed for other packages, such as ggpot2. See example below.</p>
+<pre class="r"><code>library(&quot;datasets&quot;)
+library(&quot;xts&quot;)
+Seatbelts1 &lt;- data.frame(Seatbelts)
+Seatbelts1$date &lt;- index(as.xts(Seatbelts))
+Seatbelts1 &lt;- Seatbelts1[ (Seatbelts1$date &gt;= as.yearmon(&quot;Jan 1982&quot;)) &amp;
+  (Seatbelts1$date &lt;= as.yearmon(&quot;Dec 1983&quot;)), , drop = FALSE]
+Seatbelts1$date &lt;- as.Date(Seatbelts1$date)
+Seatbelts1$law &lt;- ifelse(Seatbelts1$law==1, &quot;new law&quot;, &quot;pre-law&quot;)
+Seatbelts1 &lt;- Seatbelts1[, c(&quot;date&quot;, &quot;DriversKilled&quot;, &quot;front&quot;, &quot;rear&quot;, &quot;law&quot;)]
+head(Seatbelts1)</code></pre>
+<pre><code>##           date DriversKilled front rear     law
+## 157 1982-01-01           115   595  238 pre-law
+## 158 1982-02-01           104   673  285 pre-law
+## 159 1982-03-01           131   660  324 pre-law
+## 160 1982-04-01           108   676  346 pre-law
+## 161 1982-05-01           103   755  410 pre-law
+## 162 1982-06-01           115   815  411 pre-law</code></pre>
+<pre class="r"><code># METHOD 1: tidyr
+library(&quot;tidyr&quot;)
+seatbelts_long1 &lt;- gather(
+Seatbelts1,
+key = victim_type,
+value = nvictims,
+DriversKilled, front, rear)
+
+# METHOD 2: data.table
+library(&quot;data.table&quot;)
+seatbelts_long2 &lt;-
+melt.data.table(as.data.table(Seatbelts1),
+id.vars = NULL,
+measure.vars = c(&quot;DriversKilled&quot;, &quot;front&quot;, &quot;rear&quot;),
+variable.name = &quot;victim_type&quot;,
+value.name = &quot;nvictims&quot;)
+
+# METHOD 3: data.table
+library(&quot;cdata&quot;)
+seatbelts_long3 &lt;- unpivot_to_blocks(
+Seatbelts1,
+nameForNewKeyColumn = &quot;victim_type&quot;,
+nameForNewValueColumn = &quot;nvictims&quot;,
+columnsToTakeFrom = c(&quot;DriversKilled&quot;, &quot;front&quot;, &quot;rear&quot;))</code></pre>
+<p>In other cases, we may want to do the reverse: move from tall to wide format.</p>
+<pre class="r"><code>library(&quot;datasets&quot;)
+library(&quot;data.table&quot;)
+library(&quot;ggplot2&quot;)
+ChickWeight &lt;- data.frame(ChickWeight) # get rid of attributes
+ChickWeight$Diet &lt;- NULL # remove the diet label
+# pad names with zeros
+padz &lt;- function(x, n=max(nchar(x))) gsub(&quot; &quot;, &quot;0&quot;, formatC(x, width=n))
+# append &quot;Chick&quot; to the chick ids
+ChickWeight$Chick &lt;- paste0(&quot;Chick&quot;, padz(as.character(ChickWeight$Chick)))
+
+ChickSummary &lt;- as.data.table(ChickWeight)
+ChickSummary &lt;- ChickSummary[,
+.(count = .N,
+weight = mean(weight),
+q1_weight = quantile(weight, probs = 0.25),
+q2_weight = quantile(weight, probs = 0.75)),
+by = Time]
+head(ChickSummary)</code></pre>
+<pre><code>##    Time count    weight q1_weight q2_weight
+## 1:    0    50  41.06000        41        42
+## 2:    2    50  49.22000        48        51
+## 3:    4    49  59.95918        57        63
+## 4:    6    49  74.30612        68        80
+## 5:    8    49  91.24490        83       102
+## 6:   10    49 107.83673        93       124</code></pre>
+<pre class="r"><code># METHOD 1: tidyr
+library(&quot;tidyr&quot;)
+ChickWeight_wide1 &lt;- spread(ChickWeight,
+key = Time,
+value = weight)
+head(ChickWeight_wide1)</code></pre>
+<pre><code>##     Chick  0  2  4  6  8  10  12  14  16  18  20  21
+## 1 Chick01 42 51 59 64 76  93 106 125 149 171 199 205
+## 2 Chick02 40 49 58 72 84 103 122 138 162 187 209 215
+## 3 Chick03 43 39 55 67 84  99 115 138 163 187 198 202
+## 4 Chick04 42 49 56 67 74  87 102 108 136 154 160 157
+## 5 Chick05 41 42 48 60 79 106 141 164 197 199 220 223
+## 6 Chick06 41 49 59 74 97 124 141 148 155 160 160 157</code></pre>
+<pre class="r"><code># METHOD 2: data.table
+library(&quot;data.table&quot;)
+ChickWeight_wide2 &lt;- dcast.data.table(
+as.data.table(ChickWeight),
+Chick ~ Time,
+value.var = &quot;weight&quot;)
+
+# METHOD 3: data.table
+library(&quot;cdata&quot;)
+ChickWeight_wide3 &lt;- pivot_to_rowrecs(
+ChickWeight,
+columnToTakeKeysFrom = &quot;Time&quot;,
+columnToTakeValuesFrom = &quot;weight&quot;,
+rowKeyColumns = &quot;Chick&quot;)</code></pre>
+<p><strong>References</strong></p>
+<p>Zumel, N., &amp; Mount, J. (2014). Practical Data Science With R. Manning Publications Co.</p>
+<p>Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.</p>
+<hr />
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
