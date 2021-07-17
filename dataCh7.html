@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Practical Data Science With R. Chapter 7</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fas fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Practical Data Science With R. Chapter 7</h1>
+
+</div>
+
+
+<div id="chapter-7-linear-and-logistic-regression" class="section level2">
+<h2>Chapter 7: Linear and Logistic Regression</h2>
+<p>Linear regression is the most popular method of analysis for statisticians, economists and data scientists. In this chapter, we will go over the basic of linear and logistic regression: how to define it, how to interpret the results and diagnostics. It is the best first method to be tried when we try to predict some numerical quantity and understand the relationship between the input (independent) variables and the output (dependent) variable. Logistic regressions are very useful when we try to predict probabilities and understand what “determines” these probabilities.</p>
+<div id="using-linear-regression" class="section level4">
+<h4>Using Linear Regression</h4>
+<p>As explained in more detailed in <a href="etricsCh2.html">Chapter 2 of Introductory Econometrics</a>, a linear regression can be explained by a simple additive equation.</p>
+<p><span class="math display">\[ y = \beta_1 x_1 + \beta_2 x_2 + e\]</span></p>
+<p><span class="math inline">\(y\)</span> is the numeric quantity you want to predict, while <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are the independent variables. Variation in independent variables will help us explain variation in the dependent variable. <span class="math inline">\(beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> are coefficients that we are looking for.</p>
+<p>The first step is to create a linear model. In R, we use base command lm(y~x1+x2) to do so. Let’s say we are interested in understanding/predicting wage based on age, sex, employment class and education. Using psub.RDS data, run the following commands.</p>
+<pre class="r"><code>psub &lt;- readRDS(&quot;R_data_files/psub.RDS&quot;)
+set.seed(3454351)
+gp &lt;- runif(nrow(psub))
+dtrain &lt;- subset(psub,gp &gt;= 0.5)
+dtest &lt;- subset(psub,gp &lt; 0.5)
+model &lt;- lm(log10(PINCP) ~ AGEP + SEX + COW + SCHL,data=dtrain)
+summary(model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log10(PINCP) ~ AGEP + SEX + COW + SCHL, data = dtrain)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.5038 -0.1354  0.0187  0.1710  0.9741 
+## 
+## Coefficients:
+##                                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                         4.0058856  0.0144265 277.676  &lt; 2e-16 ***
+## AGEP                                0.0115985  0.0003032  38.259  &lt; 2e-16 ***
+## SEXFemale                          -0.1076883  0.0052567 -20.486  &lt; 2e-16 ***
+## COWFederal government employee      0.0638672  0.0157521   4.055 5.06e-05 ***
+## COWLocal government employee       -0.0297093  0.0107370  -2.767 0.005667 ** 
+## COWPrivate not-for-profit employee -0.0330196  0.0102449  -3.223 0.001272 ** 
+## COWSelf employed incorporated       0.0145475  0.0164742   0.883 0.377232    
+## COWSelf employed not incorporated  -0.1282285  0.0134708  -9.519  &lt; 2e-16 ***
+## COWState government employee       -0.0479571  0.0123275  -3.890 0.000101 ***
+## SCHLRegular high school diploma     0.1135386  0.0107236  10.588  &lt; 2e-16 ***
+## SCHLGED or alternative credential   0.1216670  0.0173038   7.031 2.17e-12 ***
+## SCHLsome college credit, no degree  0.1838278  0.0106461  17.267  &lt; 2e-16 ***
+## SCHLAssociate&#39;s degree              0.2387045  0.0123568  19.318  &lt; 2e-16 ***
+## SCHLBachelor&#39;s degree               0.3637114  0.0105810  34.374  &lt; 2e-16 ***
+## SCHLMaster&#39;s degree                 0.4445777  0.0127100  34.978  &lt; 2e-16 ***
+## SCHLProfessional degree             0.5111167  0.0201800  25.328  &lt; 2e-16 ***
+## SCHLDoctorate degree                0.4818700  0.0245162  19.655  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2688 on 11186 degrees of freedom
+## Multiple R-squared:  0.2976, Adjusted R-squared:  0.2966 
+## F-statistic: 296.2 on 16 and 11186 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>dtest$predLogPINCP &lt;- predict(model,newdata=dtest)
+dtrain$predLogPINCP &lt;- predict(model,newdata=dtrain)</code></pre>
+<p>The results can be viewed using the summary() command.</p>
+<pre class="r"><code>summary(model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log10(PINCP) ~ AGEP + SEX + COW + SCHL, data = dtrain)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.5038 -0.1354  0.0187  0.1710  0.9741 
+## 
+## Coefficients:
+##                                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                         4.0058856  0.0144265 277.676  &lt; 2e-16 ***
+## AGEP                                0.0115985  0.0003032  38.259  &lt; 2e-16 ***
+## SEXFemale                          -0.1076883  0.0052567 -20.486  &lt; 2e-16 ***
+## COWFederal government employee      0.0638672  0.0157521   4.055 5.06e-05 ***
+## COWLocal government employee       -0.0297093  0.0107370  -2.767 0.005667 ** 
+## COWPrivate not-for-profit employee -0.0330196  0.0102449  -3.223 0.001272 ** 
+## COWSelf employed incorporated       0.0145475  0.0164742   0.883 0.377232    
+## COWSelf employed not incorporated  -0.1282285  0.0134708  -9.519  &lt; 2e-16 ***
+## COWState government employee       -0.0479571  0.0123275  -3.890 0.000101 ***
+## SCHLRegular high school diploma     0.1135386  0.0107236  10.588  &lt; 2e-16 ***
+## SCHLGED or alternative credential   0.1216670  0.0173038   7.031 2.17e-12 ***
+## SCHLsome college credit, no degree  0.1838278  0.0106461  17.267  &lt; 2e-16 ***
+## SCHLAssociate&#39;s degree              0.2387045  0.0123568  19.318  &lt; 2e-16 ***
+## SCHLBachelor&#39;s degree               0.3637114  0.0105810  34.374  &lt; 2e-16 ***
+## SCHLMaster&#39;s degree                 0.4445777  0.0127100  34.978  &lt; 2e-16 ***
+## SCHLProfessional degree             0.5111167  0.0201800  25.328  &lt; 2e-16 ***
+## SCHLDoctorate degree                0.4818700  0.0245162  19.655  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2688 on 11186 degrees of freedom
+## Multiple R-squared:  0.2976, Adjusted R-squared:  0.2966 
+## F-statistic: 296.2 on 16 and 11186 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>To make predictions based on our model, we can use command predict(). Let’s do that both on the training and test data sets.</p>
+<pre class="r"><code>dtest$predLogPINCP &lt;- predict(model,newdata=dtest)
+dtrain$predLogPINCP &lt;- predict(model,newdata=dtrain)</code></pre>
+<p>One good way to inspect the results is using a figure. Using ggplot2, let’s examine how the prediction line hold against the actual values. We can also view the residual errors showing how far our predictions are from the actual values.</p>
+<pre class="r"><code>library(&#39;ggplot2&#39;)
+ggplot(data = dtest, aes(x = predLogPINCP, y = log10(PINCP))) +
+geom_point(alpha = 0.2,color = &quot;darkgray&quot;) +
+geom_smooth(color=&quot;darkblue&quot;) +
+geom_line(aes(x = log10(PINCP),
+y = log10(PINCP)),
+color = &quot;blue&quot;, linetype=2) +
+coord_cartesian(xlim = c(4,5.25),
+ylim = c(c(3.5,5.5)))</code></pre>
+<p><img src="dataCh7_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data=dtest,aes(x = predLogPINCP,
+y = predLogPINCP - log10(PINCP) )) +
+geom_point(alpha=0.2,color=&quot;darkgray&quot;) +
+geom_smooth(color=&quot;darkblue&quot;) +
+ylab(&quot;residual error (prediction - actual)&quot;)</code></pre>
+<p><img src="dataCh7_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p>To evaluate the model in terms of quality of the predictions, we can check R-squared and RMSE. High R-squared means that a high fraction of variation in the dependent variable (y) is explained by variation in the independent variables. We would want the R-squared to be similar in predictions based on the training and test data. They are!</p>
+<pre class="r"><code>rsq &lt;- function(y,f) { 1 - sum((y-f)^2)/sum((y-mean(y))^2) }
+rsq(log10(dtrain$PINCP), dtrain$predLogPINCP)</code></pre>
+<pre><code>## [1] 0.2976165</code></pre>
+<pre class="r"><code>rsq(log10(dtest$PINCP), dtest$predLogPINCP)</code></pre>
+<pre><code>## [1] 0.2911965</code></pre>
+<pre class="r"><code># Alternative
+sum_model=summary(model)
+sum_model$r.squared</code></pre>
+<pre><code>## [1] 0.2976165</code></pre>
+<p>RMSE or root mean squared error is another useful measure. It shows the width of the data “cloud” around the line of perfect prediction.</p>
+<pre class="r"><code>rmse &lt;- function(y, f) { sqrt(mean( (y-f)^2 )) }
+rmse(log10(dtrain$PINCP), dtrain$predLogPINCP)</code></pre>
+<pre><code>## [1] 0.2685855</code></pre>
+<pre class="r"><code>rmse(log10(dtest$PINCP), dtest$predLogPINCP)</code></pre>
+<pre><code>## [1] 0.2675129</code></pre>
+<p>To examine coefficients of the model, you can either run the summary() or the coefficients() command.</p>
+<pre class="r"><code>summary(model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = log10(PINCP) ~ AGEP + SEX + COW + SCHL, data = dtrain)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.5038 -0.1354  0.0187  0.1710  0.9741 
+## 
+## Coefficients:
+##                                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                         4.0058856  0.0144265 277.676  &lt; 2e-16 ***
+## AGEP                                0.0115985  0.0003032  38.259  &lt; 2e-16 ***
+## SEXFemale                          -0.1076883  0.0052567 -20.486  &lt; 2e-16 ***
+## COWFederal government employee      0.0638672  0.0157521   4.055 5.06e-05 ***
+## COWLocal government employee       -0.0297093  0.0107370  -2.767 0.005667 ** 
+## COWPrivate not-for-profit employee -0.0330196  0.0102449  -3.223 0.001272 ** 
+## COWSelf employed incorporated       0.0145475  0.0164742   0.883 0.377232    
+## COWSelf employed not incorporated  -0.1282285  0.0134708  -9.519  &lt; 2e-16 ***
+## COWState government employee       -0.0479571  0.0123275  -3.890 0.000101 ***
+## SCHLRegular high school diploma     0.1135386  0.0107236  10.588  &lt; 2e-16 ***
+## SCHLGED or alternative credential   0.1216670  0.0173038   7.031 2.17e-12 ***
+## SCHLsome college credit, no degree  0.1838278  0.0106461  17.267  &lt; 2e-16 ***
+## SCHLAssociate&#39;s degree              0.2387045  0.0123568  19.318  &lt; 2e-16 ***
+## SCHLBachelor&#39;s degree               0.3637114  0.0105810  34.374  &lt; 2e-16 ***
+## SCHLMaster&#39;s degree                 0.4445777  0.0127100  34.978  &lt; 2e-16 ***
+## SCHLProfessional degree             0.5111167  0.0201800  25.328  &lt; 2e-16 ***
+## SCHLDoctorate degree                0.4818700  0.0245162  19.655  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2688 on 11186 degrees of freedom
+## Multiple R-squared:  0.2976, Adjusted R-squared:  0.2966 
+## F-statistic: 296.2 on 16 and 11186 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>coefficients(model)</code></pre>
+<pre><code>##                        (Intercept)                               AGEP 
+##                         4.00588563                         0.01159846 
+##                          SEXFemale     COWFederal government employee 
+##                        -0.10768834                         0.06386719 
+##       COWLocal government employee COWPrivate not-for-profit employee 
+##                        -0.02970932                        -0.03301963 
+##      COWSelf employed incorporated  COWSelf employed not incorporated 
+##                         0.01454745                        -0.12822845 
+##       COWState government employee    SCHLRegular high school diploma 
+##                        -0.04795709                         0.11353857 
+##  SCHLGED or alternative credential SCHLsome college credit, no degree 
+##                         0.12166699                         0.18382783 
+##             SCHLAssociate&#39;s degree              SCHLBachelor&#39;s degree 
+##                         0.23870449                         0.36371138 
+##                SCHLMaster&#39;s degree            SCHLProfessional degree 
+##                         0.44457769                         0.51111666 
+##               SCHLDoctorate degree 
+##                         0.48187005</code></pre>
+<p>For example, there is a variable named SEXFEMALE. This indicates that sex varaible is a categorical variable and male was chosen by the model to be the reference. The coefficient for SEXFEMALE shows that holding everything else constant, women are predicted to earn -0.107 (measured in log base 10) less than men. Since our dependent variable is not measured in dollars, this number -0.107 does not tell us much. We need to convert it back to a way we could understand what it means. By “the taking the”anti-log", we see that we predict women to earn 78% of men with the same age, education and occupational class.</p>
+<p>Similarly, the value for high school diploma is 0.11 while for bachelor’s degree is 0.36. This means that a worker with a bachelors degree is predicted to earn 78% more compared to a person with only a high school diploma.</p>
+<pre class="r"><code># (income_men)/(income_women) = 10^(-0.107)
+10^(-0.107)</code></pre>
+<pre><code>## [1] 0.7816278</code></pre>
+<pre class="r"><code># (income_bachelors)/(income_hs) = 10^(0.36 - 0.11)
+10^(0.36 - 0.11)</code></pre>
+<pre><code>## [1] 1.778279</code></pre>
+<p>Age coefficient of 0.0116 indicates that with an additional year, a person is expected to earn (10^0.0116-1) 2.7% more (all else constant).</p>
+<p>The intercept is the predicted income for a person with reference level in terms of sex, education, occupation and with age 0. In most cases, intercept is not a subject of interest.</p>
+<p>The p-value estimates the probability of seeing a coefficient with a magnitude as large as you observed if the true coefficient is really zero. The lower the p value, the more certain you are your finding is different from zero. Typically, economists regard a p-value lower than 0.05 as statistically significant.</p>
+<p>The residual standard error is the sum of the square of the residuals divided by the degrees of freedom. It is similar to root mean squared error but it is a more conservative estimate because it adjusts fro complexity of the model.</p>
+<p>Another useful measure is the adjusted R-squared which is R-squared penalized for the number of explanatory variables used. Adding another explanatory variable will make the multiple R-squared higher but adjusted R-squared will only increase if the added variable is any good at explaining variation in the dependent variable.</p>
+<p>Finally, model’s F-statistic, derived from F-test, shows overall fit of the model. F-test is the technique used to check if two variances—in this case, the variance of the residuals from the constant model and the variance of the residuals from the linear model—are significantly different. High F-statistic and accordingly low p-value associated with it gives us confidence that our model explains more variance in the model than a constant model does.</p>
+<div id="linear-regression-takeaways" class="section level6">
+<h6>Linear Regression Takeaways</h6>
+<ul>
+<li><p>Linear regression assumes that the outcome is a linear combination of the input variables. Naturally, it works best when that assumption is nearly true; but it can predict surprisingly well even when it isn’t.</p></li>
+<li><p>If you want to use the coefficients of your model for advice, you should only trust the coefficients that appear statistically significant.</p></li>
+<li><p>Overly large coefficient magnitudes, overly large standard errors on the coefficient estimates, and the wrong sign on a coefficient could be indications of correlated inputs. Linear regression can predict well even in the presence of correlated variables, but correlated variables lower the quality of the advice.</p></li>
+<li><p>Linear regression will have trouble with problems that have a very large number of variables, or categorical variables with a very large number of levels.</p></li>
+<li><p>Linear regression packages have some of the best built-in diagnostics available, but rechecking your model on test data is still your most effective safety check.</p></li>
+</ul>
+</div>
+</div>
+<div id="using-logistic-regression" class="section level4">
+<h4>Using Logistic Regression</h4>
+<p>Logistic regression is the most popular generalized linear model. One of the most useful attributes is that it is able to predict probabilities that range between 0 and 1. While linear probability model can also predict probabilities, they are not limited to (0,1) range. It also often used for binary choice classification problems.</p>
+<p>Logistic regression considers everything in log-odds: the log of the ratio of probability of an event being true over the probability of false. If an outcome is more likely to happen the odds value is above 1 and log-odds value is positive, if the outcome is more likely not to happen, the odds value is below 1 and log-odds value be negative. Taking an inverse of logit(p) function, maps log-odds ratios to probabilities bounded between 0 and 1.</p>
+<p>Logistic regression can be expressed like this: $ P(something=TRUE) = _0 + _1 x_1 + _2 x_2 + e$. You are trying to predict that something is true based on the explanatory (x) variables.</p>
+<p>Let’s load data which we will use to anticipate infants to be at risk and in-need for additional care. Separate data into train and test samples. Then build a model using command glm().</p>
+<pre class="r"><code>load(&quot;R_data_files/NatalRiskData.rData&quot;)
+train &lt;- sdata[sdata$ORIGRANDGROUP&lt;=5,]
+test &lt;- sdata[sdata$ORIGRANDGROUP&gt;5,]
+
+
+complications &lt;- c(&quot;ULD_MECO&quot;,&quot;ULD_PRECIP&quot;,&quot;ULD_BREECH&quot;)
+riskfactors &lt;- c(&quot;URF_DIAB&quot;, &quot;URF_CHYPER&quot;, &quot;URF_PHYPER&quot;,
+&quot;URF_ECLAM&quot;)
+
+y &lt;- &quot;atRisk&quot;
+x &lt;- c(&quot;PWGT&quot;,
+&quot;UPREVIS&quot;,
+&quot;CIG_REC&quot;,
+&quot;GESTREC3&quot;,
+&quot;DPLURAL&quot;,
+complications,
+riskfactors)
+
+library(wrapr)
+fmla &lt;- mk_formula(y, x)
+
+model &lt;- glm(fmla, data=train, family=binomial(link=&quot;logit&quot;))</code></pre>
+<p>To make predictions, use function predict(). To check how good our predictions are. In this double density plot, we would like to see False instances concentrated on the left, and TRUE instances - on the right.</p>
+<pre class="r"><code>train$pred &lt;- predict(model, newdata=train, type=&quot;response&quot;)
+test$pred &lt;- predict(model, newdata=test, type=&quot;response&quot;)
+library(WVPlots)
+DoubleDensityPlot(train, &quot;pred&quot;, &quot;atRisk&quot;,
+title = &quot;Distribution of natality risk scores&quot;)</code></pre>
+<p><img src="dataCh7_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>To use the model as a classifier, you need to pick a threshold. When picking a threshold, you are balancing precision (what fraction of predicted positive values are true) and recall (what fractions of true positives classifier finds). In this case, it is difficult to do so since the two distributions are overlapping. One could pick a value around 0.02 because after that value, the rate of risky birth is 2.5 higher.</p>
+<p>We can analyze the model coefficients using coefficients() function. Positive coefficients are positively correlated with the outcome being true (infant being at risk) and negative coefficients - negatively correlated.</p>
+<p>The values of the coefficients can be understood as follows. For example, the coefficient for premature baby (GESTREC3&lt;37weeks) is 1.54. Taking the exponent of that number we get 4.69 (<span class="math inline">\(\exp(1.54)=4.69\)</span>). This means that the odds of being at risk at 4.69 times higher for a premature baby compared to a baby born at full term. If we assume that full-term baby with certain characteristics has a 1% probability of being at risk, then risk odds are 0.01/0.99=0.0101. Taking this number and multiplying by 4.69, we get 0.047 (<span class="math inline">\(0.0101*4.69=0.047\)</span>). The risk odds for a premature baby with the same characteristics is 0.047.Probability of being at risk for this premature baby then is 0.047/1.047=0.045 or 4.5%.</p>
+<p><span class="math display">\[
+p = odds * (1 - p) = odds - p * odds\\
+p * (1 + odds) = odds\\
+p = odds/(1 + odds)\\
+\]</span></p>
+<p>Reading the model in general is the easiest with the command summary(). In general, the analysis of the summary statistics and p-values is similar to linear model.</p>
+<pre class="r"><code>summary(model)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = fmla, family = binomial(link = &quot;logit&quot;), data = train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.9732  -0.1818  -0.1511  -0.1358   3.2641  
+## 
+## Coefficients:
+##                           Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)              -4.412189   0.289352 -15.249  &lt; 2e-16 ***
+## PWGT                      0.003762   0.001487   2.530 0.011417 *  
+## UPREVIS                  -0.063289   0.015252  -4.150 3.33e-05 ***
+## CIG_RECTRUE               0.313169   0.187230   1.673 0.094398 .  
+## GESTREC3&lt; 37 weeks        1.545183   0.140795  10.975  &lt; 2e-16 ***
+## DPLURALtriplet or higher  1.394193   0.498866   2.795 0.005194 ** 
+## DPLURALtwin               0.312319   0.241088   1.295 0.195163    
+## ULD_MECOTRUE              0.818426   0.235798   3.471 0.000519 ***
+## ULD_PRECIPTRUE            0.191720   0.357680   0.536 0.591951    
+## ULD_BREECHTRUE            0.749237   0.178129   4.206 2.60e-05 ***
+## URF_DIABTRUE             -0.346467   0.287514  -1.205 0.228187    
+## URF_CHYPERTRUE            0.560025   0.389678   1.437 0.150676    
+## URF_PHYPERTRUE            0.161599   0.250003   0.646 0.518029    
+## URF_ECLAMTRUE             0.498064   0.776948   0.641 0.521489    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2698.7  on 14211  degrees of freedom
+## Residual deviance: 2463.0  on 14198  degrees of freedom
+## AIC: 2491
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<p>Among the differences is that instead of R-squared, we have pseudo R-squared which measures how much of the deviance (how well the model fits the data) is explained by the model. Instead of an F-test, for logistic regression we run a chi-squared test(<span class="math inline">\(\chi^2\)</span>). High chi-squared score and low p-value indicates that it is likely that the model found some informative patterns in the data. AIC or Akaike Information Criterion is used to decide on the number of explanatory variables. If you run multiple models with different explanatory variables on the same data, you can consider the model with the lowest AIC to be the best fit.</p>
+<div id="linear-regression-takeaways-1" class="section level6">
+<h6>Linear Regression Takeaways</h6>
+<ul>
+<li><p>Logistic regression is well calibrated: it reproduces the marginal probabilities of the data. Pseudo R-squared is a useful goodness-of-fit heuristic.</p></li>
+<li><p>Logistic regression will have trouble with problems with a very large number of variables, or categorical variables with a very large number of levels.</p></li>
+<li><p>Logistic regression can predict well even in the presence of correlated variables, but correlated variables lower the quality of the advice.</p></li>
+<li><p>Overly large coefficient magnitudes, overly large standard errors on the coefficient estimates, and the wrong sign on a coefficient could be indications of correlated inputs.</p></li>
+<li><p>Too many Fisher iterations, or overly large coefficients with very large standard errors could be signs that your logistic regression model has not converged, and may not be valid.</p></li>
+<li><p>glm() provides good diagnostics, but rechecking your model on test data is still your most effective diagnostic.</p></li>
+</ul>
+</div>
+</div>
+<div id="regularization" class="section level4">
+<h4>Regularization</h4>
+<p>Regularization adds a penalty to the model formulation that biases model’s coefficients downward. There are a few types of regularized regression. Among the more popular ones, there is Ridge regression and Lasso regression.</p>
+<p>Ridge regression minimizes the prediction error subject to minimizing the sum of squared magnitudes of the coefficients. Linear regression minimizes the sum of squared error (<span class="math inline">\((y-f(x))^2\)</span>) where as Ridge adds another component (<span class="math inline">\((y-f(x))^2+\lambda(\beta_1+\beta_2+...)^2\)</span>). Depending on how large you choose lambda to be, the stronger the minimization effect is.</p>
+<p>Lasso regression is very similar to Ridge regression except that it minimizes the not the squared magnitudes of the coefficients bu the absolute values (<span class="math inline">\((y-f(x))^2+\lambda(abs[\beta_1]+abs[\beta_2]+...)\)</span>).</p>
+<p>Elastic net regression combines ridge and lasso regressions (<span class="math inline">\((y-f(x))^2+(1-\alpha)(\beta_1+\beta_2+...)^2+(\alpha)(abs[\beta_1]+abs[\beta_2]+...)\)</span>).</p>
+<p>To run these types of regularized regressions in R, we use package glmnet. To make the input and output of the package more comparable to lm() and glm(), we will also use package glmnetUtils.</p>
+<p>See example commands below.</p>
+<pre class="r"><code>cars &lt;- read.table(&#39;R_data_files/car.data.csv&#39;,sep = &#39;,&#39;,header = TRUE,stringsAsFactor = TRUE)
+vars &lt;- setdiff(colnames(cars), &quot;rating&quot;)
+cars$fail &lt;- cars$rating == &quot;unacc&quot;
+outcome &lt;- &quot;fail&quot;
+set.seed(24351)
+gp &lt;- runif(nrow(cars))
+library(zeallot)
+c(cars_test, cars_train) %&lt;-% split(cars, gp &lt; 0.7)
+nrow(cars_test)</code></pre>
+<pre><code>## [1] 499</code></pre>
+<pre class="r"><code>nrow(cars_train)</code></pre>
+<pre><code>## [1] 1229</code></pre>
+<pre class="r"><code>library(wrapr)
+(fmla &lt;- mk_formula(outcome, vars) )</code></pre>
+<pre><code>## fail ~ buying + maint + doors + persons + lug_boot + safety
+## &lt;environment: base&gt;</code></pre>
+<pre class="r"><code>model_glm &lt;- glm(fmla,data=cars_train,family=binomial)
+
+summary(model_glm)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = fmla, family = binomial, data = cars_train)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -2.35684  -0.02593   0.00000   0.00001   3.11185  
+## 
+## Coefficients:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     28.0132  1506.0310   0.019 0.985160    
+## buyinglow       -4.6616     0.6520  -7.150 8.67e-13 ***
+## buyingmed       -3.8689     0.5945  -6.508 7.63e-11 ***
+## buyingvhigh      1.9139     0.4318   4.433 9.30e-06 ***
+## maintlow        -3.2542     0.5423  -6.001 1.96e-09 ***
+## maintmed        -3.2458     0.5503  -5.899 3.66e-09 ***
+## maintvhigh       2.8556     0.4865   5.869 4.38e-09 ***
+## doors3          -1.4281     0.4638  -3.079 0.002077 ** 
+## doors4          -2.3733     0.4973  -4.773 1.82e-06 ***
+## doors5more      -2.2652     0.5090  -4.450 8.58e-06 ***
+## persons4       -29.8240  1506.0310  -0.020 0.984201    
+## personsmore    -29.4551  1506.0310  -0.020 0.984396    
+## lug_bootmed      1.5608     0.4529   3.446 0.000568 ***
+## lug_bootsmall    4.5238     0.5721   7.908 2.62e-15 ***
+## safetylow       29.9415  1569.3789   0.019 0.984778    
+## safetymed        2.7884     0.4134   6.745 1.53e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1484.7  on 1228  degrees of freedom
+## Residual deviance:  245.5  on 1213  degrees of freedom
+## AIC: 277.5
+## 
+## Number of Fisher Scoring iterations: 21</code></pre>
+<pre class="r"><code>library(glmnetUtils)
+model_ridge &lt;- cv.glmnet(fmla,cars_train,alpha=0, family=&quot;binomial&quot;)
+model_lasso &lt;- cv.glmnet(fmla,cars_train,alpha=1,family=&quot;binomial&quot;)
+elastic_net &lt;- cva.glmnet(fmla,cars_train,family=&quot;binomial&quot;)
+
+# Examine the ridge model
+coefs &lt;- coef(model_ridge)
+coef_frame &lt;- data.frame(coef = rownames(coefs)[-1], value = coefs[-1,1])
+ggplot(coef_frame, aes(x=coef, y=value)) +
+  geom_pointrange(aes(ymin=0, ymax=value)) +
+  ggtitle(&quot;Coefficients of ridge model&quot;) +
+  coord_flip()</code></pre>
+<p><img src="dataCh7_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>prediction &lt;- predict(model_ridge, newdata = cars_test,type=&quot;response&quot;)
+cars_test$pred_ridge &lt;- as.numeric(prediction)
+cars_test$fail[cars_test$fail==TRUE]=&quot;unacceptable&quot;
+cars_test$fail[cars_test$fail==FALSE]=&quot;passed&quot;
+confmat &lt;- table(truth = cars_test$fail, prediction = ifelse(cars_test$pred_ridge &gt; 0.5, &quot;unacceptable&quot;,&quot;passed&quot;))
+
+prediction &lt;- predict(model_ridge,newdata = cars_test,type=&quot;response&quot;,s = model_ridge$lambda.min)
+
+# Finding the minimum error alpha for the elastic net model
+
+# Examine the elastic net model
+get_cvm &lt;- function(model) {
+  index &lt;- match(model$lambda.1se, model$lambda)
+  model$cvm[index]
+}
+
+enet_performance &lt;- data.frame(alpha = elastic_net$alpha)
+models &lt;- elastic_net$modlist
+enet_performance$cvm &lt;- vapply(models, get_cvm, numeric(1))
+
+minix &lt;- which.min(enet_performance$cvm)
+(best_alpha &lt;- elastic_net$alpha[minix])</code></pre>
+<pre><code>## [1] 0.216</code></pre>
+<pre class="r"><code>ggplot(enet_performance, aes(x=alpha, y=cvm)) +
+  geom_point() +
+  geom_line() +
+  geom_vline(xintercept = best_alpha, color=&quot;red&quot;, linetype=2) +
+  ggtitle(&quot;CV loss as a function of alpha&quot;)</code></pre>
+<p><img src="dataCh7_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<pre class="r"><code>(model_enet &lt;- cv.glmnet(fmla, cars_train, alpha = best_alpha, family=&quot;binomial&quot;))</code></pre>
+<pre><code>## Call:
+## cv.glmnet.formula(formula = fmla, data = cars_train, alpha = best_alpha, 
+##     family = &quot;binomial&quot;)
+## 
+## Model fitting options:
+##     Sparse model matrix: FALSE
+##     Use model.frame: FALSE
+##     Number of crossvalidation folds: 10
+##     Alpha: 0.216
+##     Deviance-minimizing lambda: 0.000183849  (+1 SE): 0.002487565</code></pre>
+<pre class="r"><code>prediction &lt;- predict(model_enet,newdata = cars_test,type=&quot;response&quot;)
+
+cars_test$pred_enet &lt;- as.numeric(prediction)
+confmat &lt;- table(truth = cars_test$fail, prediction = ifelse(cars_test$pred_enet &gt; 0.5, &quot;unacceptable&quot;,&quot;passed&quot;))
+confmat </code></pre>
+<pre><code>##               prediction
+## truth          passed unacceptable
+##   passed          149           10
+##   unacceptable     17          323</code></pre>
+<p><strong>References</strong></p>
+<p>Zumel, N., &amp; Mount, J. (2014). Practical Data Science With R. Manning Publications Co.</p>
+<hr />
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
