@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Practical Data Science With R. Chapter 8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fas fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Practical Data Science With R. Chapter 8</h1>
+
+</div>
+
+
+<div id="chapter-8-advanced-data-preparation" class="section level2">
+<h2>Chapter 8: Advanced Data Preparation</h2>
+<p>In this chapter we further analyze data using vtreat package. Basic way to use vtreat package is to split the data into three groups: one for learning the treatment, one for modeling and one for testing.</p>
+<div id="clasification-example" class="section level4">
+<h4>Clasification Example</h4>
+<p>We will use a data set from KDD Cup 209 which gives information on 50,000 credit card accounts. The task is to predict churn or credit card cancellations based on a number of variables. Explanatory variables which are not described are available to to be used for prediction.</p>
+<p>First, we look at the variable we are trying to predict and examine how much variation there is. In our problem, churn is binary - only takes two values. 1 represents that the event happened (account got cancelled) and -1 it did not.</p>
+<pre class="r"><code>d &lt;- read.table(&#39;R_data_files/orange_small_train.data.gz&#39;, header = TRUE, sep = &#39;\t&#39;, na.strings = c(&#39;NA&#39;, &#39;&#39;))
+churn &lt;- read.table(&#39;R_data_files/orange_small_train_churn.labels.txt&#39;, header = FALSE, sep = &#39;\t&#39;) 
+d$churn &lt;- churn$V1
+set.seed(729375)
+rgroup &lt;- base::sample(c(&#39;train&#39;, &#39;calibrate&#39;, &#39;test&#39;), nrow(d), prob = c(0.8, 0.1, 0.1), replace = TRUE)
+
+dTrain &lt;- d[rgroup == &#39;train&#39;, , drop = FALSE]
+dCal &lt;- d[rgroup == &#39;calibrate&#39;, , drop = FALSE]
+dTrainAll &lt;- d[rgroup %in% c(&#39;train&#39;, &#39;calibrate&#39;), , drop = FALSE]
+dTest &lt;- d[rgroup == &#39;test&#39;, , drop = FALSE]
+outcome &lt;- &#39;churn&#39;
+vars &lt;- setdiff(colnames(dTrainAll), outcome)
+rm(list=c(&#39;d&#39;, &#39;churn&#39;, &#39;rgroup&#39;))
+
+outcome_summary &lt;- table( churn = dTrain[, outcome], useNA = &#39;ifany&#39;)
+knitr::kable(outcome_summary)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">churn</th>
+<th align="right">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">-1</td>
+<td align="right">37110</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">2943</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>outcome_summary[&quot;1&quot;] / sum(outcome_summary)</code></pre>
+<pre><code>##          1 
+## 0.07347764</code></pre>
+<p>If we attempt to model the data without preparing the data, we will quickly run into major issues. By quickly looking at a couple of variables we can see that some of them having large amounts of missing data, others do not vary at all. For example, Var1 has 44,395 missing values out of 45,025 (most of them!); among those that are not missing, most are zero and a few are relatively very large (far away from the median).</p>
+<pre class="r"><code>summary(dTrainAll$Var1)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.00    0.00    0.00   11.72   16.00  680.00   44395</code></pre>
+<pre class="r"><code>plot(sort(dTrainAll$Var1))</code></pre>
+<p><img src="dataCh8_files/figure-html/3-1.png" width="672" /></p>
+<pre class="r"><code>length(dTrainAll$Var1)</code></pre>
+<pre><code>## [1] 45025</code></pre>
+<p>Another variable Var200 has over a thousand of levels which is way too many for a categorical variable for the size of the data set.</p>
+<p>Having many issues with multiple if not majority or all variables calls us to use package vtreat. It will cleanup explanatory variables. To run vtreat using parallel computing to increase computational time, use the code below. Since there are many rows and columns, this may take a few minutes. Treated data will have old column modified and new columns created.</p>
+<pre class="r"><code>library(&quot;vtreat&quot;)
+(parallel_cluster &lt;- parallel::makeCluster(parallel::detectCores()))</code></pre>
+<pre><code>## socket cluster with 8 nodes on host &#39;localhost&#39;</code></pre>
+<pre class="r"><code>treatment_plan &lt;- vtreat::designTreatmentsC(dTrain, varlist = vars, outcomename = &quot;churn&quot;, outcometarget = 1, verbose = FALSE, parallelCluster = parallel_cluster)
+
+dTrain_treated &lt;- prepare(treatment_plan, dTrain, parallelCluster = parallel_cluster)
+
+cross_frame_experiment &lt;- vtreat::mkCrossFrameCExperiment(
+  dTrainAll,
+  varlist = vars,
+  outcomename = &quot;churn&quot;,
+  outcometarget = 1,
+  verbose = FALSE,
+  parallelCluster = parallel_cluster)
+
+dTrainAll_treated &lt;- cross_frame_experiment$crossFrame
+treatment_plan &lt;- cross_frame_experiment$treatments
+score_frame &lt;- treatment_plan$scoreFrame
+dTest_treated &lt;- prepare(treatment_plan,dTest,parallelCluster = parallel_cluster)</code></pre>
+<p>Treatment score frame summarizes the the treatment. For example, looking at variables 126 and 189, we see that new binary variables were created Var126_isBAD and Var189_isBAD that indicate missing or ‘bad’ values of the corresponding variable. We are also given information about the pseudo r-squared (with significance level) which indicates how informative the variable may be at explaining the dependent variable. Sometimes, missing values can be better explain the outcome than the values themselves.</p>
+<p>For every categorical variable, vtreat creates a set of new binary variables for each non-rare category including a category for missing values. The catB encoding returns a numerical value for every possible level of the original categorical value representing how informative the given level is. catP is a prevalence indicator. It show how often a level occurs.</p>
+<pre class="r"><code>t(subset(score_frame, origName == &quot;Var218&quot;))</code></pre>
+<pre><code>##                   389            390            488                
+## varName           &quot;Var218_catP&quot;  &quot;Var218_catB&quot;  &quot;Var218_lev_x_cJvF&quot;
+## varMoves          &quot;TRUE&quot;         &quot;TRUE&quot;         &quot;TRUE&quot;             
+## rsq               &quot;0.011810524&quot;  &quot;0.013461009&quot;  &quot;0.005423820&quot;      
+## sig               &quot;1.605493e-62&quot; &quot;5.327975e-71&quot; &quot;1.185987e-29&quot;     
+## needsSplit        &quot;TRUE&quot;         &quot;TRUE&quot;         &quot;FALSE&quot;            
+## extraModelDegrees &quot;2&quot;            &quot;2&quot;            &quot;0&quot;                
+## origName          &quot;Var218&quot;       &quot;Var218&quot;       &quot;Var218&quot;           
+## code              &quot;catP&quot;         &quot;catB&quot;         &quot;lev&quot;              
+## default_threshold &quot;0.006060606&quot;  &quot;0.006060606&quot;  &quot;0.001470588&quot;      
+## recommended       &quot;TRUE&quot;         &quot;TRUE&quot;         &quot;TRUE&quot;             
+##                   489                
+## varName           &quot;Var218_lev_x_UYBR&quot;
+## varMoves          &quot;TRUE&quot;             
+## rsq               &quot;0.001933412&quot;      
+## sig               &quot;1.458742e-11&quot;     
+## needsSplit        &quot;FALSE&quot;            
+## extraModelDegrees &quot;0&quot;                
+## origName          &quot;Var218&quot;           
+## code              &quot;lev&quot;              
+## default_threshold &quot;0.001470588&quot;      
+## recommended       &quot;TRUE&quot;</code></pre>
+<pre class="r"><code>comparison &lt;- data.frame(original218 = dTrain$Var218, impact218 = dTrain_treated$Var218_catB)
+head(comparison)</code></pre>
+<pre><code>##   original218  impact218
+## 1        cJvF -0.2180735
+## 2        &lt;NA&gt;  1.5155125
+## 3        UYBR  0.1221393
+## 4        UYBR  0.1221393
+## 5        UYBR  0.1221393
+## 6        UYBR  0.1221393</code></pre>
+<p>For a categorical variable Var200 which had a very large number of levels, vtreat only created a category that indicates missing value Var200_lev_NA, along with catB and catP.</p>
+<pre class="r"><code>score_frame[score_frame$origName == &quot;Var200&quot;, , drop = FALSE]</code></pre>
+<pre><code>##           varName varMoves         rsq          sig needsSplit
+## 361   Var200_catP     TRUE 0.005851453 7.383631e-32       TRUE
+## 362   Var200_catB     TRUE 0.001406796 8.437949e-09       TRUE
+## 428 Var200_lev_NA     TRUE 0.005851102 7.414462e-32      FALSE
+##     extraModelDegrees origName code default_threshold recommended
+## 361             14417   Var200 catP       0.006060606        TRUE
+## 362             14417   Var200 catB       0.006060606        TRUE
+## 428                 0   Var200  lev       0.001470588        TRUE</code></pre>
+<p>Once we have a treatment plan, we can now use it to prepare the calibration data.</p>
+<pre class="r"><code>dCal_treated &lt;- prepare(treatment_plan, dCal, parallelCluster = parallel_cluster)</code></pre>
+<p>If you do not have large enough data set for a split into three, you can use cross-validation procedure built in vtreat package. This can be done as follows.</p>
+<pre class="r"><code>parallel_cluster &lt;- parallel::makeCluster(parallel::detectCores())
+cross_frame_experiment &lt;- vtreat::mkCrossFrameCExperiment(dTrainAll, varlist = vars, outcomename = &quot;churn&quot;, outcometarget = 1, verbose = FALSE, parallelCluster = parallel_cluster)
+
+dTrainAll_treated &lt;- cross_frame_experiment$crossFrame
+treatment_plan &lt;- cross_frame_experiment$treatments
+score_frame &lt;- treatment_plan$scoreFrame
+dTest_treated &lt;- prepare(treatment_plan, dTest, parallelCluster = parallel_cluster)</code></pre>
+<p>Once the treatment is complete, one needs to build a model. The main issue is to select what explanatory variables to use when trying to predict the outcome variable. Using too few variables may lead you to under-explaining the variation in the dependent variable, while using too many may lead to over-fitting leading to poor performance.</p>
+<p>Let’s filter the variables based on linear significances determined in the vtreat’s score_frame. By selecting a threshold k, we expect that k irrelevant variables will pass through the filter. Under the selected=TRUE column, we see how many and what kind of variables passed through the filter.</p>
+<pre class="r"><code>k &lt;- 1
+(significance_cutoff &lt;- k / nrow(score_frame))</code></pre>
+<pre><code>## [1] 0.001831502</code></pre>
+<pre class="r"><code>score_frame$selected &lt;- score_frame$sig &lt; significance_cutoff
+suppressPackageStartupMessages(library(&quot;dplyr&quot;))
+score_frame %&gt;% 
+ group_by(., code, selected) %&gt;%
+ summarize(.,
+ count = n()) %&gt;%
+ ungroup(.) %&gt;%
+ cdata::pivot_to_rowrecs(.,columnToTakeKeysFrom = &#39;selected&#39;, columnToTakeValuesFrom = &#39;count&#39;, rowKeyColumns = &#39;code&#39;, sep = &#39;=&#39;)</code></pre>
+<pre><code>## # A tibble: 5 x 3
+##   code  `selected=FALSE` `selected=TRUE`
+##   &lt;chr&gt;            &lt;int&gt;           &lt;int&gt;
+## 1 catB                11              22
+## 2 catP                 7              26
+## 3 clean              158              15
+## 4 isBAD               60             111
+## 5 lev                 74              62</code></pre>
+<p>Having decided on the variables to use and the model, say logistic regression, we can run the model using the following code.</p>
+<pre class="r"><code>library(&quot;wrapr&quot;)
+newvars &lt;- score_frame$varName[score_frame$selected]
+f &lt;- mk_formula(&quot;churn&quot;, newvars, outcome_target = 1)
+model &lt;- glm(f, data = dTrainAll_treated, family = binomial)</code></pre>
+<p>To evaluate the model, we measure the area under the curve (AUC). It is 0.72 which is much better than 0.5 (random). If we only one variable that best predicts the outcome, we would only get AUC of 0.59. Using 0.15 threshold, we find that 466 accounts (356+110) were identified as at risk. Of the actual 376 churners (266+110), 110 were identified correctly (that is, we identified 29%). IF we just randomly guessed, we would only be right 9.3%.</p>
+<pre class="r"><code>library(&quot;sigr&quot;)
+dTest_treated$glm_pred &lt;- predict(model,
+newdata = dTest_treated,
+type = &#39;response&#39;)
+
+calcAUC(dTest_treated$glm_pred, dTest_treated$churn == 1)</code></pre>
+<pre><code>## [1] 0.724806</code></pre>
+<pre class="r"><code>permTestAUC(dTest_treated, &quot;glm_pred&quot;, &quot;churn&quot;, yTarget = 1)</code></pre>
+<pre><code>## [1] &quot;&lt;b&gt;AUC test alt. hyp. AUC&gt;AUC(permuted)&lt;/b&gt;: (&lt;i&gt;AUC&lt;/i&gt;=0.7248, &lt;i&gt;s.d.&lt;/i&gt;=0.01552, &lt;i&gt;p&lt;/i&gt;&amp;lt;1e-05).&quot;</code></pre>
+<pre class="r"><code>var_aucs &lt;- vapply(newvars,
+  function(vi) {
+  calcAUC(dTrainAll_treated[[vi]], dTrainAll_treated$churn == 1)
+  }, numeric(1))
+
+(best_train_aucs &lt;- var_aucs[var_aucs &gt;= max(var_aucs)])</code></pre>
+<pre><code>## Var216_catB 
+##   0.5935357</code></pre>
+<pre class="r"><code>table(prediction = dTest_treated$glm_pred&gt;0.15,
+truth = dTest$churn)</code></pre>
+<pre><code>##           truth
+## prediction   -1    1
+##      FALSE 4233  266
+##      TRUE   366  110</code></pre>
+<p>We can also investigate the threshold we pick visually using enrichment and recall figures. If we pick 0.2 as a threshold, we would identify around 0.12 of the at-risk accounts (see Recall figure) and warn those who have a cancellation risk 3 times higher than the general population (see Enrichment figure).</p>
+<pre class="r"><code>WVPlots::DoubleDensityPlot(dTest_treated, &quot;glm_pred&quot;, &quot;churn&quot;,
+&quot;glm prediction on test, double density plot&quot;)</code></pre>
+<p><img src="dataCh8_files/figure-html/12-1.png" width="672" /></p>
+<pre class="r"><code>WVPlots::PRTPlot(dTest_treated, &quot;glm_pred&quot;, &quot;churn&quot;,
+&quot;glm prediction on test, enrichment plot&quot;,
+truthTarget = 1, plotvars = c(&quot;enrichment&quot;, &quot;recall&quot;), thresholdrange = c(0, 1.0))</code></pre>
+<p><img src="dataCh8_files/figure-html/12-2.png" width="672" /></p>
+</div>
+<div id="regression-example" class="section level4">
+<h4>Regression Example</h4>
+<p>Preparing data for regression model using vtreat package is similar. Let’s work through an example in which we aim to predict car’s fuel economy based on various car characteristics.</p>
+<pre class="r"><code>auto_mpg &lt;- readRDS(&#39;R_data_files/auto_mpg.RDS&#39;)
+knitr::kable(head(auto_mpg))</code></pre>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="9%" />
+<col width="12%" />
+<col width="10%" />
+<col width="6%" />
+<col width="12%" />
+<col width="10%" />
+<col width="6%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">mpg</th>
+<th align="right">cylinders</th>
+<th align="right">displacement</th>
+<th align="right">horsepower</th>
+<th align="right">weight</th>
+<th align="right">acceleration</th>
+<th align="right">model_year</th>
+<th align="left">origin</th>
+<th align="left">car_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">8</td>
+<td align="right">307</td>
+<td align="right">130</td>
+<td align="right">3504</td>
+<td align="right">12.0</td>
+<td align="right">70</td>
+<td align="left">1</td>
+<td align="left">“chevrolet chevelle malibu”</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">8</td>
+<td align="right">350</td>
+<td align="right">165</td>
+<td align="right">3693</td>
+<td align="right">11.5</td>
+<td align="right">70</td>
+<td align="left">1</td>
+<td align="left">“buick skylark 320”</td>
+</tr>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">8</td>
+<td align="right">318</td>
+<td align="right">150</td>
+<td align="right">3436</td>
+<td align="right">11.0</td>
+<td align="right">70</td>
+<td align="left">1</td>
+<td align="left">“plymouth satellite”</td>
+</tr>
+<tr class="even">
+<td align="right">16</td>
+<td align="right">8</td>
+<td align="right">304</td>
+<td align="right">150</td>
+<td align="right">3433</td>
+<td align="right">12.0</td>
+<td align="right">70</td>
+<td align="left">1</td>
+<td align="left">“amc rebel sst”</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">8</td>
+<td align="right">302</td>
+<td align="right">140</td>
+<td align="right">3449</td>
+<td align="right">10.5</td>
+<td align="right">70</td>
+<td align="left">1</td>
+<td align="left">“ford torino”</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">8</td>
+<td align="right">429</td>
+<td align="right">198</td>
+<td align="right">4341</td>
+<td align="right">10.0</td>
+<td align="right">70</td>
+<td align="left">1</td>
+<td align="left">“ford galaxie 500”</td>
+</tr>
+</tbody>
+</table>
+<p>Here, we have data on miles per galon (whcih we will try to predict, number of engine cylinders, displacement and horsepower, as well as car’s weight and accelaration (to 60mph). A car name is also given as a string variable.</p>
+<p>In some cases, it is interesting to see what we will get if we simply run the regression using all the independent variables without treating the data. Since we have missing values of horespower, we cannot predict the mpg for a few cars.</p>
+<pre class="r"><code>library(&quot;wrapr&quot;)
+vars &lt;- c(&quot;cylinders&quot;, &quot;displacement&quot;,
+&quot;horsepower&quot;, &quot;weight&quot;, &quot;acceleration&quot;,
+&quot;model_year&quot;, &quot;origin&quot;)
+f &lt;- mk_formula(&quot;mpg&quot;, vars)
+model &lt;- lm(f, data = auto_mpg)
+auto_mpg$prediction &lt;- predict(model, newdata = auto_mpg)
+str(auto_mpg[!complete.cases(auto_mpg), , drop = FALSE])</code></pre>
+<pre><code>## &#39;data.frame&#39;:    6 obs. of  10 variables:
+##  $ mpg         : num  25 21 40.9 23.6 34.5 23
+##  $ cylinders   : num  4 6 4 4 4 4
+##  $ displacement: num  98 200 85 140 100 151
+##  $ horsepower  : num  NA NA NA NA NA NA
+##  $ weight      : num  2046 2875 1835 2905 2320 ...
+##  $ acceleration: num  19 17 17.3 14.3 15.8 20.5
+##  $ model_year  : num  71 74 80 80 81 82
+##  $ origin      : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 1 1 2 1 2 1
+##  $ car_name    : chr  &quot;\&quot;ford pinto\&quot;&quot; &quot;\&quot;ford maverick\&quot;&quot; &quot;\&quot;renault lecar deluxe\&quot;&quot; &quot;\&quot;ford mustang cobra\&quot;&quot; ...
+##  $ prediction  : num  NA NA NA NA NA NA</code></pre>
+<p>One should investigate why the values are missing and take appropriate action. If the values are missing independently fo the car characteristics, we can simply use vtreat package to help us clean the data. After treating the data using vtreat, we have predictions even for the cars with missing values. One should figure out hwo the missing values and other aspects of treatment were dealt with.</p>
+<pre class="r"><code>library(&quot;vtreat&quot;)
+cfe &lt;- mkCrossFrameNExperiment(auto_mpg, vars, &quot;mpg&quot;,
+verbose = FALSE)
+treatment_plan &lt;- cfe$treatments
+auto_mpg_treated &lt;- cfe$crossFrame
+score_frame &lt;- treatment_plan$scoreFrame
+new_vars &lt;- score_frame$varName
+newf &lt;- mk_formula(&quot;mpg&quot;, new_vars)
+new_model &lt;- lm(newf, data = auto_mpg_treated)
+auto_mpg$prediction &lt;- predict(new_model, newdata = auto_mpg_treated)
+str(auto_mpg[!complete.cases(auto_mpg), , drop = FALSE])</code></pre>
+<pre><code>## &#39;data.frame&#39;:    6 obs. of  10 variables:
+##  $ mpg         : num  25 21 40.9 23.6 34.5 23
+##  $ cylinders   : num  4 6 4 4 4 4
+##  $ displacement: num  98 200 85 140 100 151
+##  $ horsepower  : num  NA NA NA NA NA NA
+##  $ weight      : num  2046 2875 1835 2905 2320 ...
+##  $ acceleration: num  19 17 17.3 14.3 15.8 20.5
+##  $ model_year  : num  71 74 80 80 81 82
+##  $ origin      : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 1 1 2 1 2 1
+##  $ car_name    : chr  &quot;\&quot;ford pinto\&quot;&quot; &quot;\&quot;ford maverick\&quot;&quot; &quot;\&quot;renault lecar deluxe\&quot;&quot; &quot;\&quot;ford mustang cobra\&quot;&quot; ...
+##  $ prediction  : num  24.2 22.3 35.2 26 32.8 ...</code></pre>
+</div>
+<div id="vtreat-package" class="section level4">
+<h4>vtreat package</h4>
+<p>vtreat package works in two phases: a design phase, in which it learns the details of your data, and application/preparation phase, in which it derives new explanatory variables better suited for predictive modeling.</p>
+<p>For treatment design phase, you can rely on the following commands:</p>
+<ul>
+<li>designTreatmentsC(): design a variable treatment plan for binary classification.</li>
+<li>designTreatmentsN(): design a variable treatment plan for regression.</li>
+<li>designTreatmentsZ(): design a variable treatment plan that does not look at the training data outcomes.</li>
+<li>design_missingness_treatment(): only deals with missing values</li>
+<li>mkCrossFrameCExperiment(): uses cross-validation but otherwise similar to designTreatmentsC()</li>
+<li>mkCrossFrameNExperiment(): uses cross-validation but otherwise similar to designTreatmentsN()</li>
+</ul>
+<div id="missing-values" class="section level5">
+<h5>Missing Values</h5>
+<p>There are standard practices how to deal with missing values. They include (1) restricting the data to complete cases or, in other words, removing the observations with missing values, (2) imputing the missing values, for example by letting the missing value be average value of that variable, (3) use models that tolerate missing values, (4) treat missing values as observable information.</p>
+<p>In the example below, we let the NA for the numeric variable to take the mean value of that variable (x1), and create a new variable that indicates that this value is missing.</p>
+<pre class="r"><code>library(&quot;wrapr&quot;)
+d &lt;- build_frame(
+&quot;x1&quot; , &quot;x2&quot; , &quot;x3&quot;, &quot;y&quot; |
+1 , &quot;a&quot; , 6 , 10 |
+NA_real_, &quot;b&quot; , 7 , 20 |
+3 , NA_character_, 8 , 30 )
+knitr::kable(d)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">x1</th>
+<th align="left">x2</th>
+<th align="right">x3</th>
+<th align="right">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">a</td>
+<td align="right">6</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="left">b</td>
+<td align="right">7</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">NA</td>
+<td align="right">8</td>
+<td align="right">30</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>plan1 &lt;- vtreat::design_missingness_treatment(d)
+vtreat::prepare(plan1, d) %.&gt;%
+knitr::kable(.)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">x1</th>
+<th align="right">x1_isBAD</th>
+<th align="left">x2</th>
+<th align="right">x3</th>
+<th align="right">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">a</td>
+<td align="right">6</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">b</td>
+<td align="right">7</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="left"><em>invalid</em></td>
+<td align="right">8</td>
+<td align="right">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="indicator-variables" class="section level5">
+<h5>Indicator Variables</h5>
+<p>Most statistical and machine learning techniques require variables to be numeric. Non-numeric variables, thus, need to be transformed into numeric. A popular transformation is creating dummy variables for each non-numeric value. This is also known as creating indicator variables or one-hot encoding.</p>
+<p>In the example below, the x2 string variable is converted to multiple binary variables for each level (including missing values).</p>
+<pre class="r"><code>d &lt;- build_frame(
+&quot;x1&quot; , &quot;x2&quot; , &quot;x3&quot;, &quot;y&quot; |
+1 , &quot;a&quot; , 6 , 10 |
+NA_real_, &quot;b&quot; , 7 , 20 |
+3 , NA_character_, 8 , 30 )
+print(d)</code></pre>
+<pre><code>##   x1   x2 x3  y
+## 1  1    a  6 10
+## 2 NA    b  7 20
+## 3  3 &lt;NA&gt;  8 30</code></pre>
+<pre class="r"><code>plan2 &lt;- vtreat::designTreatmentsZ(d,
+varlist = c(&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;),
+verbose = FALSE)
+vtreat::prepare(plan2, d)</code></pre>
+<pre><code>##   x1 x1_isBAD x3 x2_lev_NA x2_lev_x_a x2_lev_x_b
+## 1  1        0  6         0          1          0
+## 2  2        1  7         0          0          1
+## 3  3        0  8         1          0          0</code></pre>
+</div>
+<div id="impact-coding" class="section level5">
+<h5>Impact Coding</h5>
+<p>Impact coding (also known as effects coding and target encoding) is replacing a level entry with its numeric effect. This is done when a string-valued variable has too many possible values/levels and would lead to too many binary variables if coded separately.</p>
+<p>See plan3 in which we create impact-coded variable x2_catN.</p>
+<p>See plan4 how to create impact coding for a categorical variable which will be measured in logistic units (log of an odds-ratio).</p>
+<pre class="r"><code>d &lt;- build_frame(
+  &quot;x1&quot; , &quot;x2&quot; , &quot;x3&quot;, &quot;y&quot; |
+  1 , &quot;a&quot; , 6 , 10 |
+  NA_real_, &quot;b&quot; , 7 , 20 |
+  3 , NA_character_, 8 , 30 )
+
+print(d)</code></pre>
+<pre><code>##   x1   x2 x3  y
+## 1  1    a  6 10
+## 2 NA    b  7 20
+## 3  3 &lt;NA&gt;  8 30</code></pre>
+<pre class="r"><code>plan3 &lt;- vtreat::designTreatmentsN(d,
+  varlist = c(&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;),
+  outcomename = &quot;y&quot;,
+  codeRestriction = &quot;catN&quot;,
+  verbose = FALSE)
+
+vtreat::prepare(plan3, d)</code></pre>
+<pre><code>##   x2_catN  y
+## 1     -10 10
+## 2       0 20
+## 3      10 30</code></pre>
+<pre class="r"><code>plan4 &lt;- vtreat::designTreatmentsC(d,
+  varlist = c(&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;),
+  outcomename = &quot;y&quot;,
+  outcometarget = 20,
+  codeRestriction = &quot;catB&quot;,
+  verbose = FALSE)
+
+vtreat::prepare(plan4, d)</code></pre>
+<pre><code>##     x2_catB  y
+## 1 -8.517343 10
+## 2  9.903538 20
+## 3 -8.517343 30</code></pre>
+</div>
+<div id="treatment-plan" class="section level5">
+<h5>Treatment Plan</h5>
+<p>The treatment plant creates a set of rules how to process training data before fitting it to a model, and rules how new data will be processed before applying it to the model.</p>
+<pre class="r"><code>class(plan4)</code></pre>
+<pre><code>## [1] &quot;treatmentplan&quot;</code></pre>
+<pre class="r"><code>names(plan4)</code></pre>
+<pre><code>## [1] &quot;treatments&quot;    &quot;scoreFrame&quot;    &quot;outcomename&quot;   &quot;vtreatVersion&quot;
+## [5] &quot;outcomeType&quot;   &quot;outcomeTarget&quot; &quot;meanY&quot;         &quot;splitmethod&quot;  
+## [9] &quot;fit_obj_id&quot;</code></pre>
+<pre class="r"><code>plan4$scoreFrame</code></pre>
+<pre><code>##   varName varMoves rsq       sig needsSplit extraModelDegrees origName code
+## 1 x2_catB     TRUE   1 0.0506719       TRUE                 2       x2 catB
+##   default_threshold recommended
+## 1                 1        TRUE</code></pre>
+<p>The variable score frame is a data frame showing derived explanatory variables, what variable it is derived from, what type of transformation was applied, and some quality summaries about the statistic.</p>
+</div>
+<div id="cross-frame" class="section level5">
+<h5>Cross-Frame</h5>
+<p>The cross frame is an item found when you use the same data for both the design and training using a cross-validation technique. Naively reusing the same data will create a model that will look very well on the training data but will fail on any application on new data. You can use cross-validation with vtreat package as follows.</p>
+<p>As you can see, using the same data for training and testing, we suffer from overfitting which inflates our variable quality estimate. x_bad_catN’s F-test is inflated and falsely looks significant.</p>
+<pre class="r"><code># Create a simple data set
+set.seed(2019)
+d &lt;- data.frame(
+  x_bad = sample(letters, 100, replace = TRUE),
+  y = rnorm(100),
+  stringsAsFactors = FALSE)
+d$x_good &lt;- ifelse(d$y &gt; rnorm(100), &quot;non-neg&quot;, &quot;neg&quot;)
+head(d)</code></pre>
+<pre><code>##   x_bad          y  x_good
+## 1     y -0.7603575 non-neg
+## 2     j  0.4442418 non-neg
+## 3     e  1.7386856 non-neg
+## 4     m -0.7752029 non-neg
+## 5     q -1.1825636     neg
+## 6     x -0.3140285 non-neg</code></pre>
+<pre class="r"><code># Naively reusing the same data
+plan5 &lt;- vtreat::designTreatmentsN(d,
+varlist = c(&quot;x_bad&quot;, &quot;x_good&quot;),
+outcomename = &quot;y&quot;,
+codeRestriction = &quot;catN&quot;,
+minFraction = 2,
+verbose = FALSE)
+class(plan5)</code></pre>
+<pre><code>## [1] &quot;treatmentplan&quot;</code></pre>
+<pre class="r"><code>print(plan5)</code></pre>
+<pre><code>## [1] &quot;treatmentplan&quot;
+##   origName     varName code         rsq          sig extraModelDegrees
+## 1    x_bad  x_bad_catN catN 9.93962e-05 9.215776e-01                25
+## 2   x_good x_good_catN catN 3.25805e-01 5.631959e-10                 1
+##   recommended
+## 1       FALSE
+## 2        TRUE</code></pre>
+<pre class="r"><code>training_data1 &lt;- vtreat::prepare(plan5, d)
+res1 &lt;- vtreat::patch_columns_into_frame(d, training_data1)
+head(res1)</code></pre>
+<pre><code>##   x_bad  x_good x_bad_catN x_good_catN          y
+## 1     y non-neg  0.2879701    0.523549 -0.7603575
+## 2     j non-neg -0.1957772    0.523549  0.4442418
+## 3     e non-neg  0.1720338    0.523549  1.7386856
+## 4     m non-neg -0.3295562    0.523549 -0.7752029
+## 5     q     neg -0.5767783   -0.590385 -1.1825636
+## 6     x non-neg -0.2259024    0.523549 -0.3140285</code></pre>
+<pre class="r"><code>sigr::wrapFTest(res1, &quot;x_good_catN&quot;, &quot;y&quot;)</code></pre>
+<pre><code>## [1] &quot;F Test summary: (R2=0.3241, F(1,98)=46.98, p&lt;1e-05).&quot;</code></pre>
+<pre class="r"><code>sigr::wrapFTest(res1, &quot;x_bad_catN&quot;, &quot;y&quot;)</code></pre>
+<pre><code>## [1] &quot;F Test summary: (R2=0.1943, F(1,98)=23.64, p&lt;1e-05).&quot;</code></pre>
+<pre class="r"><code># Using cross-validation
+cfe &lt;- vtreat::mkCrossFrameNExperiment(d,
+varlist = c(&quot;x_bad&quot;, &quot;x_good&quot;),
+outcomename = &quot;y&quot;,
+codeRestriction = &quot;catN&quot;,
+minFraction = 2,
+verbose = FALSE)
+plan6 &lt;- cfe$treatments
+training_data2 &lt;- cfe$crossFrame
+res2 &lt;- vtreat::patch_columns_into_frame(d, training_data2)
+head(res2)</code></pre>
+<pre><code>##   x_bad  x_good x_bad_catN x_good_catN          y
+## 1     y non-neg  0.7808611   0.4535235 -0.7603575
+## 2     j non-neg -1.4621185   0.4535235  0.4442418
+## 3     e non-neg -0.4041591   0.5424189  1.7386856
+## 4     m non-neg -0.2240972   0.5772362 -0.7752029
+## 5     q     neg -1.1043780  -0.7107558 -1.1825636
+## 6     x non-neg  0.0000000   0.5424189 -0.3140285</code></pre>
+<pre class="r"><code>sigr::wrapFTest(res2, &quot;x_bad_catN&quot;, &quot;y&quot;)</code></pre>
+<pre><code>## [1] &quot;F Test summary: (R2=-0.6653, F(1,98)=-39.15, p=n.s.).&quot;</code></pre>
+<pre class="r"><code>sigr::wrapFTest(res2, &quot;x_good_catN&quot;, &quot;y&quot;)</code></pre>
+<pre><code>## [1] &quot;F Test summary: (R2=0.3039, F(1,98)=42.78, p&lt;1e-05).&quot;</code></pre>
+<pre class="r"><code>plan6$scoreFrame</code></pre>
+<pre><code>##       varName varMoves       rsq          sig needsSplit extraModelDegrees
+## 1  x_bad_catN     TRUE 0.0806097 4.201189e-03       TRUE                25
+## 2 x_good_catN     TRUE 0.3117822 1.576683e-09       TRUE                 1
+##   origName code default_threshold recommended
+## 1    x_bad catN               0.5        TRUE
+## 2   x_good catN               0.5        TRUE</code></pre>
+<p><strong>References</strong></p>
+<p>Zumel, N., &amp; Mount, J. (2014). Practical Data Science With R. Manning Publications Co.</p>
+<hr />
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
