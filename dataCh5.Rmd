@@ -1,0 +1,553 @@
+---
+title: "Practical Data Science With R. Chapter 5"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Chapter 5: Data Engineering and Data Shaping
+
+Before any analysis can be done, data must be organized in a way that is easy to work with. Data shaping is arranging your data into a format that is ready for visualization and analysis. In this chapter, we will go over some of the most common situations using base R commands as well as very popular packages data.table and dplyr.
+
+### Data Selection
+
+Data selection involves removing/choosing/reordering rows or columns, removing or assigning missing values and similar.
+
+#### Subsetting
+
+Subsetting is choosing rows and/or collums we want to keep or drop. It is one of the daily tools. Using dataset iris which is already pre-installed in R. As you can see, iris dataset has data on length and width of sepals and petals. Say you do not need all the information: you want to drop sepal length and width but keep the remaining columns. In addition, say you want to keep only those irises that have a petal length greater than 2, and remove those that have petal length shorter than 2. This can be done as follows:
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+head(iris)
+
+# METHOD 1: base R
+columns_we_want = c("Petal.Length", "Petal.Width", "Species")
+rows_we_want = iris$Petal.Length > 2
+new_data1a=iris[rows_we_want, columns_we_want, drop = FALSE]
+new_data1b=iris[iris$Petal.Length>2, -c(1,2), drop = FALSE]
+new_data1c=iris[iris$Petal.Length>2, 3:5, drop = FALSE]
+head(new_data1a) # check new_data1b and new_data1c to see that they are identical to new_data1a
+
+# METHOD 2: data.table
+library("data.table")
+iris_data.table = as.data.table(iris)
+columns_we_want = c("Petal.Length", "Petal.Width", "Species")
+rows_we_want = iris_data.table$Petal.Length > 2
+iris_data.table = iris_data.table[rows_we_want , ..columns_we_want]
+head(iris_data.table)
+
+# METHOD 2: dplyr
+library("dplyr")
+iris_dplyr <- iris %>%
+  select(., Petal.Length, Petal.Width, Species) %>%
+  filter(., Petal.Length > 2)
+head(iris_dplyr)
+```
+
+#### Removing Rows with Incomplete Data
+
+We often also want to remove rows for which key variables are missing. Let's look at an example using dataset msleep from package ggplot2. 
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(ggplot2)
+summary(msleep)
+
+# METHOD 1: base R
+clean_base_1a=msleep[complete.cases(msleep), , drop = FALSE]
+nrow(clean_base_1a)
+clean_base_1b = na.omit(msleep)
+nrow(clean_base_1a)
+
+# METHOD 2: data.table
+library("data.table")
+msleep_data.table <- as.data.table(msleep)
+clean_data.table = msleep_data.table[complete.cases(msleep_data.table), ]
+nrow(clean_data.table)
+
+# METHOD 2: dplyr
+library("dplyr")
+clean_dplyr <- msleep %>%
+  filter(., complete.cases(.))
+nrow(clean_dplyr)
+```
+
+#### Ordering Rows
+
+Sometimes we want to sort or control what order our data rows are in. While for some data it is not relevant, in other cases it may be essential (time series). Perhaps the data came to us unsorted, or sorted for a purpose other than ours. Sorting is relatively straightforward. Example below shows how we can sort data, count cumulative sum and craete a conditional cumulative sum.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+
+purchases = wrapr::build_frame(
+"day", "hour", "n_purchase" |
+1 , 9 , 5 |
+2 , 9 , 3 |
+2 , 11 , 5 |
+1 , 13 , 1 |
+2 , 13 , 3 |
+1 , 14 , 1 )
+
+#Alternatively, you could type data using data.frame command
+purchases = data.frame(day=c(1,2,2,1,2,1),
+                       hour=c(9,9,11,13,13,14),
+                       n_purchase=c(5,3,5,1,3,1))
+
+# METHOD 1: base R
+
+## Cumulative sum
+order_index <- with(purchases, order(day, hour))
+purchases_ordered <- purchases[order_index, , drop = FALSE]
+purchases_ordered$running_total <- cumsum(purchases_ordered$n_purchase)
+purchases_ordered
+
+## Cumulative sum by day
+order_index2 <- with(purchases, order(day, hour))
+purchases_ordered2 <- purchases[order_index2, , drop = FALSE]
+data_list2 <- split(purchases_ordered2, purchases_ordered2$day)
+data_list2 <- lapply(
+  data_list2,
+  function(di) {
+  di$running_total_by_day <- cumsum(di$n_purchase)
+  di
+  })
+purchases_ordered2 <- do.call(base::rbind, data_list2)
+rownames(purchases_ordered2) <- NULL
+purchases_ordered2
+
+# METHOD 2: data.table
+
+## Cumulative sum
+library("data.table")
+DT_purchases <- as.data.table(purchases)
+order_cols <- c("day", "hour")
+setorderv(DT_purchases, order_cols)
+DT_purchases[ , running_total := cumsum(n_purchase)]
+#print(DT_purchases)
+
+## Cumulative sum by day
+DT_purchases <- as.data.table(purchases)[order(day, hour),
+.(hour = hour,
+n_purchase = n_purchase,
+running_total = cumsum(n_purchase)),
+by = "day"]
+#print(DT_purchases)
+
+# METHOD 3: dplyr
+
+## Cumulative sum
+library("dplyr")
+res <- purchases %>%
+  arrange(., day, hour) %>%
+  mutate(., running_total = cumsum(n_purchase))
+#print(res)
+
+## Cumulative sum by day
+res <- purchases %>%
+arrange(., day, hour) %>%
+group_by(., day) %>%
+mutate(., running_total = cumsum(n_purchase)) %>%
+ungroup(.)
+#print(res)
+```
+
+#### Basic Data Transformations
+
+Basic Data Transformations cover adding columns, renaming columns, and parametric programming.
+
+Adding a new column is simple. To make this example more interesting, let's add another column that combines the day and month and represents it as a date in a new column. We could run the following commands.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+# METHOD 1: base R
+airquality_with_date = airquality
+airquality_with_date$date = with(airquality_with_date,as.Date(paste0("1973","-",Month,"-",Day)))
+## alternatively
+# airquality_with_date$date=as.Date(paste0("1973","-",airquality_with_date$Month,"-",airquality_with_date$Day))
+airquality_with_date =airquality_with_date[,c("Ozone", "date"),drop = FALSE]
+head(airquality_with_date)
+
+# METHOD 1b: using base R and package wrapr
+## Let's also remove rows with missing values
+library("wrapr")
+airquality %.>%
+transform(., date = as.Date(paste0("1973","-",Month,"-",Day))) %.>%
+subset(., !is.na(Ozone), select = c("Ozone", "date")) %.>%
+head(.)
+
+# METHOD 2: data.table
+library("data.table")
+DT_airquality <-
+as.data.table(airquality)[
+, date := as.Date(paste0("1973","-",Month,"-",Day)) ][
+, c("Ozone", "date")]
+head(DT_airquality)
+
+# METHOD 3: dplyr
+library("dplyr")
+airquality_with_date2 <- airquality %>%
+mutate(., date = as.Date(paste0("1973","-",Month,"-",Day))) %>%
+select(., Ozone, date)
+head(airquality_with_date2)
+
+```
+
+As you can see, there are some missing values. Say, you want to include the previous reading into the missing entry. That is if day 10 reading is missing, let it equal to the reading from day 9. This can be done multiple ways.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+# METHOD 1: base R
+airquality_corrected = airquality_with_date
+airquality_corrected$OzoneCorrected1=airquality_corrected$Ozone
+indeces_of_NAs = which(is.na(airquality_corrected$Ozone))
+for (i in 1:length(indeces_of_NAs)){
+  index=indeces_of_NAs[i]
+  airquality_corrected$OzoneCorrected1[index]=airquality_corrected$OzoneCorrected1[index-1]
+}
+
+# METHOD 1b: using base R and package zoo
+library("zoo")
+airquality_corrected$OzoneCorrected2 <-
+na.locf(airquality_corrected$Ozone, na.rm = FALSE)
+airquality_corrected
+
+# METHOD 2: data.table
+library("data.table")
+library("zoo")
+DT_airquality[, OzoneCorrected := na.locf(Ozone, na.rm=FALSE)]
+
+# METHOD 3: dplyr
+library("dplyr")
+library("zoo")
+airquality_with_date %>%
+mutate(.,OzoneCorrected = na.locf(., na.rm = FALSE))
+```
+
+One other popular trick with data, especially when there are multiple readings of the same variable, is to coalesce them into one. For example, if there are multiple reading for the same variable, you may choose to keep the first reading of the variable. If the variable readings differ, you may want to consider averaging, or figuring out why the readings differ in the first place, and then choose the most appropriate method.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+data <- wrapr::build_frame(
+"time", "sensor1", "sensor2", "sensor3" |
+1L , NA , -0.07528 , -0.07528 |
+2L , NA , -0.164 , NA |
+3L , NA , -0.8119 , -0.8119 |
+4L , NA , NA , -0.461 |
+5L , NA , NA , NA )
+
+# METHOD 1: base R - custom for this problem
+for (i in 1:nrow(data)){
+  if (sum(is.na(data[i,2:4]))==length(data[i,2:4])){
+    data$reading0[i]=NA
+  } else {
+    ind=min(which(!is.na(as.numeric(data[i,2:4]))))
+    data$reading0[i] = as.numeric(data[i,1+ind])
+  }
+}
+
+# METHOD 2: wrapr
+library("wrapr")
+data$reading = data$sensor1 %?% data$sensor2 %?% data$sensor3 %?% 0.0
+```
+
+Very often, we need to combine many rows in a summary row. A summary gives a succinct information about the data that we are working with. That can be done using a variety of ways. See below using dataset iris.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+head(iris)
+
+# METHOD 1: base R - custom for this problem
+# you can use tapply(), aggregate(), tabulate(), or table())
+m1=aggregate(Petal.Length ~ Species, data = iris, mean)
+m2=aggregate(Petal.Width ~ Species, data = iris, mean)
+m_final = merge(m1,m2,by="Species")
+
+# METHOD 2: data.table
+library("data.table")
+iris_data.table <- as.data.table(iris)
+iris_data.table <- iris_data.table[,
+  .(Petal.Length = mean(Petal.Length),
+  Petal.Width = mean(Petal.Width)),
+  by = .(Species)]
+
+# METHOD 3: dplyr
+library("dplyr")
+iris %>% group_by(., Species) %>%
+summarize(.,
+  Petal.Length = mean(Petal.Length),
+  Petal.Width = mean(Petal.Width)) %>%
+  ungroup(.) -> iris.summary
+iris.summary
+```
+
+#### Multi-Table Data Transforms
+
+Most data scientists sooner or later run into combining multiple sources of data. Datasets can be combined by row or column, depending on the datasets. For example, you may have one dataset that contains prices for one day, and another dataset that contains prices for another day. In this case, you could combine by row.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+productTable <- wrapr::build_frame(
+"productID", "price" |
+"p1" , 9.99 |
+"p2" , 16.29 |
+"p3" , 19.99 |
+"p4" , 5.49 |
+"p5" , 24.49 )
+salesTable <- wrapr::build_frame(
+"productID", "sold_store", "sold_online" |
+"p1" , 6 , 64 |
+"p2" , 31 , 1 |
+"p3" , 30 , 23 |
+"p4" , 31 , 67 |
+"p5" , 43 , 51 )
+productTable2 <- wrapr::build_frame(
+"productID", "price" |
+"n1" , 25.49 |
+"n2" , 33.99 |
+"n3" , 17.99 )
+productTable$productID <- factor(productTable$productID)
+productTable2$productID <- factor(productTable2$productID)
+
+# METHOD 1: base R - custom for this problem
+rbind_base = rbind(productTable,productTable2)
+
+# METHOD 2: data.table
+library("data.table")
+rbindlist(list(productTable,productTable2))
+
+# METHOD 3: dplyr
+library("dplyr")
+bind_rows(list(productTable,productTable2))
+```
+
+Combining by columns is also relatively straightforward. This is typically done, when for the same variables in both datasets, we have different columns in each. 
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+# METHOD 1: base R - custom for this problem
+cbind(productTable, salesTable[, -1])
+
+# METHOD 2: data.table
+library("data.table")
+cbind(as.data.table(productTable),
+as.data.table(salesTable[, -1]))
+
+# METHOD 3: dplyr
+library("dplyr")
+# list of data frames calling convention
+dplyr::bind_cols(list(productTable, salesTable[, -1]))
+```
+
+Often, we have different data about the same units in different data sets. We can easily combine different data tables. The final data table will have all the columns from each dataset. The most important/common join for the data scientist is likely the left join. This join keeps every row from the left table and adds columns coming from matching rows in the right table. When there are no matching rows, NA values are substituted in.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+productTable <- wrapr::build_frame(
+"productID", "price" |
+"p1" , 9.99 |
+"p3" , 19.99 |
+"p4" , 5.49 |
+"p5" , 24.49 )
+salesTable <- wrapr::build_frame(
+"productID", "unitsSold" |
+"p1" , 10 |
+"p2" , 43 |
+"p3" , 55 |
+"p4" , 8 )
+
+# METHOD 1: base R - custom for this problem
+merge(productTable, salesTable, by = "productID", all.x = TRUE)
+
+# METHOD 2a: data.table
+library("data.table")
+productTable_data.table <- as.data.table(productTable)
+salesTable_data.table <- as.data.table(salesTable)
+# index notation for join idea is rows are produced for each row inside the []
+salesTable_data.table[productTable_data.table, on = "productID"]
+
+# METHOD 2b: data.table
+library("data.table")
+joined_table <- productTable
+joined_table$unitsSold <- salesTable$unitsSold[match(joined_table$productID,
+salesTable$productID)]
+
+# METHOD 3: dplyr
+library("dplyr")
+left_join(productTable, salesTable, by = "productID")
+```
+
+There are many other types of merging one would run into. For example, we may want to merge two tables into a single table, keeping only the rows where the key exists in both tables.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+productTable <- wrapr::build_frame(
+"productID", "price" |
+"p1" , 9.99 |
+"p3" , 19.99 |
+"p4" , 5.49 |
+"p5" , 24.49 )
+salesTable <- wrapr::build_frame(
+"productID", "unitsSold" |
+"p1" , 10 |
+"p2" , 43 |
+"p3" , 55 |
+"p4" , 8 )
+
+# METHOD 1: base R - custom for this problem
+merge(productTable, salesTable, by = "productID")
+
+# METHOD 2: data.table
+library("data.table")
+productTable_data.table <- as.data.table(productTable)
+salesTable_data.table <- as.data.table(salesTable)
+merge(productTable, salesTable, by = "productID")
+
+# METHOD 3: dplyr
+library("dplyr")
+inner_join(productTable, salesTable, by = "productID")
+```
+
+Finally, we can merge two tables into a single table, keeping rows for all key values. Notice the two tables have
+equal importance here.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+# METHOD 1: base R - custom for this problem
+merge(productTable, salesTable, by = "productID", all=TRUE)
+
+# METHOD 2: data.table
+library("data.table")
+productTable_data.table <- as.data.table(productTable)
+salesTable_data.table <- as.data.table(salesTable)
+merge(productTable_data.table, salesTable_data.table,
+by = "productID", all = TRUE)
+
+# METHOD 3: dplyr
+library("dplyr")
+full_join(productTable, salesTable, by = "productID")
+```
+
+Consider this more complicated example in which you have bid/ask quotes and trade prices. Find for which times the trade price were within the bid and ask ranges.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+quotes <- data.table(
+bid = c(5, 5, 7, 8),
+ask = c(6, 6, 8, 10),
+bid_quantity = c(100, 100, 100, 100),
+ask_quantity = c(100, 100, 100, 100),
+when = as.POSIXct(strptime(
+c("2018-10-18 1:03:17",
+"2018-10-18 2:12:23",
+"2018-10-18 2:15:00",
+"2018-10-18 2:17:51"),
+"%Y-%m-%d %H:%M:%S")))
+
+trades <- data.table(
+trade_id = c(32525, 32526),
+price = c(5.5, 9),
+quantity = c(100, 200),
+when = as.POSIXct(strptime(
+c("2018-10-18 2:13:42",
+"2018-10-18 2:19:20"),
+"%Y-%m-%d %H:%M:%S")))
+
+# Range Join
+library("data.table")
+trades[, trade_price := price]
+quotes[, `:=`(bid_price = bid, ask_price = ask) ]
+quotes[trades, on = .(bid <= price, ask >= price) ][
+, .(when, bid, ask, bid_price, trade_price, ask_price, trade_id) ]
+
+# Rolling Join
+quotes[ , quote_time := when ]
+trades[, trade_time := when]
+quotes[ trades, on = "when", roll = TRUE ][
+, .(quote_time, bid_price, trade_price, ask_price, trade_id, trade_time) ]
+```
+
+#### Reshaping Transforms
+
+Let's examine an example of how to convert the data from wide format to long format. Instead of having multiple readings (driverskilled, front, rear) for a specific date in one row, we may want to have each of these in separate rows. This is sometimes needed for other packages, such as ggpot2. See example below.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library("datasets")
+library("xts")
+Seatbelts1 <- data.frame(Seatbelts)
+Seatbelts1$date <- index(as.xts(Seatbelts))
+Seatbelts1 <- Seatbelts1[ (Seatbelts1$date >= as.yearmon("Jan 1982")) &
+  (Seatbelts1$date <= as.yearmon("Dec 1983")), , drop = FALSE]
+Seatbelts1$date <- as.Date(Seatbelts1$date)
+Seatbelts1$law <- ifelse(Seatbelts1$law==1, "new law", "pre-law")
+Seatbelts1 <- Seatbelts1[, c("date", "DriversKilled", "front", "rear", "law")]
+head(Seatbelts1)
+
+# METHOD 1: tidyr
+library("tidyr")
+seatbelts_long1 <- gather(
+Seatbelts1,
+key = victim_type,
+value = nvictims,
+DriversKilled, front, rear)
+
+# METHOD 2: data.table
+library("data.table")
+seatbelts_long2 <-
+melt.data.table(as.data.table(Seatbelts1),
+id.vars = NULL,
+measure.vars = c("DriversKilled", "front", "rear"),
+variable.name = "victim_type",
+value.name = "nvictims")
+
+# METHOD 3: data.table
+library("cdata")
+seatbelts_long3 <- unpivot_to_blocks(
+Seatbelts1,
+nameForNewKeyColumn = "victim_type",
+nameForNewValueColumn = "nvictims",
+columnsToTakeFrom = c("DriversKilled", "front", "rear"))
+```
+
+In other cases, we may want to do the reverse: move from tall to wide format.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library("datasets")
+library("data.table")
+library("ggplot2")
+ChickWeight <- data.frame(ChickWeight) # get rid of attributes
+ChickWeight$Diet <- NULL # remove the diet label
+# pad names with zeros
+padz <- function(x, n=max(nchar(x))) gsub(" ", "0", formatC(x, width=n))
+# append "Chick" to the chick ids
+ChickWeight$Chick <- paste0("Chick", padz(as.character(ChickWeight$Chick)))
+
+ChickSummary <- as.data.table(ChickWeight)
+ChickSummary <- ChickSummary[,
+.(count = .N,
+weight = mean(weight),
+q1_weight = quantile(weight, probs = 0.25),
+q2_weight = quantile(weight, probs = 0.75)),
+by = Time]
+head(ChickSummary)
+
+# METHOD 1: tidyr
+library("tidyr")
+ChickWeight_wide1 <- spread(ChickWeight,
+key = Time,
+value = weight)
+head(ChickWeight_wide1)
+
+# METHOD 2: data.table
+library("data.table")
+ChickWeight_wide2 <- dcast.data.table(
+as.data.table(ChickWeight),
+Chick ~ Time,
+value.var = "weight")
+
+# METHOD 3: data.table
+library("cdata")
+ChickWeight_wide3 <- pivot_to_rowrecs(
+ChickWeight,
+columnToTakeKeysFrom = "Time",
+columnToTakeValuesFrom = "weight",
+rowKeyColumns = "Chick")
+```
+
+
+**References**
+
+Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.
+
+Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.
+
+---

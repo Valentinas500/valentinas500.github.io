@@ -1,0 +1,174 @@
+---
+title: "Practical Data Science With R. Chapter 2"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+##### Chapter 2: Starting with R and Data
+
+By now, I assume R is already installed on your computer. R is an open source software that runs on any popular operating system that can be downloaded here: (for [Windows](https://cran.r-project.org/bin/windows/base/); for [Mac OS](https://cran.r-project.org/bin/macosx/); for [Linux](https://cran.r-project.org/bin/linux/)).
+
+Vectors are fundamental R data structures. Vector holds the same primitive or atomic type of value in each slot. Lists in R, on the other hand, can hold different types in each slot. To create a vector or a list, one can use the "c" (for combine) command.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+example_vector = c(10, 20, 30)
+example_list = list(a = 10, b = 20, c = 30)
+```
+
+Try the following commands:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+example_vector
+print(example_vector)
+example_vector[2]
+example_vector[c(FALSE, TRUE, TRUE)]
+example_list
+example_list[2]
+example_list[c(TRUE, FALSE, TRUE)]
+```
+
+If the sequence of numbers in a vector follow a specific pattern, one can use one of the default commands. For example, if you want to create a vector containing values from 1 to 50, you can use simply the following command:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+x = 1:50
+```
+
+
+However, whenever you want the steps between values to be smaller or larger then unity (1), you can use the following command indicating the first, last value and the step size:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+y1 = seq(from=1,to=50,by=2)
+y2 = seq(1,50,2)
+```
+
+In R, there are two values that one must distinguish. Null is an empty or length-zero vector. To create such a vector, one can simply write the following:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+x1 = c()
+x2 = NULL
+```
+
+For example, when one combines NULL with other values in vector, NULL essentially means do nothing or ignore. It is well-defined meaning you will not get an error when encountering NULL.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+x3 = c(NULL, 5, c() )
+```
+
+NA, on the other hand, indicates a missing value. It tells the researcher which values are missing. For example, try the following:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+x4 = c(1, NA, 3)
+```
+
+Do not confuse NA with NaN, which means invalid. 
+
+In R, TRUE and FALSE are reserved words denoting logical constraints. Using "==", ">" and "<", try the following commands:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+y1==y2
+c(1, 2, 5) <= c( 2, 2, 4)
+c(1, 2, 5) > c( 2, 2, 4)
+```
+
+If a researcher has a long command, she or he can break it up into multiple lines. For example, one can write the following:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+x5 = 1 + 
+    2
+x6 = ( 1
+    + 2 );
+```
+
+As you probably noticed, semicolon is not necessary. However, many use semicolon to indicate the end of the statement. If one wants to use more than one command or function in one line, semicolon will separate the two statements.
+
+Another useful command is cbind. It takes a sequence of vector, matrix or data-frame arguments and combine by columns or rows.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+A=cbind(rep(5,7), 1:7)
+A
+A[2,1]
+B=rbind(2, 1:7)
+B
+```
+
+In R, "data.frame" is the tabular data type and the most important. One can create the names for each column using very simple syntax. Make sure that the length of each column in a data.frame is the same. See the following:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+x = c(1, 2, 3, 4, 5)
+X = data.frame( q1 = x, q2 = 2*x )
+```
+
+One can indicate the specific value to call in a vector or a data.frame or to change the value of that data point as can be seen below. In the brackets, the first number corresponds to the row and the second to the column. To call the data point in the third row value in the first column, on would use the following commands:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+X[3,1]
+```
+
+In R, it is very convenient to organize and store intermediate data. Check out the following example in which we  sort the data, find cumulative sum and find a fraction of all cumulative revenues below. It is convenient to use something like "." to store any temporary data only assigning it a more memorable name at the end after competing intermediate tasks.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+data = data.frame(revenue = c(2, 1, 2), sort_key = c("b", "c", "a"), stringsAsFactors = FALSE)
+. = data
+. = .[order(.$sort_key), , drop = FALSE]
+.$ordered_sum_revenue <- cumsum(.$revenue)
+.$fraction_revenue_seen <- .$ordered_sum_revenue/sum(.$revenue)
+result = .
+```
+
+Similarly, one can use an R package to make their lives easier. However, make sure you read the documentation of the package. For example, to do the steps above one could use package **dplyr** with piped notation supplied by **magittr**. See below:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+#install.packages("dplyr")
+library(dplyr)
+result <- data %>%
+   arrange(., sort_key) %>%
+   mutate(., ordered_sum_revenue = cumsum(revenue)) %>%
+   mutate(., fraction_revenue_seen = ordered_sum_revenue/sum(revenue))
+```
+
+A lot of the work in R is done in vectors and data frames using the functions in the base R (you do not need to install and call a library for basic operations).  See below:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+D = data.frame(col1 = c(10, 15, 20), col2 = c(0, -5, -10))
+D$col3 = D$col1 + D$col2
+D$col4 = D$col1 * D$col2
+print(D)
+```
+
+Usually, you will use data that is either in some local directory in your computer or is in some directory online. With R, it is easy to import either of these. For example, you can use the following commands to download a dataset from a specific URL:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+my_data_1 = read.csv("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data", header = FALSE)
+
+my_data_2 = read.table("http://assets.datacamp.com/course/dasi/present.txt", header = TRUE)
+print(my_data_2)
+
+data(wage1, package='wooldridge')
+class(wage1)
+```
+
+To see how the data looks, you can simply call to see the first few values by using the following command:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+head(wage1)
+```
+
+To see if there are any anomalies or outliers, you can run quick summary of the whole data.frame by executing the following:
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+summary(wage1)
+```
+
+To plot data, one can use either basic commands such as plot, barplot, histogram.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+plot(wage1$educ,wage1$wage)
+barplot(sort(wage1$wage))
+hist(wage1$wage)
+```
+
+One can also use one of the more advanced commands from other popular packages such as **ggplot2**. See example below. See how to use ggplot2 package [here](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf).
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+#install.packages("ggplot2")
+library(ggplot2)
+
+ggplot(wage1, aes(educ, wage)) +
+ geom_point(aes(color=wage)) +
+ geom_smooth(method ="lm") +
+ coord_cartesian() +
+ scale_color_gradient() +
+ theme_bw()
+```
+
+**References**
+
+Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.
+
+Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.
+
+---

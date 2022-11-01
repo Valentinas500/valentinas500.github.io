@@ -1,0 +1,147 @@
+---
+title: "Statistics for Business & Economics"
+output: pdf_document
+---
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+
+### Chapter 1: Data and Statistics
+
+***
+
+Numerical facts such as averages, totals, percentages, maximums, minimums are called statistics. They help us understand a variety of business, economic, social and other situations. In general, statistics is the art and science of collecting, analyzing, presenting, and interpreting data. Particularly in business, statistical information allows business people to make more informed decisions. From accounting, to finance, marketing, to information systems and production, statistics plays an essential role.
+
+***
+
+#### Data
+
+Before we do any statistical analysis, we need data. Data are the facts and figures collected, analyzed, and summarized for presentation and interpretation. Data collected from a particular study or survey is typically referred to as a data set.
+
+See an example of a data set below.
+
+**Nation** | **WTO Status** | **Per Capita GDP (\$)** | **Trade Deficit (\$1000s)** | **Fitch Rating** | **Fitch Outlook** |
+---|---|---|---|---|---|
+**Armenia** | Member | 5,400 | 2,673,359 | BB− | Stable | 
+**Australia**  | Member | 40,800 | −33,304,157 | AAA | Stable | 
+**Austria** | Member | 41,700 | 12,796,558 | AAA | Stable | 
+**Azerbaijan** | Observer | 5,400 | −16,747,320 | BBB- | Positive | 
+
+When we look at the table, we should be able to recognize between elements and variables.
+
+**Elements** are the entities on which data are collected. In this case, each nation (each table row) is an element. 
+A **variable** is a characteristic of interest for the elements. In this case, we have WTO status, Per capita GDP and three other variables. Each variable is in a different column.
+
+The set of measurements obtained for a particular element is called an **observation.** In this table observations are all the entries (not bolded). For example, Armenia's per capita GDP of 5,400 is an observation.
+
+***
+
+Nominal, Ordinal, Interval, and Ratio are defined as the four fundamental levels of measurement scales that are used to record data.
+
+When the data for a variable consist of labels or names used to identify an attribute of the element, the scale of measurement is considered a **nominal scale**. In our example table, scale measurement of the variable *WTO Status* is nominal because it can only take on category labels. There is no rank between the different categories.
+
+The scale of measurement for a variable is considered an **ordinal scale** if the data exhibit the properties of nominal data and in addition, the order or rank of the data is meaningful. *Fitch Rating* is an ordinal variable. Rating labels are categories that can be ranked.
+
+The scale of measurement for a variable is an **interval scale** if the data have all the properties of ordinal data and the interval between values is expressed in terms of a fixed unit of measure.
+
+The scale of measurement for a variable is a **ratio scale** if the data have all the properties of interval data and the ratio of two values is meaningful.
+
+Categorical data use either the nominal or ordinal scale of measurement. Quantitative data are obtained using either the interval or ratio scale of measurement.
+
+ ![https://www.questionpro.com/blog/nominal-ordinal-interval-ratio/](Types-of-measurements-scales.jpg) 
+
+***
+
+Data can be classified as categorical or quantitative.
+
+Data that can be grouped by specific categories are referred to as **categorical** data. Categorical data use either the nominal or ordinal scale of measurement. There is limited analysis that can be done with categorical data.
+
+Data that use numeric values to indicate how much or how many are referred to as **quantitative** data. Quantitative data are obtained using either the interval or ratio scale of measurement. Arithmetic operations provide meaningful results for quantitative variables.
+
+***
+
+For purposes of statistical analysis, distinguishing between cross-sectional data and time series data is important. 
+**Cross-sectional data** are data collected at the same or approximately the same point in time.
+
+**Time series data** are data collected over several time periods.
+
+![https://www.differencebetween.com/difference-between-time-series-and-cross-sectional-data/](Difference.jpg) 
+
+***
+
+#### Data Sources
+
+Data comes from a variety of existing sources such as compnay records, government records and other.
+
+Researchers obtain new data by **observational studies** in which they simply observe and record what is happening.
+
+Researchers also obtain new data by **experimental studies** in which they run a controlled experiment. This means that researcher is able to control who gets some kind treatment and who doesn't.
+
+***
+
+One should beware that data sets may contain errors and other issues due to a variety of reasons. Data could be recorded incorrectly, survey respondents may lie, some may misunderstand the question.
+
+***
+
+#### Descriptive Statistics
+
+**Descriptive statistics** are summaries of data that are presented in a way to be easily understood by the reader. These summaries can be tabular, graphical, or numerical.
+
+***
+
+#### Statistical Inference
+
+The set of all elements of interest in a particular study is called a **population**.
+
+If we try to obtain data for the whole population, we are doing a **census**.
+
+A **sample** is a smaller group (a subset of the population) that we typically have data for.
+
+Typically, we use sample data to make estimates and test hypotheses about the whole population. This is called **statistical inference**.
+
+***
+
+#### Analytics 
+
+**Analytics** is the scientific process of transforming data into insight for making better decisions.
+
+**Descriptive analytics** encompasses the set of analytical techniques that describe what has happened in the past.
+
+**Predictive analytics** consists of analytical techniques that use models constructed from past data to predict the future or to assess the impact of one variable on another.
+
+**Prescriptive analytics** is the set of analytical techniques that yield a best course of action.
+
+***
+
+#### Big Data and Mining 
+
+Larger and more complex data sets are now often called **big data**.
+
+**Data mining** deals with methods for developing useful decision-making information from large databases.
+
+***
+
+#### Computers and Statistical Analysis 
+
+Various computer software allows us to do complicated statistical analysis with speed and ease. Some of the most popular software are: Microsoft Excel, R, Python, SAS, SPSS, among many other.
+
+***
+
+#### Analytics 
+
+Ethical issues arise in statistics because of the important role statistics plays in the collection, analysis, presentation, and interpretation of data. In a statistical study, unethical behavior can take a variety of forms including improper sampling, inappropriate analysis of the data, development of misleading graphs, use of inappropriate summary statistics, and/or a biased interpretation of the statistical results
+
+***
+
+**References**
+
+Anderson, David R., et al. Statistics for business & economics. Cengage Learning, 2020.
+
+

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Macroeconomics</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 66px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h2 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h3 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h4 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h5 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.section h6 {
+  padding-top: 71px;
+  margin-top: -71px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Valentinas Rudys</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="etrics.html">Econometrics</a>
+    </li>
+    <li>
+      <a href="macro.html">Macroeconomics</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="programming.html">Programming</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:vrudys@fordham.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Macroeconomics</h1>
+
+</div>
+
+
+<p>Basic Macroeconomics, ECON 1100, Spring 2020 at Fordham University</p>
+<p>Based on Mankiw, N. G. (2020). Principles of Macroeconomics. Cengage Learning.</p>
+<ul>
+<li><a href="https://drive.google.com/open?id=1h07efboB522B4A_VnzX3pr4E4Sg90m_g">Syllabus</a></li>
+</ul>
+<p>If you have any questions, please email me at <a href="mailto:vrudys@fordham.edu" class="email">vrudys@fordham.edu</a></p>
+<p>For immediate questions on homework or assignments, you can message me or call me on Skype (ID: valentinas500)</p>
+<div id="january" class="section level4">
+<h4>January</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1yPeAAXm5fG4oPIDdYOHWkIr_Y2zan3QO">Chapter 1: Ten Principles of Economics</a> (<a href="https://drive.google.com/open?id=1Xaamk4S9bh4HYxuBV96fmoeCiqG2dvz-">Quiz</a>, <a href="https://drive.google.com/open?id=1COZBPTlDDhr3slAb14_Et_hBDM8YCHGC">AK</a>)</li>
+<li><a href="https://drive.google.com/open?id=1tQMZIkQ7miibT2LDDoTZSkaZLiELzELH">Chapter 2: Thinking Link an Economist</a> (<a href="https://drive.google.com/open?id=1sIcgKnszi_aakkRfT45lPpcpIAu9WmBu">Quiz</a>, <a href="https://drive.google.com/open?id=1bhEYlDNnKdxmD3E7bVKa334-ntxu_ITe">AK</a>)
+<ul>
+<li><a href="https://drive.google.com/open?id=1Hjxc56rxLuTaof9952tu_z4MS29HAVXs">Extra Credit Assignment 1</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=101joQYFtwZyoeIbYIjinHaKsJG0WN5Pn">Chapter 3: Interdependence and Gains from Trade</a> (<a href="https://drive.google.com/open?id=14gmAN0Q_1nQGG5Y6MYICeid_QcMGf_DV">Quiz</a>, <a href="https://drive.google.com/open?id=1qVgk5hl_9ZyyPz7wdfB8W-8lVrYeEXj1">AK</a>)</li>
+<li><a href="https://drive.google.com/open?id=1q9Sg5B6-tSKuB18gdncnUMSHOc-LCxT5">Chapter 4: The Market Forces of Supply and Demand</a> (<a href="https://drive.google.com/open?id=1b1ROclhcPQWFsIsrrbc4hf9KKgbT1iJK">Quiz</a>, <a href="https://drive.google.com/open?id=1-9xx73n167rWOue6i7qgkAeUtrW0qHxY">AK</a>)
+<ul>
+<li><a href="https://drive.google.com/open?id=1SGd3chj6Kduz7zdHlQbpNkhtpYe3cPSF">Practice Problems</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1xS6DJfZCcmbQsysGxDuJHokpH5mxLJdB">Chapter 10: Measuring a Nation’s Income</a> (<a href="https://drive.google.com/open?id=1tou0f8un7jDnO5arsPF5qzrSDVxwvpL2">Quiz 1</a>, <a href="https://drive.google.com/open?id=1g8Ptq4VhfLUGpqsooUfBECfN-wBLwEjc">Quiz 2</a>)</li>
+<li><a href="https://databank.worldbank.org/indicator/NY.GDP.MKTP.CD/1ff4a498/Popular-Indicators?savedlg=1#">GDP by Country</a></li>
+<li><a href="https://drive.google.com/open?id=1kDEoBSsLbiYMcHIZikoRm5P1xRUfta6X">Chapter 11: Measuring the Cost of Living</a> (<a href="https://drive.google.com/open?id=146QYcL0SanMmYgs2jLVcVtc4xv_jmWiJ">Quiz 1</a>, <a href="https://drive.google.com/open?id=1cRfFYb5auGkM-h4_y_uvgfvNDCMxpbn3">Quiz 2</a>)
+<ul>
+<li><a href="https://fred.stlouisfed.org/series/CPIAUCSL">CPI for All Urban Consumers: All Items</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=16SaeEtKziJOu1UFp4ZwYJwOfmCCmjCSa">Practice Midterm Exam 1</a></li>
+<li><a href="https://drive.google.com/open?id=1PjL-wtua0NngAbTyarMUeNtQEJca3g4z">More Practice Problems</a></li>
+</ul>
+</div>
+<div id="february" class="section level4">
+<h4>February</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1PNAddWGJCua4jcH0_De3v-opbU84NX93">Chapter 12: Production and Growth</a> (<a href="https://drive.google.com/open?id=1-TMtAHtXVzRyJTVXT2NCAVCVWMjqUVZ1">Quiz 1</a>, <a href="https://drive.google.com/open?id=1IjOItsyQzsuYl-adtGvac41pW9E-LJuf">AK</a>)</li>
+<li><a href="https://drive.google.com/open?id=1NpGGGULx3SNLHzUR64Z1QgAyHoHzZ-ug">Chapter 13: Saving, Investment, and the Financial System</a> (<a href="https://drive.google.com/open?id=14ud5Ds66q3BnsJY_UbKfjYPGAIdvphEQ">Quiz 1</a>, <a href="https://drive.google.com/open?id=1Nkqs7dol2n9AY7C9FLOdS9kTmEBg1wZ8">AK</a>)</li>
+<li><a href="https://drive.google.com/open?id=1dA_3eivcPfSprNVe-qExSfPVVD9Xf1gb">Chapter 14: Basic Tools of Finance</a> (<a href="https://drive.google.com/open?id=1gTwAbQnDCTm-lL4fx1UibRgqRCkdlKIM">Quiz 1</a>, <a href="https://drive.google.com/open?id=1VPhCEMDrM1db2xhU8ls4_0spBOJwP6Op">AK</a>)</li>
+<li><a href="https://drive.google.com/open?id=1Mq0MCabdpKc31ny0PApYsTetk7YB8M8w">Chapter 15: Unemployment</a> (<a href="https://drive.google.com/open?id=1OlYdsKeSrUUiCoqM4UivqKFmqu9Hqz3n">Quiz 1</a>, <a href="https://drive.google.com/open?id=1oxx-u0Sx5FrZ0dYnLM0gBtMK2ZaxC2ia">AK</a>)
+<ul>
+<li>Understanding Labor Force and Unemployment Developments in the US</li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1GTVpnAHpizK4PGAWcCDvq8mKk5BkQ7DS">Practice Midterm Exam 2</a></li>
+</ul>
+</div>
+<div id="week-of-3082020" class="section level4">
+<h4>Week of 3/08/2020</h4>
+<ul>
+<li>Midterm Exam 2</li>
+</ul>
+</div>
+<div id="week-of-3152020-spring-break" class="section level4">
+<h4>Week of 3/15/2020, Spring Break</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1FSIf5wQxYXxFMpvKKRD7ZpPjowc_-JNv">Chapter 16: The Monetary System</a></li>
+<li>Homework
+<ul>
+<li><a href="https://drive.google.com/open?id=1WS-USVW4TXanPm0ZKiy49_aglj-hdGWP">PowerPoint Quiz</a> [optional, due 3/22/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1s6pjc0HOnbiym-E5MN1oSx0AFlH1KlSS">Answer Key</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1pAj8HMvIOc9isCK8ktXW-7jEl3GGztgn">Homework Assignment</a> [optional, due 3/22/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1n5Zkz4l1IF8jFNxMNItYcqzTt-cMy6dA">Answer Key</a></li>
+</ul></li>
+</ul></li>
+<li>Live WebEx Class (Tuesday, 3/17/2020, 4pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1m37tZAWP2UWT5gapzadwQtHtFQt3m7_H">PP</a>]
+<ul>
+<li>Went over fractional reserve banking system and leverage ratio</li>
+</ul></li>
+<li>Podcasts
+<ul>
+<li>Podcast 1: <a href="https://www.npr.org/2019/09/04/757617674/episode-371-where-dollar-bills-come-from">Where Dollar Bills Come From</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/2019/11/20/781364732/episode-953-three-sides-of-a-car-loan">Three Sides Of A Car Loan</a></li>
+<li>Podcast 3: <a href="https://www.npr.org/2019/12/13/787996422/episode-957-youre-giving-your-boss-a-loan">You’re Giving Your Boss A Loan</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/2019/10/02/766556249/episode-942-capitalism-in-the-courtroom">Capitalism In The Courtroom</a></li>
+<li>Podcast 5: <a href="https://www.npr.org/2019/05/01/719213730/episode-416-why-the-price-of-coke-didnt-change-for-70-years">Why The Price of Coke Didn’t Change For 70 years</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-3222020" class="section level4">
+<h4>Week of 3/22/2020</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1FSIf5wQxYXxFMpvKKRD7ZpPjowc_-JNv">Chapter 16: The Monetary System</a></li>
+<li><a href="https://drive.google.com/open?id=1niqOtFwGUrBiqRPyECelKrDLcTeLceaP">Chapter 17: Money Growth and Inflation</a></li>
+<li>Homework
+<ul>
+<li><a href="https://drive.google.com/open?id=1pWXiLy35hfkfMAQt4hKoNqoz2_UEQoB6">PowerPoint Quiz</a> [due 3/29/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1qq0MkWxSJla1993PBhvc-w76Vk5Lb8nI">Answer Key</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1v2B5508-Aiyvbm4fjbk00RyQpbMLL1fb">Homework Assignment</a> [due 3/29/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1pCCgIFNgoc0rf5zf3BgKLTu8sBBLd6mU">Answer Key</a> <!--        + [Submit Here](https://forms.gle/66By2hZxPHPhoYXCA) --></li>
+</ul></li>
+</ul></li>
+<li>Live WebEx Class (Monday, 3/23/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1OE9BhOL8-AQ-VCASTEWD8oYF570ctCnV">PP</a>]</li>
+<li>Live WebEx Class (Thursday, 3/26/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1OE9BhOL8-AQ-VCASTEWD8oYF570ctCnV">PP</a>]</li>
+<li>Podcasts
+<ul>
+<li>Podcast 1: <a href="https://www.npr.org/2019/07/02/738264513/episode-752-eagles-vs-chickens">Eagles vs Chickens</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/2019/08/09/749938354/episode-932-deep-learning-with-the-elephants">Deep Learning With the Elephants</a></li>
+<li>Podcast 3: <a href="https://www.npr.org/2019/07/09/739893511/episode-925-a-mob-boss-a-garbage-boat-and-why-we-recycle">A Mob Boss, A Garbage Boat and Why We Recycle</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/2019/07/12/741283641/episode-926-so-should-we-recycle">So, Should We Recycle</a></li>
+<li>Podcast 5: <a href="https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/08/20180815_pmoney_pmpod613rerun-da306b74-0d8a-475a-a71f-8a8b6b416161.mp3?orgId=1&amp;d=956&amp;p=510289&amp;story=638926383&amp;t=podcast&amp;e=638926383&amp;siteplayer=true&amp;awCollectionId=510289&amp;awEpisodeId=638926383&amp;dl=1">Trash!</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-3292020" class="section level4">
+<h4>Week of 3/29/2020</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1slwCaJTSyamkA2iJZbYjJFpIWtLhjZ3d">Chapter 18: Open Economy Macroeconomics: Basic Concepts</a></li>
+<li><a href="https://drive.google.com/open?id=1e4ssU2d1oh7peTd9UMist7l-zKvN0WFW">Chapter 20: Aggregate Demand and Aggregate Supply</a></li>
+<li>Homework
+<ul>
+<li><a href="https://drive.google.com/open?id=1tJHxtUg0xo1KJYSA6Yt9_BCERy88k4xf">PowerPoint Quiz</a> [due 4/05/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1-Ya9gtuPytSERt1Ajhsa1F-rdSgfTsqM">Answer Key</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1gEjMe-b-WT5ZNpOSLMF-lc-9EeNIg5zp">Homework Assignment</a> [due 4/05/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1xKdEybIy0Q0hovpFmA9dKKhRbX6MWKVP">Answer Key</a></li>
+</ul></li>
+</ul></li>
+<li>Live WebEx Class (Monday, 3/30/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=15hbolGcJp1LkTom8m6sLKQ5vOJRpOhDg">PP</a>]</li>
+<li>Live WebEx Class (Thursday, 4/02/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1ZIl4NpcIvB2l2EAeaTXgZMQoBwkf2FbV">PP</a>]</li>
+<li>Podcasts
+<ul>
+<li>Podcast 1: <a href="https://www.npr.org/2019/08/14/751234092/episode-616-how-solar-got-cheap">How Solar Got Cheap</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/2019/08/16/751845378/episode-933-find-the-helium">Find The Helium</a></li>
+<li>Podcast 3: <a href="https://www.npr.org/2019/11/15/779924717/episode-952-sperm-banks">Sperm Banks</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/transcripts/714289051">How Much Does This Cow Weigh?</a></li>
+<li>Podcast 5: <a href="https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/10/20181017_pmoney_pmpod453-6760e94c-5c32-43c5-bc4f-85f77c517389.mp3?orgId=1&amp;d=1164&amp;p=510289&amp;story=658312757&amp;t=podcast&amp;e=658312757&amp;siteplayer=true&amp;awCollectionId=510289&amp;awEpisodeId=658312757&amp;dl=1">What Causes What?</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-4052020" class="section level4">
+<h4>Week of 4/05/2020</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1e4ssU2d1oh7peTd9UMist7l-zKvN0WFW">Chapter 20: Aggregate Demand and Aggregate Supply</a></li>
+<li>Live WebEx Class (Monday, 4/06/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1ZIl4NpcIvB2l2EAeaTXgZMQoBwkf2FbV">PP</a>]</li>
+<li>Podcasts
+<ul>
+<li>Podcast 1: <a href="https://edge2.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/12/20181205_pmoney_pmpod533rerun-e314b138-f93f-4750-9419-81dc322a76fa.mp3/20181205_pmoney_pmpod533rerun-e314b138-f93f-4750-9419-81dc322a76fa.mp3_dc0922aeabf0501dd02ab6df55be1854_19254045.mp3?orgId=1&amp;d=1260&amp;p=510289&amp;story=673940083&amp;t=podcast&amp;e=673940083&amp;siteplayer=true&amp;awCollectionId=510289&amp;awEpisodeId=673940083&amp;dl=1&amp;hash_redirect=1&amp;x-total-bytes=19254045&amp;x-ais-classified=download&amp;listeningSessionID=0CD_382_73__1de22ec5a2858a2feb7c490c980aba942f77c579">Why Car Safety Is A Trade Barrier</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/transcripts/652001941">Modern Monetary Theory</a></li>
+<li>Podcast 3: <a href="https://www.npr.org/transcripts/643471690">Big Government Cheese</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/transcripts/630937569">The New Socialists</a></li>
+<li>Podcast 5: <a href="https://www.npr.org/transcripts/609887444">Fixing Chicken</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-4122020" class="section level4">
+<h4>Week of 4/12/2020</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1e4ssU2d1oh7peTd9UMist7l-zKvN0WFW">Chapter 20: Aggregate Demand and Aggregate Supply</a></li>
+<li>Homework
+<ul>
+<li><a href="https://drive.google.com/open?id=1HxgU4SAnYqRM11lBT-oTgmFCIhirbEnF">PowerPoint Quiz</a> [due 4/19/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1RTqXtDxSAQomoj0zO5JPu-OXA_krIffo">Answer Key</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1YKRHb53mqgtooM3aMl3PwBFAsT3TU_9H">Homework Assignment</a> [due 4/19/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1kUopS4CHTqc97B6alL9A-O2qZwNIpC6r">Answer Key</a> <!--        + [Submit Here](https://forms.gle/W72jukWWtSpBcArN9) --></li>
+</ul></li>
+</ul></li>
+<li>Sign up for MPSG game</li>
+<li>Live WebEx Class (Thursday, 4/16/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1ZIl4NpcIvB2l2EAeaTXgZMQoBwkf2FbV">PP1</a>, <a href="https://drive.google.com/open?id=1Sse4coSy6XsoPmaOEZ1R_4MYwq3ZB_eW">PP2</a>]</li>
+</ul>
+</div>
+<div id="week-of-4192020" class="section level4">
+<h4>Week of 4/19/2020</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1laWE_N9EYAwVQO9HmRXHjhhPrzl1e-3h">Chapter 21: The Influence of Monetary and Fiscal Policy on Aggregate Demand</a></li>
+<li><a href="https://valentinas500.shinyapps.io/MPSG/">Monetary and Fiscal Policy Simulation Game</a></li>
+<li>Homework
+<ul>
+<li><a href="https://drive.google.com/open?id=1WcFMqMpvYGqt6vUVemU_rTidAejOLpqp">PowerPoint Quiz</a> [due 4/26/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=13CHY6TOSUgC4ZeRC6NN-uJ_s75NHUEnU">Answer Key</a></li>
+</ul></li>
+<li><a href="https://drive.google.com/open?id=1eNybeoaFGA3xlvvA0UfzAvGHuacaC0lv">Homework Assignment</a> [due 4/26/2020]
+<ul>
+<li><a href="https://drive.google.com/open?id=1b-X9IBTW0BxdALAnTbdAhZooy7nBH0uR">Answer Key</a> <!--      + [Submit Here](https://forms.gle/dwMDCfT1BkwuQtnRA) --></li>
+</ul></li>
+</ul></li>
+<li>Live WebEx Class (Monday, 4/20/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1Sse4coSy6XsoPmaOEZ1R_4MYwq3ZB_eW">PP</a>]</li>
+<li>Live WebEx Class (Thursday, 4/23/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1Aqpe7zZe-jGe48ZvLaylfYPhoYGlEUan">PP</a>]
+<ul>
+<li>Podcast 1: <a href="https://www.npr.org/transcripts/632442064">The Poop Cartel</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/transcripts/628132840">LeBron James Is Still Underpaid</a></li>
+<li>Podcast 3: <a href="https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/06/20180622_pmoney_pmpod682rerunv2-ba8abab6-cced-44c4-8b32-d1ad16630a39.mp3?orgId=1&amp;d=1267&amp;p=510289&amp;story=622645172&amp;t=podcast&amp;e=622645172&amp;siteplayer=true&amp;awCollectionId=510289&amp;awEpisodeId=622645172&amp;dl=1">When CEO Pay Exploded</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/transcripts/613776379">The Taxi King</a></li>
+<li>Podcast 5: <a href="https://www.npr.org/transcripts/731987365">The Planet Money Workout</a>
+<ul>
+<li><a href="https://forms.gle/X7zpTpoFTK3P7E3L9">Respond</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="week-of-4262020" class="section level4">
+<h4>Week of 4/26/2020</h4>
+<ul>
+<li><a href="https://drive.google.com/open?id=1BQXXf-H4mQhOd-jSlDL2H3vDkdwHhxHO">Chapter 23: Six Debates over Macroeconomic Policy</a></li>
+<li><a href="https://valentinas500.shinyapps.io/MPSG/">Monetary and Fiscal Policy Simulation Game</a></li>
+<li>Presentations</li>
+<li><a href="https://drive.google.com/file/d/15Oq0KCocZ7tqGjOg3w7Oa39AGpgBHLr8/view?usp=sharing">Practice Final Exam</a></li>
+<li>Live WebEx Class (Monday, 4/27/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1Aqpe7zZe-jGe48ZvLaylfYPhoYGlEUan">PP</a>]</li>
+<li>Live WebEx Class (Thursday, 4/30/2020, 5.30pm (GMT-4)) [see <a href="https://drive.google.com/open?id=1Aqpe7zZe-jGe48ZvLaylfYPhoYGlEUan">PP</a>]</li>
+<li>Podcasts
+<ul>
+<li>Podcast 1: <a href="https://www.npr.org/transcripts/776045835">How Stories and Psychology Shape Our Economic Lives</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/transcripts/774067928">Bullsh*t Jobs</a></li>
+<li>Podcast 3: <a href="https://www.npr.org/transcripts/736942500">I Buy, Therefore I Am: How Brands Become Part Of Who We Are</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/transcripts/715145723">Why No One Feels Rich: The Psychology Of Inequality</a></li>
+<li>Podcast 5: <a href="https://www.npr.org/transcripts/698563807">For Sale, By Owner: The Psychology Of Repugnant Transactions</a></li>
+<li>Podcast 6: <a href="https://www.npr.org/transcripts/697641324">Better Than Cash: How Awards Can Shape Our Behavior</a>
+<ul>
+<li><a href="https://forms.gle/54GqMMCcA5prqwKo8">Respond</a></li>
+</ul></li>
+</ul></li>
+<li>More Podcasts
+<ul>
+<li>Podcast 1: <a href="https://www.npr.org/2019/05/31/728723289/episode-917-quit-threat">Quit Threat!</a></li>
+<li>Podcast 2: <a href="https://www.npr.org/2019/05/17/724462179/episode-913-counting-the-homeless">Counting The Homeless</a></li>
+<li>Podcast 3: <a href="https://www.npr.org/transcripts/717664332">Dollar Stores Vs Lettuce</a></li>
+<li>Podcast 4: <a href="https://www.npr.org/transcripts/700909552">The Starbury</a></li>
+<li>Podcast 5: <a href="https://www.npr.org/transcripts/610518433">The Land Of Duty Free</a>
+<ul>
+<li><a href="https://forms.gle/iGW5f4ECAmYowSkj6">Respond</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="mpsg-game-schedule" class="section level4">
+<h4>MPSG Game Schedule</h4>
+<ul>
+<li><a href="https://valentinas500.shinyapps.io/MPSG/">Monetary and Fiscal Policy Simulation Game</a>
+<ul>
+<li>Decision 1: Tuesday, April 21</li>
+<li>Decision 2: Thursday, April 23</li>
+<li>Decision 3: Saturday, April 25</li>
+<li>Decision 4: Monday, April 27</li>
+<li>Decision 5: Wednesday, April 29</li>
+<li>Decision 6: Friday, May 1</li>
+</ul></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

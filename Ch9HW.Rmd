@@ -1,0 +1,32 @@
+---
+title: "Chapter 9 Homework Problems"
+output: pdf_document
+---
+
+#### Computer Exercise C3
+
+Use the data from **jtrain** for this exercise.\
+1. Consider the simple regression model
+$$log(scrap) = b0 + b1*grant + u$$
+where scrap is the firm scrap rate and grant is a dummy variable indicating whether a firm received a job training grant. Can you think of some reasons why the unobserved factors in u might be correlated with grant?\
+2. Estimate the simple regression model using the data for 1988. (You should have 54 observations.) Does receiving a job training grant significantly lower a firm's scrap rate?\
+3. Now, add as an explanatory variable $log(scrap87)$. How does this change the estimated effect of grant? Interpret the coefficient on grant. Is it statistically significant at the 5% level against the one-sided alternative $H_1: b_1 < 0$?\
+4. Test the null hypothesis that the parameter on $log(scrap87)$ is one against the two-sided alternative. Report the p-value for the test. \
+5. Repeat parts 3 and 4, using heteroskedasticity-robust standard errors, and briefly discuss any notable differences.
+
+#### Computer Exercise C4
+Use the data for the year 1990 in **infmrt** for this exercise.\
+$$infmort = b0 + b1*log(pcinc) + b2*log(physic) + b3*log(popul) + u$$
+1. Reestimate the equation above (equation 9.43), but now include a dummy variable for the observation on the District of Columbia (called $DC$). Interpret the coefficient on DC and comment on its size and significance.\
+2. Compare the estimates and standard errors from part 1 with those from equation (9.44). What do you conclude about including a dummy variable for a single observation?
+
+#### Computer Exercise C13
+
+Use the data in **ceosal2** to answer this question.\
+1. Estimate the model
+$$lsalary = b0 + b1*lsales + b2*lmktval + b3*ceoten + b4*ceoten^2 + u$$
+by OLS using all of the observations, where $lsalary$, $lsales$, and $lmktval$ are all natural logarithms. Report the results in the usual form with the usual OLS standard errors. (You may verify that the heteroskedasticity-robust standard errors are similar.)\
+2. In the regression from part 1 obtain the studentized residuals; call these $stri$. How many studentized residuals are above 1.96 in absolute value? If the studentized residuals were independent draws from a standard normal distribution, about how many would you expect to be above two in absolute value with 177 draws?\
+3. Reestimate the equation in part 1 by OLS using only the observations with $|stri| \leq 1$. 96. How do the coefficients compare with those in part 1?
+
+

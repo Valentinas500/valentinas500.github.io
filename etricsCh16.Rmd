@@ -1,0 +1,255 @@
+---
+title: "Introductory Econometrics. Chapter 16"
+---
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+
+##### Chapter 16: Simultaneous Equations Models
+
+While in the previous chapters we discussed the solution to endogeneity arising from omitted variables and mismeasurement, we have not touched upon the issue of simultaneity. Simultaneity is a situation in which explanatory variables are jointly determined with the dependent variable. In this situation, we use simultaneous equations models. The most popular method to estimate simulation equations models is the method of instrumental variables.
+
+
+As the name suggests a simultaneous equations models have multiple equations or a system of equations. Each equation in the system should have a cateris paribus interpretation.
+
+
+The observed data only gives us only the equilibrium outcomes. Thus, when building a simultaneous equations model, we need to use counterfactual reasoning.
+
+
+The classic example of simultaneous equation model is a supply and demand model for a particular good or service. SEM or simultaneous equation model can also be used to study the effect of law enforcement size on the murder rate. A simple cross-sectional model to address this issue can be stated as
+
+$$
+murder.pc=\alpha_1 (police.pc)+\beta_{10}+\beta_{11}(inc.pc)+u_1
+$$
+
+Here, $murder.pc$ is the murder rate in the city per capita, $police.pc$ is the number of police officers per capita, and $inc.pc$ is the income per capita.
+
+
+Such model alone has a major issue. Police force size depends on the crime rate. There is a two-way or simultaneous relationship between crime and the size of police force. To address this issue, we can consider another relationship:
+
+$$
+pol.pc=\alpha_2 (murder.pc) +\beta_{20} (Other) + u_2
+$$
+
+You can now estimate the effects of additional police force on the murder rates. [We hold of the actual estimation until later.] We call such equations structural equations as we postulate them using economic theory. In this model, $murder.pc$ and $police.pc$ are endogenous (determined within the model) while $inc.pc$ and $Other$ are exogenous or determined outside the model.
+
+
+First, we need to understand a simultaneity bias in OLS when dealing with simultaneous equations models. Consider a two-equation structural model (we supress the intercept for simplicity).
+
+$$
+y_1=\alpha_1 y_2 + \beta_1 z_1 + u_1
+$$
+$$
+y_2=\alpha_2 y_1 + \beta_2 z_2 + u_2
+$$
+
+We can solve the model using substitution.
+
+$$
+y_2=\alpha_2 y_1 + \beta_2 z_2 + u_2 
+$$
+$$
+y_2= \alpha_2 (\alpha_1 y_2 + \beta_1 z_1 + u_1) + \beta_2 z_2 + u_2
+$$
+Rearranging yields
+$$
+(1-\alpha_2 \alpha_1)y_2= \alpha_2 \beta_1 z_1 + \beta_2 z_2 + \alpha_2 u_1 + u_2
+$$
+
+Assuming that $\alpha_2 \alpha_1 \neq 0$, we can solve for $y_2$. Dividing by $(1-\alpha_2 \alpha_1)$ gives us
+$$
+y_2= \frac{\alpha_2 \beta_1}{(1-\alpha_2 \alpha_1)} z_1 + \frac{\beta_2}{(1-\alpha_2 \alpha_1)} z_2 + \frac{\alpha_2 u_1 + u_2}{(1-\alpha_2 \alpha_1)}  
+$$
+
+This we call a reduced form equation for $y_2$; $\frac{\alpha_2 \beta_1}{(1-\alpha_2 \alpha_1)}$ and $\frac{\beta_2}{(1-\alpha_2 \alpha_1)}$ -- reduced form parameters. The reduced form error is $\frac{\alpha_2 u_1 + u_2}{(1-\alpha_2 \alpha_1)}$. Since $u_1$ and $u_2$ are ucorrelated with $z_1$ and $z_2$, the reduced form error is also uncorrelated with $z_1$ and $z_2$ and thus we estimate the regression by OLS.
+
+
+Because $z_1$ and $u_1$ are uncorrelated by assumption, the issue is whether $y_2$ and $u_1$ are uncorrelated. When $y_2$ is correlated with $u_1$ because of simultaneity, we say that OLS suffers from simultaneity bias. In simple models you may be able to determine the direction of the bias but in more complex models (with multiple explanatory variables) this can be complicated.
+
+
+As with endogeineity due to mismeasurement or omitted variables, 2SLS can be applied to treat simultaneity in simultaneous equation models.
+
+
+The key condition in OLS is the that each explanatory variable is uncorrelated with the error term. While this condition may not hold with simultaneous equation models, we can still identify or consistently estimate the parameters in the model if we have some instrumental variables.
+
+
+Consider a simple demand ($q_d$) and supply ($q_s$) model.
+$$ q_s=\alpha_1 p + \beta_1 z_1 + u_1$$
+$$ q_d=\alpha_2 p + u_2$$
+
+We have a variable $z_1$ that shifts the supply equation but does not affect the demand. As we vary $z_1$, supply function shifts but the demand function does not, thus the observed price and quantity outcomes must be on the same demand function. Varying $z_1$ alows us to find the demand function. Then the supply function can be identified. In general, SEM must satisfy the order condition to be identified. The order condition states that at least one exogenous variable is excluded from an identified equation.
+
+
+Consider a labor supply model for married working women. The hours a woman works is a function of wage and other factors (supply function). The demand function is the wage offer to the woman which depends on her education and experience. See the two structural equations below.
+
+$$hours = \alpha_1 log(wage) + \beta_{10} + \beta_{11}educ + \beta_{12}age + \beta_{13}kidslt6 + \beta_{14}nwifeinc + u_1$$
+
+
+$$log(wage) = \alpha_2 hours + \beta_{20} + \beta_{21}educ + \beta_{22}exper + \beta_{23} exper^2 + u_2$$
+
+Using substitution we can derive the following.
+
+$$log(wage) = \alpha_2 (\alpha_1 log(wage) + \beta_{10} + \beta_{11}educ + \beta_{12}age + \beta_{13}kidslt6 + \beta_{14}nwifeinc + u_1) + \\ \beta_{20} + \beta_{21}educ + \beta_{22}exper + \beta_{23} exper^2 + u_2$$
+
+Solving further yields the following.
+
+$$
+log(wage) = \frac{\beta_{20}+\alpha_2 \beta_{10}}{1-\alpha_1 \alpha_2} +
+\frac{\alpha_2 \beta_{11} +\beta_{21}}{1-\alpha_1 \alpha_2} educ +
+\frac{\alpha_2 \beta_{12}}{1-\alpha_1 \alpha_2} age +
+\frac{\alpha_2 \beta_{13}}{1-\alpha_1 \alpha_2} kidslt6 +
+\frac{\alpha_2 \beta_{14}}{1-\alpha_1 \alpha_2} nwifeinc + \\
+\frac{\beta_{22}}{1-\alpha_1 \alpha_2} exper +
+\frac{\beta_{23}}{1-\alpha_1 \alpha_2} exper^2 +
+\frac{\alpha_2 u_1 + u_2}{1-\alpha_1 \alpha_2} 
+$$
+For brevity, we can simply write the following.
+
+$$
+log(wage) = \pi_{20} +
+\pi_{21} educ +
+\pi_{22} age +
+\pi_{23} kidslt6 +
+\pi_{24} nwifeinc + \\
+\pi_{25} exper +
+\pi_{26} exper^2 +
+v_2
+$$
+
+The simultaneous equations model above can be estimated by two stage least squares using the R code below.
+
+```{r, warning=FALSE, message=FALSE,echo=TRUE}
+library(systemfit)
+data(mroz, package='wooldridge')
+
+eq.hrs   = hours    ~ log(wage)+educ+age+kidslt6+nwifeinc
+eq.wage  = log(wage)~ hours    +educ+exper+I(exper^2)
+eq.system= list(eq.hrs, eq.wage)
+instrum  = ~educ+age+kidslt6+nwifeinc+exper+I(exper^2)
+summary(systemfit(eq.system,inst=instrum,
+                  data=subset(mroz,!is.na(wage)),
+                  method="2SLS"))
+```
+
+
+As we can see, that all else held constant, the labor supply slopes upward: the coefficient for wage is positive. We can compute labor supply elasticity. Elasticity measures the percentage change in y (hours) due to percentage change in x (wages).  
+
+The estimated coefficient for $log(wage)$, $\alpha_1$
+in the labor supply function (function that determines the hours), is 
+approximately 1640. 
+$$
+\Delta \widehat{hours} \approx \frac{1640}{100} (\% \Delta wage)
+$$
+Multiplying both sides by $100/hours$ yields the following.
+$$
+100 \frac{\Delta \widehat{hours}}{hours} \approx \frac{100}{hours} \frac{1640}{100} (\% \Delta wage)
+$$
+$$
+\% \Delta \widehat{hours} \approx \frac{1640}{hours} (\% \Delta wage)
+$$
+At the average hours worked ($1,303$), the estimated elasticity is $1,640/ 1,303 \approx 1.26$ which is relatively large.
+
+Looking at the wage equation, we now find that hours worked is not significant (what you find running a multiple regresion model estimtaed by OLS) so the endogeneity issue was addressed.
+
+See the results of equations estimated individually by OLS by running the code below.
+```{r, eval=FALSE, warning=FALSE, message=FALSE, echo=TRUE}
+data(mroz, package='wooldridge')
+eq.hrs   = hours    ~ log(wage)+educ+age+kidslt6+nwifeinc
+eq.wage  = log(wage)~ hours    +educ+exper+I(exper^2)
+summary(lm(eq.hrs,data=subset(mroz,!is.na(wage))))
+summary(lm(eq.wage,data=subset(mroz,!is.na(wage)))) 
+```
+ 
+
+[David Romer (1993)](https://eml.berkeley.edu/~dromer/papers/DRomer_QJE1993.pdf) proposed that more open economies should have lower rates of inflation, all else the same. The model he suggests can be stated as a symultaneous equations model:
+$$
+inf=\beta_{10}+\alpha_{1}open+\beta_{11}log(pcinc)+u_1
+$$
+$$
+open=\beta_{20}+\alpha_{2}+\beta_{21}+\beta_{22}log(land)+u_2
+$$
+Here, $pcinc$ is per capita income, $open$ is the share of imports relative to GDP and $land$ is the area of a country. Runing the code below, we find that open economies have lower rates of inflation. The result is significant at 1\% level. 
+
+```{r, warning=FALSE, message=FALSE,echo=TRUE}
+data(openness, package='wooldridge')
+
+#A system of equations
+eq.1   = open~inf+log(pcinc)+log(land)
+eq.2  = inf~open+log(pcinc)
+eq.system= list(eq.1, eq.2)
+instrum  = ~log(land)+log(pcinc)
+summary(systemfit(eq.system,inst=instrum,
+                  data=openness,
+                  method="2SLS"))
+
+#Alternatively, can run as a standard IV model
+#rfreg= lm(open~log(pcinc)+log(land),data=openness) #First stage
+#ssreg= lm(inf~rfreg$fitted.values+log(pcinc),data=openness) #Second stage
+
+```
+
+
+Permanent Income Hypothesis is a hypothesis about consumer spending. It states that people will spend consistent not with their current income but with their expected long-term (or permanent) income. The main equation can be stated as
+$$
+gc_t = \beta_0 + \beta_1 gy_t + \beta_2 r3_t +u_t
+$$
+Here, $ gc_t$ is annual growth in real per capita consumption, measured as change in log of consumption, $gy_t$ is growth in real disposable income, $r3_t$ is the ex post real interest rate as measured by the return on three-month T-bill rates, or $r3_t = i3_t - inf_t$. Traditionally, we think of incomes and interest rates as jointly determined.
+The full model can be stated as 3 equation system.
+$$
+gc_t = \beta_{10} + \beta_{11} gy_t + \beta_{12} r3_t +u_t
+$$
+$$
+gy_t = \beta_{20} + \beta_{21} gc_{t-1} + \beta_{22} gy_{t-1} + \beta_{23} r3_{t-1}
+$$
+$$
+r_t = \beta_{30} + \beta_{31} gc_{t-1} + \beta_{32} gy_{t-1} + \beta_{33} r3_{t-1}
+$$
+
+```{r, warning=FALSE, message=FALSE,echo=TRUE}
+data(consump, package='wooldridge')
+
+#A system of equations
+eq.1   = gy~gc_1+gy_1+r3_1
+eq.2   = r3~gc_1+gy_1+r3_1
+eq.3  = gc~gy+r3
+eq.system= list(eq.1, eq.2, eq.3)
+instrum  = ~gc_1+gy_1+r3_1
+summary(systemfit(eq.system,inst=instrum,
+                  data=consump,
+                  method="2SLS"))
+```
+Since we find that the the estimated coefficient for $gy_t$ on $gc_t$ equation is positive and statistically significant, we must reject the permanent income hypothesis. Higher current disposable income does increase consumtpion.
+
+
+**Homework Problems**
+
+<p class="comment"> Computer Exercise C1.\
+Use data set **smoke** from package **wooldridge** for this exercise.\
+1. A model to estimate the effects of smoking on annual income (perhaps through lost work days due to illness, or productivity effects) is
+$$log(income) = \beta_0 + \beta_1*cigs + \beta_2*educ +\beta_3*age+\beta_4*age^2 + u.$$
+where *cigs* is number of cigarettes smoked per day, on average. How do you interpret $\beta_1$? \
+2. To reflect the fact that cigarette consumption might be jointly determined with income, a demand for cigarettes equation is
+$$ cigs = \gamma_0 + \gamma_1* *log(income) + \gamma_2*educ + \gamma_3*age + \gamma_4*age^2 + \gamma_5*log(cigpric) + \gamma_6*restaurn + u_2 $$ 
+where *cigpric* is the price of a pack of cigarettes (in cents) and *restaurn* is a binary variable equal to unity if the person lives in a state with restaurant smoking restrictions. Assuming these are exogenous to the individual, what signs would you expect for $\gamma_5$ and $\gamma_6$? \
+3. Under what assumption is the income equation from part 1 identified? \
+4. Estimate the income equation by OLS and discuss the estimate of $\beta_1$. \
+5. Estimate the reduced form for *cigs*. (Recall that this entails regressing *cigs* on all exogenous variables.) Are *log(cigpric)* and *restaurn* significant in the reduced form? \
+6. Now, estimate the income equation by 2SLS. Discuss how the estimate of \beta_1 compares with the OLS estimate. \
+7. Do you think that cigarette prices and restaurant smoking restrictions are exogenous in the income equation? 
+</p>
+
+
+**References**
+
+Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.
+
+Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss, CreateSpace.
+
+---

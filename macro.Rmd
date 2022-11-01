@@ -1,0 +1,178 @@
+---
+title: "Macroeconomics"
+---
+
+Basic Macroeconomics, ECON 1100, Spring 2020 at Fordham University
+
+Based on Mankiw, N. G. (2020). Principles of Macroeconomics. Cengage Learning.
+
+- [Syllabus](https://drive.google.com/open?id=1h07efboB522B4A_VnzX3pr4E4Sg90m_g)
+
+If you have any questions, please email me at vrudys@fordham.edu
+
+For immediate questions on homework or assignments, you can message me or call me on Skype (ID: valentinas500) 
+
+#### January
+
+- [Chapter 1: Ten Principles of Economics](https://drive.google.com/open?id=1yPeAAXm5fG4oPIDdYOHWkIr_Y2zan3QO) ([Quiz](https://drive.google.com/open?id=1Xaamk4S9bh4HYxuBV96fmoeCiqG2dvz-), [AK](https://drive.google.com/open?id=1COZBPTlDDhr3slAb14_Et_hBDM8YCHGC))
+- [Chapter 2: Thinking Link an Economist](https://drive.google.com/open?id=1tQMZIkQ7miibT2LDDoTZSkaZLiELzELH) ([Quiz](https://drive.google.com/open?id=1sIcgKnszi_aakkRfT45lPpcpIAu9WmBu), [AK](https://drive.google.com/open?id=1bhEYlDNnKdxmD3E7bVKa334-ntxu_ITe))
+    + [Extra Credit Assignment 1](https://drive.google.com/open?id=1Hjxc56rxLuTaof9952tu_z4MS29HAVXs)
+- [Chapter 3: Interdependence and Gains from Trade](https://drive.google.com/open?id=101joQYFtwZyoeIbYIjinHaKsJG0WN5Pn) ([Quiz](https://drive.google.com/open?id=14gmAN0Q_1nQGG5Y6MYICeid_QcMGf_DV), [AK](https://drive.google.com/open?id=1qVgk5hl_9ZyyPz7wdfB8W-8lVrYeEXj1))
+- [Chapter 4: The Market Forces of Supply and Demand](https://drive.google.com/open?id=1q9Sg5B6-tSKuB18gdncnUMSHOc-LCxT5) ([Quiz](https://drive.google.com/open?id=1b1ROclhcPQWFsIsrrbc4hf9KKgbT1iJK), [AK](https://drive.google.com/open?id=1-9xx73n167rWOue6i7qgkAeUtrW0qHxY))
+    + [Practice Problems](https://drive.google.com/open?id=1SGd3chj6Kduz7zdHlQbpNkhtpYe3cPSF)
+- [Chapter 10: Measuring a Nation's Income](https://drive.google.com/open?id=1xS6DJfZCcmbQsysGxDuJHokpH5mxLJdB) ([Quiz 1](https://drive.google.com/open?id=1tou0f8un7jDnO5arsPF5qzrSDVxwvpL2), [Quiz 2](https://drive.google.com/open?id=1g8Ptq4VhfLUGpqsooUfBECfN-wBLwEjc))
+- [GDP by Country](https://databank.worldbank.org/indicator/NY.GDP.MKTP.CD/1ff4a498/Popular-Indicators?savedlg=1#)
+- [Chapter 11: Measuring the Cost of Living](https://drive.google.com/open?id=1kDEoBSsLbiYMcHIZikoRm5P1xRUfta6X) ([Quiz 1](https://drive.google.com/open?id=146QYcL0SanMmYgs2jLVcVtc4xv_jmWiJ), [Quiz 2](https://drive.google.com/open?id=1cRfFYb5auGkM-h4_y_uvgfvNDCMxpbn3))
+    + [CPI for All Urban Consumers: All Items](https://fred.stlouisfed.org/series/CPIAUCSL)
+- [Practice Midterm Exam 1](https://drive.google.com/open?id=16SaeEtKziJOu1UFp4ZwYJwOfmCCmjCSa)
+- [More Practice Problems](https://drive.google.com/open?id=1PjL-wtua0NngAbTyarMUeNtQEJca3g4z) 
+
+#### February
+
+- [Chapter 12: Production and Growth](https://drive.google.com/open?id=1PNAddWGJCua4jcH0_De3v-opbU84NX93) ([Quiz 1](https://drive.google.com/open?id=1-TMtAHtXVzRyJTVXT2NCAVCVWMjqUVZ1), [AK](https://drive.google.com/open?id=1IjOItsyQzsuYl-adtGvac41pW9E-LJuf))
+- [Chapter 13: Saving, Investment, and the Financial System](https://drive.google.com/open?id=1NpGGGULx3SNLHzUR64Z1QgAyHoHzZ-ug) ([Quiz 1](https://drive.google.com/open?id=14ud5Ds66q3BnsJY_UbKfjYPGAIdvphEQ), [AK](https://drive.google.com/open?id=1Nkqs7dol2n9AY7C9FLOdS9kTmEBg1wZ8))
+- [Chapter 14: Basic Tools of Finance](https://drive.google.com/open?id=1dA_3eivcPfSprNVe-qExSfPVVD9Xf1gb) ([Quiz 1](https://drive.google.com/open?id=1gTwAbQnDCTm-lL4fx1UibRgqRCkdlKIM), [AK](https://drive.google.com/open?id=1VPhCEMDrM1db2xhU8ls4_0spBOJwP6Op))
+- [Chapter 15: Unemployment](https://drive.google.com/open?id=1Mq0MCabdpKc31ny0PApYsTetk7YB8M8w) ([Quiz 1](https://drive.google.com/open?id=1OlYdsKeSrUUiCoqM4UivqKFmqu9Hqz3n), [AK](https://drive.google.com/open?id=1oxx-u0Sx5FrZ0dYnLM0gBtMK2ZaxC2ia))
+    + Understanding Labor Force and Unemployment Developments in the US
+- [Practice Midterm Exam 2](https://drive.google.com/open?id=1GTVpnAHpizK4PGAWcCDvq8mKk5BkQ7DS)
+
+#### Week of 3/08/2020
+
+- Midterm Exam 2
+
+#### Week of 3/15/2020, Spring Break
+
+- [Chapter 16: The Monetary System](https://drive.google.com/open?id=1FSIf5wQxYXxFMpvKKRD7ZpPjowc_-JNv)
+- Homework
+    - [PowerPoint Quiz](https://drive.google.com/open?id=1WS-USVW4TXanPm0ZKiy49_aglj-hdGWP) [optional, due 3/22/2020]
+        + [Answer Key](https://drive.google.com/open?id=1s6pjc0HOnbiym-E5MN1oSx0AFlH1KlSS)
+    - [Homework Assignment](https://drive.google.com/open?id=1pAj8HMvIOc9isCK8ktXW-7jEl3GGztgn) [optional, due 3/22/2020]
+        + [Answer Key](https://drive.google.com/open?id=1n5Zkz4l1IF8jFNxMNItYcqzTt-cMy6dA)
+- Live WebEx Class (Tuesday, 3/17/2020, 4pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1m37tZAWP2UWT5gapzadwQtHtFQt3m7_H)]
+    + Went over fractional reserve banking system and leverage ratio
+- Podcasts
+    - Podcast 1: [Where Dollar Bills Come From](https://www.npr.org/2019/09/04/757617674/episode-371-where-dollar-bills-come-from) 
+    - Podcast 2: [Three Sides Of A Car Loan](https://www.npr.org/2019/11/20/781364732/episode-953-three-sides-of-a-car-loan) 
+    - Podcast 3: [You're Giving Your Boss A Loan](https://www.npr.org/2019/12/13/787996422/episode-957-youre-giving-your-boss-a-loan) 
+    - Podcast 4: [Capitalism In The Courtroom](https://www.npr.org/2019/10/02/766556249/episode-942-capitalism-in-the-courtroom) 
+    - Podcast 5: [Why The Price of Coke Didn't Change For 70 years](https://www.npr.org/2019/05/01/719213730/episode-416-why-the-price-of-coke-didnt-change-for-70-years) 
+        
+
+#### Week of 3/22/2020
+
+- [Chapter 16: The Monetary System](https://drive.google.com/open?id=1FSIf5wQxYXxFMpvKKRD7ZpPjowc_-JNv)
+- [Chapter 17: Money Growth and Inflation](https://drive.google.com/open?id=1niqOtFwGUrBiqRPyECelKrDLcTeLceaP)
+- Homework
+    - [PowerPoint Quiz](https://drive.google.com/open?id=1pWXiLy35hfkfMAQt4hKoNqoz2_UEQoB6) [due 3/29/2020]
+        + [Answer Key](https://drive.google.com/open?id=1qq0MkWxSJla1993PBhvc-w76Vk5Lb8nI) 
+    - [Homework Assignment](https://drive.google.com/open?id=1v2B5508-Aiyvbm4fjbk00RyQpbMLL1fb) [due 3/29/2020]
+        + [Answer Key](https://drive.google.com/open?id=1pCCgIFNgoc0rf5zf3BgKLTu8sBBLd6mU) 
+<!--        + [Submit Here](https://forms.gle/66By2hZxPHPhoYXCA) -->
+- Live WebEx Class (Monday, 3/23/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1OE9BhOL8-AQ-VCASTEWD8oYF570ctCnV)]
+- Live WebEx Class (Thursday, 3/26/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1OE9BhOL8-AQ-VCASTEWD8oYF570ctCnV)]
+- Podcasts
+    - Podcast 1: [Eagles vs Chickens](https://www.npr.org/2019/07/02/738264513/episode-752-eagles-vs-chickens)
+    - Podcast 2: [Deep Learning With the Elephants](https://www.npr.org/2019/08/09/749938354/episode-932-deep-learning-with-the-elephants)
+    - Podcast 3: [A Mob Boss, A Garbage Boat and Why We Recycle](https://www.npr.org/2019/07/09/739893511/episode-925-a-mob-boss-a-garbage-boat-and-why-we-recycle)
+    - Podcast 4: [So, Should We Recycle](https://www.npr.org/2019/07/12/741283641/episode-926-so-should-we-recycle)
+    - Podcast 5: [Trash!](https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/08/20180815_pmoney_pmpod613rerun-da306b74-0d8a-475a-a71f-8a8b6b416161.mp3?orgId=1&d=956&p=510289&story=638926383&t=podcast&e=638926383&siteplayer=true&awCollectionId=510289&awEpisodeId=638926383&dl=1)
+
+
+#### Week of 3/29/2020
+
+- [Chapter 18: Open Economy Macroeconomics: Basic Concepts](https://drive.google.com/open?id=1slwCaJTSyamkA2iJZbYjJFpIWtLhjZ3d)
+- [Chapter 20: Aggregate Demand and Aggregate Supply](https://drive.google.com/open?id=1e4ssU2d1oh7peTd9UMist7l-zKvN0WFW)
+- Homework
+    - [PowerPoint Quiz](https://drive.google.com/open?id=1tJHxtUg0xo1KJYSA6Yt9_BCERy88k4xf) [due 4/05/2020]
+        + [Answer Key](https://drive.google.com/open?id=1-Ya9gtuPytSERt1Ajhsa1F-rdSgfTsqM)
+    - [Homework Assignment](https://drive.google.com/open?id=1gEjMe-b-WT5ZNpOSLMF-lc-9EeNIg5zp) [due 4/05/2020]
+        + [Answer Key](https://drive.google.com/open?id=1xKdEybIy0Q0hovpFmA9dKKhRbX6MWKVP) 
+- Live WebEx Class (Monday, 3/30/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=15hbolGcJp1LkTom8m6sLKQ5vOJRpOhDg)]
+- Live WebEx Class (Thursday, 4/02/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1ZIl4NpcIvB2l2EAeaTXgZMQoBwkf2FbV)]
+- Podcasts
+    - Podcast 1: [How Solar Got Cheap](https://www.npr.org/2019/08/14/751234092/episode-616-how-solar-got-cheap)
+    - Podcast 2: [Find The Helium](https://www.npr.org/2019/08/16/751845378/episode-933-find-the-helium)
+    - Podcast 3: [Sperm Banks](https://www.npr.org/2019/11/15/779924717/episode-952-sperm-banks)
+    - Podcast 4: [How Much Does This Cow Weigh?](https://www.npr.org/transcripts/714289051)
+    - Podcast 5: [What Causes What?](https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/10/20181017_pmoney_pmpod453-6760e94c-5c32-43c5-bc4f-85f77c517389.mp3?orgId=1&d=1164&p=510289&story=658312757&t=podcast&e=658312757&siteplayer=true&awCollectionId=510289&awEpisodeId=658312757&dl=1)
+
+
+#### Week of 4/05/2020
+
+- [Chapter 20: Aggregate Demand and Aggregate Supply](https://drive.google.com/open?id=1e4ssU2d1oh7peTd9UMist7l-zKvN0WFW)
+- Live WebEx Class (Monday, 4/06/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1ZIl4NpcIvB2l2EAeaTXgZMQoBwkf2FbV)]
+- Podcasts
+    - Podcast 1: [Why Car Safety Is A Trade Barrier](https://edge2.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/12/20181205_pmoney_pmpod533rerun-e314b138-f93f-4750-9419-81dc322a76fa.mp3/20181205_pmoney_pmpod533rerun-e314b138-f93f-4750-9419-81dc322a76fa.mp3_dc0922aeabf0501dd02ab6df55be1854_19254045.mp3?orgId=1&d=1260&p=510289&story=673940083&t=podcast&e=673940083&siteplayer=true&awCollectionId=510289&awEpisodeId=673940083&dl=1&hash_redirect=1&x-total-bytes=19254045&x-ais-classified=download&listeningSessionID=0CD_382_73__1de22ec5a2858a2feb7c490c980aba942f77c579) 
+    - Podcast 2: [Modern Monetary Theory](https://www.npr.org/transcripts/652001941) 
+    - Podcast 3: [Big Government Cheese](https://www.npr.org/transcripts/643471690) 
+    - Podcast 4: [The New Socialists](https://www.npr.org/transcripts/630937569) 
+    - Podcast 5: [Fixing Chicken](https://www.npr.org/transcripts/609887444) 
+
+        
+#### Week of 4/12/2020
+
+- [Chapter 20: Aggregate Demand and Aggregate Supply](https://drive.google.com/open?id=1e4ssU2d1oh7peTd9UMist7l-zKvN0WFW)
+- Homework
+    - [PowerPoint Quiz](https://drive.google.com/open?id=1HxgU4SAnYqRM11lBT-oTgmFCIhirbEnF) [due 4/19/2020]
+        + [Answer Key](https://drive.google.com/open?id=1RTqXtDxSAQomoj0zO5JPu-OXA_krIffo)
+    - [Homework Assignment](https://drive.google.com/open?id=1YKRHb53mqgtooM3aMl3PwBFAsT3TU_9H) [due 4/19/2020]
+        + [Answer Key](https://drive.google.com/open?id=1kUopS4CHTqc97B6alL9A-O2qZwNIpC6r)
+<!--        + [Submit Here](https://forms.gle/W72jukWWtSpBcArN9) -->
+- Sign up for MPSG game
+- Live WebEx Class (Thursday, 4/16/2020, 5.30pm (GMT-4)) [see [PP1](https://drive.google.com/open?id=1ZIl4NpcIvB2l2EAeaTXgZMQoBwkf2FbV), [PP2](https://drive.google.com/open?id=1Sse4coSy6XsoPmaOEZ1R_4MYwq3ZB_eW)]
+
+#### Week of 4/19/2020
+
+- [Chapter 21: The Influence of Monetary and Fiscal Policy on Aggregate Demand](https://drive.google.com/open?id=1laWE_N9EYAwVQO9HmRXHjhhPrzl1e-3h)
+- [Monetary and Fiscal Policy Simulation Game](https://valentinas500.shinyapps.io/MPSG/)
+- Homework
+    + [PowerPoint Quiz](https://drive.google.com/open?id=1WcFMqMpvYGqt6vUVemU_rTidAejOLpqp) [due 4/26/2020]
+        + [Answer Key](https://drive.google.com/open?id=13CHY6TOSUgC4ZeRC6NN-uJ_s75NHUEnU) 
+    + [Homework Assignment](https://drive.google.com/open?id=1eNybeoaFGA3xlvvA0UfzAvGHuacaC0lv) [due 4/26/2020]
+        + [Answer Key](https://drive.google.com/open?id=1b-X9IBTW0BxdALAnTbdAhZooy7nBH0uR) 
+<!--      + [Submit Here](https://forms.gle/dwMDCfT1BkwuQtnRA) -->
+- Live WebEx Class (Monday, 4/20/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1Sse4coSy6XsoPmaOEZ1R_4MYwq3ZB_eW)]
+- Live WebEx Class (Thursday, 4/23/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1Aqpe7zZe-jGe48ZvLaylfYPhoYGlEUan)]
+    - Podcast 1: [The Poop Cartel](https://www.npr.org/transcripts/632442064)
+    - Podcast 2: [LeBron James Is Still Underpaid](https://www.npr.org/transcripts/628132840)
+    - Podcast 3: [When CEO Pay Exploded](https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/06/20180622_pmoney_pmpod682rerunv2-ba8abab6-cced-44c4-8b32-d1ad16630a39.mp3?orgId=1&d=1267&p=510289&story=622645172&t=podcast&e=622645172&siteplayer=true&awCollectionId=510289&awEpisodeId=622645172&dl=1)
+    - Podcast 4: [The Taxi King](https://www.npr.org/transcripts/613776379)
+    - Podcast 5: [The Planet Money Workout](https://www.npr.org/transcripts/731987365)
+        + [Respond](https://forms.gle/X7zpTpoFTK3P7E3L9)
+
+
+#### Week of 4/26/2020
+
+- [Chapter 23: Six Debates over Macroeconomic Policy](https://drive.google.com/open?id=1BQXXf-H4mQhOd-jSlDL2H3vDkdwHhxHO)
+- [Monetary and Fiscal Policy Simulation Game](https://valentinas500.shinyapps.io/MPSG/)
+- Presentations
+- [Practice Final Exam](https://drive.google.com/file/d/15Oq0KCocZ7tqGjOg3w7Oa39AGpgBHLr8/view?usp=sharing)
+- Live WebEx Class (Monday, 4/27/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1Aqpe7zZe-jGe48ZvLaylfYPhoYGlEUan)]
+- Live WebEx Class (Thursday, 4/30/2020, 5.30pm (GMT-4)) [see [PP](https://drive.google.com/open?id=1Aqpe7zZe-jGe48ZvLaylfYPhoYGlEUan)]
+- Podcasts
+    - Podcast 1: [How Stories and Psychology Shape Our Economic Lives](https://www.npr.org/transcripts/776045835) 
+    - Podcast 2: [Bullsh*t Jobs](https://www.npr.org/transcripts/774067928)
+    - Podcast 3: [I Buy, Therefore I Am: How Brands Become Part Of Who We Are](https://www.npr.org/transcripts/736942500)
+    - Podcast 4: [Why No One Feels Rich: The Psychology Of Inequality](https://www.npr.org/transcripts/715145723)
+    - Podcast 5: [For Sale, By Owner: The Psychology Of Repugnant Transactions](https://www.npr.org/transcripts/698563807)
+    - Podcast 6: [Better Than Cash: How Awards Can Shape Our Behavior](https://www.npr.org/transcripts/697641324)
+        + [Respond](https://forms.gle/54GqMMCcA5prqwKo8)
+- More Podcasts
+    - Podcast 1: [Quit Threat!](https://www.npr.org/2019/05/31/728723289/episode-917-quit-threat) 
+    - Podcast 2: [Counting The Homeless](https://www.npr.org/2019/05/17/724462179/episode-913-counting-the-homeless)
+    - Podcast 3: [Dollar Stores Vs Lettuce](https://www.npr.org/transcripts/717664332)
+    - Podcast 4: [The Starbury](https://www.npr.org/transcripts/700909552)
+    - Podcast 5: [The Land Of Duty Free](https://www.npr.org/transcripts/610518433)
+        + [Respond](https://forms.gle/iGW5f4ECAmYowSkj6)
+        
+#### MPSG Game Schedule
+- [Monetary and Fiscal Policy Simulation Game](https://valentinas500.shinyapps.io/MPSG/)
+    - Decision 1: Tuesday, April 21
+    - Decision 2: Thursday, April 23
+    - Decision 3: Saturday, April 25
+    - Decision 4: Monday, April 27
+    - Decision 5: Wednesday, April 29
+    - Decision 6: Friday, May 1
+
+
+        

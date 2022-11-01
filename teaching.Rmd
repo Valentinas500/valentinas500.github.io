@@ -1,0 +1,66 @@
+---
+title: "Teaching"
+---
+
+
+\
+
+
+#### Fordham University, Rose Hill Campus
+
+- Introductory Econometrics (ECON 3885). Fall 2019 -- Spring 2020
+  - Class Outline: [Spring 2020](etrics.html)
+  - Student Evaluations: [#1](ECON3885 R01- Introductory Econometrics Rudys [ C$FN]_f24f00ea-1e3c-4d88-8546-c8de06b514afen-US (1).pdf), [#2](ECON3885 R01- Introductory Econometrics Rudys [ C$FN]_eb0b3986-ad00-4ab0-be5c-17dc61f3b7c9en-US (1).pdf)
+
+\vspace{12pt}
+
+- Basic Macroeconomics (ECON 1100). Fall 2018 -- Spring 2020
+  - Class Outline: [Spring 2020](macro.html)
+  - Selected Lesson Plans: [Ch3](Chapter 3 Lesson Plan - Outline.pdf), [Ch11](Chapter 11 Lesson Plan - Outline.pdf)
+  - Student Evaluations: [#1](ECON1100 R09- Basic Macroeconomics Rudys [ C$FN]_84bed932-db60-41b2-a06a-da68d117eb1een-US (1).pdf), [#2](ECON1100 R09- BASIC MACROECONOMICS Rudys [ C$FN]_550782e6-5c7b-4c2b-88c7-b9e508c2bbfcen-US (2).pdf), [#3](ECON1100 R13- BASIC MACROECONOMICS Rudys [ C$FN]_2dd5197a-36db-46dd-825d-834dd6e46692en-US (1).pdf)
+
+<!--Video Lecture Clips: [#1](), [#2]()-->
+
+\
+
+
+#### Monroe College, Bronx Campus
+
+- Macroeconomics (EC 201). Fall 2019 -- Spring 2021
+  - Student Evaluations:  [#1](EC-201-01MACROECONOMICS_ValentinasRudys (6).pdf), [#2](EC-201-02MACROECONOMICS_ValentinasRudys (1).pdf), [#3](EC-201-05MACROECONOMICS_ValentinasRudys (3).pdf), [#4](EC-201-05MACROECONOMICS_ValentinasRudys (6).pdf), [#5](EC-201-54MACROECONOMICS_ValentinasRudys (2).pdf)
+
+\vspace{12pt}
+
+- Money and Banking (FA 304). Fall 2019 -- Spring 2019 
+  - Student Evaluations:  [#1](FA-304-33MONEYANDBANKING_ValentinasRudys.pdf), [2](FA-304-02MONEYANDBANKING_ValentinasRudys.pdf)
+
+\vspace{12pt}
+
+- Microeconomics (EC 203). Spring 2019 -- Spring 2020 
+  - Student Evaluations:  [#1](EC-203-01MICROECONOMICS_ValentinasRudys.pdf), [#2](EC-203-03MICROECONOMICS_ValentinasRudys (4).pdf), [#3](EC-203-03MICROECONOMICS_ValentinasRudys (6).pdf)
+
+
+\
+
+
+#### University of the People, Online
+
+- Macroeconomics. Spring 2018
+  - Student Evaluations:  [#1](https://drive.google.com/file/d/1eyMQEsbo1_hUvwQe1-qeVoUclqhJeH3A/view)
+
+\
+
+#### Original Games
+
+- Microeconomics Business Simulation Game: [Paper](Microeconomics_Simulation_Game.pdf), [Game Link](https://vrudys.com/microsimgame/index.html)
+
+- Macroeconomics Policy Simulation Game: [Paper](Macroeconomics_Simulation_Game.pdf), [Game Link](https://valentinas500.shinyapps.io/MPSG/)
+
+
+\
+
+<!-- 
+> [Provide Annonymous Feedback](https://docs.google.com/forms/d/e/1FAIpQLSdAtAn3hsF1Cfy84sgsYFyeOwRvReJGHzFDDucIKL3EYQyfZA/viewform?usp=pp_url)
+-->
+
+

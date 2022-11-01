@@ -1,0 +1,165 @@
+---
+title: "Introductory Econometrics. Chapter 19"
+---
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+
+##### Chapter 19: Carrying Out an Empirical Project
+
+Research begins with a question. It is important to pose a very specific question that can be answered with data. Knowing precisely what question you want to answer is essential. You can only:
+
+- collect your data if you exactly know your question.
+- know whether you can complete your project in the allotted time if you know whether the necessary data is available.
+- know if your research question is of interest to someone if you can precisely state it and discuss it with your class mates/instructor.
+
+The question that you pose should be within the time and scope limits of your current study plan. Make sure that the data to study that question exists and it is reasonably easy to access.
+
+For example, "I am studying crime rates in the United States" shows that a student probably does not yet know what the actual question is; however, "I am studying the effects of community policing on city crime rates in the United States" is a lot better.
+
+To begin with a student/researcher must find an area of economics or other social science that he or she is interested in. Some of the more popular examples in economics that you may have heard already about are:
+
+- Labor Economics: Explaining wage differentials
+- Public Economics: Effect of taxes on economic activity
+- Education Economics: Effect of spending on school performance
+- Macroeconomics: Effect of investment on GNP growth
+
+Once you decide on the area of economics or finance or other social science, you must do background literature review. A good place to start for economists is database called EconLit accessible through universities' library. Google Scholar is also helpful for searching and tracking literature on your topic.
+
+When thinking about your research project, you should keep some things in mind. Research does not have to be very broad and try to answer universal truths; instead, it can focus on local issues. However, the main point is that research project should add something new. You may:
+
+- Add a new variable whose influence has not been studied before
+- Expand economic questions to include factors from other sciences
+- Study an existing question for more recent data (may be boring)
+- Use a new data set or study a question for a different country
+- Try out new/alternative methods to study an old question
+- Find a completely new question (hard but possible)
+
+All research papers begin with a relevant literature review. It is important to be able to show how your research builds on previous findings or differs from previously published research. Use online search services to systematically search for literature. Keep your notes organized. When searching, think of related topics that may also be relevant. A literature review can be part of the introduction if the research paper is short or a separate section if you want to expand more on how your paper fits in with the literature in the related fields.
+
+Most questions can be addressed using alternative types of data  (pure cross-sections, repeated cross-sections, time series, panels). Deciding on which kind of data to collect depends on numerous factors: question, nature of the analysis, availability of data, 
+
+Many questions can in principle be studied using a single cross-section. However, for a reasonable ceteris paribus analysis one needs enough controls. For example, panel data provides more possibilities for convincing ceteris paribus analyses as one can control for time-invariant unobserved effects (see PSID or Compustat). Panel data for cities, counties, states etc. are often publicly available. Data sets are often available online, in journal archives, or from authors.
+
+For most of the research regarding finance, there is a lot of publicly available information due to open and well-regulated capital and debt markets in the US and around the world.
+
+Some students may want to do a survey. However, a running a successful survey is very complicated. An inexperienced student researcher may unknowingly run into multiple of issues.
+
+Most data is downloadable in one of the specific electronic formats for one of the most popular econometric/statistical software such as SAS, SPSS, STATA, R, EVIEWS and so on. You should take great care when dealing with data and do not be shy to ask for help as it can save hours or even days of your time. Here is a few things to keep note of:
+
+- Keep track of important identifiers such as observational unit and/or the time period.
+- Time series must be ordered according to time period.
+- Panel data are conveniently ordered as blocks of individual data.
+- It is always important to correctly identify and handle missing values.
+- Non-numerical data also have to be handled with great care.
+- Software specific formats often provide good ways of documentation.
+
+When you receive the data, it is usually not ready for econometric analysis just yet. You will need to spend a lot of time inspecting, cleaning and summarizing your data.
+
+- It is extremely important to become familiar with your data set.
+- Even data sets that were used before may contain problems/errors.
+- Look at individual entries/try to understand the structure of your data.
+- Understand how missing values are coded; if they are coded as "999" or "-1", this can be extremely dangerous for your analysis.
+- It is better to use non-numerical values for missing values.
+- Understand the units of measurement of your variables. Know whether your data is real/nominal, seasonally adjusted/unadjusted
+
+A good idea is to run a summary of the variables of interest. See if the mean, max, min, standard deviation of your data are plausible or not. Take care of the implausible values, coding errors and other issues before you move on. When making data transformations (differencing, growth rates) make sure your data is correctly ordered and no wrong operations result. For example, in a panel data set, be aware that the first observation of each cross-sectional unit has no predecessor.
+
+Once you have your data clean and ready to be used for analysis, you need to decide on appropriate econometric methods to use. Ordinary least squares is the most widely used method and often appropriate. However, make sure that the key assumptions are satisfied in your model, and always check for possible problems of omitted variables, self-selection, measurement error, and simultaneity. Acknowledging issues with your research does not make it worse. It just shows that you are aware and trying to address the issues the best you can. Avoiding a discussion like this shows that either researcher is blind to the problems or, even worse, trying to hide possible issues.
+
+Say you chose OLS or 2SLS. If so carefully choose functional form specifications (logs, squares etc.). Make sure to appropriately code and include all relevant variables (for example, 3-digit occupation codes cannot be included directly as the variable is not quantitative; transform such variables to dummies representing categories). Handle ordinal regressors in a similar way (e.g., job satisfaction). For ordinal dependent variables, there are ordered logit/probit models. One can also reduce ordered variables to binary variables if it is necessary. It is a good idea to discuss transformations you want to make with your professor or research supervisor.
+
+Think of secondary complications such as heteroskedasticity. Carry out misspecification tests and think about possible biases. Look at variations of your specification/method and see how sensitive your results are to these changes. Hopefully, results do not change in a substantial way. Are there problems with outliers/influential observations?
+
+Time series regressions may have other specific problems such as:
+
+- levels vs. differences
+- trends and seasonality
+- unit roots and cointegration
+
+If you work with panel data, think of the following key assumptions:
+
+- Random effects: regressors unrelated to individual specific effects
+- Fixed effects: regressors related to individual specific effects
+- The fixed effects assumption is often more convincing
+- Contemporaneous exogeneity: idiosyncratic errors are uncorrelated with the explanatory variables of the same time period
+- Strict exogeneity: idiosyncratic errors are uncorrelated with the explanatory variables of all time periods (often problematic)
+
+Possible methods for panel data:
+- Pooled OLS: random effects assumption, serial correlation of error terms, needs only contemporaneous exogeneity.
+- Random effects estimation: random effects assumption, more efficient than pooled OLS, needs strict exogeneity.
+- Fixed effects estimation: fixed effects assumption, problem with time invariant regressors, needs strict exogeneity.
+- First differencing: similar to fixed effects, good for longer time series.
+
+Having decided on the econometric method, you need to decide on the specific model. Which variables to include? This process of looking for the best model is called specification search. Often, one starts with a general model and drops insignificant variables. If the specification search entails many steps, this is problematic. Our assumptions actually require that the model is only estimated once. If one sequentially estimates a number of models on the same data, the resulting test statistics and p-values cannot be interpreted anymore. This (difficult) problem is often ignored in practice. One should keep the number of specification steps to a minimum.
+
+Once you have the results, you need to carefully combine convincing data analysis with good explanations and clear exposition.
+
+In the introduction:
+
+- State basic objectives and explain why the topic is important.
+- Lay what has been done and how do you add to this?
+- Grab the reader's attention by presenting simple statistics, paradoxical evidence, topical examples, or challenges to common wisdom.
+- May give a short summary of results in the introduction.
+
+In the theoretical (or conceptual) framework section:
+
+- Describe of general approach to answering your research question.
+- Develop/use a formal economic model for this.
+- For example, setting up a utility maximization model of criminal activity clarifies the factors that matter for explaining criminal activity .
+- However, often common economic sense suffices to discuss the main mechanisms and control variables that have to be taken into account.
+- As one is in most cases interested in answering a causal question, a convincing discussion of what variables to control for is essential.
+
+Either in the above section or in a separate section on econometric models and estimation methods:
+
+- Specify the population model you have in mind.
+- Explain your functional form choice.
+- After specifying a population model, discuss estimation methods.
+- Describe how you measure the variables in your population model.
+
+When using OLS: Discuss why exogeneity assumptions hold, and how you deal with heteroskedasticity, serial correlation, and the like.
+
+When using IV/2SLS: Explain why your instrumental variables fulfill the assumptions: 1) exclusion, 2) exogeneity, 3) partial correlation.
+
+When using panel methods: Explain what the unobserved individual specific effects stand for, and how they are removed/accounted for.
+
+Dedicate a section or a subsection for your data:
+
+- Carefully describe the data used in your empirical analysis.
+- Name the sources of your data and how they can be obtained.
+- Time series data and short data sets may be listed in the appendix.
+- If your data is self-collected, include a copy of the questionnaire.
+- Discuss the units of measurement of the variables of interest.
+- Present summary statistics for the variables used in the analysis.
+- For trending variables, growth rates or graphs are more appropriate.
+- Always state how many observations you use for different estimations.
+
+The results section should:
+
+- Present estimated equations, or, if there are too many, present tables.
+- Always include things like R-squared and the number of observations.
+- Are your estimated coefficients statistically significant?
+- Are they economically significant? What is their magnitude?
+- If coefficients do not have the expected signs, this may indicate there  is a specification problem, for example, omitted variables.
+- Relate differences between the results from different methods to the differences in the assumptions underlying these methods.
+
+Finally, in conclusion:
+
+- Summarize main results and conclusions from them
+- Discuss caveats to the conclusions drawn
+- Suggest directions for further research
+
+Make sure to type everything and have your paper double-spaced. Number each equation, table, figure for easy reference, refer other authors by appropriately citing them. When you discuss an equation, only describe the important variables, not all. You may use a shorthand for several other less important variables (controls). It is a good idea to present results either in an equation form or a table. Either way, do not use too many decimal numbers (not too few as well) and make sure it is readable and easy to understand.
+
+**References**
+
+Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.
+
+---

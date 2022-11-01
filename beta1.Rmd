@@ -1,0 +1,39 @@
+---
+title: "Interpreting Slope Coefficient"
+---
+
+## Level-level
+
+$$ \Delta y=\beta_1\Delta x$$
+Rearranging the above equation yields
+$$ \beta_1 = \Delta y / \Delta x$$
+
+$\beta_1$ represents the change in y due to one unit increase in x. For example, if $y=wage$ and $x=YearsInEducation$, then $\beta_1$ represents the change in the wage due to one additional year of schooling.
+
+## Log-level
+
+$$ \Delta log(y)=\beta_1\Delta x$$
+Since $100*\Delta log(y) \approx \% \Delta y$ for small changes in $y$,
+$$ (\% \Delta y) / 100=\beta_1\Delta x$$
+$$ \beta_1 = (\% \Delta y / 100)/(\Delta x) \quad \quad or \quad \quad 100 \beta_1=(\% \Delta y)/(\Delta x) $$
+$100*\beta_1$ represents the percentage change in y due to one unit increase in x. For example, if $y=wage$ and $x=YearsInEducation$, then $100*beta_1$ represents the percentage change in the wage due to one additional year of schooling. If one does not multiply $beta_1$ by 100, one gets the change in the wage measured as a fraction.
+
+## Level-log
+
+$$ \Delta y=\beta_1\Delta log(x) = (\beta_1/100) [100*\Delta log(x)] \approx (\beta_1/100)(\%\Delta x) $$
+where we use the fact that $100*\Delta log(x) \approx \% \Delta x$ for small changes in $x$. So $\beta_1/100$ is the (ceteris paribus) change in $y$ when $x$ increases by one percent.
+
+$$ \beta_1/100 = (\Delta y)/(\%\Delta x) $$
+$\beta_1/100$ represents the change in y due to one percent increase in x. For example, if $y=NumberOfKidsInFamily$ and $x=HouseholdIncome$, then $beta_1/100$ represents the change in the number of kids a family is predicted to have due to one percent increase in houeshold income.
+
+## Log-log
+
+$$ \Delta log(y) = \beta_1 \Delta log(x) $$
+Since $100*\Delta log(y) \approx \% \Delta y$ for small changes in $y$,
+and  $100*\Delta log(x) \approx \% \Delta x$ for small changes in $x$,
+$$ \% \Delta y / 100 = \beta_1 \% \Delta x / 100 $$
+
+Simplification yields the following 
+$$ \% \Delta y = \beta_1 \% \Delta x \quad \quad or \quad \quad \beta_1 = \% \Delta y / \% \Delta x$$
+
+$\beta_1$ represents the percent change in y due to one percent change in x. For example, if $y=CEOSalary$ and $x=FirmSales$, then $\beta_1$ represents the percent change in the salary of the CEO due to percent change in the firm's sales.

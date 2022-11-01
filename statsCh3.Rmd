@@ -1,0 +1,192 @@
+---
+title: "Statistics for Business & Economics"
+output: pdf_document
+---
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+
+### Chapter 3: Descriptive Statistics: Numerical Measures
+
+***
+
+**Sample statistics** are measures are computed for data from a sample.
+
+**Population parameters** are measures are computed for data from a population.
+
+**Point estimator** is a sample statistic of the corresponding population parameters.
+
+***
+
+#### Measures of Location
+
+Perhaps the most important measure of location is the **mean**, or average value, for a variable. The mean provides a measure of central location for the data.
+$$
+\text{Sample mean: } \bar x = \frac{\sum x_i}{n} = \frac{x_1+x_2+x_3+...+x_n}{n} 
+$$
+
+$$
+\text{Population mean: } \mu = \frac{\sum x_i}{N} = \frac{x_1+x_2+x_3+...+x_n}{N} 
+$$
+
+**Weighted mean** is a mean obtained by assigning each observation a weight that reflects its importance.
+$$
+\text{Weighted mean: } \bar x = \frac{\sum w_i x_i}{\sum w_i} = \frac{w_1x_1+w_2x_2+w_3x_3+...+w_nx_n}{w_1+w_2+w_3+...+w_n} 
+$$
+**Median** is also a measure of central location provided by the value in the middle when the data are arranged in ascending order. When the number of observations is an even number and there is no single middle value, we use the average of the two middle observations.
+
+When data consists extreme values, it is better to use the median, or a **trimmed mean** (mean for data that excludes some highest and lowest observations).
+
+The **geometric mean** is a measure of location that is calculated by finding the nth root of the product of n values.
+
+$$
+\text{Geometric mean: } \bar x_g = \sqrt[n]{(x_1)(x_2)(x_3)...(x_n)}=[(x_1)(x_2)(x_3)...(x_n)]^{1/n}
+$$
+
+**Mode** is a measure of location that shows the value that occurs with greatest frequency. Situations can arise for which the greatest frequency occurs at two or more different values. In these instances more than one mode exist. If the data contain exactly two modes, we say that the data are bimodal. If data contain more than two modes, we say that the data are multimodal. 
+
+A **percentile** provides information about how the data are spread over the interval from the smallest value to the largest value. Note that the 50th percentile is also the median.
+
+$$
+\text{Location of p-th  percentile: } L_p = \frac{p}{100}(n+1)
+$$
+
+**Quartiles**, **Quintiles**, **Deciles** are simply specific percentiles; thus, the steps for computing percentiles can be applied directly in the computation of quartiles.
+
+$$
+\text{Location of 10-th  percentile (first decile): } L_{10} = \frac{10}{100}(n+1)
+$$
+
+***
+
+#### Measures of Variability
+
+In addition to measures of location, it is often desirable to consider measures of data variability, or dispersion.
+
+Range is a measure of variability defined to be the largest value minus the smallest value.
+$$
+\text{Range = Largest value - Smallest value }
+$$
+
+**Interquartile range** (IQR) is a measure of variability defined to be the difference between the third and the first quartiles.
+
+$$
+\text{Interquartile range: } IQR = Q_3 - Q_1
+$$
+
+**Variance** is a measure of variability based on the squared deviations of the data values about the mean.
+
+$$
+\text{Sample variance: } s^2 = \frac{\sum (x_i-\bar x)^2}{n-1}
+$$
+$$
+\text{Population variance: } \sigma^2 = \frac{\sum (x_i-\mu)^2}{n-1}
+$$
+
+The **standard deviation** is defined to be the positive square root of the variance.
+
+$$
+\text{Sample standard deviation: } s = \sqrt{s^2} = \sqrt{\frac{\sum (x_i-\bar x)^2}{n-1}}
+$$
+
+$$
+\text{Population variance: } \sigma = \sqrt{\sigma^2} = \sqrt{\frac{\sum (x_i-\mu)^2}{n-1}}
+$$
+
+Keep in mind that the standard deviation is easier to interpret than the variance because the standard deviation is measured in the same units as the data.
+
+The **coefficient of variation** is a relative measure of variability; it measures the standard deviation relative to the mean.
+
+$$
+\text{Coefficient of Variation: } \frac{s}{\bar x}*100
+$$
+
+***
+
+#### Measures of Distribution Shape, Relative Location, and Detecting Outliers
+
+**Skewness** is a measure of the shape of a data distribution. For a symmetric distribution, the mean and the median are equal. When the data are positively skewed, the mean will usually be greater than the median; when the data are negatively skewed, the mean will usually be less than the median. 
+
+Measures of relative location help us determine how far a particular value is from the mean. By using both the mean and standard deviation, we can determine the relative location of any observation. **z-score** is a value computed by dividing the deviation about the mean, $(x_i-\bar x)$, by the standard devion, $s$. A z-score is referred to as a standardized value and denotes the number of standard deviations a particular value, $x_i$, is from the mean, $\bar x$.
+
+**Chebyshev’s theorem** enables us to make statements about the proportion of data values that must be within a specified number of standard deviations of the mean. **Chebyshev’s Theorem** postulates that at least 
+$(1-\frac{1}{z^2})$ of the data values must be within $z$ standard deviations of the mean, where $z$ is any value greater than 1.
+At least 0.75, or 75\%, of the data values must be within $z = 2$ standard deviations of the mean.
+At least 0.89, or 89\%, of the data values must be within $z = 3$ standard deviations of the mean.
+
+When the data are believed to approximate a bell-shaped distribution, the empirical rule can be used to determine the percentage of data values that must be within a specified number of standard deviations of the mean.
+
+For data having a bell-shaped distribution:
+
+- Approximately 68% of the data values will be within one standard deviation of the mean.
+- Approximately 95% of the data values will be within two standard deviations of the mean.
+- Almost all of the data values will be within three standard deviations of the mean.
+
+Sometimes a data set will have one or more observations with unusually large or unusually small values. These extreme values are called **outliers**. We can use z-scores to identify outliers. It is sometimes recommended to treat any data value with a z-score less than −3 or greater than +3 as an outlier. Another approach to identifying outliers is based upon the values of the first and third quartiles (Q1 and Q3) and the interquartile range (IQR). Values outside IQR can be potentially considered outliers.
+
+***
+
+#### Five-Number Summaries and Boxplots
+
+In a **five-number summary**, five numbers are used to summarize the data:
+
+- Smallest value
+- First quartile (Q1)
+- Median (Q2)
+- Third quartile (Q3)
+- Largest value
+
+A **boxplot** is a graphical display of data based on a five-number summary. A key to the development of a boxplot is the computation of the interquartile range, $IQR=Q3-Q1$.
+
+***
+
+#### Measures of Association Between Two Variables
+
+**Covariance** is a measure of linear association between two variables. Positive values indicate a positive relationship; negative values indicate a negative relationship. One problem with using covariance as a measure of the strength of the linear relationship is that the value of the covariance depends on the units of measurement for $x$ and $y$. 
+
+For a sample of size n with the observations $(x_1,y_1)$, $(x_2,y_2)$, and so on, the sample covariance is defined as follows:
+
+$$
+\text{Sample covariance: } s_{xy}=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{n-1}
+$$
+
+$$
+\text{Population covariance: } \sigma_{xy}=\frac{\sum(x_i-\mu_x)(y_i-\mu_y)}{N}
+$$
+
+**Correlation coefficient** is a measure of linear association between two variables that takes on values between -1 and 1. Values above zero indicate a positive relationship; values below zero -- a negative relationship. Note that correlation provides a measure of linear association and not necessarily causation. A high correlation between two variables does not mean that changes in one variable will cause changes in the other variable. For example, we may find that the quality rating and the typical meal price of restaurants are positively correlated. However, simply increasing the meal price at a restaurant will not cause the quality rating to increase. Also, because the correlation coefficient measures only the strength of the linear relationship between two quantitative variables, it is possible for the correlation coefficient to be near zero, suggesting no linear relationship, when the relationship between the two variables is nonlinear. 
+
+For sample data, the Pearson product moment correlation coefficient is defined as follows.
+
+$$
+\text{Pearson correlation coefficient (sample): } r_{xy}=\frac{s_{xy}}{s_{x}s_{y}}
+$$
+
+$$
+\text{Pearson correlation coefficient (population): } \rho_{xy}=\frac{\sigma_{xy}}{\sigma_{x}\sigma_{y}}
+$$
+
+***
+
+#### Data Dashboards: Adding Numerical Measures to Improve Effectiveness
+
+The goal of data visualization is to communicate key information about the data as effectively and clearly as possible. One of the most widely used data visualization tools is a data dashboard, a set of visual displays that organizes and presents information that is used to monitor the performance of a company or organization in a manner that is easy to read, understand, and interpret.
+
+The addition of numerical measures, such as the mean and standard deviation of key performance indicators (KPIs) to a data dashboard is critical because numerical measures often provide benchmarks or goals by which KPIs are evaluated. In addition, graphical displays that include numerical measures as components of the display are also frequently included in data dashboards. We must keep in mind that the purpose of a data dashboard is to provide information on the KPIs in a manner that is easy to read, understand, and interpret. Adding numerical measures and graphs that utilize numerical measures can help us accomplish these objectives.
+
+
+***
+
+**References**
+
+Anderson, David R., et al. Statistics for business & economics. Cengage Learning, 2020.
+
+
+

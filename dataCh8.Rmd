@@ -1,0 +1,364 @@
+---
+title: "Practical Data Science With R. Chapter 8"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Chapter 8: Advanced Data Preparation
+
+In this chapter we further analyze data using vtreat package. Basic way to use vtreat package is to split the data into three groups: one for learning the treatment, one for modeling and one for testing.
+
+#### Clasification Example
+
+We will use a data set from KDD Cup 209 which gives information on 50,000 credit card accounts. The task is to predict churn or credit card cancellations based on a number of variables. Explanatory variables which are not described are available to to be used for prediction.
+
+First, we look at the variable we are trying to predict and examine how much variation there is. In our problem, churn is binary - only takes two values. 1 represents that the event happened (account got cancelled) and -1 it did not.
+
+```{r 2, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+d <- read.table('R_data_files/orange_small_train.data.gz', header = TRUE, sep = '\t', na.strings = c('NA', ''))
+churn <- read.table('R_data_files/orange_small_train_churn.labels.txt', header = FALSE, sep = '\t') 
+d$churn <- churn$V1
+set.seed(729375)
+rgroup <- base::sample(c('train', 'calibrate', 'test'), nrow(d), prob = c(0.8, 0.1, 0.1), replace = TRUE)
+
+dTrain <- d[rgroup == 'train', , drop = FALSE]
+dCal <- d[rgroup == 'calibrate', , drop = FALSE]
+dTrainAll <- d[rgroup %in% c('train', 'calibrate'), , drop = FALSE]
+dTest <- d[rgroup == 'test', , drop = FALSE]
+outcome <- 'churn'
+vars <- setdiff(colnames(dTrainAll), outcome)
+rm(list=c('d', 'churn', 'rgroup'))
+
+outcome_summary <- table( churn = dTrain[, outcome], useNA = 'ifany')
+knitr::kable(outcome_summary)
+outcome_summary["1"] / sum(outcome_summary)
+```
+
+If we attempt to model the data without preparing the data, we will quickly run into major issues. By quickly looking at a couple of variables we can see that some of them having large amounts of missing data, others do not vary at all. For example, Var1 has 44,395 missing values out of 45,025 (most of them!); among those that are not missing, most are zero and a few are relatively very large (far away from the median).
+
+```{r 3, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+summary(dTrainAll$Var1)
+plot(sort(dTrainAll$Var1))
+length(dTrainAll$Var1)
+```
+
+Another variable Var200 has over a thousand of levels which is way too many for a categorical variable for the size of the data set.
+
+Having many issues with multiple if not majority or all variables calls us to use package vtreat. It will cleanup explanatory variables. To run vtreat using parallel computing to increase computational time, use the code below. Since there are many rows and columns, this may take a few minutes. Treated data will have old column modified and new columns created.
+
+```{r 4, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+library("vtreat")
+(parallel_cluster <- parallel::makeCluster(parallel::detectCores()))
+treatment_plan <- vtreat::designTreatmentsC(dTrain, varlist = vars, outcomename = "churn", outcometarget = 1, verbose = FALSE, parallelCluster = parallel_cluster)
+
+dTrain_treated <- prepare(treatment_plan, dTrain, parallelCluster = parallel_cluster)
+
+cross_frame_experiment <- vtreat::mkCrossFrameCExperiment(
+  dTrainAll,
+  varlist = vars,
+  outcomename = "churn",
+  outcometarget = 1,
+  verbose = FALSE,
+  parallelCluster = parallel_cluster)
+
+dTrainAll_treated <- cross_frame_experiment$crossFrame
+treatment_plan <- cross_frame_experiment$treatments
+score_frame <- treatment_plan$scoreFrame
+dTest_treated <- prepare(treatment_plan,dTest,parallelCluster = parallel_cluster)
+```
+
+Treatment score frame summarizes the the treatment. For example, looking at variables 126 and 189, we see that new binary variables were created Var126_isBAD and Var189_isBAD that indicate missing or 'bad' values of the corresponding variable. We are also given information about the pseudo r-squared (with significance level) which indicates how informative the variable may be at explaining the dependent variable. Sometimes, missing values can be better explain the outcome than the values themselves.
+
+For every categorical variable, vtreat creates a set of new binary variables for each non-rare category including a category for missing values. The catB encoding returns a numerical value for every possible level of the original categorical value representing how informative the given level is. catP is a prevalence indicator. It show how often a level occurs.  
+
+```{r 5, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+t(subset(score_frame, origName == "Var218"))
+comparison <- data.frame(original218 = dTrain$Var218, impact218 = dTrain_treated$Var218_catB)
+head(comparison)
+```
+
+For a categorical variable Var200 which had a very large number of levels, vtreat only created a category that indicates missing value Var200_lev_NA, along with catB and catP.
+
+```{r 6, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+score_frame[score_frame$origName == "Var200", , drop = FALSE]
+```
+
+Once we have a treatment plan, we can now use it to prepare the calibration data.
+
+```{r 7, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+dCal_treated <- prepare(treatment_plan, dCal, parallelCluster = parallel_cluster)
+```
+
+If you do not have large enough data set for a split into three, you can use cross-validation procedure built in vtreat package. This can be done as follows.
+
+```{r 8, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+parallel_cluster <- parallel::makeCluster(parallel::detectCores())
+cross_frame_experiment <- vtreat::mkCrossFrameCExperiment(dTrainAll, varlist = vars, outcomename = "churn", outcometarget = 1, verbose = FALSE, parallelCluster = parallel_cluster)
+
+dTrainAll_treated <- cross_frame_experiment$crossFrame
+treatment_plan <- cross_frame_experiment$treatments
+score_frame <- treatment_plan$scoreFrame
+dTest_treated <- prepare(treatment_plan, dTest, parallelCluster = parallel_cluster)
+```
+
+Once the treatment is complete, one needs to build a model. The main issue is to select what explanatory variables to use when trying to predict the outcome variable. Using too few variables may lead you to under-explaining the variation in the dependent variable, while using too many may lead to over-fitting leading to poor performance. 
+
+Let's filter the variables based on linear significances determined in the vtreat's score_frame. By selecting a threshold k, we expect that k irrelevant variables will pass through the filter. Under the selected=TRUE column, we see how many and what kind of variables passed through the filter.
+
+```{r 9, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+k <- 1
+(significance_cutoff <- k / nrow(score_frame))
+score_frame$selected <- score_frame$sig < significance_cutoff
+suppressPackageStartupMessages(library("dplyr"))
+score_frame %>% 
+ group_by(., code, selected) %>%
+ summarize(.,
+ count = n()) %>%
+ ungroup(.) %>%
+ cdata::pivot_to_rowrecs(.,columnToTakeKeysFrom = 'selected', columnToTakeValuesFrom = 'count', rowKeyColumns = 'code', sep = '=')
+```
+
+Having decided on the variables to use and the model, say logistic regression, we can run the model using the following code.
+
+```{r 10, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+library("wrapr")
+newvars <- score_frame$varName[score_frame$selected]
+f <- mk_formula("churn", newvars, outcome_target = 1)
+model <- glm(f, data = dTrainAll_treated, family = binomial)
+```
+
+To evaluate the model, we measure the area under the curve (AUC). It is 0.72 which is much better than 0.5 (random). If we only one variable that best predicts the outcome, we would only get AUC of 0.59. Using 0.15 threshold, we find that 466 accounts (356+110) were identified as at risk. Of the actual 376 churners (266+110), 110 were identified correctly (that is, we identified 29%). IF we just randomly guessed, we would only be right 9.3%. 
+
+```{r 11, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+library("sigr")
+dTest_treated$glm_pred <- predict(model,
+newdata = dTest_treated,
+type = 'response')
+
+calcAUC(dTest_treated$glm_pred, dTest_treated$churn == 1)
+permTestAUC(dTest_treated, "glm_pred", "churn", yTarget = 1)
+var_aucs <- vapply(newvars,
+  function(vi) {
+  calcAUC(dTrainAll_treated[[vi]], dTrainAll_treated$churn == 1)
+  }, numeric(1))
+
+(best_train_aucs <- var_aucs[var_aucs >= max(var_aucs)])
+
+table(prediction = dTest_treated$glm_pred>0.15,
+truth = dTest$churn)
+```
+
+We can also investigate the threshold we pick visually using enrichment and recall figures. If we pick 0.2 as a threshold, we would identify around 0.12 of the at-risk accounts (see Recall figure) and warn those who have a cancellation risk 3 times higher than the general population (see Enrichment figure).
+
+```{r 12, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+WVPlots::DoubleDensityPlot(dTest_treated, "glm_pred", "churn",
+"glm prediction on test, double density plot")
+WVPlots::PRTPlot(dTest_treated, "glm_pred", "churn",
+"glm prediction on test, enrichment plot",
+truthTarget = 1, plotvars = c("enrichment", "recall"), thresholdrange = c(0, 1.0))
+```
+
+#### Regression Example
+
+Preparing data for regression model using vtreat package is similar. Let's work through an example in which we aim to predict car's fuel economy based on various car characteristics.
+
+
+```{r 13, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+auto_mpg <- readRDS('R_data_files/auto_mpg.RDS')
+knitr::kable(head(auto_mpg))
+```
+
+Here, we have data on miles per galon (whcih we will try to predict, number of engine cylinders, displacement and horsepower, as well as car's weight and accelaration (to 60mph). A car name is also given as a string variable.
+
+In some cases, it is interesting to see what we will get if we simply run the regression using all the independent variables without treating the data. Since we have missing values of horespower, we cannot predict the mpg for a few cars. 
+
+```{r 14, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+library("wrapr")
+vars <- c("cylinders", "displacement",
+"horsepower", "weight", "acceleration",
+"model_year", "origin")
+f <- mk_formula("mpg", vars)
+model <- lm(f, data = auto_mpg)
+auto_mpg$prediction <- predict(model, newdata = auto_mpg)
+str(auto_mpg[!complete.cases(auto_mpg), , drop = FALSE])
+```
+
+One should investigate why the values are missing and take appropriate action. If the values are missing independently fo the car characteristics, we can simply use vtreat package to help us clean the data. After treating the data using vtreat, we have predictions even for the cars with missing values. One should figure out hwo the missing values and other aspects of treatment were dealt with.
+
+```{r 15, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+library("vtreat")
+cfe <- mkCrossFrameNExperiment(auto_mpg, vars, "mpg",
+verbose = FALSE)
+treatment_plan <- cfe$treatments
+auto_mpg_treated <- cfe$crossFrame
+score_frame <- treatment_plan$scoreFrame
+new_vars <- score_frame$varName
+newf <- mk_formula("mpg", new_vars)
+new_model <- lm(newf, data = auto_mpg_treated)
+auto_mpg$prediction <- predict(new_model, newdata = auto_mpg_treated)
+str(auto_mpg[!complete.cases(auto_mpg), , drop = FALSE])
+```
+
+
+#### vtreat package
+
+vtreat package works in two phases: a design phase, in which it learns the details of your data, and application/preparation phase, in which it derives new explanatory variables better suited for predictive modeling.
+
+For treatment design phase, you can rely on the following commands:
+
+- designTreatmentsC(): design a variable treatment plan for binary classification.
+- designTreatmentsN(): design a variable treatment plan for regression.
+- designTreatmentsZ(): design a variable treatment plan that does not look at the training data outcomes.
+- design_missingness_treatment(): only deals with missing values
+- mkCrossFrameCExperiment(): uses cross-validation but otherwise similar to designTreatmentsC()
+- mkCrossFrameNExperiment(): uses cross-validation but otherwise similar to designTreatmentsN()
+
+##### Missing Values
+
+There are standard practices how to deal with missing values. They include (1) restricting the data to complete cases or, in other words, removing the observations with missing values, (2) imputing the missing values, for example by letting the missing value be average value of that variable, (3) use models that tolerate missing values, (4) treat missing values as observable information.
+
+In the example below, we let the NA for the numeric variable to take the mean value of that variable (x1), and create a new variable that indicates that this value is missing.
+
+```{r 16, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+library("wrapr")
+d <- build_frame(
+"x1" , "x2" , "x3", "y" |
+1 , "a" , 6 , 10 |
+NA_real_, "b" , 7 , 20 |
+3 , NA_character_, 8 , 30 )
+knitr::kable(d)
+
+plan1 <- vtreat::design_missingness_treatment(d)
+vtreat::prepare(plan1, d) %.>%
+knitr::kable(.)
+```
+
+##### Indicator Variables
+
+Most statistical and machine learning techniques require variables to be numeric. Non-numeric variables, thus, need to be transformed into numeric. A popular transformation is creating dummy variables for each non-numeric value. This is also known as creating indicator variables or one-hot encoding.
+
+In the example below, the x2 string variable is converted to multiple binary variables for each level (including missing values). 
+
+```{r 17, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+d <- build_frame(
+"x1" , "x2" , "x3", "y" |
+1 , "a" , 6 , 10 |
+NA_real_, "b" , 7 , 20 |
+3 , NA_character_, 8 , 30 )
+print(d)
+
+plan2 <- vtreat::designTreatmentsZ(d,
+varlist = c("x1", "x2", "x3"),
+verbose = FALSE)
+vtreat::prepare(plan2, d)
+```
+
+##### Impact Coding
+
+Impact coding (also known as effects coding and target encoding) is replacing a level entry with its numeric effect. This is done when a string-valued variable has too many possible values/levels and would lead to too many binary variables if coded separately.
+
+See plan3 in which we create impact-coded variable x2_catN.
+
+See plan4 how to create impact coding for a categorical variable which will be measured in logistic units (log of an odds-ratio).
+ 
+```{r 18, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+d <- build_frame(
+  "x1" , "x2" , "x3", "y" |
+  1 , "a" , 6 , 10 |
+  NA_real_, "b" , 7 , 20 |
+  3 , NA_character_, 8 , 30 )
+
+print(d)
+
+plan3 <- vtreat::designTreatmentsN(d,
+  varlist = c("x1", "x2", "x3"),
+  outcomename = "y",
+  codeRestriction = "catN",
+  verbose = FALSE)
+
+vtreat::prepare(plan3, d)
+
+plan4 <- vtreat::designTreatmentsC(d,
+  varlist = c("x1", "x2", "x3"),
+  outcomename = "y",
+  outcometarget = 20,
+  codeRestriction = "catB",
+  verbose = FALSE)
+
+vtreat::prepare(plan4, d)
+```
+
+##### Treatment Plan
+
+The treatment plant creates a set of rules how to process training data before fitting it to a model, and rules how new data will be processed before applying it to the model.
+
+```{r 19, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+class(plan4)
+names(plan4)
+plan4$scoreFrame
+```
+
+The variable score frame is a data frame showing derived explanatory variables, what variable it is derived from, what type of transformation was applied, and some quality summaries about the statistic.
+
+##### Cross-Frame
+
+The cross frame is an item found when you use the same data for both the design and training using a cross-validation technique. Naively reusing the same data will create a model that will look very well on the training data but will fail on any application on new data. You can use cross-validation with vtreat package as follows.
+
+As you can see, using the same data for training and testing, we suffer from overfitting which inflates our variable quality estimate. x_bad_catN's F-test is inflated and falsely looks significant.
+
+```{r 20, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+# Create a simple data set
+set.seed(2019)
+d <- data.frame(
+  x_bad = sample(letters, 100, replace = TRUE),
+  y = rnorm(100),
+  stringsAsFactors = FALSE)
+d$x_good <- ifelse(d$y > rnorm(100), "non-neg", "neg")
+head(d)
+
+# Naively reusing the same data
+plan5 <- vtreat::designTreatmentsN(d,
+varlist = c("x_bad", "x_good"),
+outcomename = "y",
+codeRestriction = "catN",
+minFraction = 2,
+verbose = FALSE)
+class(plan5)
+print(plan5)
+
+training_data1 <- vtreat::prepare(plan5, d)
+res1 <- vtreat::patch_columns_into_frame(d, training_data1)
+head(res1)
+
+sigr::wrapFTest(res1, "x_good_catN", "y")
+sigr::wrapFTest(res1, "x_bad_catN", "y")
+
+# Using cross-validation
+cfe <- vtreat::mkCrossFrameNExperiment(d,
+varlist = c("x_bad", "x_good"),
+outcomename = "y",
+codeRestriction = "catN",
+minFraction = 2,
+verbose = FALSE)
+plan6 <- cfe$treatments
+training_data2 <- cfe$crossFrame
+res2 <- vtreat::patch_columns_into_frame(d, training_data2)
+head(res2)
+
+sigr::wrapFTest(res2, "x_bad_catN", "y")
+sigr::wrapFTest(res2, "x_good_catN", "y")
+
+plan6$scoreFrame
+```
+
+
+
+
+**References**
+
+Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.
+
+---

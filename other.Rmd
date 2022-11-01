@@ -1,0 +1,120 @@
+---
+title: "About me"
+---
+
+	<link rel="stylesheet" href="css/style.css">
+	<!-- jQuery library -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/script.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+	
+	<!-- Latest compiled JavaScript -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	 crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	 crossorigin="anonymous"></script>
+
+#Interpreting $\beta_1$ Coefficient
+
+## Level-level
+
+$$ \Delta y=\beta_1\Delta x$$
+Rearranging the above equation yields
+$$ \beta_1 = \Delta y / \Delta x$$
+
+$\beta_1$ represents the change in y due to one unit increase in x. For example, if $y=wage$ and $x=YearsInEducation$, then $\beta_1$ represents the change in the wage due to one additional year of schooling.
+
+## Log-level
+
+$$ \Delta log(y)=\beta_1\Delta x$$
+Since $100*\Delta log(y) \approx \% \Delta y$ for small changes in $y$,
+$$ (\% \Delta y) / 100=\beta_1\Delta x$$
+$$ \beta_1 = (\% \Delta y / 100)/(\Delta x) \quad \quad or \quad \quad 100 \beta_1=(\% \Delta y)/(\Delta x) $$
+$100*\beta_1$ represents the percentage change in y due to one unit increase in x. For example, if $y=wage$ and $x=YearsInEducation$, then $100*beta_1$ represents the percentage change in the wage due to one additional year of schooling. If one does not multiply $beta_1$ by 100, one gets the change in the wage measured as a fraction.
+
+## Level-log
+
+$$ \Delta y=\beta_1\Delta log(x) = (\beta_1/100) [100*\Delta log(x)] \approx (\beta_1/100)(\%\Delta x) $$
+where we use the fact that $100*\Delta log(x) \approx \% \Delta x$ for small changes in $x$. So $\beta_1/100$ is the (ceteris paribus) change in $y$ when $x$ increases by one percent.
+
+$$ \beta_1/100 = (\Delta y)/(\%\Delta x) $$
+$\beta_1/100$ represents the change in y due to one percent increase in x. For example, if $y=NumberOfKidsInFamily$ and $x=HouseholdIncome$, then $beta_1/100$ represents the change in the number of kids a family is predicted to have due to one percent increase in houeshold income.
+
+## Log-log
+
+$$ \Delta log(y) = \beta_1 \Delta log(x) $$
+Since $100*\Delta log(y) \approx \% \Delta y$ for small changes in $y$,
+and  $100*\Delta log(x) \approx \% \Delta x$ for small changes in $x$,
+$$ \Delta \% y / 100 = \beta_1 \Delta \% x / 100 $$
+
+Simplification yields the following 
+$$ \Delta \% y = \beta_1 \Delta \% x \quad \quad or \quad \quad \beta_1 = \Delta \% y / \Delta \% x$$
+
+$\beta_1$ represents the percent change in y due to one percent change in x. For example, if $y=CEOSalary$ and $x=FirmSales$, then $\beta_1$ represents the percent change in the salary of the CEO due to percent change in the firm's sales.
+
+
+
+
+<div class="overlay_file_chooser">
+		<div style="margin: 30px auto; width: 400px;">
+			<div>
+				<label style="color:white">Select Month</label>
+				<select class="form-control" id="month_value">
+					<option value="January">January</option>
+					<option value="Feburary">Feburary</option>
+					<option value="March">March</option>
+					<option value="April">April</option>
+					<option value="May">May</option>
+					<option value="June">June</option>
+					<option value="July">July</option>
+					<option value="August">August</option>
+					<option value="September">September</option>
+					<option value="October">October</option>
+					<option value="November">November</option>
+					<option value="December">December</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label style="color:white">Calendar background Color</label>
+				<input type="color" value="#F7F7F7" class="form-control" id="calendar-background" />
+			</div>
+
+			<div class="form-group">
+				<label style="color:white">Header and footer Color Selector</label>
+				<input type="color" value="#F7F7F7" class="form-control" id="card_header_footer_color" />
+			</div>
+			<div class="form-group">
+				<label style="color:white">Session Header Color Selector</label>
+				<input type="color" value="#20B2AA" class="form-control" id="session_header" />
+			</div>
+			<div class="form-group">
+				<label style="color:white">Date and Location Color Selector</label>
+				<input type="color" value="#17a2b8" class="form-control" id="card_profile_site_color" />
+			</div>
+		</div>
+		<div class="file">
+			<input type="file" class="custom-file-upload" id="files" name="files" size="60" />
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="page-header">
+			<img src="img/header.png" width="1108px" height="164px" alt="">
+			<div class="month-text">January-2018</div>
+		</div>
+		<div class="open-session">
+			<div class="open-session-header text-center">Open Sessions (Self-Nomination Based)</div>
+			<div class="row" id="open-session">
+			</div>
+		</div>
+		<br>
+		<div class="close-session">
+			<div class="close-session-header text-center">Close Sessions (Self-Nomination Based)</div>
+			<div class="row" id='close-session'>
+			</div>
+		</div>
+
+</div>

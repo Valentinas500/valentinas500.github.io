@@ -1,0 +1,255 @@
+---
+title: "Practical Data Science With R. Chapter 4"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Chapter 4: Managing Data
+
+In this chapter, we will cover the basics of how data quality issues are fixed, how data is transformed before modeling, and how to organize your data for convenient data modeling.
+
+#### Cleaning Data
+
+First, let's familiarize with invalid data values and missing entries. 
+
+A missing entry is a data value that is not stored for a variable in the observation of interest. There are standard practices how to deal with missing entries.
+
+What is an invalid value depends on the variable you are analyzing or question that you are trying to solve. For example, a FICO score ranges between 300 and 850 so any value below 350 or above 850 should be treated as invalid. Similarly, age, weight or income below zero are invalid as well. 
+
+Let's open American Community Survey Public Use Microdata Sample data from 2016 [custdata.RDS](R_data_files/custdata.RDS) and analyze 'age' variable.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+my_data <- readRDS("R_data_files/custdata.RDS")
+plot(sort(my_data$age))
+sum(my_data$age==0)
+
+my_data$age_1=my_data$age;
+my_data$age_1[my_data$age_1==0]=NA
+summary(my_data$age_1)
+
+#Alternatively, we can use dplyr package
+library(dplyr)
+my_data <- my_data %>%
+mutate(age_2 = na_if(age, 0))
+```
+
+A sorted plot of all age values shows that there are some 'age' entries equal to 0. To be exact, there are a total of 77 such entries. I create a new variable age_1 in which values equal to 0 become equal to NA.
+
+Similarly, the directions below will 45 convert negative income values to NA.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+sum(my_data$income<0)
+
+my_data$income_1=my_data$income;
+my_data$income_1[my_data$income_1<0]=NA
+summary(my_data$income_1)
+
+#Alternatively, we can use dplyr package
+library(dplyr)
+my_data <- my_data %>%
+mutate(income_2 = ifelse(income < 0, NA, income))
+```
+
+Some variables are categorical and have to be treated as categorical, not numeric For example, 'gas_usage' three values (1,2,3) represnt three different categories with the remaining variables representing monthly gas bill amount. The first three values must be converted either into three separate binary variables, or into a new categorical variable. See below.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+summary(my_data$gas_usage)
+
+my_data$gas_usage_1=my_data$gas_usage;
+my_data$gas_usage_1[my_data$gas_usage_1>3]=NA
+my_data$gas_usage_1=as.factor(my_data$gas_usage_1)
+summary(my_data$gas_usage_1)
+
+my_data$gas_usage_2=my_data$gas_usage;
+my_data$gas_usage_2[my_data$gas_usage_2<3]=NA
+
+#Alternatively, three different variables for each category
+my_data$gas_usage_A1=my_data$gas_usage==1;
+my_data$gas_usage_A2=my_data$gas_usage==2;
+my_data$gas_usage_A3=my_data$gas_usage==3;
+
+#Alternatively, we can use dplyr package
+my_data <- my_data %>%
+mutate(gas_with_rent = (gas_usage == 1),
+gas_with_electricity = (gas_usage == 2),
+no_gas_bill = (gas_usage == 3) ) %>%
+mutate(gas_usage_new = ifelse(gas_usage < 4, NA, gas_usage))
+```
+
+Let's now take a look at missing values at some columns.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+sum(is.na(my_data$age_1))
+sum(is.na(my_data$income_1))
+```
+
+There are two standard ways to deal with missing values: either drop rows with missing values convert them to a meaningful value. When you run various statistical analyses in R, rows with missing values are dropped by default. If there are a lot of missing values, this can be problematic.
+
+When there are missing values for categorical variables, we can create a new category level and assign all missing entries to that category. When there are muissing values for numeric variables, they can be imputed. Depending on the importance of that variable and why you expect it is missing, a different imputation is appropriate. Often, a mean value of the explanatory variable is computed and inserted into the missing entries. It is a good idea to have a binary variable created that indicates that the entry is imputed. Let's look at income in our example.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+summary(my_data$income_1)
+mean_income=mean(my_data$income_1,na.rm=TRUE)
+
+my_data$income_1_imputed=0;
+my_data$income_1_imputed[is.na(my_data$income_1)]=1; 
+
+my_data$income_1[is.na(my_data$income_1)]=mean_income
+
+summary(my_data$income_1)
+```
+
+You should try to figure out/think about why the some values are missing. Different approach is appropriate depending on why the values are missing. For example, there could be missing income values because high income earners do not feel comfortable sharing their income - then imputing an average value for missing values is completely incorrect. If you don’t know whether the missing values are random or systematic, it is a safer approach to assume that the difference is systematic, rather than working hard to impute values to the variables based on the random missingness assumption.
+
+There are numerous tools in R to make your life a lot easier. One package vtreat creates a treatment plan that records all the information needed to repeat the data treatment process. Let's examine a simple example.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(vtreat)
+library(dplyr)
+
+my_data_orig=readRDS("R_data_files/custdata.RDS")
+my_data_orig <- my_data_orig %>%
+mutate(age = na_if(age, 0))
+my_data_orig <- my_data_orig %>%
+mutate(income = ifelse(income < 0, NA, income))
+my_data_orig <- my_data_orig %>%
+mutate(gas_with_rent = (gas_usage == 1),
+gas_with_electricity = (gas_usage == 2),
+no_gas_bill = (gas_usage == 3) ) %>%
+mutate(gas_usage = ifelse(gas_usage < 4, NA, gas_usage))
+
+variables=setdiff(colnames(my_data_orig), c("custid", "health_ins"))
+treatment_plan <- design_missingness_treatment(my_data_orig, varlist = variables)
+training_prepared <- prepare(treatment_plan, my_data_orig)
+summary(training_prepared)
+```
+
+Before going ahead with modeling, you should examine for more issues. Among many of them, you would want to convert 'sex' variable from character to factor.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+summary(training_prepared$sex)
+training_prepared$sex=as.factor(training_prepared$sex)
+summary(training_prepared$sex)
+```
+
+#### Data Transformations
+
+The purpose of data transformation is to make data easier to understand, visualize and model. Having a uniform data format standard can be very beneficial.
+
+Let's open 'median_income.RDS' and match with the treated 'custdata.RDS'. To match data, it is easy to again use dplyr package. 
+
+Normalization (also known as rescaling) is useful when absolute quantities are less meaningful than relative ones. For example, you may see a wage of 25. Not knowing the currency and the cost of living, this number alone is not very useful. However, if you see that relative to the higher wage it is 0.5, informs us that the the wage of 25 is half of the max wage in the data. Normalization can be done based on the max, mean, median, it can be conditional on some other variable or unconditional. 
+
+In our example, let's normalize income by state. That is the median income for each state (conditional) will have a value of 1. Alternatively, depending on the question and method of analysis, we could use unconditional normalization (independent on the state of residence). Similarly, we can rescale age variable so that the customer with an average age takes the value of 1. 
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+median_income_table <- readRDS("R_data_files/median_income.RDS")
+
+library(dplyr)
+training_prepared <- training_prepared %>%
+left_join(., median_income_table, by="state_of_res") %>%
+mutate(income_normalized = income/median_income)
+head(training_prepared[, c("income", "median_income", "income_normalized")])
+
+summary(training_prepared$income_normalized)
+
+#Unconditional normalization for income
+training_prepared$income_normalized_uncond=training_prepared$income/median(training_prepared$income)
+
+#Normalization of age variable
+mean_age <- mean(training_prepared$age)
+age_normalized <- training_prepared$age/mean_age
+summary(age_normalized)
+```
+
+You can also rescale your data by using the standard deviation as a unit of distance. It is helpful to think of standard deviations since we know that 68\% of data falls within 1 standard deviation. A customer who is within one standard deviation of the mean age is considered not much older or younger than typical. A customer who is more than one or two standard deviations from the mean can be considered much older, or much younger. To make the relative ages even easier to understand, you can also center the data by the mean, so a customer of “typical age” has a centered age of 0.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(dplyr)
+mean_age <- mean(training_prepared$age)
+sd_age <- sd(training_prepared$age)
+print(mean_age + c(-sd_age, sd_age))
+
+training_prepared$scaled_age <- (training_prepared$age - mean_age) / sd_age
+  training_prepared %>%
+  filter(abs(age - mean_age) < sd_age) %>%
+  select(age, scaled_age) %>%
+  head()
+
+training_prepared %>%
+  filter(abs(age - mean_age) > sd_age) %>%
+  select(age, scaled_age) %>%
+  head()
+```
+
+You can rescale variables manually with a couple of lines of code but when you have multiple numeric variables, you can simplify your life and increase efficiency using the scale() function to center and scale multiple variables simultaneously.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+dataf <- training_prepared[, c("age", "income", "num_vehicles", "gas_usage")]
+summary(dataf)
+dataf_scaled <- scale(dataf, center=TRUE, scale=TRUE)
+(means <- attr(dataf_scaled, 'scaled:center'))
+(sds <- attr(dataf_scaled, 'scaled:scale'))
+```
+
+Normally distributed data fist many natural phenomena and allows us to do much more. However, many variables such as monetary amounts—incomes, customer value, account values, purchase sizes among other often have skewed distributions. This leads us to consider data transformations that make data look "more normal". One of these transformations is taking the log of the variable. See example below.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+par(mfrow = c(1, 2))
+plot(density(training_prepared$income))
+plot(density(log(training_prepared$income)))
+```
+
+It is also very helpful to use log transformations when data ranges in orders of magnitude. For example, population of towns/cities, incomes, and so on. This is because many modeling techniques run into issues with very wide data ranges. Sometimes, it makes more sense to use log transformations such as in linear regressions. For example, using log of wage in a regression as a dependent variable gives results as percentage change in wage. Remember that log transformation is only possbile with non-negative values.
+
+#### Sampling
+
+Sampling is the process of selecting a subset of a population to represent the whole population. Sampling is a very useful tool in analysis and modeling even when we are able to analyze larger and larger datasets. It is easier to test and debug code on small subsamples before moving on to training the model on the whole dataset. You also need to create samples to create training and test splits.
+
+You build a model when you want to make predictions or understand relationships. You also need to check whether the model is making accurate predictions using other/new data. The first set is called the training set. You feed the training set to the model. The second set, test or hould-out set, is used to verify the results - you use new data to check if model's predictions any good. 
+
+One easy way to create/manage random sampling is by adding a new column that will contain a randomly generated number uniformly between 0 and 1. Then you can indicate how to split the data, or how big the sample you want by choosing only those rows for which the randomly generated number is below certain value. For example, if you want to use ten percernt for the test set, let rows belong to the test set if the randomly generated number is below or equal to 0.1. You can do so in R suing runif() function very easily. You should make sure to set the random seed using the command set.seed(). This will make sure you will draw the same sample group every time.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+set.seed(25643) #Reusing the same set seed number will allow you to get an identical "random" sample
+training_prepared$gp <- runif(nrow(training_prepared))
+data_test <- subset(training_prepared, gp <= 0.1) #Use ten percent for the test set
+data_train <- subset(training_prepared, gp > 0.1) #Use the remaining data for the training set
+dim(data_test)
+dim(data_train)
+```
+
+In some cases, you have data that tracks not only individual/unit itself but also the household individual belongs to or group unit belongs to. In these cases you may want to do random sampling at the group (household) level (all members of a household should belong to the same group -- test or training). 
+
+In the example below, we load household data, identify unique household ids (using unique() command) for each of which we create a random number between 0 and 1 (using runif command). In the final step, we merge the newly crated random numbers according to household id. As you can see identical household ids have the same random number associated with it. We can now split the data to different sets at a household level.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+household_data = readRDS("R_data_files/hhdata.RDS")
+hh = unique(household_data$household_id)
+set.seed(243674)
+households = data.frame(household_id = hh,gp = runif(length(hh)),stringsAsFactors=FALSE)
+household_data = dplyr::left_join(household_data,
+  households,
+  by = "household_id")
+```
+
+Finally, it is a good idea to keep track of changes. One way to do it is to record the date and time of the last treatment/modification. That can be done by adding a column that shows the time of the last action. Commands Sys.time()
+and Sys.Date() could be used to save the time.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+household_data$load_date=Sys.Date()
+household_data$load_time=Sys.time()
+head(household_data)
+```
+
+
+**References**
+
+Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.
+
+Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.
+
+---

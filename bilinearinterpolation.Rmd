@@ -1,0 +1,93 @@
+---
+title: "Bilinear Interpolation"
+---
+
+
+Bilinear interpolation is a simple extension of linear interpolation. The function performs linear interpolation in each direction. The algorithm is very simple and is typically applied in a variety of fields. See the code in Matlab, R and Python below.
+
+
+Matlab function [[download](interpol/bilinearinterpolation.m)]
+
+<div class="content"><pre class="codeinput"><span class="keyword">function</span>[fksFinal]=bilinearinterpolation(x1,x2,y1,y2,fun,X,Y)
+<span class="comment">%Function requires endpoints of x range (x1,x2), endpoints of y range (y1,y2),</span>
+<span class="comment">%a function (fun) with two variables,</span>
+<span class="comment">%and point (X,Y) for which you want the function to be approximated.</span>
+<span class="comment">%Example: bilinearinterpolation(1,10,1,10,@(x,y)(x+y)^2,5,5)</span>
+
+<span class="comment">%Evaluate the given expression at endpoints</span>
+fQ11=fun(x1,y1);
+fQ12=fun(x1,y2);
+fQ21=fun(x2,y1);
+fQ22=fun(x2,y2);
+
+<span class="comment">%First, we do linear interpolation in the x-direction.</span>
+fx1= fQ11*((x2-X)/(x2-x1)) + fQ21*((X-x1)/(x2-x1));
+fx2= fQ12*((x2-X)/(x2-x1)) + fQ22*((X-x1)/(x2-x1));
+
+<span class="comment">%Then, we interpolate in the y-direction.</span>
+fksFinal= fx1*((y2-Y)/(y2-y1)) + fx2*((Y-y1)/(y2-y1));
+</pre>
+
+R function [[download](interpol/bilinearinterpolation.R)]
+```{r, eval=FALSE}
+bilinearinterpolation <- function(X1,X2,Y1,Y2,fun,X,Y) {
+  #Function requires endpoints of x range (X1,X2), endpoints of y range (Y1,Y2),
+  #a function (fun) with two variables x1 and x2 (using lowercase in quotations), as for example "x1+x2",
+  #and point (X,Y) for which you want the function to be approximated.
+  #Example: bilinearinterpolation(1,10,1,10,"(x1+x2)^2",5,5) 
+  
+  # Read the given expression (function)
+  funct=parse(text=fun)
+  
+  # Evaluate the given expression at endpoints
+  x1 = X1; x2 = Y1; fQ11=eval(funct);
+  x1 = X1; x2 = Y2; fQ12=eval(funct);
+  x1 = X2; x2 = Y1; fQ21=eval(funct);
+  x1 = X2; x2 = Y2; fQ22=eval(funct);
+  
+  #First, we do linear interpolation in the x-direction.
+  fx1= fQ11*((X2-X)/(X2-X1)) + fQ21*((X-X1)/(X2-X1));
+  fx2= fQ12*((X2-X)/(X2-X1)) + fQ22*((X-X1)/(X2-X1));
+  
+  #Then, we interpolate in the y-direction.
+  fksFinal= fx1*((Y2-Y)/(Y2-Y1)) + fx2*((Y-Y1)/(Y2-Y1));
+  return(fksFinal)
+}
+```
+
+Python function [[download](interpol/bilinearinterpolation.py)]
+```{python, eval=FALSE}
+def bilinearinterpolation(X1,X2,Y1,Y2,fun,X,Y):
+  #Function requires endpoints of x range (X1,X2), endpoints of y range (Y1,Y2),
+  #a function (fun) with two variables x1 and x2 (using lowercase in quotations), as for example "x1+x2",
+  #and point (X,Y) for which you want the function to be approximated.
+  #Example: bilinearinterpolation(1,10,1,10,"pow(x1+x2,2)",5,5) 
+  
+  # Evaluate the given expression at endpoints
+  x1 = X1; x2 = Y1; fQ11=eval(fun);
+  x1 = X1; x2 = Y2; fQ12=eval(fun);
+  x1 = X2; x2 = Y1; fQ21=eval(fun);
+  x1 = X2; x2 = Y2; fQ22=eval(fun);
+  
+  #First, we do linear interpolation in the x-direction.
+  fx1= fQ11*((X2-X)/(X2-X1)) + fQ21*((X-X1)/(X2-X1));
+  fx2= fQ12*((X2-X)/(X2-X1)) + fQ22*((X-X1)/(X2-X1));
+  
+  #Then, we interpolate in the y-direction.
+  fksFinal= fx1*((Y2-Y)/(Y2-Y1)) + fx2*((Y-Y1)/(Y2-Y1));
+  return fksFinal
+```
+
+
+
+<style type="text/css">
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+</style>

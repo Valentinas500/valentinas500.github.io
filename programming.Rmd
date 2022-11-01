@@ -1,0 +1,76 @@
+---
+title: "Programming"
+---
+
+While working on my dissertation, I created a variety of original code. I simplified it and shared some of it here. Please check before using it as it may have errors.
+
+#### Economic Models
+
+OLG Models
+
+- [Multi-Period Stationary Overlapping Generations (OLG) Model](multiperiodolg.html)
+<!-- - [Search and Matching Frictions in a Multi-Period OLG Model](endlaborolg.html) -->
+
+<!-- http://users.nber.org/~bassetto/software/olg/softwareolg.html -->
+<!-- https://www.sciencedirect.com/science/article/pii/S1094202507000336?via%3Dihub -->
+
+<!-- https://www.openicpsr.org/openicpsr/project/114252/version/V1/view?path=/openicpsr/114252/fcr:versions/V1/fortran_code/CALIBRATE.F90&type=file -->
+<!--https://www.aeaweb.org/articles?id=10.1257/mac.4.3.96 -->
+
+Other Models
+
+- [Portfolio Allocation and Consumption in a Simple Partial Equilibrium Life-Cycle Model](portfoliolife.html)
+<!-- - Infinitely-Lived Heterogeneous Agent Model -->
+- [Infinitely-Lived Heterogeneous Agent Model](infinite_het_agents.html)
+- Aggregate Uncertainty in Infinitely-Lived Heterogeneous Agent Model
+
+#### Financial Models
+- Mean-Variance Optimization (Excel, R)
+
+#### Various Functions for Economists
+- [Linear Interpolation (Matlab/Octave, R, Python)](linearinterpolation.html)
+- [Bilinear Interpolation (Matlab/Octave, R, Python)](bilinearinterpolation.html)
+- [Golden Section Search - Univariate (Matlab/Octave, R, Python)](univariategss.html)
+- [Golden Section Search - Bivariate (Matlab/Octave, R, Python)](bivariategss.html)
+ 
+#### Other Tools, Techniques and Models 
+- Financial Problems (PV, FV, IRR) in MS Excel
+- Using Solver in in MS Excel
+
+#### Original Games
+
+- Microeconomics Business Simulation Game: [Paper](Microeconomics_Simulation_Game.pdf), [Game Link](https://vrudys.com/microsimgame/index.html)
+- Macroeconomics Policy Simulation Game: [Paper](Macroeconomics_Simulation_Game.pdf), [Game Link](https://valentinas500.shinyapps.io/MPSG/)
+
+<!-- High-Frequency Trading
+- linear algebra and vector manipulation
+- Monte Carlo simulation, trinomial trees and finite differences.
+- Data Mining
+- Auto-regression
+- Auto-correlation
+- Principal Component Analysis
+- Equity Long/Short experience with focus on Index Equity
+- Machine Learning
+- Non-parametric Econometrics
+- Factor modeling
+- Derivative pricing
+- Understanding of equities portfolio construction, risk/return attribution, transaction cost analysis, and portfolio research, coupled with ability to view and react to live portfolios
+- Bayesian optimization, stochastic modeling, 
+- ML and NLP models for acquiring and analyzing proprietary unstructured textual data
+- Portfolio optimization
+- Reduced Form Causal Analysis?
+- Experimental research 
+- Relative value models for fixed income and interest rates derivatives
+- systematic alpha research
+- automated market making
+- financial research and portfolio management.
+- Domain knowledge in futures is a plus
+- survey sampling and design, significance testing, regression modeling, experimental design, behavioral data analysis)
+- GLM, analysis of quasi-experimental research designs with non-equivalent groups (e.g., regression adjustment, matching, propensity score stratification), longitudinal analysis, classification, dimension reduction, clustering, hierarchical linear (random effects) modeling, etc., to people research problems in organizations
+- scikit-learn, Pandas, keras, and tensorflow
+- Experience using MSCI’s Barra One or Risk Manager models for fixed income analysis/risk management and scenario analysis
+- Experience using Bloomberg’s GRM or PORT models for fixed income analysis/risk management and scenario analysis
+- ML/AI approaches, including classification, clustering, and regression
+- Machine learning skills: Machine Learning techniques such as NLP, K means clustering, Neural Networks etc
+- Systematic/High Frequency or Electronic Trading
+-->

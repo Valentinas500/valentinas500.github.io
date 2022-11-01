@@ -1,0 +1,39 @@
+---
+title: "Home"
+---
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+<div class="col2">
+Valentinas Rudys is a Research Fellow and an Economics PhD candidate at Fordham University in New York City.\
+\
+Fields: Macroeconomics, Labor, Computational Macro
+\
+<!--Curriculum Vitae ([donwload](RUDYS_CV_Research.pdf))-->
+\
+Email: vrudys@fordham.edu\
+\
+Mailing Address:\
+Valentinas Rudys\
+Fordham University\
+Department of Economics\
+Dealy Hall\
+441 East Fordham Road\
+Bronx, NY 10458\
+
+
+<div style="width:400px; height:auto">
+![](ECON1.JPG)
+</div>
+</div>

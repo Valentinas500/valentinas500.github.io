@@ -1,0 +1,40 @@
+---
+title: "Practical Data Science With R. Chapter 10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Chapter 10: Exploring Advanced Methods
+
+
+
+#### Clustern Analysis
+
+
+```{r 1, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+a=c(1,1);
+b=c(3,5);
+Euclidean_distance = sqrt( (a[1]-b[1])^2 + (a[2]-b[2])^2 )
+Manhattan_distance = sum( abs(a[1]-b[1]) + abs(a[2]-b[2]) )
+```
+
+
+```{r 2, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+protein = read.table("R_data_files/protein.txt", sep = "\t", header=TRUE)
+summary(protein)
+```
+
+
+
+
+#### Association Rule Mining
+
+
+**References**
+
+Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.
+
+---

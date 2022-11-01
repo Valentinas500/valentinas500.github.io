@@ -1,0 +1,104 @@
+---
+title: "Statistics for Business & Economics"
+output: pdf_document
+---
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+
+### Chapter 2: Descriptive Statistics: Tabular and Graphical Display
+
+***
+
+**Categorical** data use labels or names to identify categories of like items, and **quantitative** data are numerical values that indicate how much or how many.
+
+**Data visualization** is a term often used to describe the use of graphical displays to summarize and present information about a data set.
+
+***
+
+#### Summarizing Data for a Qualitative Variable
+
+A **frequency distribution** is a tabular summary of data showing the number (frequency) of observations in each of several non-overlapping categories or classes.
+
+The **relative frequency** of a class equals the fraction or proportion of observations belonging to a class. For a data set with n observations, the relative frequency of each class can be determined as follows:
+
+A **relative frequency distribution** gives a tabular summary of data showing the relative frequency for each class. 
+
+A **percent frequency distribution** summarizes the percent frequency of the data for each class.
+
+A **bar chart** is a graphical display for depicting categorical data summarized in a frequency, relative frequency, or percent frequency distribution.
+
+The **pie chart** provides another graphical display for presenting relative frequency and percent frequency distributions for categorical data.
+
+***
+
+#### Summarizing Data for a Quantitative Variable
+
+To make a frequency distribution for quantitative data, you need to determine the number of classes, width of the classes, and class limits. In some applications, we want to know the midpoints of the classes in a frequency distribution for quantitative data. The **class midpoint** is the value halfway between the lower and upper class limits.
+
+A **dot plot** on the horizontal axis shows the range for the data. Then each data value is represented by a dot placed above the axis.
+
+A **histogram** is a graphical display of a frequency distribution, relative frequency distribution, or percent frequency distribution of quantitative data constructed by placing the class intervals on the horizontal axis and the frequencies, relative frequencies, or percent frequencies on the vertical axis.
+
+A **cumulative frequency distribution** is a tabular summary of quantitative data showing the number of data values that are less than or equal to the upper class limit of each class.
+
+A **cumulative relative frequency distribution** shows the proportion of data items, and a **cumulative percent frequency distribution** shows the percentage of data items with values less than or equal to the upper limit of each class. 
+
+A **stem-and-leaf display** is a graphical display used to show simultaneously the rank order and shape of a distribution of data.
+
+***
+
+#### Summarizing Data for Two Variables Using Tables
+
+A crosstabulation is a tabular summary of data for two variables. The classes for one variable are represented by the rows, the classes for the other variable are represented by the columns.
+
+Simpson's paradox is a situation when different crosstabulations give opposing conclusions. Conclusions drawn from two or more separate crosstabulations can be reversed when the data are aggregated into a single crosstabulation.
+
+***
+
+#### Summarizing Data for Two Variables Using Graphical Displays
+
+A **scatter diagram** is a graphical display of the relationship between two quantitative variables, and a **trendline** is a line that provides an approximation of the relationship. 
+
+A **side-by-side bar chart** is a graphical display for depicting multiple bar charts on the same display.
+
+***
+
+#### Data Visualization: Best Practices in Creating Effective Graphical Displays
+
+**Data visualization** is a term used to describe the use of graphical displays to summarize and present information about a data set.
+
+Displays Used to Show the Distribution of Data:
+
+- Bar Chart—Used to show the frequency distribution and relative frequency distribution for categorical data
+- Pie Chart—Used to show the relative frequency and percent frequency for categorical data; generally not preferred to the use of a bar chart
+- Dot Plot—Used to show the distribution for quantitative data over the entire range of the data
+- Histogram—Used to show the frequency distribution for quantitative data over a set of class intervals
+- Stem-and-Leaf Display—Used to show both the rank order and shape of the distribution for quantitative data
+
+Displays Used to Make Comparisons:
+
+- Side-by-Side Bar Chart—Used to compare two variables
+- Stacked Bar Charts—Used to compare the relative frequency or percent frequency of two categorical variables
+
+Displays Used to Show Relationships:
+
+- Scatter diagram—Used to show the relationship between two quantitative variables
+- Trendline—Used to approximate the relationship of data in a scatter diagram
+
+**Data dashboard** is a set of visual displays that organizes and prosents information that is used to monitor firm's performance in an easy to read way.
+
+***
+
+**References**
+
+Anderson, David R., et al. Statistics for business & economics. Cengage Learning, 2020.
+
+

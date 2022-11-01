@@ -1,0 +1,317 @@
+---
+title: "Practical Data Science With R. Chapter 7"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Chapter 7: Linear and Logistic Regression
+
+Linear regression is the most popular method of analysis for statisticians, economists and data scientists. In this chapter, we will go over the basic of linear and logistic regression: how to define it, how to interpret the results and diagnostics. It is the best first method to be tried when we try to predict some numerical quantity and understand the relationship between the input (independent) variables and the output (dependent) variable. Logistic regressions are very useful when we try to predict probabilities and understand what "determines" these probabilities.
+
+#### Using Linear Regression
+
+As explained in more detailed in [Chapter 2 of Introductory Econometrics](etricsCh2.html), a linear regression can be explained by a simple additive equation.
+
+$$ y = \beta_1 x_1 + \beta_2 x_2 + e$$
+
+$y$ is the numeric quantity you want to predict, while $x_1$ and $x_2$ are the independent variables. Variation in independent variables will help us explain variation in the dependent variable. $beta_1$ and $\beta_2$ are coefficients that we are looking for.
+
+The first step is to create a linear model. In R, we use base command lm(y~x1+x2) to do so. 
+Let's say we are interested in understanding/predicting wage based on age, sex, employment class and education. 
+Using psub.RDS data, run the following commands.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+psub <- readRDS("R_data_files/psub.RDS")
+set.seed(3454351)
+gp <- runif(nrow(psub))
+dtrain <- subset(psub,gp >= 0.5)
+dtest <- subset(psub,gp < 0.5)
+model <- lm(log10(PINCP) ~ AGEP + SEX + COW + SCHL,data=dtrain)
+summary(model)
+dtest$predLogPINCP <- predict(model,newdata=dtest)
+dtrain$predLogPINCP <- predict(model,newdata=dtrain)
+```
+
+The results can be viewed using the summary() command.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+summary(model)
+```
+
+To make predictions based on our model, we can use command predict(). Let's do that both on the training and test data sets.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+dtest$predLogPINCP <- predict(model,newdata=dtest)
+dtrain$predLogPINCP <- predict(model,newdata=dtrain)
+```
+
+One good way to inspect the results is using a figure. Using ggplot2, let's examine how the prediction line hold against the actual values. We can also view the residual errors showing how far our predictions are from the actual values.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+library('ggplot2')
+ggplot(data = dtest, aes(x = predLogPINCP, y = log10(PINCP))) +
+geom_point(alpha = 0.2,color = "darkgray") +
+geom_smooth(color="darkblue") +
+geom_line(aes(x = log10(PINCP),
+y = log10(PINCP)),
+color = "blue", linetype=2) +
+coord_cartesian(xlim = c(4,5.25),
+ylim = c(c(3.5,5.5)))
+
+ggplot(data=dtest,aes(x = predLogPINCP,
+y = predLogPINCP - log10(PINCP) )) +
+geom_point(alpha=0.2,color="darkgray") +
+geom_smooth(color="darkblue") +
+ylab("residual error (prediction - actual)")
+```
+
+To evaluate the model in terms of quality of the predictions, we can check R-squared and RMSE. High R-squared means that a high fraction of variation in the dependent variable (y) is explained by variation in the independent variables. We would want the R-squared to be similar in predictions based on the training and test data. They are!
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+rsq <- function(y,f) { 1 - sum((y-f)^2)/sum((y-mean(y))^2) }
+rsq(log10(dtrain$PINCP), dtrain$predLogPINCP)
+rsq(log10(dtest$PINCP), dtest$predLogPINCP)
+# Alternative
+sum_model=summary(model)
+sum_model$r.squared
+```
+
+RMSE or root mean squared error is another useful measure. It shows the width of the data "cloud" around the line of perfect prediction.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+rmse <- function(y, f) { sqrt(mean( (y-f)^2 )) }
+rmse(log10(dtrain$PINCP), dtrain$predLogPINCP)
+rmse(log10(dtest$PINCP), dtest$predLogPINCP)
+```
+
+To examine coefficients of the model, you can either run the summary() or the coefficients() command. 
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+summary(model)
+coefficients(model)
+```
+
+For example, there is a variable named SEXFEMALE. This indicates that sex varaible is a categorical variable and male was chosen by the model to be the reference. The coefficient for SEXFEMALE shows that holding everything else constant, women are predicted to earn -0.107 (measured in log base 10) less than men. Since our dependent variable is not measured in dollars, this number -0.107 does not tell us much. We need to convert it back to a way we could understand what it means. By "the taking the "anti-log", we see that we predict women to earn 78% of men with the same age, education and occupational class. 
+
+Similarly, the value for high school diploma is 0.11 while for bachelor's degree is 0.36. This means that a worker with a bachelors degree is predicted to earn 78\% more compared to a person with only a high school diploma.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+# (income_men)/(income_women) = 10^(-0.107)
+10^(-0.107)
+# (income_bachelors)/(income_hs) = 10^(0.36 - 0.11)
+10^(0.36 - 0.11)
+```
+
+Age coefficient of 0.0116 indicates that with an additional year, a person is expected to earn (10^0.0116-1) 2.7% more (all else constant).
+
+The intercept is the predicted income for a person with reference level in terms of sex, education, occupation and with age 0. In most cases, intercept is not a subject of interest.
+
+The p-value estimates the probability of seeing a coefficient with a magnitude as large as you observed if the true coefficient is really zero. The lower the p value, the more certain you are your finding is different from zero. Typically, economists regard a p-value lower than 0.05 as statistically significant.
+
+The residual standard error is the sum of the square of the residuals divided by the degrees of freedom. It is similar to root mean squared error but it is a more conservative estimate because it adjusts fro complexity of the model.
+
+Another useful measure is the adjusted R-squared which is R-squared penalized for the number of explanatory variables used. Adding another explanatory variable will make the multiple R-squared higher but adjusted R-squared will only increase if the added variable is any good at explaining variation in the dependent variable.
+
+Finally, model's F-statistic, derived from F-test, shows overall fit of the model. F-test is the technique used to check if two variances—in this case, the variance of the residuals from the constant model and the
+variance of the residuals from the linear model—are significantly different. High F-statistic and accordingly low p-value associated with it gives us confidence that our model explains more variance in the model than a constant model does.
+
+###### Linear Regression Takeaways
+
+- Linear regression assumes that the outcome is a linear combination of the input variables.
+Naturally, it works best when that assumption is nearly true; but it can predict
+surprisingly well even when it isn't.
+
+- If you want to use the coefficients of your model for advice, you should only trust the
+coefficients that appear statistically significant.
+
+- Overly large coefficient magnitudes, overly large standard errors on the coefficient
+estimates, and the wrong sign on a coefficient could be indications of correlated inputs.
+Linear regression can predict well even in the presence of correlated variables, but
+correlated variables lower the quality of the advice.
+
+- Linear regression will have trouble with problems that have a very large number of
+variables, or categorical variables with a very large number of levels.
+
+- Linear regression packages have some of the best built-in diagnostics available, but
+rechecking your model on test data is still your most effective safety check.
+
+#### Using Logistic Regression
+
+Logistic regression is the most popular generalized linear model. One of the most useful attributes is that it is able to predict probabilities that range between 0 and 1. While linear probability model can also predict probabilities, they are not limited to (0,1) range. It also often used for binary choice classification problems.
+
+Logistic regression considers everything in log-odds: the log of the ratio of probability of an event being true over the probability of false. If an outcome is more likely to happen the odds value is above 1 and log-odds value is positive, if the outcome is more likely not to happen, the odds value is below 1 and log-odds value be negative. Taking an inverse of logit(p) function, maps log-odds ratios to probabilities bounded between 0 and 1.
+
+Logistic regression can be expressed like this: $ P(something=TRUE) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + e$. You are trying to predict that something is true based on the explanatory (x) variables.
+
+Let's load data which we will use to anticipate infants to be at risk and in-need for additional care. Separate data into train and test samples. Then build a model using command glm().
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+load("R_data_files/NatalRiskData.rData")
+train <- sdata[sdata$ORIGRANDGROUP<=5,]
+test <- sdata[sdata$ORIGRANDGROUP>5,]
+
+
+complications <- c("ULD_MECO","ULD_PRECIP","ULD_BREECH")
+riskfactors <- c("URF_DIAB", "URF_CHYPER", "URF_PHYPER",
+"URF_ECLAM")
+
+y <- "atRisk"
+x <- c("PWGT",
+"UPREVIS",
+"CIG_REC",
+"GESTREC3",
+"DPLURAL",
+complications,
+riskfactors)
+
+library(wrapr)
+fmla <- mk_formula(y, x)
+
+model <- glm(fmla, data=train, family=binomial(link="logit"))
+```
+
+To make predictions, use function predict(). To check how good our predictions are. In this double density plot, we would like to see False instances concentrated on the left, and TRUE instances - on the right.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+train$pred <- predict(model, newdata=train, type="response")
+test$pred <- predict(model, newdata=test, type="response")
+library(WVPlots)
+DoubleDensityPlot(train, "pred", "atRisk",
+title = "Distribution of natality risk scores")
+```
+
+To use the model as a classifier, you need to pick a threshold. When picking a threshold, you are balancing precision (what fraction of predicted positive values are true) and recall (what fractions of true positives classifier finds). In this case, it is difficult to do so since the two distributions are overlapping. One could pick a value around 0.02 because after that value, the rate of risky birth is 2.5 higher.
+
+We can analyze the model coefficients using coefficients() function. Positive coefficients are positively correlated with the outcome being true (infant being at risk) and negative coefficients - negatively correlated.
+
+The values of the coefficients can be understood as follows. For example, the coefficient for premature baby (GESTREC3<37weeks) is 1.54. Taking the exponent of that number we get 4.69 ($\exp(1.54)=4.69$). This means that the odds of being at risk at 4.69 times higher for a premature baby compared to a baby born at full term. If we assume that full-term baby with certain characteristics has a 1\% probability of being at risk, then risk odds are 0.01/0.99=0.0101. Taking this number and multiplying by 4.69, we get 0.047 ($0.0101*4.69=0.047$). The risk odds for a premature baby with the same characteristics is 0.047.Probability of being at risk for this premature baby then is 0.047/1.047=0.045 or 4.5\%.
+
+$$
+p = odds * (1 - p) = odds - p * odds\\
+p * (1 + odds) = odds\\
+p = odds/(1 + odds)\\
+$$
+
+Reading the model in general is the easiest with the command summary(). In general, the analysis of the summary statistics and p-values is similar to linear model. 
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+summary(model)
+```
+
+Among the differences is that instead of R-squared, we have pseudo R-squared which measures how much of the deviance (how well the model fits the data) is explained by the model. Instead of an F-test, for logistic regression we run a chi-squared test($\chi^2$). High chi-squared score and low p-value indicates that it is likely that the model found some informative patterns in the data. AIC or Akaike Information Criterion is used to decide on the number of explanatory variables. If you run multiple models with different explanatory variables on the same data, you can consider the model with the lowest AIC to be the best fit.
+
+###### Linear Regression Takeaways
+
+- Logistic regression is well calibrated: it reproduces the marginal probabilities of the data.
+Pseudo R-squared is a useful goodness-of-fit heuristic.
+
+- Logistic regression will have trouble with problems with a very large number of
+variables, or categorical variables with a very large number of levels.
+
+- Logistic regression can predict well even in the presence of correlated variables, but
+correlated variables lower the quality of the advice.
+
+- Overly large coefficient magnitudes, overly large standard errors on the coefficient
+estimates, and the wrong sign on a coefficient could be indications of correlated inputs.
+
+- Too many Fisher iterations, or overly large coefficients with very large standard errors
+could be signs that your logistic regression model has not converged, and may not be
+valid.
+
+- glm() provides good diagnostics, but rechecking your model on test data is still your
+most effective diagnostic.
+
+#### Regularization
+
+Regularization adds a penalty to the model formulation that biases model's coefficients downward. There are a few types of regularized regression. Among the more popular ones, there is Ridge regression and Lasso regression.
+
+Ridge regression minimizes the prediction error subject to minimizing the sum of squared magnitudes of the coefficients. Linear regression minimizes the sum of squared error ($(y-f(x))^2$) where as Ridge adds another component ($(y-f(x))^2+\lambda(\beta_1+\beta_2+...)^2$). Depending on how large you choose lambda to be, the stronger the minimization effect is.
+
+Lasso regression is very similar to Ridge regression except that it minimizes the not the squared magnitudes of the coefficients bu the absolute values ($(y-f(x))^2+\lambda(abs[\beta_1]+abs[\beta_2]+...)$). 
+
+Elastic net regression combines ridge and lasso regressions ($(y-f(x))^2+(1-\alpha)(\beta_1+\beta_2+...)^2+(\alpha)(abs[\beta_1]+abs[\beta_2]+...)$).
+
+To run these types of regularized regressions in R, we use package glmnet. To make the input and output of the package more comparable to lm() and glm(), we will also use package glmnetUtils.
+
+See example commands below.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, echo=TRUE}
+
+cars <- read.table('R_data_files/car.data.csv',sep = ',',header = TRUE,stringsAsFactor = TRUE)
+vars <- setdiff(colnames(cars), "rating")
+cars$fail <- cars$rating == "unacc"
+outcome <- "fail"
+set.seed(24351)
+gp <- runif(nrow(cars))
+library(zeallot)
+c(cars_test, cars_train) %<-% split(cars, gp < 0.7)
+nrow(cars_test)
+nrow(cars_train)
+
+library(wrapr)
+(fmla <- mk_formula(outcome, vars) )
+model_glm <- glm(fmla,data=cars_train,family=binomial)
+
+summary(model_glm)
+
+library(glmnetUtils)
+model_ridge <- cv.glmnet(fmla,cars_train,alpha=0, family="binomial")
+model_lasso <- cv.glmnet(fmla,cars_train,alpha=1,family="binomial")
+elastic_net <- cva.glmnet(fmla,cars_train,family="binomial")
+
+# Examine the ridge model
+coefs <- coef(model_ridge)
+coef_frame <- data.frame(coef = rownames(coefs)[-1], value = coefs[-1,1])
+ggplot(coef_frame, aes(x=coef, y=value)) +
+  geom_pointrange(aes(ymin=0, ymax=value)) +
+  ggtitle("Coefficients of ridge model") +
+  coord_flip()
+
+prediction <- predict(model_ridge, newdata = cars_test,type="response")
+cars_test$pred_ridge <- as.numeric(prediction)
+cars_test$fail[cars_test$fail==TRUE]="unacceptable"
+cars_test$fail[cars_test$fail==FALSE]="passed"
+confmat <- table(truth = cars_test$fail, prediction = ifelse(cars_test$pred_ridge > 0.5, "unacceptable","passed"))
+
+prediction <- predict(model_ridge,newdata = cars_test,type="response",s = model_ridge$lambda.min)
+
+# Finding the minimum error alpha for the elastic net model
+
+# Examine the elastic net model
+get_cvm <- function(model) {
+  index <- match(model$lambda.1se, model$lambda)
+  model$cvm[index]
+}
+
+enet_performance <- data.frame(alpha = elastic_net$alpha)
+models <- elastic_net$modlist
+enet_performance$cvm <- vapply(models, get_cvm, numeric(1))
+
+minix <- which.min(enet_performance$cvm)
+(best_alpha <- elastic_net$alpha[minix])
+
+ggplot(enet_performance, aes(x=alpha, y=cvm)) +
+  geom_point() +
+  geom_line() +
+  geom_vline(xintercept = best_alpha, color="red", linetype=2) +
+  ggtitle("CV loss as a function of alpha")
+
+(model_enet <- cv.glmnet(fmla, cars_train, alpha = best_alpha, family="binomial"))
+
+prediction <- predict(model_enet,newdata = cars_test,type="response")
+
+cars_test$pred_enet <- as.numeric(prediction)
+confmat <- table(truth = cars_test$fail, prediction = ifelse(cars_test$pred_enet > 0.5, "unacceptable","passed"))
+confmat 
+```
+
+
+
+**References**
+
+Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.
+
+---

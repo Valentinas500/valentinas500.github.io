@@ -1,0 +1,253 @@
+---
+title: "Introductory Econometrics. Chapter 14"
+---
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+
+##### Chapter 14: Advanced Panel Data Methods
+
+In Chapter 13, we learned how we can remove unobserved heterogeneities using first differencing. In Chapter 14, we learn new models that are perfectly suited for panel data analysis. 
+
+
+While first differencing is indeed very popular, there are multiple ways of eliminating fixed effects, $a_i$. One of these ways is called **fixed effects transformation** (sometimes also called **within transformation**). Assume a following model:
+$$
+y_{it} = \beta_1 x_{it} + a_i + u_{it}
+$$
+Take the average in terms of time, $t$, for each unit $i$.
+$$
+\bar{y}_i=\frac{\sum_{t=1}^T y_{it}}{T} \quad \text{and} \quad \bar{x}_i=\frac{\sum_{t=1}^T x_{it}}{T} \quad \text{and} \quad \bar{u}_i=\frac{\sum_{t=1}^T u_{it}}{T} 
+$$
+Fixed effect, $a_i$, however, does not change over time, thus $a_i=\bar{a}_i$.
+Averaged equation for each unit $i$ can be written as follows.
+$$
+\bar y_i = \beta_1 \bar x_i + a_i +\bar u_i
+$$
+Subtracting the original equation from the averaged equation, we get the following.
+$$
+(y_{it}-\bar y_i) = \beta_1 (x_{it}-\bar x_i) + (a_i-a_i) + (u_{it}-\bar u_i)
+$$
+Or
+$$
+\ddot y_{it} = \beta_1 \ddot x_{it} + \ddot u_{it} \quad \quad \quad \text{where} \quad \ddot y_{it}=(y_{it}-\bar y_i)
+$$
+We call $\ddot y_{it}$ the time-demeaned (mean-subtracted) data on y. Similarly, $\ddot x_{it}$ is the time-demeaned data on x. We note that in the time-demeaned equation, the unobserved effect, $a_i$, disappears.
+
+
+Estimating the above model using OLS with pooled panel data will give you a **fixed effects estimator**. 
+
+
+The model is the same with more explanatory variables present.
+$$
+y_{it} = \beta_1 x_{it1} + \beta_2 x_{it2} +... + \beta_k x_{itk} + a_i + u_{it}
+$$
+Following the steps explained above, the fixed effects transformation yields the following.
+$$
+\ddot y_{it} = \beta_1 \ddot x_{it1} + \beta_2 \ddot x_{it2} +... + \beta_k \ddot x_{itk} + \ddot u_{it}
+$$
+
+Any explanatory variable that is constant over time for all $i$ (as $a_i$) gets swept away by the fixed effects transformation. Thus, we cannot include variables such as gender, city's distance to a particular object and similar that do not change over time. Take note that an adjustment to degrees of freedom is needed when computing standard errors and test statistics.
+
+
+Let's look at job training and scrap rate example. There is 54 firms observed on 1987, 1988 and 1989. 19 firms received grants in 1988 and 10 different firms received grants in 1989. 
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(plm)
+data(jtrain, package="wooldridge")
+jtrain_p = pdata.frame(jtrain, index=c("fcode","year") )
+reg1=plm(lscrap~d88+d89+grant+grant_1, data=jtrain_p, model="within")
+summary(reg1)
+```
+Looking at the coefficients $d88$ and, especially, $d89$, we see that the scrap rates were decreasing over the three years. The estimated coefficients for scrap rates indicate that the grant had a larger lagged effect (compared to contemporaneous effect). Obtaining a grant in 1988 is predicted to lower the firm scrap rate in the following year (1989) by 34.4% [$\exp(-0.422)-1 \approx -0.344$].
+
+
+Dataset **wagepan** consists of observations on 545 men who worked every year from 1980 through 1987. Suppose you are interested in finding out if the return to education changed over time. To do that, you can include cross-products (interaction terms) between years and education. See the R code below.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(plm)
+data(wagepan, package='wooldridge')
+wagepan.p = pdata.frame(wagepan, index=c("nr","year") )
+pdim(wagepan.p)
+reg2=plm(lwage~married+union+factor(year)*educ, data=wagepan.p, model="within")
+summary(reg2)
+```
+All interaction terms are positive and mostly increasing over time. If we look at the last year in the sample, 1987, the return to education is around 3\% higher in that year compared to the base year, 1980. 
+
+
+A **dummy variable regression** is a type of regression in which we estimate an intercept for each unit $i$ along with other explanatory variables. While this method may have too many variables to estimate making it often not practical. However, the resulting estimates are exactly the same as in the fixed effects model described above. 
+See the above examples estimated using dummy variable regression method.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+reg1_b=lm(lscrap~grant+grant_1+factor(year)+factor(fcode), data=jtrain)
+reg2_b=lm(lwage~married+union+factor(year)*educ+factor(nr), data=wagepan)
+```
+
+
+When dataset contains only two time periods, fixed effects (FE) model and first-differencing (FD) model (from Chapter 13) will yield identical estimates and statistics, thus it does not matter which one of them researcher chooses to use. With more than two time periods, FE and FD estimators are not the same. When $u_{it}$ are serially uncorrelated, FE model is more efficient than FD. If $u_{it}$ is serially correlated, for example, as in random walk, then difference $\Delta u_{it}$ is not correlated and thus FD model is better than FE. If number of periods, $T$, is larger than explanatory variables, $N$, FD model is more appropriate. In case the results using FE and FD models are significantly different, it is useful to report both models' results and try to identify why they may be different.
+
+
+If panel data is missing years for some cross-sectional units in the sample, we call such data set **unbalanced panel**. While the estimation is almost the same as with a balanced panel, it is important to know why some observations are missing. If we have missing data for some unit $i$ that is not correlated with $u_{it}$, unbalanced panel causes no problems. If data is missing not randomly, that is if some units leave the sample (attrition), and this attrition is correlated with idiosyncratic error, $u_{it}$, then our estimators will be biased.
+
+
+Let's look back at the job training and scrap rate example with 54 firms observed in 1987, 1988 and 1989. If we add $\log(sales_{it})$ (firm's annual sales) and $\log(employ_{it})$ (number of employees in a firm), we lose 54 firms from the analysis because they havoc no data on sale and employment. Some additional firms have a few observations missing for one or both of these variables but the overall results do not change. See the R code below.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+reg3=plm(lscrap~d88+d89+grant+grant_1+log(sales)+log(employ), data=jtrain_p, model="within")
+summary(reg3)
+```
+
+
+Another popular model for panel data is called **random effects model**. Assume we have the following model:
+$$
+y_{it} = \beta_0 + \beta_1 x_{it1} + ... + \beta_k x_{itk} + a_i + u_{it} 
+$$
+Suppose we think $a_i$ is uncorrelated with each explanatory variable in all time periods. Then, using a transformation to eliminate $a_i$ results in inefficient estimators. The equation above becomes a random effect model when we assume that unobserved effect $a_i$ is uncorrelated with each explanatory variable:
+$$
+\text{Cov}(x_{itj},a_i)=0 \quad \text{for} \quad t=1,2,...,T; \quad j=1,2,...,k.
+$$
+If we think that unobserved effect $a_i$ is correlated with any explanatory variables, we should use first differencing or fixed effects model. The question is how we should estimate $\beta_j$? Using the panel data as simple cross-section would not violate any assumptions but disregard a lot of important information. On the other hand, running OLS of $y_{it}$ on all explanatory variables and time dummies leads to serial correlation of the composite error term. Assume you use the following model:
+$$
+y_{it}=\beta_0+\beta_1 x_{it1}+...+\beta_k x_{itk} + v_{it} \quad \text{where} \quad v_{it}=a_i + u_{it}
+$$
+Since $a_{it}$ is in each time period, serial correlation of composite error terms is:
+$$
+\text{Corr}(v_{it},v_{is})=\sigma^2_a/(\sigma_a^2+\sigma_u^2), \quad \text{when} \quad t\neq s
+$$
+
+To avoid this postie serial correlation, we can use generalized least squares (GLS) transformation. We should have a relatively large number of units $N$ and a relatively small number of time periods $T$. GLS transformation, that eliminates serial correlation, basics are as follows. Define $theta$ as:
+$$
+\theta=1-[\sigma^2_u/(\sigma_u^2+T\sigma^2_a)]^{1/2}
+$$
+This theta is between 0 and 1. The transformed equation then becomes:
+$$
+y_{it}-\theta \bar y_i = \beta_0(1-\theta)+\beta_1(x_{it1}-\theta \bar x_{i1})+...+
+\beta_k (x_{itk}-\theta \bar x_{ik}) + (v_{it}-\theta \bar v_i)
+$$
+The bars above variables denote the variable averages over time for unit $i$. While we previously learned that fixed effects (FE) estimator subtracts the time averages from the corresponding variable, random effects transformation only subtracts fraction $\theta$ of that time average. The GLS estimator is simply the pooled OLS estimator of the above equation. Resulting errors are not serially correlated. While the parameter $\theta$ is not known, we can estimate it. It typically is estimated as follows:
+$$
+\hat \theta = 1 - [1/(1+T[\hat \sigma^2_a/\hat\sigma^2_u])]^{1/2}
+$$
+Consistent estimators $\hat \sigma^2_a$ and $\hat \sigma^2_u$ can be based on pooled OLS or fixed effects residuals.
+$$
+\hat \sigma^2_a = [NT(T-1)/2-(k+1)]^{-1}\sum^N_{i=1} \sum^{T-1}_{t=1} \sum^T_{s=t+1} \hat v_{it} \hat v_{is}
+$$
+$$
+\hat \sigma^2_u = \hat \sigma^2_v - \hat \sigma^2_a
+$$
+
+The feasible GLD estimator that uses $\hat \theta$ is called the **random effects estimator** (RE).
+
+
+Let's look at the transformed equation again.
+$$
+y_{it}-\theta \bar y_i = \beta_0(1-\theta)+\beta_1(x_{it1}-\theta \bar x_{i1})+...+
+\beta_k (x_{itk}-\theta \bar x_{ik}) + (v_{it}-\theta \bar v_i)
+$$
+
+We can easily compare pooled OLS with RE (random effects) and FE (fixed effects) models. When we set $\theta=0$, we obtain pooled OLS estimators; when $\theta=1$, we obtain fixed effects estimators; and when $\theta$ is between 0 and 1, we obtain random effects estimators. Comparing the three sets of estimates can help us determine the nature of the biases caused by leaving the unobserved effect, $a_i$, entirely in the error term (as does pooled OLS) or partially in the error term (as does the RE transformation).
+
+
+Let's look at the wage equation for men using **wagepan** dataset from package **wooldridge**. We can compare three methods: pooled OLS, random effects and fixed effects. Note that in fixed effects model, dummy variables for education and race drop out since they do not vary within the same individual over time. See the R-code below.
+
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+wagepan.p$yr<-factor(wagepan.p$year)
+reg.ols<- (plm(lwage~educ+black+hisp+exper+I(exper^2)+married+union+yr, 
+                                      data=wagepan.p, model="pooling") )
+reg.re <- (plm(lwage~educ+black+hisp+exper+I(exper^2)+married+union+yr, 
+                                      data=wagepan.p, model="random") )
+reg.fe <- (plm(lwage~                      I(exper^2)+married+union+yr, 
+                                      data=wagepan.p, model="within") )
+summary(reg.re)[7]
+# Pretty table of selected results (not reporting year dummies)
+stargazer(reg.ols,reg.re,reg.fe, type="text", 
+          column.labels=c("OLS","RE","FE"),keep.stat=c("n","rsq"),
+          keep=c("ed","bl","hi","exp","mar","un"))
+
+```
+Standard errors in the pooled OLS regression ignore positive serial correlation and thus are incorrect. While the results are, in general, in line across all models, the magnitude is significantly smaller in FE than RE and even more so than pooled OLS. Having $\theta=0.6429$, we see that RE estimates are closer to FE than pooled OLS.
+
+
+A researcher may want to know how to decide which model is more appropriate in certain situations. Since FE allows arbitrary correlation between $a_i$ and $x_{itj}$ while RE doesn't, FE is considered more convincing. However, FE model is not able to estimate the effects of explanatory variables that are constant over time. If one of the key variables is constant over time, researcher would want to use RE model which is preferred to pooled OLS. Remember that in RE, one must include as many time-constant controls as in pooled OLS, but this is not necessary in FE.
+
+
+It is fairly common to use both RE and FE and then test for statistically significant differences in coefficients using Hausman test. One should use RE unless the Hausman test rejects $\text{Cov}(x_{itj},a_i)=0 \text{ for all }  t,j$. Failure to reject means that estimates from RE and FE are close enough so that it does not matter which one you use. A rejection using the Hausman test is taken to mean that the key RE assumption, $\text{Cov}(x_{itj},a_i)=0$, is false, and then the FE estimates are used. 
+
+
+The key issue that determines whether we use FE or RE is whether we can plausibly assume that $a_i$ is uncorrelated with all $x_{itj}$. FE is almost always much more convincing than RE for policy analysis using aggregated data.
+
+
+There is another approach called **correlated random effects** or CRE. It is appropriate to use when it makes sense to view $a_i$ as being random variables along with the observed variables. In this approach, we model correlation between $a_i$ and $\{x_{it}: t=1,2,...,T\}$. Assume a linear relationship between $a_i$ and time average $\bar x_i = (\sum_{t=1}^T x_{it})/T$.
+$$
+a_i=\alpha+\gamma\bar x_i + r_i \quad \text{where } \text{Cov}(\bar x_i,r_i)=0
+$$
+
+Assume a model with single explanatory variable:
+$$
+y_{it}=\beta_1 x_{it} + a_i+u_{it}
+$$
+Substitute $a_i=\alpha+\gamma\bar x_i + r_i$ into the equation.
+$$
+y_{it}=\alpha + \beta_1 x_{it} + \gamma\bar x_i + r_i + u_{it}
+$$
+While this is similar to RE, it has $\gamma \bar x_i$ which controls the correlation between $a_i$ and $x_it$. The remaining part $r_i$ is uncorrelated with $x_it$.
+
+
+There are two good reasons to use correlated random effects (CRE) approach.
+1. CRE approach gives a simple formal way of choosing between FE and RE. In RE, $\gamma=0$, while in FE, $\gamma=1$. Using CRE, we estimate $\hat \gamma_{CRE}$ and can test (simple t-test) whether $\gamma$ is significantly different from zero. If we reject $H_0:\gamma=0$ at a sufficiently small significance level, we reject RE in favor of FE.
+2. CRE also allows to include time-constant explanatory variables in what is effectively a fixed effects analysis. 
+
+
+Interestingly, we can apply panel data methods to data structures that do not involve time. Geronimus and Koreman (1992) used pairs of sisters to study the effects of teen childbearing on future economic outcomes (measured as income relative to needs).
+$$
+log(inc\_needs_{fs}) = \beta_0 + \delta_0 (sister2_s) + \beta_1(teenbrth_{fs}) + \beta_2(age_{fs}) + other\_factors + a_f + u_{fs}
+$$
+where $_f$ index denotes the family, and $_s$ indexes the sister within a family. Differencing removes the family effect $a_f$.
+$$
+\Delta \log(inc\_needs)=\delta_0+ \beta_1 \Delta(teenbrth)+\beta_2\Delta(age)+...+u
+$$
+The samples used by Geronimus and Korenman (1992) and Ashenfelter and Krueger (1994)
+are examples of **matched pairs samples**. More generally, fixed and random effects methods can be applied to a **cluster sample**. A cluster sample has the same appearance as a cross-sectional data set, but there is an important difference: clusters of units are sampled from a population of clusters rather than sampling individuals from the population of individuals. In the previous examples, each family is sampled from the population of families, and then we obtain data on at least two family members. Therefore, each family is a cluster.
+
+
+
+**Homework Problems**
+
+<p class="comment"> Computer Exercise C1.\
+Use the data in **rental** for this exercise. The data on rental prices and other variables for college towns are for the years 1980 and 1990. The idea is to see whether a stronger presence of students affects rental rates. The unobserved effects model is
+$$log(rent_{it}) = \beta_0 + \delta_0 y90_{t} + \beta_1\log(pop{it}) + \beta_2log(avginc{it})
++ \beta_3 pctstu_{it} + a_i + u_{it},$$
+where $pop$ is city population, $avginc$ is average income, and $pctstu$ is student population as a percentage of city population (during the school year).
+1. Estimate the equation by pooled OLS and report the results in standard form. What do you make of the estimate on the 1990 dummy variable? What do you get for $\beta^{pctstu}$? \
+2. Are the standard errors you report in part 1 valid? Explain. \
+3. Now, difference the equation and estimate by OLS. Compare your estimate of $\beta_{pctstu}$ with that from part 1. Does the relative size of the student population appear to affect rental prices? \
+4. Estimate the model by fixed effects to verify that you get identical estimates and standard errors to those in part 3.
+</p>
+
+<p class="comment"> Computer Exercise C3.\
+For this exercise, we use **jtrain** to determine the effect of the job training grant on hours of job training per employee. The basic model for the three years is
+$$hrsemp_{it} = \beta_0 + \delta_1d88_t + \delta_2 d89_t + \beta_1 grant_{it} + \beta_2 grant_{i,t-1} + \beta_3\log(employ_{it})  + a_i + u_{it}.$$
+1. Estimate the equation using fixed effects. How many firms are used in the FE estimation? How many total observations would be used if each firm had data on all variables (in particular, hrsemp) for all three years? \
+2. Interpret the coefficient on $grant$ and comment on its significance. \
+3. Is it surprising that $grant_{-1}$ is insignificant? Explain. \
+4. Do larger firms provide their employees with more or less training, on average? How big are the differences? (For example, if a firm has 10% more employees, what is the change in average hours of training?)
+</p>
+
+<p class="comment"> Computer Exercise C15. \
+1. In the wage equation in Example 14.4, explain why dummy variables for occupation might be important omitted variables for estimating the union wage premium. \
+2. If every man in the sample stayed in the same occupation from 1981 through 1987, would you need to include the occupation dummies in a fixed effects estimation? Explain. \
+3. Using the data in **wagepan** include eight of the occupation dummy variables in the equation and estimate the equation using fixed effects. Does the coefficient on union change by much? What about its statistical significance?
+</p>
+
+
+
+**References**
+
+Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.
+
+Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.
+
+---

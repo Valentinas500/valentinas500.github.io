@@ -1,0 +1,217 @@
+---
+title: "Bivariate Golden Section Search"
+---
+
+
+Golden section search is a technique locating the maximum of a function. This method efficiently reduces the area in which the maximum of the function exists. If there are multiple maximums in the given area, the function will converge to one of them.
+
+This GSS bivariate function requires the user to input the two interval endpoints, the function, and the level of accuracy (smaller level = more accuracy).
+
+To illustrate how GSS works in a bivariate case, let's examine an example. For example, you are interested to find the max of $f(x,y)=-x^2-y^2$ over a large interval of $x$ and $y$. We already know that the max is $(0,0)$ so we will be able to compare the answer provided by the code with the true max.
+
+Say, we are interested in the max of this function over the interval $x=(-25,40)$ and $y=(-100,111)$. First, the algorithm creates a rectangle with corner coordinates user provides. Then, four more points are created in the middle of the given rectangle according to the GSS method. The user given function is evaluated at those four coordinates. The algorithm finds the max of the four inner points, and reduces the outer rectangle around the new max. In the next step, four new inner points are found which are then again evaluated. The procedure continues until area of the rectangle is sufficiently small (depends on user input).
+
+
+![](gss/Rplot1.png)
+![](gss/Rplot2.png)
+![](gss/Rplot3.png)
+![](gss/Rplot4.png)
+
+
+Matlab function [[download](gss_bivariate.m)]
+
+<div class="content"><pre class="codeinput"><span class="keyword">function</span>[Afinal,Bfinal]=gss_bivariate(A1,A4,B1,B4,fun,eps)
+<span class="comment">%This function performs a bivariate golden section search method.</span>
+<span class="comment">%Inputs are two points for each variable and a bivariate function.</span>
+<span class="comment">%For example: [xstar,ystar]=gss_bivariate(-25,40,-100,111,@(x,y)-x^2-y^2,0.00001)</span>
+
+p=(sqrt(5)-1)/2;
+
+A2=p*A1+(1-p)*A4;
+B2=p*B1+(1-p)*B4;
+A3=(1-p)*A1+p*A4;
+B3=(1-p)*B1+p*B4;
+
+f22=fun(A2,B2);
+f23=fun(A2,B3);
+f32=fun(A3,B2);
+f33=fun(A3,B3);
+all_fun=[f22,f23,f32,f33];
+
+area=10;
+
+<span class="keyword">while</span> area&gt;eps
+    <span class="keyword">if</span> max(all_fun)==f22
+        A1=A1; B1=B1;
+        A4=A3; B4=B3;
+        A3=A2; B3=B2;
+        A2=p*A1+(1-p)*A4;
+        B2=p*B1+(1-p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f33
+        A1=A2; B1=B2;
+        A4=A4; B4=B4;
+        A2=A3; B2=B3;
+        A3=(1-p)*A1+(p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f23
+        A1=A1; B1=B2;
+        A4=A3; B4=B4;
+        A3=A2; B2=B3;
+        A2=p*A1+(1-p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    <span class="keyword">elseif</span> max(all_fun)==f32
+        A1=A2; B1=B1;
+        A4=A4; B4=B3;
+        A2=A3; B3=B2;
+        A3=(1-p)*A1+(p)*A4;
+        B2=p*B1+(1-p)*B4;
+    <span class="keyword">end</span>
+    f22=fun(A2,B2);
+    f23=fun(A2,B3);
+    f32=fun(A3,B2);
+    f33=fun(A3,B3);
+    all_fun=[f22,f23,f32,f33];
+    area=abs((A4-A1)*(B4-B1));
+
+<span class="keyword">end</span>
+Afinal=A2;
+Bfinal=B2;
+
+<span class="keyword">end</span>
+</pre>
+
+R function [[download](gss_bivariate.R)]
+```{r, eval=FALSE}
+gss_bivariate <- function(fx, A1, A4, B1, B4, eps) {
+  #The function uses golden-section search to find the max 
+  #of a given function over a given area.
+  #Inputs are the function, min and max values for the x and y ranges.
+  #Enter the function in quotes using x and y as indep variables,
+  #for example as this: "-(x^2)-(y^2)"
+  #Full entry, for example: gss_bivariate("-(x^2)-(y^2)",-10,10,-10,10,0.00001)
+  
+  fun=parse(text=fx) #Read the given expression (function)
+  
+  p=(5^(1/2)-1)/2;
+  
+  A2=p*A1+(1-p)*A4;
+  B2=p*B1+(1-p)*B4;
+  A3=(1-p)*A1+p*A4;
+  B3=(1-p)*B1+p*B4;
+  
+  x=A2; y=B2; f22=eval(fun);
+  x=A2; y=B3; f23=eval(fun);
+  x=A3; y=B2; f32=eval(fun);
+  x=A3; y=B3; f33=eval(fun);
+  all_fun=c(f22,f23,f32,f33);
+  
+  area=10;
+  
+  while (area>eps){
+    if (max(all_fun)==f22){
+      A1=A1; B1=B1;
+      A4=A3; B4=B3;
+      A3=A2; B3=B2;
+      A2=p*A1+(1-p)*A4;
+      B2=p*B1+(1-p)*B4;
+    } else if (max(all_fun)==f33) {
+      A1=A2; B1=B2;
+      A4=A4; B4=B4;
+      A2=A3; B2=B3;
+      A3=(1-p)*A1+(p)*A4;
+      B3=(1-p)*B1+(p)*B4;
+    } else if (max(all_fun)==f23) {
+      A1=A1; B1=B2;
+      A4=A3; B4=B4;
+      A3=A2; B2=B3;
+      A2=p*A1+(1-p)*A4;
+      B3=(1-p)*B1+(p)*B4;
+    } else {
+      A1=A2; B1=B1;
+      A4=A4; B4=B3;
+      A2=A3; B3=B2;
+      A3=(1-p)*A1+(p)*A4;
+      B2=p*B1+(1-p)*B4;
+    }
+    x=A2; y=B2; f22=eval(fun);
+    x=A2; y=B3; f23=eval(fun);
+    x=A3; y=B2; f32=eval(fun);
+    x=A3; y=B3; f33=eval(fun);
+    all_fun=c(f22,f23,f32,f33);
+    area=abs((A4-A1)*(B4-B1));
+  }
+  return(c(A2,B2)) 
+}
+
+```
+
+Python function [[download](gss_bivariate.Py)]
+```{python, eval=FALSE}
+def gss_bivariate(fun, A1, A4, B1, B4, eps):
+  #The function uses golden-section search to find the max 
+  #of a given function over a given area.
+  #Inputs are the function, min and max values for the x and y ranges.
+  #Enter the function in quotes using x and y as indep variables,
+  #for example as this: "-(x**2)-(y**2)"
+  #Full entry, for example: gss_bivariate("-(x**2)-(y**2)",-10,10,-10,10,0.00001)
+  
+  p=(5**(1/2)-1)/2;
+  A2=p*A1+(1-p)*A4;
+  B2=p*B1+(1-p)*B4;
+  A3=(1-p)*A1+p*A4;
+  B3=(1-p)*B1+p*B4;
+  x=A2; y=B2; f22=eval(fun);
+  x=A2; y=B3; f23=eval(fun);
+  x=A3; y=B2; f32=eval(fun);
+  x=A3; y=B3; f33=eval(fun);
+  all_fun=[f22,f23,f32,f33];
+  
+  area=10; #Initialize area
+  
+  while area>eps:
+    if max(all_fun)==f22:
+        A1=A1; B1=B1;
+        A4=A3; B4=B3;
+        A3=A2; B3=B2;
+        A2=p*A1+(1-p)*A4;
+        B2=p*B1+(1-p)*B4;
+    elif max(all_fun)==f33:
+        A1=A2; B1=B2;
+        A4=A4; B4=B4;
+        A2=A3; B2=B3;
+        A3=(1-p)*A1+(p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    elif max(all_fun)==f23:
+        A1=A1; B1=B2;
+        A4=A3; B4=B4;
+        A3=A2; B2=B3;
+        A2=p*A1+(1-p)*A4;
+        B3=(1-p)*B1+(p)*B4;
+    else:
+        A1=A2; B1=B1;
+        A4=A4; B4=B3;
+        A2=A3; B3=B2;
+        A3=(1-p)*A1+(p)*A4;
+        B2=p*B1+(1-p)*B4;  
+    x=A2; y=B2; f22=eval(fun);
+    x=A2; y=B3; f23=eval(fun);
+    x=A3; y=B2; f32=eval(fun);
+    x=A3; y=B3; f33=eval(fun);
+    all_fun=[f22,f23,f32,f33];
+    area=abs((A4-A1)*(B4-B1));
+  return [A2,B2] 
+```
+
+
+
+<style type="text/css">
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+</style>

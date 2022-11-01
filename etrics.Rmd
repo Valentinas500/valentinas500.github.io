@@ -1,0 +1,108 @@
+---
+title: "Introductory Econometrics"
+---
+
+
+#### Taught Courses
+
+- [ECON 3885, Spring 2020 at Fordham University](etricsSpring2020.html)
+
+- [ECON 3885, Fall 2019, Fordham University](https://drive.google.com/file/d/1kslihwSkY2TlmGkCMA-M_zcFmrqxy39e/view?usp=sharing)
+
+#### Notes on Introductory Econometrics 
+*Based on Wooldridge, J. (2019). Introductory Econometrics: A Modern Approach. Boston, MA: Cengage.*
+
+- [Chapter 1: The Nature of Econometrics and Economic Data](etricsCh1.html)
+- [Chapter 2: The Simple Regression Model](etricsCh2.html)
+- [Chapter 3: The Multiple Regression Analysis: Estimation](etricsCh3.html)
+- [Chapter 4: The Multiple Regression Analysis: Inference](etricsCh4.html)
+- [Chapter 5: The Multiple Regression Analysis: OLS Asymptotics](etricsCh5.html)
+- [Chapter 6: Multiple Regression Analysis: Further Issues](etricsCh6.html)
+- [Chapter 7: Multiple Regression Analysis with Dummy Variables](etricsCh7.html)
+- [Chapter 8: Heteroskedasticity](etricsCh8.html)
+- [Chapter 9: Specification and Data Issues](etricsCh9.html)
+- [Chapter 10: Basic Regression Analysis with Time Series Data](etricsCh10.html)
+- [Chapter 11: Issues in Using OLS with Time Series Data](etricsCh11.html)
+- [Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions](etricsCh12.html)
+- [Chapter 13: Pooling Cross Sections across Time: Simple Panel Data Methods](etricsCh13.html)
+- [Chapter 14: Advanced Panel Data Methods](etricsCh14.html)
+- [Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares](etricsCh15.html)
+- [Chapter 16: Simultaneous Equation Models](etricsCh16.html)
+- [Chapter 17: Limited Dependent Variable Models: Logit and Probit](etricsCh17.html)
+- [Chapter 18: Advanced Time Series Topics](etricsCh18.html)
+- [Chapter 19: Carrying Out an Empirical Project](etricsCh19.html)
+
+#### Notes on Practical Data Science With R
+*Based on Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.*
+
+- [Chapter 2: Starting with R and Data](dataCh2.html)
+- [Chapter 3: Exploring Data: Summary Statistics and Plots](dataCh3.html)
+- [Chapter 4: Managing Data](dataCh4.html)
+- [Chapter 5: Data Engineering and Data Shaping](dataCh5.html)
+- [Chapter 6: Choosing and Evaluating Models](dataCh6.html)
+- [Chapter 7: Linear and Logistic Regression](dataCh7.html)
+- [Chapter 8: Advanced Data Preparation](dataCh8.html)
+- [Chapter 9: Unsupervised Methods](dataCh9.html)
+    
+#### Additional Material
+    
+- [Introduction to Basic Graphs in R for Econometricians](etrics_basicplots.html)
+- [Correlation in R](etrics_correlation.html)
+- [Reporting and Comparing Regression Results in R](etrics_compareregressionresults.html)
+- Time Series Analysis and Visualization in R
+- Panel Data Visualization in R
+- [Data Visualization Using 'googleVis'](etrics_googleVis.html)
+- Data Manipulation and Visualization in R with 'tidyverse'
+- Interactive Apps Using 'shiny' In R
+- Topics in Advanced Econometrics
+- Nonparametric Econometrics in R
+- Advanced Time Series Analysis in R
+- Quantile Regressions in R
+- Simple Machine Learning Algorithms in R
+- [K-Nearest Neighbors Algorithm in R](etrics_algoknearest.html)
+
+<!-- #### Intro to Programming
+
+- R
+- Matlab/Octave
+- Python
+- SQL
+- Julia 
+- Ruby
+- C#
+- VBA
+
+#### Skills
+- High-Frequency Trading
+- linear algebra and vector manipulation
+- Monte Carlo simulation, trinomial trees and finite differences.
+- Data Mining
+- Auto-regression
+- Auto-correlation
+- Principal Component Analysis
+- Equity Long/Short experience with focus on Index Equity
+- Machine Learning
+- Non-parametric Econometrics
+- Factor modeling
+- Derivative pricing
+- Understanding of equities portfolio construction, risk/return attribution, transaction cost analysis, and portfolio research, coupled with ability to view and react to live portfolios
+- Bayesian optimization, stochastic modeling, 
+- ML and NLP models for acquiring and analyzing proprietary unstructured textual data
+- Portfolio optimization
+- Reduced Form Causal Analysis?
+- Experimental research 
+- Relative value models for fixed income and interest rates derivatives
+- systematic alpha research
+- automated market making
+- financial research and portfolio management.
+- Domain knowledge in futures is a plus
+- survey sampling and design, significance testing, regression modeling, experimental design, behavioral data analysis)
+- GLM, analysis of quasi-experimental research designs with non-equivalent groups (e.g., regression adjustment, matching, propensity score stratification), longitudinal analysis, classification, dimension reduction, clustering, hierarchical linear (random effects) modeling, etc., to people research problems in organizations
+- scikit-learn, Pandas, keras, and tensorflow
+- Experience using MSCI’s Barra One or Risk Manager models for fixed income analysis/risk management and scenario analysis
+- Experience using Bloomberg’s GRM or PORT models for fixed income analysis/risk management and scenario analysis
+- ML/AI approaches, including classification, clustering, and regression
+- Machine learning skills: Machine Learning techniques such as NLP, K means clustering, Neural Networks etc
+- Systematic/High Frequency or Electronic Trading
+
+-->

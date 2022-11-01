@@ -1,0 +1,299 @@
+---
+title: "Introductory Econometrics. Chapter 12"
+---
+
+<style>
+p.comment {
+background-color: #e8e8e8;
+padding: 10px;
+border: 0px solid black;
+margin-left: 25px;
+border-radius: 5px;
+}
+</style>
+
+##### Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions
+
+
+When the dynamics of a time-series model are completely specified, the errors are not serially correlated. Testing for serial correlation, thus, can detect misspecification. On the other hand, static and finite distributed lag models often have serially correlated errors even when the model is specified correctly. In this chapter, we go over the consequencies and remedies for serial correlation. In addition, we discuss heteroskedasticity issues in time series regressions.
+
+
+As long as the explanatory variables are strictly exogenous, the estimators, $\hat \beta_j$ are unbiased and when at least the data is weakly dependent, $\hat\beta_j$ are consistent. Unbiasedness and consistency does not depend on serial correlation in errors.
+
+
+However, with serially correlated errors, OLS is no longer best linear unbiased estimator. More importantly, test statistics are not valid. Since errors and indepdenent variables in the regression are often positively correlated, the usual OLS variance is typically understates the true variance. We will think that the OLS slope estimator is more precise than it actually is. Usual statistics and hypothesis testing is invalid with serial correlation. R-squared and adjusted R-squared are still valid as long as the data is stationary and weakly dependent.
+
+
+There are methods developed to test for serial correlation in the errors terms.
+
+
+The most popular and simplest model is AR(1) serial correlation with strictly exogenous regressors. The test is summarized as follows:
+
+1. Run the OLS regression of $y_t$ on $x_{t1},...,x_{tk}$ and obtain the OLS residuals, $\hat u_t$, for all $t=1,2,3,...n$.
+2. Run the regression of $\hat u_t$ on $\hat u_{t-1}$, for all $t=1,2,3,...,n$, obtaining the slope coefficient on $\hat u_{t-1}$, $\hat \rho$ and its t-statistic, $t_{\hat \rho}$.
+3. Use $t_{\hat \rho}$ to test $H_0: \rho=0$ against $H_1:\rho\neq 0$ in hte usual way. (Since typically it is expected that $\rho>0$, alternative can be $H_1:\rho> 0$).Usually, we conclude that we have a serial correlation problem if $H_0$ is rejected at 5\% level.
+
+
+In deciding whether serial correlation needs to be addressed, we should remember the difference between practical and statistical significance. Even if we find serial correlation, we should check if the magnitude is large enough. If $\hat \rho$ is close to zero, OLS inference procedures will not be far off.
+
+
+In previous chapters, we studied a static and augmented (assuming adaptive expectations) Philips curve showing the relationship between inflation and unemployment. 
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(dynlm); library(lmtest)
+data(phillips, package="wooldridge")
+tsdata = ts(phillips, start=1948)
+
+# Static Phillips curve:
+reg_static = dynlm( inf ~ unem, data=tsdata, end=1996)
+resid_static=resid(reg_static)
+coeftest( dynlm(resid_static ~ L(resid_static)) )
+
+# Expectations-augmented Phillips curve:
+reg_exp.augm <- dynlm( d(inf) ~ unem, data=tsdata, end=1996)
+resid_exp.augm <- resid(reg_exp.augm)
+coeftest( dynlm(resid_exp.augm ~ L(resid_exp.augm)) )
+```
+While for the static model, we find strong evidence of positive first order serial correlation, while in the expectations augmented model, there is no evidence of AR(1) serial correlation of errors. 
+
+
+Although this test can detect other kinds of serial correlation that causes adjacent errors to be correlated, it does not detect serial correlation where adjacent errors are uncorrelated (as when $\text{Corr}(u_t,u_{t-1})=0$ but $\text{Corr}(u_{t-1},u_{t-2})\neq 0$).
+
+
+Another very popular test for AR(1) serial correlation is called Durbin-Watson test also based on OLS residuals. Durbin-Watson statistic ($DW$) is computed as follows.
+$$
+DW=\frac{\sum_{t=2}^n(\hat u_t-u_{t-1})^2}{\sum_{t=1}^n \hat u_t^2}
+$$
+If one compares DW test to the previous serial correlation test based on $\hat \rho$, we notice that they are closely related.
+$$
+DW\approx2(1-\hat\rho)
+$$
+No serial correlation ($\hat\rho\approx 0$) implies $DW\approx 0$, and $\hat\rho=0$ implies $DW<2$. Since the null and the alternative hypotheses are $H_0:\rho=0$ $H_1:\rho>0$, we are looking for DW value that is significantly lower than 2. Due to computation reasons, we typically compare the the DW statistic with the upper $d_U$ and lower $d_L$ critical values. If $DW<d_L$, we reject $H_0$ in favor of $H_1$, if $DW>d_U$, we fail to reject $H_0$, and if $d_L<DW<d_U$, the test is incoclusive.
+
+
+See Durbin-Watson test applied to Phillips curve example.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+dwtest(reg_static)
+dwtest(reg_exp.augm)
+```
+
+
+Due to necessary assumptions and possibly wide range of inconclusive region, DW test is often less practicall than the simple t-test for $\hat\rho$.
+
+
+When the explanatory variables are not strictly exogenous (that is one or more of $x_tj$ is correlated with $u_{t-1}$), neither t-test nor DW tests are valid. Durbin suggested an alternative statistic when explanatory variables are not strictly exogenous. The steps are as follows.
+
+1. Run the OLS regression of $y_t$ on $x_{t1}, ... , x_{tk}$ and obtain the OLS residuals, $\hat u_t$, for all $t = 1, 2, 3,... , n$.
+2.  Run the regression of $\hat u_t$ on $x_{t1}, x_{t2}, ... , x_{tk}, \hat u_{t-1}$, for all $t = 2, , 3, ..., n$  to obtain the coefficient $\hat\rho$ on $\hat u_{t-1}$ and its t statistic, $t_{\hat\rho}$.
+3. Use $t_{\hat\rho}$ to test $H_0: \rho = 0$ against $H_1: \rho \neq 0$ in the usual way (or use a one-sided alternative).
+
+
+Let's look at an example in which we study the minimum wage effect on employment in Puerto Rico (See examples 10.3 and and 10.9 in Chapter 10 in the textbook). 
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+data(prminwge, package='wooldridge')
+step1a=lm(log(prepop)~log(mincov)+log(prgnp)+log(usgnp)+t,data=prminwge)
+step1_resid=resid(step1a)
+len=length(step1_resid)
+step1_resid_1=step1_resid[1:len-1]
+step1_resid=step1_resid[2:len]
+mincovX=prminwge$mincov[2:len]
+prgnpX=prminwge$prgnp[2:len]
+usgnpX=prminwge$usgnp[2:len]
+tX=prminwge$t[2:len]
+step2=lm(step1_resid~step1_resid_1+log(mincovX)+log(prgnpX)+log(usgnpX)+tX)
+summary(step2)
+```
+The estimated coefficient on $\hat u_{t-1}$ is 0.4805 and is statistically different from zero at 1\% level which indicates evidence of AR(1) serial correlation in errors.
+
+
+This test can be easily extended to test for higher order serial correlation. Follow these steps.
+1. Run the OLS regression of $y_t$ on $x_{t1}, ... , x_{tk}$ and obtain the OLS residuals, $\hat u_t$, for all $t = 1, 2, 3,... , n$.
+2.  Run the regression of $\hat u_t$ on $x_{t1}, x_{t2}, ... , x_{tk}, \hat u_{t-1},\hat u_{t-2},...,\hat u_{t-q}$, for all $t = (q+1), ..., n$  to obtain coefficients $\hat\rho_1,...,\hat\rho_{q}$ on $\hat u_{t-1},...,\hat u_{t-q}$.
+3. Compute the F test for joint significance that all lagged errors jointly are not different from zero: $H_0: \rho_{1}=0,..., \rho_{q}=0$
+
+
+Below example is a study of barium chloride antidumping filings and imports. Using monthly data, authors of the study among other tried to answer the following questions: were imports unusually high in the period immediately preceding the initial filing; did imports change noticeably after an antidumping filing; what was the reduction in imports after a decision in favor of the U.S. industry? While we studied this example in more detail in Chapter 10, here we discuss serial correlation. Since the data is monthly, one would expect a higher order of serial correlation. Below is an example test of AR(3) serial correlation in errors.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(dynlm);library(car);library(lmtest)
+data(barium, package='wooldridge')
+tsdata = ts(barium, start=c(1978,2), frequency=12)
+reg = dynlm(log(chnimp)~log(chempi)+log(gas)+log(rtwex)+
+                                  befile6+affile6+afdec6, data=tsdata )
+
+# Manual test: 
+residual = resid(reg)
+resreg = dynlm(residual ~ L(residual)+L(residual,2)+L(residual,3)+
+                           log(chempi)+log(gas)+log(rtwex)+befile6+
+                                          affile6+afdec6, data=tsdata )
+linearHypothesis(resreg, 
+                 c("L(residual)","L(residual, 2)","L(residual, 3)"))
+# Automatic test:
+bgtest(reg, order=3, type="F")
+```
+Since the p-value of the F-test is 0.0023, we find strong evidence of AR(3) serial correlation. 
+
+
+If we detect serial correlation, we either have to respecify the model in order to be able to estimate the model with complete dynamics, or simply correct for serial correlation for inference. One way to correct for serial correlation is called feasible generalized least squares (feasible GLS or FGLS). FGLS methods requires to run an OLS regression, and then using the residuals from that regression, run a regression of $\hat u_t = \hat u_{t-1}$ to obtain $\hat \rho$ which is then used to obtain a quasi-differenced data: $\tilde y_t=y_t-\hat\rho y_{t-1}$, $\tilde x_t=x_t-\hat\rho x_{t-1}$. A final regression is then run using transformed data.
+$$\tilde y_t = \beta_0 \tilde x_{t0} + \beta_1 \tilde x_{t1} + ... + \beta_k \tilde x_{tk} + error_t $$
+with $\tilde x_{t0}=(1-\hat\rho) \text{ for } t\geq2 \quad \text{and} \quad \tilde x_{t0}=(1-\hat\rho^2)^{1/2} \text{ for } t = 1$. This method is called Prais-Winsten estimation. Very similar method named Cochrane-Orcutt simply omits the first (when t=1) observation.
+
+Feasible GLS estimation steps for serial correlation following AR(1) are as follows.
+
+1. Run the OLS regression of $y_t$ on $x_{t1}, ... , x_{tk}$ and obtain the OLS residuals, $\hat u_t, t = 1, 2, ... , n$.
+2. Run the regression $\hat u_t = \hat u_{t-1}$ to obtain $\hat \rho$.
+3. Apply OLS to equation using quasi-differenced data to estimate $\beta_0, \beta_1, ... , \beta_k$. The usual standard errors, t statistics, and F statistics are asymptotically valid.
+
+
+Below see the code that implements Cochrane-Orcutt estimation for the barium chloride discussed above.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(dynlm);library(car);library(orcutt)
+data(barium, package='wooldridge')
+
+tsdata = ts(barium, start=c(1978,2), frequency=12)
+
+# OLS estimation
+olsres = dynlm(log(chnimp)~log(chempi)+log(gas)+log(rtwex)+
+      befile6+affile6+afdec6, data=tsdata)
+
+# Cochrane-Orcutt estimation
+cochrane.orcutt(olsres)
+```
+
+
+Statistical software packages can also easily estimtae models with higher order serially correalted errors (AR(q)).
+
+
+Because OLS and FGLS are different estimation procedures, we never expect them to give the same estimates. If they provide similar estimates of the bj, then FGLS is preferred if there is evidence of serial correlation because the estimator is more efficient and the FGLS test statistics are at least asymptotically valid. A more difficult problem arises when there are practical differences in the OLS and FGLS estimates: it is hard to determine whether such differences are statistically significant. A researcher has a big problem when OLS and FGLS estimates are different in practically important ways.
+
+
+Differencing data discussed in previous chapters also works to eliminate serial correlation.
+
+
+In recent years, it has become more popular to estimate models by OLS but to correct the standard errors for fairly arbitrary forms of serial correlation (and heteroskedasticity). Serial correlation-robust standard error computation may look somewhat complicated, but in practice it is easy to obtain. See the steps to obtain serial correlation robust (SC-robust) standard errors in the textbook. Empirically, the serial correlation-robust standard errors are typically larger than the usual OLS standard errors when there is serial correlation. These are also called Newey-West standard errors.
+
+
+The SC-robust standard errors after OLS estimation are most useful when we have doubts about some of the explanatory variables being strictly exogenous, so that methods such as Prais-Winsten and Cochrane-Orcutt are not even consistent. It is also valid to use the SC-robust standard errors in models with lagged dependent variables, assuming, of course, that there is good reason for allowing serial correlation in such models.
+
+
+Let's look back at the example of Puerto Rican minimum wage effect on employment. Previously, we found pretty strong evidence of AR(1) serial correlation. Thus, we should compute SC-robust standard errors. The robust standard error is only slightly greater than the usual OLS standard error. The robust t statistic is about ???4.98, and so the estimated elasticity is still very statistically significant. See the code below.
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(dynlm);library(lmtest);library(sandwich)
+data(prminwge, package='wooldridge')
+
+tsdata <- ts(prminwge, start=1950)
+
+# OLS regression
+reg<-dynlm(log(prepop)~log(mincov)+log(prgnp)+log(usgnp)+trend(tsdata), 
+                                                          data=tsdata )
+# results with usual SE
+coeftest(reg)
+# results with HAC SE
+coeftest(reg, vcovHAC)
+```
+
+
+Heteroskedasticity may also occur in time series regression models. With heteroskedasticity present, the usual standard errors, t and F statistics are invalid. To test for heteroskedasticity, one needs to make test and treat serial correlation first as the test for heteroskedasticity will not be valid with serial correlation present. Then we can test for heteroskedasticity using Breusch-Pagan test as with cross-section models: $u_t^2=\delta_0+\delta_1 x_{t1}+...+\delta_k x_{tk}+v_t$ if $v_t$ is serially uncorrelated. If $v_t$ has serially correlated, we can use weighted least squares as with cross-section models.
+
+
+Consider a simple example describing stock returns based on previous stock returns. 
+$$
+return_t=\beta_0+\beta_1 return_{t-1}+u_t
+$$
+Efficient market hypothesis (EMH) suggests that old information is not useful in predicting future returns or $\beta_1=0$. However, EMH does not say anything about the conditional variance. Breusch-Pagan test for heteroskedasticity allows us to check how the conditional variance behaves. 
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(dynlm);library(lmtest)
+data(nyse, package='wooldridge')
+tsdata = ts(nyse)
+# Linear regression of model:
+reg_returnsA = dynlm(return ~ L(return), data=tsdata)
+#Either bptest() command
+bptest(reg_returnsA)
+#Or manually regress residuals on explanatory variables
+reg_returnsB = dynlm(I(reg_returnsA$residuals^2) ~ L(return), data=tsdata)
+summary(reg_returnsB)
+```
+The t statistic on $return_{t-1}$ is about ???5.5, indicating strong evidence of heteroskedasticity. We find that volatility in stock returns is lower when the previous return was high, and vice versa. Therefore, we have found what is common in many financial studies: the expected value of stock returns does not depend on past returns, but the variance of returns does.
+
+
+Relatively recently, economists became more interested in dynamic forms of heteroskedasticity. An extremely popular model, introduced by Engle in 1982, called autoregressive conditional heteroskedasticity (ARCH) model looks at the conditional variance of $u_t$ given past errors $u_{t-1},u_{t-2},...$. ARCH model is:
+$$
+E(u_t^2|u_{t-1},u_{t-2},...)=E(u_t^2|u_{t-1})=\alpha_0+\alpha_1 u_{t-1}^2
+$$
+This model only makes sense if $\alpha_0>0$ and $\alpha_1>0$. 
+
+
+There are two reasons why one should be concerned with ARCH forms of heteroskedasticity.
+
+1. It is possible to get consistent (but not unbiased) estimators of the bj that are asymptotically more efficient than the OLS estimators. A weighted least squares procedure, based on estimating $u_t^2=\alpha_0+\alpha_1 u_{t-1}^2+v_t$, will do the trick.
+2. Also, the dynamics of conditional variance may be of interest itself. Since variance is often used to measure volatility, and volatility is a key element in asset pricing theories, ARCH models have become important in empirical finance.
+
+
+Let's look back at the stock returns example. We can test for heteroskedasticity characterized by ARCH model. Run OLS, and regress the squared residuals on lagged squared residuals. See the following commands. 
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+library(dynlm);library(lmtest)
+data(nyse, package='wooldridge')
+tsdata = ts(nyse)
+# Linear regression of model:
+reg_ret_A = dynlm(return ~ L(return), data=tsdata) 
+# squared residual
+residual.sq = resid(reg_ret_A)^2
+# Model for squared residual:
+ARCHreg <- dynlm(residual.sq ~ L(residual.sq)) 
+coeftest(ARCHreg)
+```
+The t statistic on $u^2_{t-1}$ is over nine, indicating strong ARCH. As we discussed earlier, a larger error at time $_{t???1}$ implies a larger variance in stock returns today.
+
+
+It is likely to have both heteroskedasticity and serial correlation in a regression model. Serial correlation is typically viewed as a bigger problem than heteroskedasticity as it has a larger impact on standard errors and efficiency of estimators. If we detect serial correlation using such a test, we can employ the Cochrane-Orcutt (or Prais-Winsten) transformation and, in the transformed equation, use heteroskedasticity-robust standard errors and test statistics. Or, we can even test for heteroskedasticity using the Breusch-Pagan or White tests. Alternatively, we can model heteroskedasticity and serial correlation and correct for both through a combined weighted least squares AR(1) procedure.
+
+
+Feasible GLS with Heteroskedasticity and AR(1) Serial Correlation
+
+1. Estimate $y_t=\beta_0+\beta_1x_{t1}+...+\beta_kx_{tk}+u_t$ by OLS and save the residuals, $\hat u_t$
+2. Regress $\log(\hat u_t^2)$ on $x_{t1},...,x_{tk}$, or on $\hat y_t,\hat y_{t}^2$ and obtain fitted values, say $\hat g_t$
+3. Estimate $h_t$ using $\hat h_t=\exp{(\hat g_t)}$
+4. Estimate the transformed equation $\hat h^{1/2}y_t = \hat h^{1/2} \beta_0 + \hat h^{1/2} \beta_1 x_{t1} + ... + \hat h^{1/2} \beta_k x_{tk} + error_t$ by standard Cochrane-Orcutt or Prais-Winsten methods.
+
+
+If we allow the variance function to be misspecified, or allow the possibility that any serial correlation does not follow an AR(1) model, then we can apply quasi-differencing to $\hat h^{1/2}y_t = \hat h^{1/2} \beta_0 + \hat h^{1/2} \beta_1 x_{t1} + ... + \hat h^{1/2} \beta_k x_{tk} + error_t$, estimating the resulting equation by OLS, and then obtain the Newey-West standard errors.
+
+
+**Homework Problems**
+
+<p class="comment"> Computer Exercise C1.\
+In Example 11.6, we estimated a finite DL model in first differences (changes):
+$$cgfr_t = \gamma_0 + \delta_0 cpe_t + \delta_1 cpe_{t-1} + \delta_2 cpe_{t-2} + u_t$$
+Use the data in **fertil3** to test whether there is AR(1) serial correlation in the errors.
+</p>
+
+<p class="comment"> Computer Exercise C5.\
+Consider the version of Fair's model in Example 10.6. Now, rather than predicting the proportion of the two-party vote received by the Democrat, estimate a linear probability model for whether or not the Democrat wins. \
+1. Use the binary variable $demwins$ in place of $demvote$ in (10.23) and report the results in standard form. Which factors affect the probability of winning? Use the data only through 1992. \
+2. How many fitted values are less than zero? How many are greater than one? \
+3. Use the following prediction rule: if $\widehat{demwins}>5$, you predict the Democrat wins; otherwise, the Republican wins. Using this rule, determine how many of the 20 elections are correctly predicted by the model. \
+4. Plug in the values of the explanatory variables for 1996. What is the predicted probability that Clinton would win the election? Clinton did win; did you get the correct prediction? \
+5. Use a heteroskedasticity-robust t test for AR(1) serial correlation in the errors. What do you find? \
+6. Obtain the heteroskedasticity-robust standard errors for the estimates in part 1. Are therenotable changes in any t statistics?
+</p>
+
+<p class="comment"> Computer Exercise C9. \
+The dataset **fish** contains 97 daily price and quantity observations on fish prices at the Fulton Fish Market in New York City. Use the variable $\log(avgprc)$ as the dependent variable. \
+1. Regress $\log(avgprc)$ on four daily dummy variables, with Friday as the base. Include a linear time trend. Is there evidence that price varies systematically within a week? \
+2. Now, add the variables $wave2$ and $wave3$, which are measures of wave heights over the past several days. Are these variables individually significant? Describe a mechanism by which stormy seas would increase the price of fish. \
+3. What happened to the time trend when $wave2$ and $wave3$ were added to the regression? What must be going on? \
+4. Explain why all explanatory variables in the regression are safely assumed to be strictly exogenous. \
+5. Test the errors for AR(1) serial correlation. \
+6. Obtain the Newey-West standard errors using four lags. What happens to the t statistics on $wave2$ and $wave3$? Did you expect a bigger or smaller change compared with the usual OLS t statistics? \
+7. Now, obtain the Prais-Winsten estimates for the model estimated in part 2. Are  $wave2$ and $wave3$ jointly statistically significant?
+</p>
+
+
+
+**References**
+
+Wooldridge, J. (2019). Introductory econometrics: a modern approach. Boston, MA: Cengage.
+
+Heiss, F. (2016). Using R for introductory econometrics. Düsseldorf: Florian Heiss,CreateSpace.
+
+---

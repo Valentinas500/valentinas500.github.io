@@ -1,0 +1,208 @@
+---
+title: "Introductory Econometrics"
+---
+
+
+#### Notes on Introductory Econometrics 
+*Based on Wooldridge, J. (2019). Introductory Econometrics: A Modern Approach. Boston, MA: Cengage.*
+
+- [Chapter 1: The Nature of Econometrics and Economic Data](etricsCh1.html)
+- [Chapter 2: The Simple Regression Model](etricsCh2.html)
+- [Chapter 3: The Multiple Regression Analysis: Estimation](etricsCh3.html)
+- [Chapter 4: The Multiple Regression Analysis: Inference](etricsCh4.html)
+- [Chapter 5: The Multiple Regression Analysis: OLS Asymptotics](etricsCh5.html)
+- [Chapter 6: Multiple Regression Analysis: Further Issues](etricsCh6.html)
+- [Chapter 7: Multiple Regression Analysis with Dummy Variables](etricsCh7.html)
+- [Chapter 8: Heteroskedasticity](etricsCh8.html)
+- [Chapter 9: Specification and Data Issues](etricsCh9.html)
+- [Chapter 10: Basic Regression Analysis with Time Series Data](etricsCh10.html)
+- [Chapter 11: Issues in Using OLS with Time Series Data](etricsCh11.html)
+- Chapter 12: Serial Correlation and Heteroskedasticity in Time Series Regressions
+- [Chapter 13: Pooling Cross Sections across Time: Simple Panel Data Methods](etricsCh13.html)
+- Chapter 14: Advanced Panel Data Methods
+- [Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares](etricsCh15.html)
+- [Chapter 16: Simultaneous Equation Models](etricsCh16.html)
+- [Chapter 17: Limited Dependent Variable Models: Logit and Probit](etricsCh17.html)
+- Chapter 18: Advanced Time Series Topics
+- [Chapter 19: Carrying Out an Empirical Project](etricsCh19.html)
+
+#### Notes on Practical Data Science With R
+*Based on Zumel, N., & Mount, J. (2014). Practical Data Science With R. Manning Publications Co.*
+
+- [Chapter 2: Starting with R and Data](dataCh2.html)
+- [Chapter 3: Exploring Data: Summary Statistics and Plots](dataCh3.html)
+    
+#### Notes on Other Topics in Data Analysis in R 
+    
+- Data Visualization And Regression Reporting in R
+- Introduction to Graphs in R for Econometricians
+- Correlation in R
+- Reporting and Comparing Regressions' Results in R
+- Time Series Analysis and Visualization in R
+- Panel Data Visualization in R
+- Data Visualization Using 'googleVis'
+- Data Manipulation and Visualization in R with 'tidyverse'
+- Interactive Apps Using 'shiny' In R
+- Topics in Advanced Econometrics
+- Nonparametric Econometrics in R
+- Advanced Time Series Analysis in R
+- Quantile Regressions in R
+- Simple Machine Learning Algorithms in R
+- K-Nearest Neighbors Algorithm in R
+
+
+
+#### Old Syllabi for Introductory Econometrics
+
+ECON 3885, Fall 2019, Fordham University
+ECON 3885, Spring 2020 at Fordham University
+
+Based on Wooldridge, J. (2019). Introductory Econometrics: A Modern Approach. Boston, MA: Cengage.
+
+- [Syllabus](https://drive.google.com/open?id=1ss6lxt9BJOwo0lLZ_tS_qqG8mPQrUB_V)
+
+If you have any questions, please email me at vrudys@fordham.edu
+
+For immediate questions on homework or assignments, you can message me or call me on Skype (ID: valentinas500) 
+
+#### Weeks Prior To 3/08/2020
+
+- Notes
+    - [Chapter 1: The Nature of Econometrics and Economic Data](etricsCh1.html)
+        + Answer Key to Problem Set: [PDF](https://drive.google.com/open?id=1PtnJhwpTmHfSz1GU7ZgjmsLb0x7kEdV5), [RMD](https://drive.google.com/open?id=1L2dskQAmru8qBMwSe_obsAkmeOV-WV-r)
+    - [Chapter 2: The Simple Regression Model](etricsCh2.html)
+        + Answer Key to Problem Set: [PDF](https://drive.google.com/open?id=1rfnMkBUjbHa8eUujC01mxdltZPCvnozQ), [RMD](https://drive.google.com/open?id=1sFP998C9IS1ncaudsKogL8_0nFj9t-4r)
+        - [Interpreting $\beta_1$ Coefficient](beta1.html)
+    - [Chapter 2: The Simple Regression Model](etricsCh2.html)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1rfnMkBUjbHa8eUujC01mxdltZPCvnozQ), [RMD](https://drive.google.com/open?id=1sFP998C9IS1ncaudsKogL8_0nFj9t-4r)
+        - [Interpreting $\beta_1$ Coefficient](beta1.html)
+    - [Chapter 3: The Multiple Regression Analysis: Estimation](etricsCh3.html)
+        + Answer Key to Problem Set: [PDF](https://drive.google.com/open?id=1UcOmGtiZGg6ZT9ws6mzEFnXpzESCPCvE), [RMD](https://drive.google.com/open?id=13jH3BUUp231WQ3T3X7vhG-MXy-Ao6ekr)
+        
+- [Practice Midterm Exam](https://drive.google.com/open?id=18Y4xfoJyh9hbWRfSKcLeDmrFa8nAV6YS)
+
+#### Week of 3/08/2020 and Spring Break
+
+- Notes
+    - [Chapter 4: The Multiple Regression Analysis: Inference](etricsCh4.html)
+    - [Chapter 6: Multiple Regression Analysis: Further Issues](etricsCh6.html)
+
+- Assignments
+    - [Homework Assignment CH4-1](https://drive.google.com/open?id=1kN4yNj5uDr3ziC0fcArjaLNiG5ccMAC5)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1ouq1q6noOv-beKNkVL6p2MQDOUwyCBjC), [RMD](https://drive.google.com/open?id=1fbVqVklOdvCNUniZ-LddM0zUX8ciojNe)
+    - [Homework Assignment CH4-2](https://drive.google.com/open?id=1LSEZRmeHNllzwjuJp7uYZC5htukFaEkh)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1vm29cW31zIIdpMw2A7LdRHt0HGMZF7N_), [RMD](https://drive.google.com/open?id=1Y5n9y7CWlnVxVQvPA4Uob7brCsqJ5C18)
+    - [Homework Assignment CH6](https://drive.google.com/open?id=1HtBSfBVSvc-sZHA648bhgqNIc2F7k3c2) [due 3/22/2020]
+        + Answer Key: [PDF](https://drive.google.com/open?id=1lggeb-rOSRp9c-AFIYyfOnkiPX81YdpH), [RMD](https://drive.google.com/open?id=1BIy00MHuF30M6aDokio3p_Pu5CIICbqt)
+
+- Video Lectures
+    - [Live WebEx Class (Thursday, 3/12/20, 1:40pm to 3:30pm)](https://fordham-student.webex.com/webappng/sites/fordham-student/recording/play/c55394279ccd47bf9ba2ac37591c4cce)
+        + Reviewed Homework Assignment CH4-2
+    - [Live WebEx Class (Thursday, 3/19/2020, 4pm)](https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/a3279073aff34deda7f7affe03a25f67)
+        + Reviewed HW Assignment CH6 problems C1, C2 and C9 ([R file from the session](https://drive.google.com/open?id=1Plgfvavba28vMNX4wRuUX2jEc28YS1tb))
+
+- Extra Material
+    - Podcast 1: [What Causes What?](https://play.podtrac.com/npr-510289/edge1.pod.npr.org/anon.npr-podcasts/podcast/npr/pmoney/2018/10/20181017_pmoney_pmpod453-6760e94c-5c32-43c5-bc4f-85f77c517389.mp3?orgId=1&d=1164&p=510289&story=658312757&t=podcast&e=658312757&siteplayer=true&awCollectionId=510289&awEpisodeId=658312757&dl=1)
+    - Podcast 2: [Deep Learning With the Elephants](https://www.npr.org/2019/08/09/749938354/episode-932-deep-learning-with-the-elephants)
+    - Podcast 3: [How Much Does This Cow Weigh?](https://www.npr.org/transcripts/714289051)
+    - Podcast 4: [What's Not On The Test: The Overlooked Factors That Determine Success](https://www.npr.org/transcripts/721733303)
+
+#### Week of 3/22/2020
+
+- Notes
+    - [Chapter 6: Multiple Regression Analysis: Further Issues](etricsCh6.html)
+        - [Chapter 6 Slides](https://drive.google.com/open?id=181wdUtAi9lmazwXm82doA5Re6TZpOHUQ)
+        - [Chapter 6 R Code](https://drive.google.com/open?id=10Vnmj9B6s3Mre2cYbKOoxD-PXY79UdM4)
+    - [Chapter 7: Multiple Regression Analysis with Dummy Variables](etricsCh7.html)
+        - [Chapter 7 Slides](https://drive.google.com/open?id=11TYv-QR0abPj_ND9KU8eoBBaRk_qTwWV)
+    - [Chapter 19: Carrying Out an Empirical Project](etricsCh19.html)
+    
+- Assignments
+    - [Homework Assignment Ch7](https://drive.google.com/open?id=1G55zarYD7hqtcrkYJPMQOel3a4NmfQwX)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1ENiYoMcV8_nX9GPfvNOH1RN5jABp0n97), [RMD](https://drive.google.com/open?id=1Zr2jNBuM-uexgsqJ1AYf-PEWzBnlxY1X)
+    - Research Project Proposal
+
+- Video Lectures
+    - [Live WebEx Class (Monday, 3/23/2020, 4pm (GMT-4))](https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/1e0ade1ceb4c4855a39704d8b49eb2cd)
+    - [Live WebEx Class (Thursday, 3/26/2020, 4pm (GMT-4))](https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/3915109b606c424b922fc1aedb7bba53)
+
+#### Week of 3/29/2020 
+
+- Notes
+    - [Chapter 7: Multiple Regression Analysis with Dummy Variables](etricsCh7.html)
+        - [Chapter 7 Slides](https://drive.google.com/open?id=11TYv-QR0abPj_ND9KU8eoBBaRk_qTwWV)
+    - [Chapter 8: Heteroskedasticity](etricsCh8.html)
+        - [Chapter 8 Slides](https://drive.google.com/open?id=1ZjOvXr8fv5DgntYpZT-h8jxJe02GSCO3)
+    - Reporting and Comparing Regression Results with **stargazer**
+        - [PDF](https://drive.google.com/open?id=1QUAy_n8I0e4IByFMRaxtN_twpj1nDh63)
+        - [RMD](https://drive.google.com/open?id=1kZiSEh3QbFYZhOMEqNKR5x-C82vgIQ4t)
+        - [R Code](https://drive.google.com/open?id=173DDpsUVrtY6I7LtypjFwW_dif-eWCd5)
+    - Detecting and Resolving Heteroskedasticity in R
+        - [R Code](https://drive.google.com/open?id=15oNsc26HSkfRPslRiCsO46coXxtlmbCn)
+- Assignments
+    - [Homework Assignment Ch8](https://drive.google.com/open?id=1g5zN37QAA_WBjj36V68fHiArP90GNpm9)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1Bg6ksRcByYP-bVsbcgY9rH_npe9PKXCQ), [RMD](https://drive.google.com/open?id=1ZJV-cIlw31ZNfi2rOzM-zeUutfyT8Pu2)
+
+- Video Lectures
+    - [Live WebEx Class (Monday, 3/30/2020, 4pm (GMT-4))](https://fordham-student.webex.com/recordingservice/sites/fordham-student/recording/playback/da5d4e8d29c14e8784d4056040b20e08)
+
+
+#### Week of 4/05/2020 
+
+- Notes
+    - [Chapter 8: Heteroskedasticity](etricsCh8.html)
+        - [Chapter 8 Slides](https://drive.google.com/open?id=1ZjOvXr8fv5DgntYpZT-h8jxJe02GSCO3)
+    - Creating Functions in R
+        - [R Code 1](https://drive.google.com/open?id=1KebFurqocEXS6vcJb37OsZepchSNE5zq)
+        - [R Code 2](https://drive.google.com/open?id=1fphbFnD3XW6ognqY-B25CYzdxVvbgb7f)
+
+
+#### Week of 4/12/2020 
+
+- Notes
+    - [Chapter 9: Specification and Data Issues](etricsCh9.html)
+        - [Chapter 9 Slides](https://drive.google.com/open?id=1Ne3_tMENXVcKcUW13DXgpIQFlT5NlzJ0)
+    - Basic Plots in R
+        - [R Code](https://drive.google.com/open?id=1ImjxdVt9g1DrPqmx-GjKX1MGOtko0Ie3)
+        - [Documentation of **plot()** Command in R](https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/plot)
+    - Using **ggplot2** for Pretty Figures
+        - [R Code](https://drive.google.com/open?id=1_uRuf2VAIjB9dh6FfWyaDMuBPIHRGKNK)
+        - [Cheat Sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+    - Loading Excel Data and Plotting Geographical Data Using **googleVis**
+        - [Excel file](https://drive.google.com/open?id=1-ay4pgMX8FWERDaSMXVB2dGWYcVml5oH)
+        - [R code](https://drive.google.com/open?id=1OKHHelV2jJ6qa7587CmO_hQZrIpeCdXz)
+        - [Output](googleVis.html) 
+- Assignments
+    - [Homework Assignment Ch9](https://drive.google.com/open?id=1J9A6SyREz67XtS2qyXMrDQqHTk3HQxKF)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1ws2dBn0HwAJH7HtoeNmF7V9Fehmi1kKb), [RMD](https://drive.google.com/open?id=1ALsMXIZuQYLAbUgiNqftwmSb5LCoUiDL)
+
+
+#### Week of 4/19/2020 
+
+- Notes
+    - [Chapter 10: Basic Regression Analysis with Time Series Data](etricsCh10.html)
+        - [Chapter 10 Slides](https://drive.google.com/open?id=1LHg5Ee2PBoyEBi9A4p8j-oVyBZtFXEUG)
+    - [Chapter 17: Limited Dependent Variable Models: Logit and Probit](etricsCh17.html)
+        - [Chapter 17 Slides](https://drive.google.com/open?id=1SLQgDZ_qD_6tsEyKB9ereR477Ih1Ufh2)
+    - Creating Interactive Applications in R Using **shiny**
+        - [R Code](https://drive.google.com/open?id=10EaSE3ljdQykGIWUlyzOck3hutmq-lLI)       
+- Assignments
+    - [Homework Assignment Ch10](https://drive.google.com/open?id=1s0cIMjgWODFRSemTSH0t1LwelanXDs-3)
+         + Answer Key: [PDF](https://drive.google.com/open?id=1svSidSTKe9GYIsnOzPHSoxGmSAlUovWd), [RMD](https://drive.google.com/open?id=1hXN__TrBQVtlKhNO6mFImx6qd1FwTFNj)
+    - [Homework Assignment Ch17](https://drive.google.com/open?id=1Trxg-Bx1_TxEFC6BN6CZqm24M7p9-RgJ)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1M7RIuX-McrHsuA1N9iMM5fXd_JcTCOAH), [RMD](https://drive.google.com/open?id=1nZtC3pKD6xnzoSbb7Ohsg_FNleNjUom4)
+
+
+#### Week of 4/26/2020 
+
+- Notes
+    - [Chapter 15: Instrumental Variables Estimation and Two-Stage Least Squares](etricsCh15.html)
+        - [Chapter 15 Slides](https://drive.google.com/open?id=1ImUVwGi8F4wBXBNjRHFPS9iBEFVh2RgA)
+- Assignments
+    - [Homework Assignment Ch15](https://drive.google.com/open?id=1mVVOWSxW2piVPhymdMWI72l3mBQm8BXV)
+        + Answer Key: [PDF](https://drive.google.com/open?id=1u9M7EyaZmCr7c_XdnNxMelj4i1ioYgqs), [RMD](https://drive.google.com/open?id=1Zv1bUFW7btqxpaM2MOutLEip2wqkWt78)
+    - [Practice Final Exam](https://drive.google.com/open?id=1JKetTn8lZEYt-PJM4W31bIxvYdBWez4Z)
+    - Final Project Due
+    - Final Exam
+
+

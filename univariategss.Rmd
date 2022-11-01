@@ -1,0 +1,157 @@
+---
+title: "Univariate Golden Section Search"
+---
+
+
+Golden section search is a technique locating the maximum of a function. This method efficiently reduces interval in which the maximum of the function is. If there are multiple maximums in the given range, the function will converge to one of them.
+
+Procedure works as this:
+Indicate the function and range (A,D) over which you want to find the max. The function computes two points within the range (B,C). The algorithm evaluates the given function at these two mid-points B and C. The point yielding a higher value is found.
+
+![](gss/RplotU2.png)
+
+The range is reduced to the two points around the high point, and new mid-points are found.
+
+![](gss/RplotU3.png)
+
+And again.
+
+![](gss/RplotU4.png)
+
+And gain. This process continues until the range narrows sufficiently.
+
+![](gss/RplotU5.png)
+
+
+
+Matlab function [[download](univariategss.m)]
+
+<div class="content"><pre class="codeinput"><span class="keyword">function</span> [ approx ] = univariategss( fx, A, D )
+<span class="comment">%The function uses golden-section search to find the maximum</span>
+<span class="comment">%of the given function over the given range of values.</span>
+<span class="comment">%This code follows Algorithm 11.6.1 described in Heer, B., &amp; Maussner, A. (2009).</span>
+<span class="comment">%Inputs are the function, min and max values for the range.</span>
+<span class="comment">%For example: univariategss(@(x)-x^2,-10,10)</span>
+
+stopping_criteria=0.000001; <span class="comment">%Stopping criteria, adjust for more or less accuracy</span>
+
+p=(5^(1/2)-1)/2;
+B=p.*A+(1-p).*D;
+C=(1-p).*A+p.*D;
+
+fB=fx(B);
+fC=fx(C);
+
+distance=abs(D-A); <span class="comment">%Initialize distance</span>
+<span class="keyword">while</span> distance&gt;stopping_criteria*max(1,abs(B)+abs(C))
+    <span class="keyword">if</span> fB&gt;fC
+        D=C;
+        C=B;
+        fC=fB;
+        B=p.*C+(1-p).*A;
+        fB=fx(B);
+    <span class="keyword">else</span>
+        A=B;
+        B=C;
+        fB=fC;
+        C=p.*B+(1-p).*D;
+        fC=fx(C);
+    <span class="keyword">end</span>
+    distance=abs(D-A); <span class="comment">%Update the distance</span>
+<span class="keyword">end</span>
+approx=B; <span class="comment">%Print out the value at which the maximum is approximated to be.</span>
+<span class="keyword">end</span>
+</pre>
+
+R function [[download](univariategss.R)]
+```{r, eval=FALSE}
+univariategss <- function(fx, A, D) {
+  #The function uses golden-section search to find the max 
+  #of a given function over a given range of values.
+  #This code follows Algorithm 11.6.1 described in Heer, B., & Maussner, A. (2009).
+  #Inputs are the function, min and max values for the range.
+  #Enter the function in quotes, for example as this: "-2*x^2"
+  #For example: univariategss("-(x^2)",-10,10)
+
+stopping_criteria=0.000001; #Stopping criteria, adjust for more or less accuracy
+fun=parse(text=fx) #Read the given expression (function)
+
+p=(5^(1/2)-1)/2;
+B=p*A+(1-p)*D;
+C=(1-p)*A+p*D;
+
+x=B; fB=eval(fun);
+x=C; fC=eval(fun);
+
+distance=abs(D-A); #Initialize distance
+while (distance>stopping_criteria*max(1,abs(B)+abs(C))){
+
+if (fB>fC){
+    D=C;
+    C=B;
+    fC=fB;
+    B=p*C+(1-p)*A;
+    x=B; fB=eval(fun);
+} else {
+    A=B;
+    B=C;
+    fB=fC;
+    C=p*B+(1-p)*D;
+    x=C; fC=eval(fun);
+}
+  distance=abs(D-A); #Update the distance
+}
+return(B) 
+}
+```
+
+Python function [[download](univariategss.Py)]
+```{python, eval=FALSE}
+def univariategss(fun,A,D):
+  #The function uses golden-section search to find the maximum
+  #of the given function over the given range of values.
+  #This code follows Algorithm 11.6.1 described in Heer, B., & Maussner, A. (2009).
+  #Inputs are the function, min and max values for the range.
+  #Enter the function in quotes, for example as this: "-2*x**2"
+  #For example: univariategss("-(x**2)",-10,10)
+  
+  stopping_criteria=0.000001; #Stopping criteria, adjust for more or less accuracy
+  p=(5**(1/2)-1)/2;
+  B=p*A+(1-p)*D;
+  C=(1-p)*A+p*D;
+  x=B; fB=eval(fun);
+  x=C; fC=eval(fun);
+  
+  distance=abs(D-A); #Initialize distance
+  while distance>(stopping_criteria*max(1,abs(B)+abs(C))):
+     if fB>fC:
+        D=C;
+        C=B;
+        fC=fB;
+        B=p*C+(1-p)*A;
+        x=B; fB=eval(fun);
+     else:
+        A=B;
+        B=C;
+        fB=fC;
+        C=p*B+(1-p)*D;
+        x=C; fC=eval(fun);
+      
+     distance=abs(D-A); #Update the distance
+  
+  return B 
+```
+
+
+
+<style type="text/css">
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+</style>
