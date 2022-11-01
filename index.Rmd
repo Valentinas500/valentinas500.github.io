@@ -16,21 +16,18 @@ title: "Home"
 </style>
 
 <div class="col2">
-Valentinas Rudys is a Research Fellow and an Economics PhD candidate at Fordham University in New York City.\
+Valentinas Rudys is an Assistant Professor of Economics at Weber State University.\
 \
-Fields: Macroeconomics, Labor, Computational Macro
+Fields: Macroeconomics, Financial Economics, Labor Economics, Computational Macroeconomics\
 \
-<!--Curriculum Vitae ([donwload](RUDYS_CV_Research.pdf))-->
-\
-Email: vrudys@fordham.edu\
+Email: valentinasrudys@weber.edu\
 \
 Mailing Address:\
 Valentinas Rudys\
-Fordham University\
-Department of Economics\
-Dealy Hall\
-441 East Fordham Road\
-Bronx, NY 10458\
+Goddard School of Business \& Economics\
+Weber State University\
+1337 Edvalson St
+Ogden, UT 84408\
 
 
 <div style="width:400px; height:auto">
